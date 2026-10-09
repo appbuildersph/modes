@@ -87,6 +87,8 @@ Failure path (**not yet run**): stop LM Studio (`lms server stop`); the app must
 - **ElevenLabs quota.** The Starter plan allows 39,749 characters per month (379 used on 2026-10-10). A spoken reply is roughly 100 to 200 characters, so the plan covers a few hundred replies in total. When the quota runs out the endpoint returns an error and the app falls back to the phone's built-in voice.
 - **ngrok free plan limits** (reported by `builder-agent` from ngrok's documentation, not checked by us): about 20,000 HTTP requests per month, 4,000 per minute, 1 GB transfer per month, 3 endpoints. Enough for a demo. The tunnel is a third-party service and must be disclosed in the submission (`docs/SUBMISSION.md`).
 
+
+Per-mode voices (optional): `ELEVENLABS_VOICE_ID_KALMA`, `ELEVENLABS_VOICE_ID_PAKINIG` and `ELEVENLABS_VOICE_ID_HAKBANG` each fall back to `ELEVENLABS_VOICE_ID`. The endpoint also takes an optional `mode` (`none`, `kalma`, `pakinig`, `hakbang`); unknown values answer 400. On ElevenLabs the modes send different voice settings (Kalma steadier, Pakinig clearer, Hakbang more expressive). These settings are a starting point and were not tuned by ear; a person must listen before anyone claims the modes sound different. Google voices ignore the mode.
 ## 4. What the tunnel exposes
 
 Only `/api/tutor`, `/api/ping` and `/api/tts` on the hub; everything else returns 404, and the app files are served only to `localhost`. LM Studio is never exposed. `/api/tts` costs money per character, so tunnelled calls must send an allowed `Origin` and share an hourly cap. The URL is public: anyone who knows it can send tutor questions (rate limited per IP, origin allow-listed for browsers, forgeable by non-browser clients). Stop ngrok when you are not demoing.
