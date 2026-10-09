@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">Composite figure made of three shapes</title>
+  <desc id="desc">One square and two triangles shown as separate colored parts</desc>
+  <rect width="640" height="360" rx="34" fill="#fffaf0"/>
+  <g stroke="#3b2d29" stroke-width="10" stroke-linejoin="round">
+    <path d="M220 92h200v200H220z" fill="#f7d26a"/>
+    <path d="M220 92 108 192l112 100z" fill="#f49b78"/>
+    <path d="m420 92 112 100-112 100z" fill="#91cbea"/>
+  </g>
+  <g fill="#3b2d29" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">
+    <text x="320" y="205">parisukat</text>
+    <text x="166" y="199" transform="rotate(-42 166 199)">tatsulok</text>
+    <text x="474" y="199" transform="rotate(42 474 199)">tatsulok</text>
+  </g>
+</svg>

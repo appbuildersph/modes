@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">Pencil measured with five equal blocks</title>
+  <desc id="desc">A pencil aligned above five equal blocks with no gaps or overlaps</desc>
+  <rect width="640" height="360" rx="34" fill="#fffaf0"/>
+  <g transform="translate(92 76) rotate(-5 230 35)" stroke="#3b2d29" stroke-width="7" stroke-linejoin="round">
+    <path d="M0 35 58 4h354v62H58z" fill="#f7d26a"/>
+    <path d="M0 35 58 4v62z" fill="#e7b58e"/>
+    <path d="m0 35 22-12v24z" fill="#3b2d29" stroke-width="3"/>
+    <path d="M412 4h52v62h-52z" fill="#f49b78"/>
+  </g>
+  <g transform="translate(88 218)" stroke="#3b2d29" stroke-width="6">
+    <rect x="0" y="0" width="88" height="72" rx="10" fill="#91cbea"/>
+    <rect x="88" y="0" width="88" height="72" rx="10" fill="#98dcb7"/>
+    <rect x="176" y="0" width="88" height="72" rx="10" fill="#f7d26a"/>
+    <rect x="264" y="0" width="88" height="72" rx="10" fill="#f49b78"/>
+    <rect x="352" y="0" width="88" height="72" rx="10" fill="#c7afe8"/>
+  </g>
+  <text x="308" y="330" fill="#3b2d29" font-family="Arial, sans-serif" font-size="30" font-weight="700" text-anchor="middle">5 pantay na bloke</text>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <rect width="120" height="120" rx="24" fill="#FBF1DA"/>
+  <!-- star body -->
+  <path d="M60 26 L70 48 L94 50 L76 66 L82 90 L60 77 L38 90 L44 66 L26 50 L50 48 Z"
+        fill="#F7D26A" stroke="#1C1410" stroke-width="3" stroke-linejoin="round"/>
+  <!-- grad cap -->
+  <path d="M40 36 L60 28 L80 36 L60 44 Z" fill="#1C1410"/>
+  <rect x="58.5" y="42" width="3" height="8" fill="#1C1410"/>
+  <circle cx="62" cy="51" r="3" fill="#F4C3D0" stroke="#1C1410" stroke-width="1.5"/>
+  <!-- face -->
+  <circle cx="52" cy="60" r="3" fill="#1C1410"/>
+  <circle cx="68" cy="60" r="3" fill="#1C1410"/>
+  <path d="M52 68 Q60 76 68 68" fill="none" stroke="#1C1410" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="46" cy="66" r="3.5" fill="#F4A87C" opacity="0.7"/>
+  <circle cx="74" cy="66" r="3.5" fill="#F4A87C" opacity="0.7"/>
+</svg>

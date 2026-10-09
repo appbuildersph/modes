@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">Two garden rows measuring five and eight metres</title>
+  <desc id="desc">A short garden row labelled 5 m and a longer garden row labelled 8 m</desc>
+  <rect width="640" height="360" rx="34" fill="#fffaf0"/>
+  <g stroke="#3b2d29" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M78 112H318" fill="none"/>
+    <path d="M78 252H482" fill="none"/>
+    <path d="M78 90v44M318 90v44M78 230v44M482 230v44" fill="none"/>
+  </g>
+  <g fill="#6fbc8f" stroke="#3b2d29" stroke-width="5">
+    <circle cx="118" cy="112" r="18"/><circle cx="168" cy="112" r="18"/><circle cx="218" cy="112" r="18"/><circle cx="268" cy="112" r="18"/>
+    <circle cx="118" cy="252" r="18"/><circle cx="168" cy="252" r="18"/><circle cx="218" cy="252" r="18"/><circle cx="268" cy="252" r="18"/><circle cx="318" cy="252" r="18"/><circle cx="368" cy="252" r="18"/><circle cx="418" cy="252" r="18"/>
+  </g>
+  <g fill="#3b2d29" font-family="Arial, sans-serif" font-size="36" font-weight="700">
+    <text x="350" y="124">5 m</text>
+    <text x="512" y="264">8 m</text>
+  </g>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title">
+  <title id="title">Cylinder</title>
+  <rect width="256" height="256" fill="none"/>
+  <path d="M49 71v114c0 25 158 25 158 0V71Z" fill="#8FD9B6" stroke="#3A2E2A" stroke-width="10" stroke-linejoin="round"/>
+  <ellipse cx="128" cy="71" rx="79" ry="31" fill="#BDE8D4" stroke="#3A2E2A" stroke-width="10"/>
+  <path d="M49 185c0 25 158 25 158 0" fill="none" stroke="#3A2E2A" stroke-width="10"/>
+</svg>

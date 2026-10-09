@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title">
+  <title id="title">Quarter circle</title>
+  <rect width="256" height="256" fill="none"/>
+  <path d="M54 202V54a148 148 0 0 1 148 148Z" fill="#B9A7E8" stroke="#3A2E2A" stroke-width="12" stroke-linejoin="round"/>
+</svg>

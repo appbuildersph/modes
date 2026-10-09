@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 230" role="img" aria-labelledby="title desc">
+  <title id="title">Two triangles forming a square</title>
+  <desc id="desc">Two equal right triangles joined along their longest sides to make one square.</desc>
+  <rect width="420" height="230" rx="22" fill="#FBF1DA"/>
+  <g transform="translate(105 10) rotate(45 105 105)">
+    <path d="M18 18H192V192Z" fill="#F7D26A" stroke="#3A2E2A" stroke-width="10" stroke-linejoin="round"/>
+    <path d="M18 18V192H192Z" fill="#F4A87C" stroke="#3A2E2A" stroke-width="10" stroke-linejoin="round"/>
+    <path d="M18 18 192 192" fill="none" stroke="#FFF8F6" stroke-width="6" stroke-dasharray="12 10"/>
+  </g>
+</svg>

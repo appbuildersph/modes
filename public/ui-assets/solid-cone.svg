@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title">
+  <title id="title">Cone</title>
+  <rect width="256" height="256" fill="none"/>
+  <path d="m128 31 76 164H52Z" fill="#F4A87C" stroke="#3A2E2A" stroke-width="10" stroke-linejoin="round"/>
+  <ellipse cx="128" cy="195" rx="76" ry="27" fill="#F7D26A" stroke="#3A2E2A" stroke-width="10"/>
+</svg>
