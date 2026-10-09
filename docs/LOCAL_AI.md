@@ -1,5 +1,7 @@
 # Local AI — on-device open-source model for the offline tutor
 
+**Model: UNDECIDED.** Every model named below is a candidate under evaluation, not a choice. The product is an offline-first tutor, and the chosen model must serve that goal.
+
 Status: research snapshot, 2026-10-09. Nothing here has been verified on a real iPhone. Model facts below were gathered by a separate research session and have not been independently re-checked. **Re-verify any fact that decides a purchase, license, or ship decision.**
 
 ## 0. Hackathon time-boxed plan (supersedes the long plan below where they conflict)

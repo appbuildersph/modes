@@ -16,6 +16,7 @@ Format: lightweight ADRs. Newest at the bottom. Status is one of Accepted, Propo
 - **Status:** Accepted
 - **Decision:** Only Grades 4-6 are bundled and selectable (`src/lib/grades.js`). Grades 1-3 JSON stays in the repo, intentionally not imported.
 - **Consequences:** Do not import the Grade 1-3 files; a stale stored grade outside 4-6 resets to the default.
+- **Amended by D-014:** Hakbang mode unlocks Grade 1-3 content, loaded lazily and only in that mode.
 
 ## D-003: Connectivity is detected by a real request, not `navigator.onLine`
 
@@ -53,14 +54,14 @@ Format: lightweight ADRs. Newest at the bottom. Status is one of Accepted, Propo
 
 ## D-008: Prefer sub-1 GB models; shortlist Gemma 3 1B and Qwen3-0.6B
 
-- **Status:** Proposed (2026-10-09), pending on-device test and Taglish evaluation
+- **Status:** Proposed (2026-10-09); **the model is explicitly undecided** pending on-device test and Taglish evaluation. The shortlist is a starting point for testing, not a selection
 - **Context:** Anecdotal evidence of a roughly 2 GB web-process kill on iOS 26; WebLLM memory figures: Gemma 3 1B 711 MB, Qwen3-0.6B 1.4 GB, Qwen3-1.7B 2.0 GB. No published Filipino scores below 1.5B.
 - **Decision:** Test Gemma 3 1B first and Qwen3-0.6B as comparison; treat Qwen3-1.7B as too risky for iPhone.
 - **Consequences:** Gemma's license terms must be read before shipping; Qwen3 needs thinking mode disabled.
 
 ## D-009: Enforce tutor mode rules in code, not only in prompts
 
-- **Status:** Proposed
+- **Status:** Accepted (modes confirmed in D-014)
 - **Context:** Small models follow format instructions unreliably; the app speaks replies aloud and serves children.
 - **Decision:** After generation, apply deterministic post-processing (strip markdown, sentence limits, spoken forms of symbols and fractions, remove `<think>`), and fall through to the next provider if the result is invalid.
 - **Consequences:** Needs a pure, unit-tested `applyMode` function; modes become testable independent of any model.
@@ -92,6 +93,13 @@ Format: lightweight ADRs. Newest at the bottom. Status is one of Accepted, Propo
 - **Decision:** State the base as pre-existing in the README and submission, list precisely what was built during the hackathon, keep real commits for hackathon work, and never rewrite history to hide the import. Ask the organisers whether the project qualifies.
 - **Consequences:** The pitch must lead with the new Local AI work. If organisers rule the base ineligible, the team needs a plan (for example, a smaller project built entirely during the window).
 
+## D-014: Three confirmed learning modes (Kalma, Pakinig, Hakbang)
+
+- **Status:** Accepted (2026-10-09, confirmed by the team lead); not implemented
+- **Context:** The team wants the same lessons to fit learners with different needs. The lead supplied a definition table: Kalma (calm/focus: ADHD, autism, sensory sensitivity), Pakinig (listen: dyslexia, low vision, weak readers), Hakbang (step: dyscalculia, intellectual disability), each with UI/UX changes and local AI changes (`docs/TUTOR_MODES.md`).
+- **Decision:** Build the three modes as a cross-cutting preference that changes both the UI and the tutor. Local AI behaviour is enforced in code (D-009). Hakbang unlocks Grade 1-3 content, loaded lazily and only in that mode, amending D-002. The app makes no diagnosis and no clinical or efficacy claims; modes are described as designed to support learners and any learner may use any mode.
+- **Consequences:** New `pref:mode` setting and a `tutor-modes` module; tutor cache key and `/api/tutor` request gain a validated `mode`; Grade 1-3 data and validators need a lazy path; several UI items (word highlighting, voice answers, visuals) are larger than the time available before the deadline and are prioritised after the Local AI work.
+
 ---
 
 ## Pending decisions
@@ -100,7 +108,7 @@ Format: lightweight ADRs. Newest at the bottom. Status is one of Accepted, Propo
 |---|---|---|---|
 | P-1 | Final model and runtime | Team, after eval | M3 |
 | P-2 | Minimum supported iPhone and iOS version | Team | M2 |
-| P-3 | Definitions and UX of Kalma / Pakinig / Hakbang | Team | M6 |
+| P-3 | UX details of the modes (where chosen, mid-lesson switching, games in Kalma, Grade 1-3 unlock in hackathon scope). Definitions are confirmed | Team | M6 |
 | P-4 | Translate bundled Filipino/Taglish content, or keep English fallback | Team | TBD |
 | P-5 | Production hosting for app and model files | Team | TBD |
 | P-6 | Port direction between `modes` and `CrossCampus` | Team | TBD |

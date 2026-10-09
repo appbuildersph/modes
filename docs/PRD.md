@@ -6,6 +6,8 @@ Status: draft v0.2, 2026-10-09. Owner: Team CrossCampus. This PRD describes the 
 
 ## 1. Summary
 
+**The product is an offline-first tutor.** The tutor must work with no network; every cloud feature is an optional upgrade. **The on-device model is undecided** (candidates are under evaluation; see `docs/LOCAL_AI.md`).
+
 Gabay is an offline-first PWA study companion for Filipino Grade 4-6 learners studying Mathematics under the DepEd MATATAG curriculum. A friendly tutor mascot, Teacher Gabay, explains lessons, checks answers, answers questions (text or voice), and tracks mastery, all of which keep working without internet. When a connection exists, the app upgrades itself: cloud Gemini tutoring, adaptive AI-generated practice, natural Filipino text-to-speech, and Gemini transcription.
 
 The current workstream adds an **open-source on-device language model** so the AI tutor itself can run offline on iPhone, where Chrome's built-in Gemini Nano does not exist.
@@ -27,10 +29,12 @@ The current workstream adds an **open-source on-device language model** so the A
 | G4 | Content is grounded in DepEd MATATAG Grades 4-6 and presented in English, Tagalog, or Taglish. |
 | G5 | The tutor teaches rather than answers: guided steps, short, warm, plain text, Filipino real-life contexts. |
 | G6 | No accounts, no client-side secrets, learner data stored locally. |
+| G7 | Three learning modes (Kalma, Pakinig, Hakbang) that change both the UI/UX and the local AI behaviour so the same lesson fits learners who need calm and focus, listening support, or step-by-step concrete teaching. |
 
 ## 4. Non-goals
 
-- Grades 1-3 and all non-math subjects (curriculum JSON for Grades 1-3 is retained in the repo but is deliberately not bundled).
+- Grades 1-3 in the default experience and all non-math subjects. Exception: Hakbang mode unlocks Grade 1-3 content (curriculum JSON for Grades 1-3 is retained in the repo but is not bundled today; see `docs/TUTOR_MODES.md` section 6).
+- Diagnosing, screening, or making clinical or therapeutic claims. The modes are designed to support learners with different needs; the app does not ask for or store a diagnosis.
 - User accounts, cloud sync, leaderboards, or any server-side learner profile.
 - A native App Store app in this phase (Capacitor is deferred; see `docs/DECISIONS.md`).
 - Training or fine-tuning a model in this phase (may be revisited if base-model Filipino quality is inadequate).
@@ -41,6 +45,7 @@ The current workstream adds an **open-source on-device language model** so the A
 | Persona | Needs | Notes |
 |---|---|---|
 | **Learner, Grade 4-6 (primary)** | Understand a lesson, practise, get encouraging feedback, ask questions by typing or speaking, do it on a phone | Ages roughly 9-12. Reads English, Tagalog, or a mix. May share a family phone. |
+| **Learner who benefits from a mode (primary)** | Kalma: learners with ADHD, autism, or sensory sensitivity who need a calm, low-stimulus, predictable screen. Pakinig: learners with dyslexia, low vision, or weak reading who need large clear text and read-aloud. Hakbang: learners with dyscalculia or intellectual disability who need one concrete step at a time | Described as design intent, not diagnosis. Any learner may choose any mode |
 | **Teacher (secondary)** | Printable lesson plans, quizzes, activity sheets, and exams aligned to MATATAG; trust that content is curriculum-correct | Served today by the PDF packets in `Term1-3/` and the root PDFs, generated from `_src/`. No in-app teacher view exists. |
 | **Parent/guardian (tertiary)** | Confidence the app is safe, private, and works without data | No accounts, no tracking. |
 | **Developer/AI agent** | Clear contracts and docs | See `CLAUDE.md`, `docs/ARCHITECTURE.md`. |
@@ -100,14 +105,19 @@ Priority: **P0** must have for the local-AI milestone, **P1** should have, **P2*
 | FR-A9 | P1 | A hidden "AI Lab" page loads a chosen model, runs a fixed prompt set, and reports load time, tokens per second, and memory outcome, for on-device evaluation. |
 | FR-A10 | P2 | Allow the learner or teacher to remove the downloaded model to free storage. |
 
-### 7.4 Tutor modes (Planned, Unconfirmed)
+### 7.4 Learning modes (Planned; definitions confirmed 2026-10-09)
 
-Definitions are in `docs/TUTOR_MODES.md` and were proposed, not confirmed by the team.
+Full definitions, per-mode UI/UX and local AI changes, and code touch points are in `docs/TUTOR_MODES.md`.
 
 | ID | Pri | Requirement |
 |---|---|---|
-| FR-M1 | P1 | Three tutor modes shape the reply: Kalma (two short sentences), Pakinig (no symbols or markdown, written to be listened to), Hakbang (one step plus a check question). |
-| FR-M2 | P1 | Modes apply identically to every provider (on-device model, cloud, bundled), with the same output constraints applied in code. |
+| FR-M1 | P0 | Three modes exist and can be selected: **Kalma** (calm/focus), **Pakinig** (listen), **Hakbang** (step). The selection persists on the device and applies across lessons, practice, and the tutor. |
+| FR-M2 | P0 | Tutor replies obey the active mode, for every provider, with the rules enforced in code after generation. Kalma: at most 2 short sentences, one idea, calm neutral tone. Pakinig: no symbols or markdown, fractions and symbols spoken as words ("3/4" is "three fourths"). Hakbang: one step then a check question, simple words, concrete Filipino examples. |
+| FR-M3 | P1 | Kalma UI: plain background, no music, coins, doodles, or 3D, one question per screen, a fixed layout, about 5 questions per session. |
+| FR-M4 | P1 | Pakinig UI: large readable font, high contrast, wide spacing, slower speech, auto read-aloud. P2: word highlighting, voice answers to practice items. |
+| FR-M5 | P2 | Hakbang UI: bigger StepScaffold, concrete visuals first (blocks, number lines). |
+| FR-M6 | P2 | Hakbang content: unlock Grade 1-3 content (lazy-loaded, only in this mode) and generate questions from the `madali` tier and lower grades. |
+| FR-M7 | P0 | The app never asks for, infers, or stores a diagnosis; copy describes who a mode is designed to support, with no clinical or efficacy claims. |
 
 ### 7.5 Voice (Current, P1 regression guard)
 
@@ -177,7 +187,7 @@ Baselines are not yet measured. Fill these in as data becomes available.
 
 1. Which model, and is its Taglish quality acceptable? (needs the eval, a Filipino-reading reviewer)
 2. What is the minimum supported iPhone model and iOS version?
-3. What exactly do Kalma, Pakinig, and Hakbang mean, and are there more modes?
+3. Where is the mode chosen and can it change mid-lesson? Is the Grade 1-3 unlock in scope for the hackathon? (The three modes and their definitions are confirmed; see `docs/TUTOR_MODES.md`.)
 4. Is the model download offered to the learner, the guardian, or a teacher-managed flow?
 5. Should the bundled Filipino/Taglish content be translated properly (all bundled item text is currently English in every language field)?
 6. Where will the app be hosted for the next phase (affects `QUESTION_CORS_ORIGINS` and `VITE_QUESTION_API_BASE`)?

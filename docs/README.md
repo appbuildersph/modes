@@ -2,6 +2,8 @@
 
 Start with the root `CLAUDE.md` (also useful for humans). Everything here is meant to be tracked in git and shared with all collaborators.
 
+Key facts: the project is an **offline-first tutor**; the on-device **model is undecided**; the project **name is undecided** ("Gabay" is a working label); it has three confirmed learning modes (Kalma, Pakinig, Hakbang).
+
 | Document | Purpose |
 |---|---|
 | [HACKATHON.md](HACKATHON.md) | AppBuildersPH Hackathon 2026 (Local AI): schedule, rules, scoring, submission checklist, what it means for this repo |

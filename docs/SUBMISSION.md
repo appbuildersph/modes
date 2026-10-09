@@ -21,6 +21,10 @@ Draft, to be tightened after the demo works:
 
 Facts that back this and are true today: the learning loop already works offline from the service-worker cache and IndexedDB; there are no accounts; credentials are server-side only. Facts that are NOT yet true and must not be claimed until verified: that an open-source model runs on-device in the demo; any speed, size, or quality number; iPhone support.
 
+### Learning modes (confirmed; describe only what works in the demo)
+
+The project has three modes, Kalma (calm/focus), Pakinig (listen), and Hakbang (step), that change both the interface and how the on-device AI replies (`docs/TUTOR_MODES.md`). In the submission and pitch, describe them as designed to support learners with different needs. Do not make clinical, therapeutic, or efficacy claims, and do not list a mode feature as shipped unless it works live.
+
 ## 3. Disclosures (required)
 
 ### What runs locally
@@ -46,7 +50,7 @@ Facts that back this and are true today: the learning loop already works offline
 
 ### Models used
 
-TBD. List every model with exact name, size, quantization, license, and source. Candidates under evaluation: Gemma 3 1B IT, Qwen3-0.6B / 1.7B (see `docs/LOCAL_AI.md`). Existing cloud models used by the pre-existing server code: Gemini (`gemini-2.5-pro` for the tutor, `gemini-2.5-flash` for questions and transcription by default).
+**UNDECIDED.** The on-device model has not been chosen; do not submit a name here until it is chosen and verified to run. List every model with exact name, size, quantization, license, and source. Candidates under evaluation: Gemma 3 1B IT, Qwen3-0.6B / 1.7B (see `docs/LOCAL_AI.md`). Existing cloud models used by the pre-existing server code: Gemini (`gemini-2.5-pro` for the tutor, `gemini-2.5-flash` for questions and transcription by default).
 
 ### Technologies and frameworks
 
