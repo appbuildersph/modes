@@ -50,7 +50,7 @@ The project has three modes, Kalma (calm/focus), Pakinig (listen), and Hakbang (
 
 ### Models used
 
-**UNDECIDED.** The on-device model has not been chosen; do not submit a name here until it is chosen and verified to run. List every model with exact name, size, quantization, license, and source. Candidates under evaluation: Gemma 3 1B IT, Qwen3-0.6B / 1.7B (see `docs/LOCAL_AI.md`). Existing cloud models used by the pre-existing server code: Gemini (`gemini-2.5-pro` for the tutor, `gemini-2.5-flash` for questions and transcription by default).
+**Chosen: Gemma 4 E2B** (confirmed by the team lead 2026-10-10), run on-device through transformers.js (`onnx-community/gemma-4-E2B-it-ONNX`, q4f16). **Do not list it as running until it has been verified on the demo device (iPhone 13).** Record exact name, size, quantization, source, and the license terms (read them first). Earlier candidates evaluated but not chosen: Gemma 3 1B, Qwen3 0.6B. Existing cloud models used by the pre-existing server code: Gemini (`gemini-2.5-pro` for the tutor, `gemini-2.5-flash` for questions and transcription by default).
 
 ### Technologies and frameworks
 

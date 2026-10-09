@@ -1,10 +1,12 @@
 # Local AI — on-device open-source model for the offline tutor
 
-**Model: UNDECIDED.** Every model named below is a candidate under evaluation, not a choice. The product is an offline-first tutor, and the chosen model must serve that goal.
+**Model: Gemma 4 E2B (confirmed by the team lead 2026-10-10), through transformers.js; not yet verified on the iPhone 13 demo device** (`docs/DECISIONS.md` D-016, D-017). The other models below are earlier candidates and fallbacks. The product is an offline-first tutor, and the model must serve that goal.
 
 Status: research snapshot, 2026-10-09. Nothing here has been verified on a real iPhone. Model facts below were gathered by a separate research session and have not been independently re-checked. **Re-verify any fact that decides a purchase, license, or ship decision.**
 
 ## 0. Hackathon time-boxed plan (supersedes the long plan below where they conflict)
+
+> **Update 2026-10-10:** the model is now Gemma 4 E2B and the demo device is an iPhone 13 installed PWA, so the plan's laptop-first steps below are superseded: test the model on the phone first (HTTPS tunnel, Safari Web Inspector), and use the Mac only for development. See `docs/ROADMAP.md` gates.
 
 Context: the AppBuildersPH Hackathon 2026 (Local AI) submission deadline is **10:00 AM on 2026-10-10**; this was written at about 11:30 PM on 2026-10-09 (`docs/HACKATHON.md`). The sections after this one are the full research and design; the full evaluation (section 8) and iPhone acceptance checklist (section 9) do not fit. The proposal below is the minimum that makes Local AI real in the demo. The team lead decides; adjust as needed.
 
@@ -17,7 +19,7 @@ Context: the AppBuildersPH Hackathon 2026 (Local AI) submission deadline is **10
 | 6:00 AM - 8:30 AM | README with judge recreation steps, disclosures (`docs/SUBMISSION.md`), AI Lab results if built, rehearsal of the offline demo on the demo laptop, demo video, social post | Everything in the `docs/SUBMISSION.md` checklist is ticked |
 | 8:30 AM - 9:30 AM | Final checks from a clean clone; repo public; stop making changes | Repo public, last commit well before 10:00 AM |
 
-Rules for this window: pick **one** model and **one** runtime and make them work before comparing anything; use the laptop as the primary demo device; treat the iPhone as stretch; do not start Capacitor, fine-tuning, or a native plugin; do not claim any measurement that was not taken on the device shown in the demo; commit often with descriptive messages (git history after 2:30 PM Oct 9 is the evidence of what was built during the hackathon).
+Rules for this window: pick **one** model and **one** runtime and make them work before comparing anything; the demo device is the iPhone 13 installed PWA (D-017), so load the model there early; treat the iPhone as stretch; do not start Capacitor, fine-tuning, or a native plugin; do not claim any measurement that was not taken on the device shown in the demo; commit often with descriptive messages (git history after 2:30 PM Oct 9 is the evidence of what was built during the hackathon).
 
 ## 1. Why this exists
 

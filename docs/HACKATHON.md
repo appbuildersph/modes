@@ -109,7 +109,7 @@ The existing Gabay tutor depends on Chrome's built-in Gemini Nano (available onl
 
 ### 8.3 Demo hardware
 
-Finalists demo on their own laptop. A WebGPU-capable laptop browser running the same open-source model is the lowest-risk demo; the iPhone is a strong proof point if it works, but it is the highest-risk path (memory limits, no simulator evidence). Decide the primary demo device early and rehearse offline (network off) on it.
+Finalists demo on their own device and laptop (the briefing says to bring your own laptop; HDMI and USB-C are available). **Decision (D-017): the demo runs on the team lead's iPhone 13 as an installed PWA.** That is the highest-risk path (iOS memory limits, a roughly 3 GB model, no simulator evidence), so test it early, rehearse screen mirroring to HDMI or USB-C, and keep a laptop-browser run as a backup only if it is also verified. Decide in advance what is shown if the phone fails on stage.
 
 ### 8.4 Honesty about benchmarks
 

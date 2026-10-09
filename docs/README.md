@@ -2,7 +2,7 @@
 
 Start with the root `CLAUDE.md` (also useful for humans). Everything here is meant to be tracked in git and shared with all collaborators.
 
-Key facts: the project is an **offline-first tutor**; the on-device **model is undecided**; the project **name is undecided** ("Gabay" is a working label); it has three confirmed learning modes (Kalma, Pakinig, Hakbang).
+Key facts: the project is an **offline-first tutor**; the on-device **model is Gemma 4 E2B** (confirmed, unverified on the demo device); the **demo device is an iPhone 13 installed PWA**; the project **name is undecided** ("Gabay" is a working label); it has three confirmed learning modes (Kalma, Pakinig, Hakbang).
 
 | Document | Purpose |
 |---|---|
@@ -12,6 +12,7 @@ Key facts: the project is an **offline-first tutor**; the on-device **model is u
 | [PRD.md](PRD.md) | Product requirements |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | How the code works |
 | [LOCAL_AI.md](LOCAL_AI.md) | On-device open-source model: research, plan, risks (section 0 is the time-boxed plan) |
+| [DESIGN.md](DESIGN.md) | Design system as it is today, accessibility audit, and the UI specification for the three modes |
 | [TUTOR_MODES.md](TUTOR_MODES.md) | Proposed Kalma / Pakinig / Hakbang modes (unconfirmed) |
 | [DEV_SETUP.md](DEV_SETUP.md) | Mac, simulator, and iPhone setup and offline test procedure |
 | [DECISIONS.md](DECISIONS.md) | Decision log |

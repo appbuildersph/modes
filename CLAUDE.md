@@ -4,7 +4,7 @@ Read this first. It is the entry point for any AI session working in this repo. 
 
 **Project name: undecided.** "Gabay" is the existing app's name in code and UI and is used in these docs as a working label only. The team has not chosen the hackathon submission name; do not rename the app, storage keys (`gabay:*`), or package, and do not present "Gabay" as the final name in submission text, until the team decides.
 
-**Models: undecided.** The on-device model(s) have not been chosen. Names in these docs (Gemma 3 1B, Qwen3, Llama 3.2, SmolLM2) are candidates under evaluation, not commitments. Do not hardcode a model, treat one as final, or present one as the project's model in submission text until the team decides (`docs/LOCAL_AI.md`, `docs/DECISIONS.md` D-008).
+**Model: Gemma 4 E2B (confirmed by the team lead, 2026-10-10), run on-device through transformers.js** (`onnx-community/gemma-4-E2B-it-ONNX`; no WebLLM build exists). **It has NOT been verified to load or run on the demo device.** Reported facts that make it risky: its files add up to about 3.1 GB, the text-only path is untested, and the demo device is an iPhone 13 (4 GB RAM) where iOS reportedly kills web processes at around 2 GB. The earlier candidates in `docs/LOCAL_AI.md` (Gemma 3 1B, Qwen3, Llama 3.2, SmolLM2) are now fallbacks. **Demo device: the team lead's iPhone 13 running the app as an installed PWA** (`docs/DECISIONS.md` D-017). Do not claim the model works on the phone until it has been run there.
 
 **What it is, in one line:** an **offline-first tutor** for Filipino Grade 4-6 math learners. The tutor must work with the network off; cloud is an optional upgrade.
 
@@ -20,7 +20,7 @@ This repo is the team's entry in the **AppBuildersPH Hackathon 2026, theme "Loca
 
 1. Judges score: Problem and Usefulness 25%, **Local AI Implementation 25%**, Technical Execution 20%, Innovation 15%, Product and Demo Quality 15% (`docs/JUDGING.md`). The on-device AI must genuinely run in the demo; core functionality may not depend entirely on a cloud API.
 2. Keep the app a PWA. A Capacitor (native) wrapper is deferred, not rejected. See `docs/DECISIONS.md`.
-3. Gemini Nano (Chrome Prompt API) does not exist on iOS, so the offline tutor needs a different, open-source model. Model choice is still open; use the time-boxed plan in `docs/LOCAL_AI.md` section 0.
+3. Gemini Nano (Chrome Prompt API) does not exist on iOS, so the offline tutor uses an open-source model: Gemma 4 E2B (confirmed, unverified on device). Use the time-boxed plan in `docs/LOCAL_AI.md` section 0 and the gates in `docs/ROADMAP.md`.
 4. Nothing about the local model has been verified on a real device yet. Do not claim otherwise.
 5. **The project has three confirmed learning modes: Kalma (calm/focus), Pakinig (listen), Hakbang (step)**, each changing both the UI/UX and the local AI behaviour. Definitions are in `docs/TUTOR_MODES.md`. They are designed to support learners with different needs; the app never diagnoses, and no clinical or efficacy claims may be made.
 6. **Honesty rules from the hackathon:** the app base is a pre-existing project (sibling repo `CrossCampus`, 139 commits, June to August 2026) and must be disclosed as such; never fabricate or inflate benchmarks; never rewrite git history to disguise the base; no help from people outside the hackathon; disclose every model, API, framework, asset, and AI tool used. See `docs/HACKATHON.md` section 8 and `docs/SUBMISSION.md`.
@@ -34,6 +34,7 @@ This repo is the team's entry in the **AppBuildersPH Hackathon 2026, theme "Loca
 | `docs/PRD.md` | You need the product goals, requirements, scope, and success metrics |
 | `docs/ARCHITECTURE.md` | You are changing code: layers, data flow, storage keys, API endpoints, fallback chains |
 | `docs/LOCAL_AI.md` | You work on the on-device model: research findings, candidates, plan, risks |
+| `docs/DESIGN.md` | You touch the UI: tokens, components, accessibility audit, and the UI specification for the three modes |
 | `docs/TUTOR_MODES.md` | You work on the three confirmed learning modes Kalma / Pakinig / Hakbang (definitions confirmed; not yet implemented) |
 | `docs/DEV_SETUP.md` | You set up the Mac, simulator, or real iPhone for testing |
 | `docs/DECISIONS.md` | You wonder why something is the way it is, or want to propose a change to a decision |

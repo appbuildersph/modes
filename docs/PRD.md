@@ -6,7 +6,7 @@ Status: draft v0.2, 2026-10-09. Owner: Team CrossCampus. This PRD describes the 
 
 ## 1. Summary
 
-**The product is an offline-first tutor.** The tutor must work with no network; every cloud feature is an optional upgrade. **The on-device model is undecided** (candidates are under evaluation; see `docs/LOCAL_AI.md`).
+**The product is an offline-first tutor.** The tutor must work with no network; every cloud feature is an optional upgrade. **The on-device model is Gemma 4 E2B** (confirmed 2026-10-10, unverified on device; see `docs/LOCAL_AI.md`). **The demo device is an iPhone 13 running the installed PWA.**
 
 Gabay is an offline-first PWA study companion for Filipino Grade 4-6 learners studying Mathematics under the DepEd MATATAG curriculum. A friendly tutor mascot, Teacher Gabay, explains lessons, checks answers, answers questions (text or voice), and tracks mastery, all of which keep working without internet. When a connection exists, the app upgrades itself: cloud Gemini tutoring, adaptive AI-generated practice, natural Filipino text-to-speech, and Gemini transcription.
 

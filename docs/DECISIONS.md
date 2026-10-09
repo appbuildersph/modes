@@ -54,7 +54,7 @@ Format: lightweight ADRs. Newest at the bottom. Status is one of Accepted, Propo
 
 ## D-008: Prefer sub-1 GB models; shortlist Gemma 3 1B and Qwen3-0.6B
 
-- **Status:** Proposed (2026-10-09); **the model is explicitly undecided** pending on-device test and Taglish evaluation. The shortlist is a starting point for testing, not a selection
+- **Status:** Superseded by D-016 (2026-10-10). Kept for the reasoning on memory limits, which still applies
 - **Context:** Anecdotal evidence of a roughly 2 GB web-process kill on iOS 26; WebLLM memory figures: Gemma 3 1B 711 MB, Qwen3-0.6B 1.4 GB, Qwen3-1.7B 2.0 GB. No published Filipino scores below 1.5B.
 - **Decision:** Test Gemma 3 1B first and Qwen3-0.6B as comparison; treat Qwen3-1.7B as too risky for iPhone.
 - **Consequences:** Gemma's license terms must be read before shipping; Qwen3 needs thinking mode disabled.
@@ -107,17 +107,30 @@ Format: lightweight ADRs. Newest at the bottom. Status is one of Accepted, Propo
 - **Decision:** Hard rule: no co-author trailers or provider attribution of any kind in commits, PR descriptions, or code. This applies to every AI tool and provider. Git identity is set per repo to the committing team member.
 - **Consequences:** AI sessions must omit attribution even if their defaults say otherwise. The hackathon's AI-tool disclosure requirement is met separately, in the submission and README, not through git. Because the rule is recorded in `CLAUDE.md`, every session in this repo should see it.
 
+## D-016: On-device model is Gemma 4 E2B
+
+- **Status:** Accepted (2026-10-10, confirmed by the team lead); **unverified on the demo device**
+- **Context:** `modes-44` measured Gemma 3 1B and Qwen3 0.6B in the browser on a Mac (`docs/ROADMAP.md` status log). The team lead had tested Gemma 4 E2B in LM Studio and confirmed it as the model. Reported by `modes-44`: Gemma 4 E2B has no WebLLM build, so it runs through transformers.js (`onnx-community/gemma-4-E2B-it-ONNX`, q4f16); its files add up to about 3.1 GB; the text-only code path is untested; it was not run in a browser.
+- **Decision:** Build the on-device provider around Gemma 4 E2B via transformers.js.
+- **Consequences / risks:** The demo device is an iPhone 13 with 4 GB RAM (D-017). A roughly 3 GB download and its runtime memory may not fit in an iOS web process (anecdotal kill reports near 2 GB; not an Apple figure). This must be tested on the phone first thing, not last. Fallback if it cannot load there: Gemma 3 1B (about 540 MB, measured to run on the Mac), which needs the team lead's OK. Gemma's terms must be read before shipping. The earlier candidates are fallbacks, not the plan.
+
+## D-017: Demo device is the team lead's iPhone 13, installed PWA
+
+- **Status:** Accepted (2026-10-10, team lead)
+- **Decision:** The live demo and the recorded video run the app as an installed Home Screen PWA on an iPhone 13. Offline claims are only valid if shown there with the network off.
+- **Consequences:** Physical-device testing is the priority (the simulator is not evidence). Needs the phone's iOS version (Safari WebGPU is believed to need iOS 26 or later; unverified), an HTTPS tunnel (`cloudflared` is installed on the Mac), and Safari Web Inspector. At Demo Day the phone must be shown to judges; HDMI or USB-C screen mirroring should be rehearsed. Supersedes the earlier laptop-first suggestion in `docs/HACKATHON.md` section 8.3 and `docs/LOCAL_AI.md` section 0.
+
 ---
 
 ## Pending decisions
 
 | # | Question | Owner | Needed by |
 |---|---|---|---|
-| P-1 | Final model and runtime | Team, after eval | M3 |
+| P-1 | ~~Final model and runtime~~ Decided: Gemma 4 E2B via transformers.js (D-016); still to be verified on the iPhone 13 | Team | Verify by 01:30 AM |
 | P-2 | Minimum supported iPhone and iOS version | Team | M2 |
 | P-3 | UX details of the modes (where chosen, mid-lesson switching, games in Kalma, Grade 1-3 unlock in hackathon scope). Definitions are confirmed | Team | M6 |
 | P-4 | Translate bundled Filipino/Taglish content, or keep English fallback | Team | TBD |
 | P-5 | Production hosting for app and model files | Team | TBD |
 | P-6 | Port direction between `modes` and `CrossCampus` | Team | TBD |
 | P-7 | Does a pre-existing project qualify; what disclosure do organisers expect | Team lead, via Telegram | Before investing further |
-| P-8 | Primary demo device (laptop vs iPhone) | Team | Early tonight |
+| P-8 | ~~Primary demo device~~ Decided: iPhone 13, installed PWA (D-017) | Team | Done |
