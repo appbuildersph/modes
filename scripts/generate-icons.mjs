@@ -1,14 +1,15 @@
-// Rasterize the mascot app icon into PWA PNG icons (192/512 + maskable + iOS).
+// Rasterize the SIBOL logo into PWA PNG icons (192/512 + maskable + iOS).
 // Run: node scripts/generate-icons.mjs
 import sharp from 'sharp'
 import { fileURLToPath } from 'node:url'
 import { dirname, resolve } from 'node:path'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
-// Full-resolution source stays in src/assets (not imported), so the 1.8 MB
+// Full-resolution source stays in src/assets (not imported), so the large
 // original is never precached by the service worker.
-const src = resolve(root, 'src/assets/gabo/gabo-icon-source.png')
-const bg = '#FBF1DA'
+const src = resolve(root, 'src/assets/sibol/sibol-icon-source.png')
+// Sampled from the logo's blue edge, so padding (maskable, og) blends in.
+const bg = '#0066FE'
 
 const out = [
   ['public/pwa-192x192.png', 192, 1],
@@ -30,3 +31,12 @@ for (const [file, size, scale] of out) {
     .toFile(resolve(root, file))
   console.log('wrote', file)
 }
+
+// Link preview image (X, LinkedIn): the logo centred on its own blue.
+const og = { w: 1200, h: 630 }
+const logo = await sharp(src).resize(og.h, og.h).png().toBuffer()
+await sharp({ create: { width: og.w, height: og.h, channels: 3, background: bg } })
+  .composite([{ input: logo, left: Math.round((og.w - og.h) / 2), top: 0 }])
+  .png()
+  .toFile(resolve(root, 'public/og.png'))
+console.log('wrote public/og.png')
