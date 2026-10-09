@@ -129,6 +129,15 @@ Format: lightweight ADRs. Newest at the bottom. Status is one of Accepted, Propo
 - **Measured on this Mac (2026-10-10, through the hub, 104 tests passing):** Kalma replies in 0.6 to 0.7 s, Hakbang about 0.6 to 0.9 s, Pakinig about 1.0 to 1.2 s, no-mode long replies about 4.5 s; foreign origin rejected (403), invalid mode rejected (400), CORS preflight with the ngrok header allowed. Requests must set `reasoning_effort: "none"` or Gemma 4 spends the whole budget on hidden reasoning and returns empty content.
 - **Consequences:** The in-browser transformers.js provider (plan step 3) is deferred, not deleted. New dependencies: an ngrok account and static domain, a deployed PWA with `VITE_EDGE_BASE` set to that domain, the Mac awake and LM Studio running during the demo. Pitch framing: AI runs on the team's own machine in the classroom, with no cloud AI API; one laptop serving many phones is slower. Supersedes D-017's assumption that the phone runs the model; the demo still uses the iPhone 13 as the client. D-016's model choice stands.
 
+## D-019: Remove pre-existing CrossCampus material from the repository (organisers' reported allowance)
+
+- **Status:** Accepted (2026-10-10, team lead); **the organisers' answer was relayed by the team lead and is not yet in writing** (the team lead is getting it in writing; add the screenshot under `docs/reference/` when it exists).
+- **Context:** The briefing requires the project to be "substantially built during the hackathon" and existing code and assets to be disclosed; a pre-existing project is a named dispute ground. The base app (CrossCampus, 139 commits, 2026-06-23 to 2026-08-22) was imported on 2026-10-09 22:45 to 22:56. The team lead reports the organisers said the pre-existing parts can be removed from the repository.
+- **Decision:** Delete files that predate the hackathon and that the AI feature does not need, in new commits. **Git history is not rewritten or squashed**, and the README and `docs/SUBMISSION.md` keep disclosing the existing base and what was removed. Concealment is not an option: the import commits stay visible.
+- **Removed so far (commit `d1fc532`):** teacher printables (Term 1-3 PDFs and their HTML sources, two root PDFs), Grade 1-3 curriculum data, the unused `src/content.json`, two unused screens (`Home.jsx`, `StartChoice.*`), and the curriculum-import and content-generation scripts. **In progress:** the 3D classroom, the mini-games and the assets only they use.
+- **Kept, because the new work runs on it (disclosed as existing code and assets):** the Grade 4-6 curriculum data and the core learning screens, helpers and styles, and the media they use. Removing these as well would remove the product the AI feature plugs into; if the organisers want that, it means rebuilding a minimal app, which is a separate decision.
+- **Consequences:** The Hakbang "unlock Grade 1-3 content" idea can no longer ship from this repository. The README provenance table must match the final file list. If the organisers' written answer differs, revisit this entry.
+
 ---
 
 ## Pending decisions
