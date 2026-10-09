@@ -3,8 +3,8 @@ import test from 'node:test'
 
 import { lessonTeaching } from '../src/lib/lesson-teaching.js'
 
-test('every Grade 1-3 lesson has teachable explanation and a solved example structure', async () => {
-  for (const grade of [1, 2, 3]) {
+test('every Grade 4-6 lesson has teachable explanation and a solved example structure', async () => {
+  for (const grade of [4, 5, 6]) {
     const curriculum = (await import(`../src/curriculum/grade${grade}.json`, { with: { type: 'json' } })).default
     for (const competency of curriculum) {
       const teaching = lessonTeaching(competency)
