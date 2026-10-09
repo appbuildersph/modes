@@ -162,30 +162,31 @@ Uses `node --test` over `test/*.test.js`. It covers the curriculum data, the tut
 
 All on the edge server (MacBook Air, Apple M5, 16 GB). The phone test above is the only phone result; no on-phone model numbers exist, because the model does not run on the phone.
 
-**Benchmark, 2026-10-10 04:26 PHT** (`node scripts/bench-edge.mjs --runs 3`; every run is in [`docs/benchmarks/edge-2026-10-10.json`](docs/benchmarks/edge-2026-10-10.json)). Gemma 4 E2B in LM Studio with the exact prompt and settings the app sends; one Grade 4 fractions question in English and Tagalog, 3 runs per mode, after one untimed warm-up. Token counts come from LM Studio's `usage` field.
+**Benchmark, 2026-10-10 07:38 PHT** (`node scripts/bench-edge.mjs --runs 3`; every run is in [`docs/benchmarks/edge-2026-10-10-0738.json`](docs/benchmarks/edge-2026-10-10-0738.json)). Gemma 4 E2B in LM Studio with the exact prompt and settings the app ships (the "Teacher Gabo" prompt with the off-topic rule); one Grade 4 fractions question in English and Tagalog, 3 runs per mode, after one untimed warm-up. Token counts come from LM Studio's `usage` field.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/benchmarks/reply-time-dark.svg">
-  <img src="docs/benchmarks/reply-time-light.svg" alt="Bar chart: median full tutor reply time per mode. Hakbang 0.56 s, Kalma 0.77 s, Pakinig 1.14 s, no mode 5.13 s, with fastest-to-slowest ranges." width="720">
+  <img src="docs/benchmarks/reply-time-light.svg" alt="Bar chart: median full tutor reply time per mode. Kalma 0.62 s, Hakbang 1.05 s, Pakinig 1.21 s, no mode 5.48 s, with fastest-to-slowest ranges." width="720">
 </picture>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/benchmarks/decode-speed-dark.svg">
-  <img src="docs/benchmarks/decode-speed-light.svg" alt="Scatter chart: decode speed against reply length for 24 replies. Replies of 100 or more tokens sit at 48 to 53 tokens per second; short replies scatter from 40 to 115." width="720">
+  <img src="docs/benchmarks/decode-speed-light.svg" alt="Scatter chart: decode speed against reply length for 24 replies. Replies of 100 or more tokens sit at 53 to 54 tokens per second; short replies scatter from 54 to 146." width="720">
 </picture>
 
-*Charts are drawn from the raw JSON by `node scripts/bench-charts.mjs`; the table below has the same numbers.*
+*Charts are drawn from the raw JSON by `node scripts/bench-charts.mjs docs/benchmarks/edge-2026-10-10-0738.json`; the table below has the same numbers.*
 
 | Mode | Reply length (median) | First token (median) | Full reply, median (range) | Decode speed (median) |
 |---|---|---|---|---|
-| No mode | 246 tokens | 0.20 s | 5.13 s (2.32-5.88 s) | 51.0 tok/s |
-| Kalma | 30 tokens | 0.17 s | 0.77 s (0.59-1.01 s) | 56.4 tok/s |
-| Pakinig | 53 tokens | 0.19 s | 1.14 s (0.85-1.23 s) | 56.0 tok/s |
-| Hakbang | 23 tokens | 0.22 s | 0.56 s (0.35-1.22 s) | 73.6 tok/s |
+| No mode | 284 tokens | 0.18 s | 5.48 s (1.57-5.77 s) | 53.4 tok/s |
+| Kalma | 29 tokens | 0.15 s | 0.62 s (0.56-0.68 s) | 59.4 tok/s |
+| Pakinig | 60 tokens | 0.15 s | 1.21 s (0.81-1.45 s) | 55.2 tok/s |
+| Hakbang | 52 tokens | 0.22 s | 1.05 s (0.42-1.16 s) | 60.5 tok/s |
 
-- Steady decode speed is about **48 to 53 tokens per second** (the 6 replies of 100+ tokens). Short replies give higher, noisier figures (up to 115 tok/s) because they are timed over a few tenths of a second; that is not the model's real speed.
-- Through the hub's `/api/tutor` (the app's real path, on the Mac): 8 of 8 requests answered by the edge model, median 0.82 s; mode replies 0.41 to 1.36 s, no-mode replies about 5 s.
+- Steady decode speed is about **53 to 54 tokens per second** (the 5 replies of 100+ tokens: 52.6 to 53.9). Short replies give higher, noisier figures (up to 146 tok/s) because they are timed over a few tenths of a second; that is not the model's real speed.
+- Through the hub's `/api/tutor` (the app's real path, on the Mac): 8 of 8 requests answered by the edge model, median 1.30 s; mode replies 0.57 to 1.57 s, no-mode replies about 5.8 s.
 - Not measured: network time from a phone, memory, cold model load, answer quality. One question, one machine, 3 runs: indicative, not a formal benchmark.
+- An earlier run at 04:26 PHT, before the off-topic rule and the tutor rename, is kept unchanged in [`docs/benchmarks/edge-2026-10-10.json`](docs/benchmarks/edge-2026-10-10.json). Model speed was the same (48 to 53 tok/s); Hakbang replies were shorter then (median 23 tokens, 0.56 s), because the off-topic rule makes every reply a little longer.
 
 Earlier single runs, recorded in [`docs/DECISIONS.md`](docs/DECISIONS.md) (D-018) and [`docs/ROADMAP.md`](docs/ROADMAP.md):
 

@@ -66,7 +66,7 @@ The project has three modes, Kalma (calm/focus), Pakinig (listen), and Hakbang (
 
 ### Measured performance (honest numbers)
 
-Measured 2026-10-10 04:26 PHT with `node scripts/bench-edge.mjs --runs 3`. Raw output, every run included: `docs/benchmarks/edge-2026-10-10.json`. Re-run it to check.
+Measured 2026-10-10 07:38 PHT with `node scripts/bench-edge.mjs --runs 3`, on the prompt the app ships ("Teacher Gabo", with the off-topic rule from `5fcd3c0`). Raw output, every run included: `docs/benchmarks/edge-2026-10-10-0738.json`. Re-run it to check.
 
 - **Machine:** Apple M5 Mac, 16 GB RAM, macOS 26.6.2, LM Studio serving `google/gemma-4-e2b` (MLX 4-bit) on 127.0.0.1:1234.
 - **Settings:** exactly what the app sends (`api/tutor.js`): compact tutor prompt, temperature 0.4, max 300 tokens, `reasoning_effort: "none"`. One Grade 4 fractions question (`4NA-IIe-1`), English and Tagalog, 4 modes, 3 runs each (24 timed requests after 1 untimed warm-up).
@@ -74,14 +74,14 @@ Measured 2026-10-10 04:26 PHT with `node scripts/bench-edge.mjs --runs 3`. Raw o
 
 | Mode | Median reply length | Time to first token (median) | Full reply, median (range) | Decode speed, median (range) |
 |---|---|---|---|---|
-| No mode | 246 tokens | 0.20 s | 5.13 s (2.32-5.88 s) | 51.0 tok/s (48.0-53.4) |
-| Kalma | 30 tokens | 0.17 s | 0.77 s (0.59-1.01 s) | 56.4 tok/s (40.6-62.4) |
-| Pakinig | 53 tokens | 0.19 s | 1.14 s (0.85-1.23 s) | 56.0 tok/s (52.8-57.1) |
-| Hakbang | 23 tokens | 0.22 s | 0.56 s (0.35-1.22 s) | 73.6 tok/s (53.2-115.2) |
+| No mode | 284 tokens | 0.18 s | 5.48 s (1.57-5.77 s) | 53.4 tok/s (52.6-56.9) |
+| Kalma | 29 tokens | 0.15 s | 0.62 s (0.56-0.68 s) | 59.4 tok/s (58.0-60.8) |
+| Pakinig | 60 tokens | 0.15 s | 1.21 s (0.81-1.45 s) | 55.2 tok/s (53.9-58.3) |
+| Hakbang | 52 tokens | 0.22 s | 1.05 s (0.42-1.16 s) | 60.5 tok/s (57.4-146.2) |
 
-- **Steady decode speed: about 48-53 tok/s.** That is the range over the 6 replies of 100+ tokens. Short replies show higher and noisier numbers (up to 115 tok/s) because a 20-token reply is timed over a few tenths of a second and LM Studio may send several tokens per stream chunk. Do not quote 115 tok/s as the model's speed.
-- **Through the real request path** (hub `/api/tutor` on the same Mac, non-streamed, one request per mode and language, all 8 returned 200 with `source: "edge"`): median 0.82 s, range 0.41-5.48 s. The mode replies (Kalma, Pakinig, Hakbang) took 0.41-1.36 s; the no-mode replies took 4.97-5.48 s because they are long.
-- **Prompt changes since this run:** the published numbers predate two prompt changes: an off-topic clause added to every prompt (commit `5fcd3c0`) and the tutor rename from "Teacher Gabay" to "Teacher Gabo". A re-run on the current prompt exists but is not published yet; until it is, treat these numbers as from the earlier prompt.
+- **Steady decode speed: about 53-54 tok/s.** That is the range over the 5 replies of 100+ tokens (52.6-53.9). Short replies show higher and noisier numbers (up to 146 tok/s) because a short reply is timed over a few tenths of a second and LM Studio may send several tokens per stream chunk. Do not quote 146 tok/s as the model's speed.
+- **Through the real request path** (hub `/api/tutor` on the same Mac, non-streamed, one request per mode and language, all 8 returned 200 with `source: "edge"`): median 1.30 s, range 0.57-5.87 s. The mode replies (Kalma, Pakinig, Hakbang) took 0.57-1.57 s; the no-mode replies took 5.82-5.87 s because they are long.
+- **Earlier run, kept for comparison:** 04:26 PHT on the prompt before the off-topic rule and the rename (`docs/benchmarks/edge-2026-10-10.json`). Same model speed (48-53 tok/s); Hakbang replies were shorter (median 23 tokens, 0.56 s). The off-topic rule makes replies a little longer.
 - **Not measured:** time over the network from a phone (tunnel or same Wi-Fi), anything running inside the phone, memory use, power, model load time from cold, answer quality or correctness. One question, one machine, 3 runs, so treat these as indicative, not a formal benchmark. Other sessions could have been using LM Studio at the same time; none was seen, but it was not prevented.
 - **Earlier numbers in `docs/ROADMAP.md`** (45-51 tok/s, mode replies 0.55-1.5 s on the same Mac) agree with these. The Gemma 3 1B / Qwen3 0.6B numbers there were reported by another session and not re-run, so do not quote them.
 

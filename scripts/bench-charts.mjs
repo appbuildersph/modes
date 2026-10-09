@@ -63,7 +63,7 @@ function replyTimeChart(t) {
   const rowH = 44
   const barH = 18
   const plotW = W - left - right
-  const maxX = 6
+  const maxX = Math.max(6, Math.ceil(Math.max(...rows.map((r) => r.totalSec))))
   const x = (v) => left + (v / maxX) * plotW
   const H = top + modes.length * rowH + 40
   let body = ''
