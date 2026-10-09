@@ -194,3 +194,47 @@
   .mode-transition-icon,
   .mode-transition-bar i { animation: none; }
 }
+
+/* ---------- Offline panel (OfflineBanner.jsx) ---------- */
+@keyframes offline-banner-in { from { transform: translate(-50%, -140%); } to { transform: translate(-50%, 0); } }
+
+.offline-banner {
+  position: fixed;
+  z-index: 150; /* under the mode switch cover */
+  top: calc(env(safe-area-inset-top, 0px) + 0.6rem);
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: min(calc(100% - 32px), 26rem);
+  padding: 0.65rem 1rem;
+  border: 2.5px solid var(--gb-outline);
+  border-radius: 1.25rem;
+  background: #fff7cc;
+  color: var(--gb-outline);
+  box-shadow: 3px 4px 0 var(--gb-outline);
+  transform: translate(-50%, 0);
+  animation: offline-banner-in 320ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  pointer-events: none;
+}
+.offline-banner.is-back { background: #d8f3e6; }
+.offline-banner-dot {
+  flex: none;
+  width: 0.8rem;
+  height: 0.8rem;
+  border: 2px solid var(--gb-outline);
+  border-radius: 50%;
+  background: var(--gb-rose, #f4a7b9);
+}
+.offline-banner.is-back .offline-banner-dot { background: #2f9e6b; }
+.offline-banner-text { display: grid; line-height: 1.25; }
+.offline-banner-text strong { font-family: 'Baloo 2', system-ui, sans-serif; font-size: 1.05rem; font-weight: 800; }
+.offline-banner-text span { font-size: 0.85rem; font-weight: 700; color: rgb(58 46 42 / 75%); }
+
+:root[data-mode='kalma'] .offline-banner { animation: mode-transition-in 400ms ease-out both; box-shadow: 2px 2px 0 var(--gb-outline); }
+:root[data-mode='pakinig'] .offline-banner-text strong { font-family: 'Atkinson Hyperlegible', 'Nunito', system-ui, sans-serif; font-size: 1.25rem; }
+:root[data-mode='pakinig'] .offline-banner-text span { font-family: 'Atkinson Hyperlegible', 'Nunito', system-ui, sans-serif; font-size: 1.05rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .offline-banner { animation: none; }
+}

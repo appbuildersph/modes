@@ -16,6 +16,7 @@ import { DEFAULT_MODE } from './lib/tutor-modes.js'
 import { screenAfterSplash } from './lib/onboarding-flow.js'
 import { modeUi } from './lib/mode-ui.js'
 import ModeTransition from './ui/ModeTransition.jsx'
+import OfflineBanner from './ui/OfflineBanner.jsx'
 import { t } from './lib/i18n.js'
 import Splash from './screens/Splash.jsx'
 import Onboarding from './screens/Onboarding.jsx'
@@ -228,6 +229,7 @@ export default function App() {
   return (
     <>
       {renderScreen()}
+      <OfflineBanner online={online} tt={(key, vars) => t(key, lang, vars)} />
       {modeCover}
     </>
   )

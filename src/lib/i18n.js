@@ -36,6 +36,14 @@ export const STRINGS = {
   'common.exit': { en: 'Exit', fil: 'Lumabas', taglish: 'Lumabas' },
   'common.online': { en: 'Online', fil: 'Online', taglish: 'Online' },
   'common.offline': { en: 'Offline', fil: 'Offline', taglish: 'Offline' },
+  // TODO: Filipino reviewer — offline panel.
+  'offline.title': { en: "You're offline", fil: 'Offline ka', taglish: 'Offline ka' },
+  'offline.body': {
+    en: 'Gabay keeps teaching with saved lessons.',
+    fil: 'Tuloy ang pagtuturo ni Gabay gamit ang mga naka-save na aralin.',
+    taglish: 'Tuloy pa rin si Gabay with saved lessons.',
+  },
+  'offline.backTitle': { en: 'Back online', fil: 'Online ka na ulit', taglish: 'Back online ka na' },
   'common.language': { en: 'Language', fil: 'Wika', taglish: 'Wika' },
   'home.destinations': { en: 'Destinations', fil: 'Mga pupuntahan', taglish: 'Mga pupuntahan' },
   'common.mastery': { en: 'Mastery', fil: 'Kahusayan', taglish: 'Mastery' },
