@@ -63,6 +63,7 @@ function adapt(res) {
     res.statusCode = code
     return res
   }
+  res.send = (body) => res.end(body)
   res.json = (value) => {
     res.setHeader('Content-Type', 'application/json; charset=utf-8')
     res.end(JSON.stringify(value))
