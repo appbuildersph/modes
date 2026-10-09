@@ -117,3 +117,80 @@
 @media (prefers-reduced-motion: reduce) {
   .read-aloud .w { transition: none; }
 }
+
+/* ---------- Mode switch cover (ModeTransition.jsx) ---------- */
+@keyframes mode-transition-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes mode-transition-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes mode-transition-pop {
+  0% { transform: scale(0.6) rotate(-8deg); opacity: 0; }
+  70% { transform: scale(1.08) rotate(2deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); }
+}
+@keyframes mode-transition-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+.mode-transition {
+  position: fixed;
+  z-index: 200;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background: var(--mode-transition-bg, var(--gb-background));
+  animation: mode-transition-in 250ms ease-out both;
+}
+.mode-transition.is-leaving { animation: mode-transition-out 350ms ease-in both; }
+.mode-transition-card {
+  display: grid;
+  justify-items: center;
+  gap: 0.35rem;
+  width: min(100%, 20rem);
+  padding: 1.75rem 1.5rem 1.5rem;
+  border: 3px solid var(--gb-outline);
+  border-radius: 1.75rem;
+  background: var(--gb-surface, #fffaf0);
+  box-shadow: 6px 6px 0 var(--gb-outline);
+  text-align: center;
+}
+.mode-transition-icon { animation: mode-transition-pop 500ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.mode-transition-kicker {
+  margin-top: 0.75rem;
+  color: rgb(58 46 42 / 60%);
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.mode-transition-title {
+  font-family: 'Baloo 2', system-ui, sans-serif;
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 1;
+}
+.mode-transition-gloss { font-weight: 800; color: rgb(58 46 42 / 70%); }
+.mode-transition-bar {
+  display: block;
+  width: 100%;
+  height: 0.9rem;
+  margin-top: 1rem;
+  overflow: hidden;
+  border: 2.5px solid var(--gb-outline);
+  border-radius: 999px;
+  background: #fff;
+}
+.mode-transition-bar i {
+  display: block;
+  height: 100%;
+  background: var(--gb-primary);
+  transform-origin: left;
+  animation: mode-transition-fill 1100ms ease-in-out both;
+}
+
+/* Kalma: no bounce, just a soft fade. */
+.mode-transition.is-calm .mode-transition-icon { animation: mode-transition-in 400ms ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mode-transition,
+  .mode-transition.is-leaving,
+  .mode-transition-icon,
+  .mode-transition-bar i { animation: none; }
+}

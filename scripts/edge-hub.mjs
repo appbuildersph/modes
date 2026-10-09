@@ -1,6 +1,6 @@
 // Edge AI hub (D-018): runs on the team's Mac next to LM Studio.
 //
-//   node scripts/edge-hub.mjs        listens on 127.0.0.1:8787
+//   node scripts/edge-hub.mjs        listens on 127.0.0.1:8787 (EDGE_HUB_HOST to change)
 //
 // - POST /api/tutor  -> api/tutor.js with TUTOR_BACKEND=edge (Gemma 4 E2B via LM Studio)
 // - POST /api/tts    -> api/tts.js (ElevenLabs when TTS_PROVIDER=elevenlabs). Billed per
@@ -25,6 +25,10 @@ process.env.TUTOR_BACKEND ||= 'edge'
 const ROOT = resolve(import.meta.dirname, '..')
 const DIST = join(ROOT, 'dist')
 const PORT = Number(process.env.EDGE_HUB_PORT || 8787)
+// 127.0.0.1 by default. EDGE_HUB_HOST=0.0.0.0 lets a phone on the same Wi-Fi or hotspot
+// reach the hub with no internet at all (pair it with EDGE_SERVE_APP=1). Opt-in only:
+// it exposes the app and both API routes to everyone on that network.
+const HOST = process.env.EDGE_HUB_HOST || '127.0.0.1'
 const MAX_BODY_BYTES = 64_000
 
 const { default: tutorHandler } = await import('../api/tutor.js')
@@ -170,8 +174,8 @@ const server = http.createServer(async (req, res) => {
   }
 })
 
-server.listen(PORT, '127.0.0.1', () => {
-  console.log(`Edge hub on http://127.0.0.1:${PORT}  (TUTOR_BACKEND=${process.env.TUTOR_BACKEND})`)
+server.listen(PORT, HOST, () => {
+  console.log(`Edge hub on http://${HOST}:${PORT}  (TUTOR_BACKEND=${process.env.TUTOR_BACKEND})`)
   console.log(`LM Studio expected at ${process.env.EDGE_LLM_URL || 'http://127.0.0.1:1234'}`)
   console.log(`Allowed cross-origin PWA: ${process.env.QUESTION_CORS_ORIGINS || '(none; same-origin only)'}`)
 })

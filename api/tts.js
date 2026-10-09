@@ -48,15 +48,23 @@ function voiceFor(lang) {
 const useElevenLabs = () => process.env.TTS_PROVIDER === 'elevenlabs'
 
 // How each learning mode should sound. ElevenLabs voice_settings: lower stability =
-// more expressive, higher = steadier and more even; style adds expressiveness
-// (and latency) when above 0. 'none' sends no override, so the voice keeps the
-// settings it was saved with. These values are a starting point chosen to be
-// audibly different; they have not been tuned by ear, so adjust them after listening.
+// more expressive, higher = steadier and more even; style adds expressiveness (and
+// latency) when above 0; speed runs 0.7 to 1.2. The voice speaks at about 173 words
+// per minute at speed 1 (measured on this voice and model; speed 0.9 gave about 158
+// and 0.8 about 142), which is fast for a child tutor, so standard, Kalma and Hakbang
+// are slowed here. Pakinig sets NO speed:
+// the client's read-speed buttons (0.8 / 0.65 / 1) change the audio playbackRate, and
+// a server speed on top would stack. 'none' repeats the voice's own saved values
+// (stability .5, similarity .75, style 0) so only the pace changes.
+// The four are deliberately far apart (Kalma 0.95 steady vs Hakbang 0.15 expressive; speeds
+// 0.72 to 0.85) so the modes are clearly different voices of the same speaker. Kalma's
+// speed sits just above the 0.7 floor, where ElevenLabs warns quality can suffer. Not tuned by
+// ear: adjust after listening.
 export const MODE_VOICE = {
-  none: null,
-  kalma: { stability: 0.85, similarity_boost: 0.75, style: 0 }, // steady, even, unhurried
-  pakinig: { stability: 0.7, similarity_boost: 0.85, style: 0 }, // clear and consistent for listening
-  hakbang: { stability: 0.4, similarity_boost: 0.75, style: 0.3 }, // warmer, more encouraging
+  none: { stability: 0.5, similarity_boost: 0.75, style: 0, speed: 0.85 }, // plain baseline, about 150 words/min
+  kalma: { stability: 0.95, similarity_boost: 0.75, style: 0, speed: 0.72 }, // very steady, flat-calm, slowest
+  pakinig: { stability: 0.75, similarity_boost: 0.95, style: 0 }, // crisp and consistent; speed is the client's
+  hakbang: { stability: 0.15, similarity_boost: 0.75, style: 0.7, speed: 0.8 }, // lively, expressive, encouraging
 }
 
 // Null when the key or voice is missing, so the handler answers 501 like Google does.

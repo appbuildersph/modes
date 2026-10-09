@@ -2,7 +2,7 @@
 //   1. online -> POST /api/tts (edge hub when the app has one, else this host; the
 //      server speaks with ElevenLabs or Google Cloud TTS, voice follows language)
 //   2. floor  -> on-device speechSynthesis (works fully OFFLINE, robotic)
-// Audio is cached in IndexedDB (tts:v3:{lang}:{mode}:{hash}; the learning mode changes
+// Audio is cached in IndexedDB (tts:v5:{lang}:{mode}:{hash}; the learning mode changes
 // the voice, so it is part of the key) so repeats cost nothing and
 // replay works offline once heard.
 //
@@ -102,11 +102,14 @@ function stopAudio() {
   }
 }
 
-function playBlob(blob, rate = CLOUD_RATE) {
+// onAudio(audio), when given, runs after the element exists and before play(), so a
+// caller (read-aloud highlighting) can attach its own listeners.
+function playBlob(blob, rate = CLOUD_RATE, { onAudio } = {}) {
   return new Promise((resolve) => {
     stopAudio()
     const url = URL.createObjectURL(blob)
     const audio = new Audio(url)
+    onAudio?.(audio)
     // The cache stores the audio as generated; speed is applied at playback so a
     // rate change never needs a new request.
     audio.playbackRate = rate
@@ -184,32 +187,37 @@ export async function fetchCloudAudio(
   }
 }
 
-async function speakCloud(text, lang, gen, rate, voiceMode) {
-  // v3: the voice now depends on the learning mode, so the mode is part of the key
-  // (a Kalma line must not replay in the Hakbang voice). Bump again if the voice changes.
-  const key = `tts:v3:${lang}:${voiceMode}:${hash(text)}`
+// The cloud voice for a line: the tts:v5 cache first (works offline for lines heard
+// before), then the network. null means "no cloud audio available right now".
+async function getCloudBlob(text, lang, voiceMode) {
+  // The voice depends on the learning mode, so the mode is part of the key (a Kalma line
+  // must not replay in the Hakbang voice). v5: the server changed each mode's pace and
+  // tone, and audio cached under the old settings must not replay. Bump again whenever the voice changes.
+  const key = `tts:v5:${lang}:${voiceMode}:${hash(text)}`
 
   try {
     const cached = await get(key)
-    if (cached instanceof Blob && cached.size) {
-      if (gen !== token) return true // stopped while loading — swallow
-      return await playBlob(cached, rate)
-    }
+    if (cached instanceof Blob && cached.size) return cached
   } catch {
     /* fall through */
   }
 
-  if (typeof navigator !== 'undefined' && navigator.onLine === false) return false
+  if (typeof navigator !== 'undefined' && navigator.onLine === false) return null
 
   try {
     const blob = await fetchCloudAudio(text, lang, { mode: voiceMode })
-    if (!blob) return false
-    set(key, blob).catch(() => {})
-    if (gen !== token) return true // stopped while fetching
-    return await playBlob(blob, rate)
+    if (blob) set(key, blob).catch(() => {})
+    return blob
   } catch {
-    return false
+    return null
   }
+}
+
+async function speakCloud(text, lang, gen, rate, voiceMode) {
+  const blob = await getCloudBlob(text, lang, voiceMode)
+  if (!blob) return false
+  if (gen !== token) return true // stopped while loading — swallow
+  return await playBlob(blob, rate)
 }
 
 // Public API. speak(text, { lang, rate, mode }). Tries cloud TTS, falls back to local.
@@ -228,13 +236,14 @@ export function speak(text, { lang = DEFAULT_LANG, rate, mode } = {}) {
 }
 
 // ---------------------------------------------------------------------------
-// Read-aloud with word highlighting (Pakinig mode). Always the on-device voice:
-// cloud audio is a plain MP3 with no word timings.
+// Read-aloud with word highlighting (Pakinig mode). Same voice rule as speak(): the
+// cloud (ElevenLabs) voice, from the tts:v5 cache or the network, and the on-device
+// voice ONLY when that audio is unavailable (offline and not cached, hub down).
 // ---------------------------------------------------------------------------
 
 // Start and end offsets of each whitespace-separated word. The word index that
 // speakWords() reports is an index into this list, so the UI should split its
-// text the same way (text.split(/\s+/) after trimming).
+// text the same way (text.trim().split(/\s+/)).
 export function wordSpans(text) {
   const spans = []
   for (const m of String(text ?? '').matchAll(/\S+/g)) spans.push({ start: m.index, end: m.index + m[0].length })
@@ -251,50 +260,75 @@ export function wordIndexAt(spans, charIndex) {
 
 export const BOUNDARY_WAIT_MS = 700 // no boundary event this long after speech starts -> use the timer
 const START_WAIT_MS = 2_500 // the voice never reported "start" -> arm the timer anyway
-const MS_PER_CHAR = 75 // rough speaking pace at rate 1, for the fallback timer only
+const MS_PER_CHAR = 75 // rough speaking pace at rate 1, for estimates only
 
-// How long the fallback timer shows a word: proportional to its length, with a
-// pause after sentence punctuation. An estimate, not a measurement.
+// How long a word takes: proportional to its length, with a pause after sentence
+// punctuation. An estimate, not a measurement.
 export function estimateWordMs(word, rate = LOCAL_RATE) {
   const pause = /[.!?]$/.test(word) ? 250 : /[,;:]$/.test(word) ? 120 : 0
   return Math.round(((word.length + 1) * MS_PER_CHAR) / rate + pause)
 }
 
+// Start time, in seconds of media time, of each word when `words` are read across
+// `duration` seconds of audio: the duration is shared out in proportion to each
+// word's estimated length plus its trailing pause. Media time does not change with
+// playbackRate, so the same start times stay correct at any speed. An estimate: the
+// audio has no real word timings, and leading or trailing silence skews it a little.
+export function wordStartTimes(words, duration) {
+  if (!words.length || !Number.isFinite(duration) || duration <= 0) return []
+  const weights = words.map((w) => estimateWordMs(w, 1))
+  const total = weights.reduce((a, b) => a + b, 0)
+  const starts = []
+  let acc = 0
+  for (const w of weights) {
+    starts.push((acc / total) * duration)
+    acc += w
+  }
+  return starts
+}
+
+// The word being spoken at `time`: the last word whose start has passed.
+export function wordIndexAtTime(starts, time) {
+  if (!starts.length) return -1
+  let i = 0
+  while (i + 1 < starts.length && starts[i + 1] <= time) i++
+  return i
+}
+
 let activeWords = null // { finish, pause, resume } of the speakWords() call in progress
 
-// speakWords(text, { lang, rate, onWord, onEnd }) -> boolean (false: nothing started,
-// no callbacks will fire). Reads `text` with the on-device voice and calls
-// onWord(index) as each word begins, using the voice's own boundary events. If none
-// arrive within ~700 ms (some voices never send them), a length-based timer drives
-// onWord instead; a boundary event that shows up later takes over again. onEnd()
-// fires exactly once: at the natural end, on an error, or when stopSpeaking(), a
-// newer speak(), or a newer speakWords() cuts it off.
-export function speakWords(text, { lang = DEFAULT_LANG, rate = LOCAL_RATE, onWord, onEnd } = {}) {
-  if (!text || !isSpeechSupported()) return false
+// speakWords(text, { lang, rate, mode, onWord, onEnd }) -> boolean. false only when
+// there is nothing to read; otherwise true IMMEDIATELY, and the reading starts once
+// the voice is chosen:
+//   1. the cloud voice (cache, then network) in an <audio> element at playbackRate
+//      `rate`; onWord follows the audio clock (wordStartTimes), so pause, resume and
+//      speed changes stay in sync;
+//   2. only if there is no cloud audio, the on-device voice: its own boundary events
+//      drive onWord, or a length-based timer if none arrive within ~700 ms.
+// onEnd() fires exactly once per call that returned true: natural end, an error, or
+// when stopSpeaking(), a newer speak() or a newer speakWords() cuts it off (the old
+// onEnd fires before the new reading starts). If neither voice can speak, onEnd
+// fires without any onWord. Throwing UI callbacks never break playback.
+// `loadAudio(text, lang, voiceMode) -> Promise<Blob|null>` is injectable for tests.
+export function speakWords(
+  text,
+  { lang = DEFAULT_LANG, rate, mode: modeId, onWord, onEnd, loadAudio = getCloudBlob } = {},
+) {
+  const words = String(text ?? '').match(/\S+/g) ?? []
+  if (!words.length) return false
   stopSpeaking()
 
-  const words = String(text).match(/\S+/g) ?? []
   const spans = wordSpans(text)
-  if (!words.length) return false
-
-  const u = new SpeechSynthesisUtterance(text)
-  const v = pickVoice(lang)
-  if (v) u.voice = v
-  u.lang = speechLang(lang)
-  u.rate = rate
-  u.pitch = 1.05
+  const voiceMode = normalizeMode(modeId)
 
   let done = false
   let paused = false
-  let gotBoundary = false
-  let fallback = false
   let lastIndex = -1
-  let nextIndex = 0
-  let watchdog = null
-  let ticker = null
+  let localStarted = false // the device voice is used at most once per call
+  let engine = null // { pause, resume, stop } of whichever voice is active
 
   const emit = (i) => {
-    if (i === lastIndex) return
+    if (i < 0 || i === lastIndex) return
     lastIndex = i
     try {
       onWord?.(i)
@@ -302,31 +336,12 @@ export function speakWords(text, { lang = DEFAULT_LANG, rate = LOCAL_RATE, onWor
       /* a UI callback must not break playback */
     }
   }
-  const clearTimers = () => {
-    clearTimeout(watchdog)
-    clearTimeout(ticker)
-    watchdog = ticker = null
-  }
-  const tick = () => {
-    if (done || paused || gotBoundary || nextIndex >= words.length) return
-    const i = nextIndex++
-    emit(i)
-    ticker = setTimeout(tick, estimateWordMs(words[i], rate))
-  }
-  const armWatchdog = (ms) => {
-    clearTimeout(watchdog)
-    watchdog = setTimeout(() => {
-      if (done || gotBoundary) return
-      fallback = true
-      tick()
-    }, ms)
-  }
   const finish = () => {
     if (done) return
     done = true
-    clearTimers()
+    engine?.stop()
     if (activeWords === handle) activeWords = null
-    if (mode === 'local') mode = null
+    if (mode === 'local' || mode === 'audio') mode = null
     try {
       onEnd?.()
     } catch {
@@ -337,33 +352,135 @@ export function speakWords(text, { lang = DEFAULT_LANG, rate = LOCAL_RATE, onWor
     finish,
     pause() {
       paused = true
-      clearTimeout(ticker)
+      engine?.pause()
     },
     resume() {
       if (!paused) return
       paused = false
-      if (fallback && !gotBoundary) tick()
+      engine?.resume()
     },
   }
 
-  u.onstart = () => armWatchdog(BOUNDARY_WAIT_MS)
-  u.onboundary = (e) => {
-    if (done || (e.name && e.name !== 'word')) return
-    gotBoundary = true
-    clearTimers() // real timings beat the estimate, even if the timer was running
-    const i = wordIndexAt(spans, e.charIndex ?? 0)
-    if (i >= 0) {
-      nextIndex = i + 1
+  // --- the cloud voice, followed by the audio clock
+  const startCloudAudio = (audio) => {
+    let starts = []
+    let frame = null
+    const hasFrames = typeof requestAnimationFrame === 'function'
+    const sync = () => {
+      if (done || paused) return
+      if (!starts.length) starts = wordStartTimes(words, audio.duration)
+      emit(wordIndexAtTime(starts, audio.currentTime))
+    }
+    const loop = () => {
+      sync()
+      if (hasFrames && !done && !paused && !audio.paused && !audio.ended) frame = requestAnimationFrame(loop)
+    }
+    const cloudEngine = {
+      pause: () => hasFrames && cancelAnimationFrame(frame),
+      resume: () => hasFrames && (frame = requestAnimationFrame(loop)),
+      stop: () => hasFrames && cancelAnimationFrame(frame),
+    }
+    engine = cloudEngine
+    audio.addEventListener('loadedmetadata', sync)
+    audio.addEventListener('timeupdate', sync)
+    audio.addEventListener('playing', loop)
+    audio.addEventListener('ended', () => {
+      sync()
+      finish()
+    })
+    audio.addEventListener('error', () => {
+      if (done || localStarted) return
+      cloudEngine.stop()
+      stopAudio()
+      startLocal() // the audio could not be decoded or played: use the device voice
+    })
+  }
+
+  // --- the on-device voice (only when there is no cloud audio)
+  const startLocal = () => {
+    if (done || localStarted) return
+    localStarted = true
+    if (!isSpeechSupported()) return finish() // nothing can speak: just end
+
+    const u = new SpeechSynthesisUtterance(text)
+    const v = pickVoice(lang)
+    if (v) u.voice = v
+    u.lang = speechLang(lang)
+    u.rate = rate ?? LOCAL_RATE
+    u.pitch = 1.05
+
+    let gotBoundary = false
+    let fallback = false
+    let nextIndex = 0
+    let watchdog = null
+    let ticker = null
+    const localRate = u.rate
+
+    const clearTimers = () => {
+      clearTimeout(watchdog)
+      clearTimeout(ticker)
+      watchdog = ticker = null
+    }
+    const tick = () => {
+      if (done || paused || gotBoundary || nextIndex >= words.length) return
+      const i = nextIndex++
       emit(i)
+      ticker = setTimeout(tick, estimateWordMs(words[i], localRate))
+    }
+    const armWatchdog = (ms) => {
+      clearTimeout(watchdog)
+      watchdog = setTimeout(() => {
+        if (done || gotBoundary) return
+        fallback = true
+        tick()
+      }, ms)
+    }
+    engine = {
+      pause: () => clearTimeout(ticker),
+      resume: () => {
+        if (fallback && !gotBoundary) tick()
+      },
+      stop: clearTimers,
+    }
+
+    u.onstart = () => armWatchdog(BOUNDARY_WAIT_MS)
+    u.onboundary = (e) => {
+      if (done || (e.name && e.name !== 'word')) return
+      gotBoundary = true
+      clearTimers() // real timings beat the estimate, even if the timer was running
+      const i = wordIndexAt(spans, e.charIndex ?? 0)
+      if (i >= 0) {
+        nextIndex = i + 1
+        emit(i)
+      }
+    }
+    u.onend = finish
+    u.onerror = finish
+
+    mode = 'local'
+    armWatchdog(START_WAIT_MS)
+    window.speechSynthesis.speak(u)
+  }
+
+  const start = async () => {
+    let blob = null
+    try {
+      blob = await loadAudio(text, lang, voiceMode)
+    } catch {
+      /* no cloud audio */
+    }
+    if (done) return // stopped or superseded while loading
+    if (!blob) return startLocal()
+    const played = await playBlob(blob, rate ?? CLOUD_RATE, { onAudio: startCloudAudio })
+    if (done) return
+    if (!played) {
+      engine?.stop()
+      startLocal() // autoplay blocked or a play error
     }
   }
-  u.onend = finish
-  u.onerror = finish
 
   activeWords = handle
-  mode = 'local'
-  armWatchdog(START_WAIT_MS)
-  window.speechSynthesis.speak(u)
+  start().catch(() => finish())
   return true
 }
 

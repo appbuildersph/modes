@@ -26,3 +26,14 @@ export const READ_SPEEDS = [0.8, 0.65, 1]
 export function modeUi(mode) {
   return UI[normalizeMode(mode)]
 }
+
+// Full-screen mode switch (ModeTransition.jsx): cover the screen, swap the mode
+// while it is covered, then reveal. Short on purpose: it shows the change, it
+// does not wait on anything. Reduced motion skips the hold.
+export const MODE_TRANSITION = { enterMs: 250, holdMs: 900, exitMs: 350 }
+
+export function modeTransitionTimes(reducedMotion = false) {
+  const { enterMs, holdMs, exitMs } = MODE_TRANSITION
+  if (reducedMotion) return { apply: 0, exit: 400, done: 400 }
+  return { apply: enterMs, exit: enterMs + holdMs, done: enterMs + holdMs + exitMs }
+}

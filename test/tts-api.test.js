@@ -125,7 +125,12 @@ test('elevenlabs request: documented URL, xi-api-key header, default model, no l
   assert.equal(call.init.method, 'POST')
   assert.equal(call.init.headers['xi-api-key'], FAKE_KEY)
   assert.equal(call.init.headers['Content-Type'], 'application/json')
-  assert.deepEqual(call.body, { text: 'Magandang araw!', model_id: 'eleven_flash_v2_5' })
+  // Standard mode still sends the voice's own saved values, with only the pace slowed.
+  assert.deepEqual(call.body, {
+    text: 'Magandang araw!',
+    model_id: 'eleven_flash_v2_5',
+    voice_settings: MODE_VOICE.none,
+  })
   assert.ok(call.init.signal instanceof AbortSignal)
 })
 
@@ -253,17 +258,36 @@ test('each learning mode sends its own voice settings to ElevenLabs, and they di
   assert.ok(sent.kalma.stability > sent.pakinig.stability)
   assert.ok(sent.pakinig.stability > sent.hakbang.stability)
   assert.ok(sent.hakbang.style > sent.kalma.style)
-  // Speed is deliberately left to the client's read rate, so the two never stack.
-  for (const settings of Object.values(sent)) assert.equal('speed' in settings, false)
+  // Pakinig's speed belongs to the client's read-speed buttons, so the server sets none
+  // there; the other modes are slowed on the server (the voice is fast at speed 1).
+  assert.equal('speed' in sent.pakinig, false)
+  for (const mode of ['kalma', 'hakbang']) {
+    assert.ok(sent[mode].speed >= 0.7 && sent[mode].speed < 1, `${mode} speed in the allowed, slowed range`)
+  }
+  assert.ok(sent.kalma.speed <= sent.hakbang.speed) // Kalma is the most unhurried
+  // The modes are meant to be clearly different, not nuanced: wide gaps, within ElevenLabs' ranges.
+  assert.ok(sent.kalma.stability - sent.hakbang.stability >= 0.5)
+  assert.ok(sent.hakbang.style - sent.kalma.style >= 0.5)
+  assert.ok(MODE_VOICE.none.speed - sent.kalma.speed >= 0.05)
+  for (const settings of [...Object.values(sent), MODE_VOICE.none]) {
+    for (const key of ['stability', 'similarity_boost', 'style']) assert.ok(settings[key] >= 0 && settings[key] <= 1, key)
+    if ('speed' in settings) assert.ok(settings.speed >= 0.7 && settings.speed <= 1.2, 'speed')
+  }
 })
 
-test('no mode, "none" and an absent mode all leave the voice at its saved settings', async () => {
+test('no mode and "none" both use the standard settings: saved voice values, slowed pace', async () => {
   useElevenLabs()
   for (const body of [{ text: 'Sige.' }, { text: 'Sige.', mode: 'none' }]) {
     calls.length = 0
     stubFetch(() => audioResponse())
     await handler(mockRequest({ ...body, lang: 'en' }), mockResponse())
-    assert.equal('voice_settings' in calls[0].body, false)
+    assert.deepEqual(calls[0].body.voice_settings, MODE_VOICE.none)
+    // Same stability, similarity and style the voice already has saved; only speed differs.
+    assert.deepEqual(
+      { stability: 0.5, similarity_boost: 0.75, style: 0 },
+      { stability: MODE_VOICE.none.stability, similarity_boost: MODE_VOICE.none.similarity_boost, style: MODE_VOICE.none.style },
+    )
+    assert.ok(MODE_VOICE.none.speed < 1 && MODE_VOICE.none.speed >= 0.7)
   }
 })
 

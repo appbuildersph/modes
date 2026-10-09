@@ -67,6 +67,7 @@ export const STRINGS = {
   'class.questionCount': { en: 'Question {n} of {total}', fil: 'Tanong {n} sa {total}', taglish: 'Question {n} of {total}' },
   'class.readAgain': { en: 'Read again', fil: 'Basahin muli', taglish: 'Basahin ulit' },
   'class.readSpeed': { en: 'Reading speed', fil: 'Bilis ng pagbasa', taglish: 'Reading speed' },
+  'mode.switching': { en: 'Switching mode', fil: 'Nagpapalit ng mode', taglish: 'Switching mode' },
   'class.thinking': { en: 'Teacher Gabay is thinking...', fil: 'Nag-iisip si Teacher Gabay...', taglish: 'Nag-iisip si Teacher Gabay...' },
   'onboarding.grade': { en: 'What grade are you in?', fil: 'Anong grade ka?', taglish: 'Anong grade ka?' },
   'onboarding.gradeLabel': { en: 'Grade {grade}', fil: 'Grade {grade}', taglish: 'Grade {grade}' },

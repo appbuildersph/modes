@@ -15,6 +15,7 @@ import { loadMode, saveMode } from './lib/mode-pref.js'
 import { DEFAULT_MODE } from './lib/tutor-modes.js'
 import { screenAfterSplash } from './lib/onboarding-flow.js'
 import { modeUi } from './lib/mode-ui.js'
+import ModeTransition from './ui/ModeTransition.jsx'
 import { t } from './lib/i18n.js'
 import Splash from './screens/Splash.jsx'
 import Onboarding from './screens/Onboarding.jsx'
@@ -46,6 +47,7 @@ export default function App() {
   const [online, setOnline] = useState(navigator.onLine)
   const [lang, setLangState] = useState(DEFAULT_LANG)
   const [mode, setModeState] = useState(DEFAULT_MODE)
+  const [modeSwitch, setModeSwitch] = useState(null) // { to, id } while the switch cover shows
   const [questionSession, setQuestionSession] = useState(null)
   const [content, setContent] = useState([])
   const classroomStartRef = useRef(false)
@@ -122,13 +124,19 @@ export default function App() {
     saveLang(nextLang)
   }
 
-  function changeMode(nextMode) {
+  function applyMode(nextMode) {
     setModeState(nextMode)
     saveMode(nextMode)
     // Kalma is music-free; switching in or out takes effect right away.
     if (screen === 'splash') return
     if (modeUi(nextMode).music) startBgm()
     else stopBgm()
+  }
+
+  // Switching mode shows a full-page cover; the new look is applied under it.
+  function changeMode(nextMode) {
+    if (nextMode === mode && !modeSwitch) return
+    setModeSwitch({ to: nextMode, id: Date.now() })
   }
 
   function navTo(key) {
@@ -206,6 +214,25 @@ export default function App() {
     await handleGradeChanged(nextGrade, 'progress')
   }
 
+  const modeCover = modeSwitch && (
+    <ModeTransition
+      key={modeSwitch.id}
+      to={modeSwitch.to}
+      lang={lang}
+      tt={(key, vars) => t(key, lang, vars)}
+      onApply={() => applyMode(modeSwitch.to)}
+      onDone={() => setModeSwitch(null)}
+    />
+  )
+
+  return (
+    <>
+      {renderScreen()}
+      {modeCover}
+    </>
+  )
+
+  function renderScreen() {
   switch (screen) {
     case 'splash':
       return (
@@ -352,5 +379,6 @@ export default function App() {
           onPick={goBrief}
         />
       ))
+  }
   }
 }

@@ -201,7 +201,7 @@ Counts: Grade 4: 54 competencies / 591 items; Grade 5: 49 / 494; Grade 6: 52 / 4
 | `tutor:{ref}:{lang}:{mode}:{hash}` | `{ text, source }` (source: `nano`, `local`, `edge`, `online`, `cached`) | `tutor.js` |
 | `pref:mode` | `none` \| `kalma` \| `pakinig` \| `hakbang` (default `none`) | `mode-pref.js` |
 | `pref:edgeBase` | URL of the edge AI hub, set once from `?edge=<url>` (http or https only) | `edge-llm.js` |
-| `tts:v3:{lang}:{mode}:{hash}` | cached audio per language and learning mode (`v3`: the cache version moves when the provider, voice or mode settings change; older `v2` entries are not replayed) | `speech.js` |
+| `tts:v5:{lang}:{mode}:{hash}` | cached audio per language and learning mode (`v5`: the cache version moves when the provider, voice or mode settings change; older `v2` entries are not replayed) | `speech.js` |
 | sound prefs | mute/music flags | `sound.js` |
 
 Legacy keys are migrated to Grade 6 on startup by `migrateMastery`.

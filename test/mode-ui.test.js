@@ -30,3 +30,13 @@ test('unknown modes fall back to standard', () => {
   assert.deepEqual(modeUi('bogus'), modeUi('none'))
   assert.deepEqual(modeUi(undefined), modeUi('none'))
 })
+
+test('the mode switch cover applies the mode while covered and stays short', async () => {
+  const { modeTransitionTimes } = await import('../src/lib/mode-ui.js')
+  const t = modeTransitionTimes(false)
+  assert.ok(t.apply > 0 && t.apply < t.exit && t.exit < t.done)
+  assert.ok(t.done <= 1600, 'the cover must not hold the learner up')
+  const r = modeTransitionTimes(true)
+  assert.equal(r.apply, 0)
+  assert.ok(r.done < t.done)
+})

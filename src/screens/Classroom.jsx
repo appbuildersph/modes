@@ -511,6 +511,7 @@ export default function Classroom({ competency, questions, questionSource = 'bun
                 <ReadAloudText
                   text={localize(item.q, lang)}
                   lang={lang}
+                  mode={mode}
                   tt={tt}
                   autoRead={ui.autoRead}
                   defaultRate={ui.readRate}

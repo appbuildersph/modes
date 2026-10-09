@@ -122,3 +122,46 @@ test('no mode, or "none", keeps the original {text, lang} body', async () => {
     assert.deepEqual(calls[0].body, { text: 'Sige.', lang: 'fil' })
   }
 })
+
+// --- word timing helper (read-aloud highlighting follows the audio clock) ---------
+import { wordStartTimes, wordIndexAtTime } from '../src/lib/speech.js'
+
+test('wordStartTimes spreads the audio duration over the words, in order', () => {
+  const words = ['Magaling', 'ka', 'talaga', 'ngayon']
+  const starts = wordStartTimes(words, 8)
+  assert.equal(starts.length, words.length)
+  assert.equal(starts[0], 0)
+  for (let i = 1; i < starts.length; i++) assert.ok(starts[i] > starts[i - 1])
+  assert.ok(starts.at(-1) < 8) // the last word starts before the end
+})
+
+test('longer words get more time, and a sentence pause pushes the next word later', () => {
+  const [a, b, c] = wordStartTimes(['po', 'kumusta', 'po'], 6)
+  assert.ok(c - b > b - a) // 'kumusta' takes longer than 'po'
+  const plain = wordStartTimes(['Hello', 'po'], 4)
+  const pause = wordStartTimes(['Hello.', 'po'], 4)
+  assert.ok(pause[1] > plain[1]) // the full stop leaves room before the next word
+})
+
+test('the schedule scales with the duration and is independent of any playback rate', () => {
+  const words = ['Isa', 'dalawa', 'tatlo']
+  const short = wordStartTimes(words, 3)
+  const long = wordStartTimes(words, 6)
+  short.forEach((t, i) => assert.ok(Math.abs(long[i] - t * 2) < 1e-9))
+})
+
+test('wordStartTimes gives no schedule for no words or an unusable duration', () => {
+  assert.deepEqual(wordStartTimes([], 5), [])
+  for (const d of [0, -1, NaN, Infinity, undefined]) assert.deepEqual(wordStartTimes(['a', 'b'], d), [])
+})
+
+test('wordIndexAtTime picks the last word whose start has passed', () => {
+  const starts = [0, 1, 2.5]
+  assert.equal(wordIndexAtTime(starts, 0), 0)
+  assert.equal(wordIndexAtTime(starts, 0.99), 0)
+  assert.equal(wordIndexAtTime(starts, 1), 1)
+  assert.equal(wordIndexAtTime(starts, 2.49), 1)
+  assert.equal(wordIndexAtTime(starts, 99), 2)
+  assert.equal(wordIndexAtTime(starts, -1), 0)
+  assert.equal(wordIndexAtTime([], 1), -1)
+})
