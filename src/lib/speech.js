@@ -90,7 +90,41 @@ function hash(str) {
 let currentAudio = null
 let token = 0 // generation guard — bumped on every speak()/stop()
 
+let audioListeners = null // AbortController for the listeners on the playing element
+
+// iOS Safari lets a media element play without a tap only after that same element
+// has played inside one. Cloud speech plays after an awaited fetch, and Pakinig reads
+// on its own, so a fresh element per line was refused and fell back to the device
+// voice on the iPhone. The first tap plays a silent clip on one element, and every
+// later line reuses it. Until then (and in Node tests) each line gets a new element.
+const SILENT_WAV = 'data:audio/wav;base64,UklGRsQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+let unlockedAudio = null
+let unlocking = false
+
+function unlockAudio() {
+  if (unlockedAudio || unlocking || currentAudio || typeof Audio === 'undefined') return
+  unlocking = true
+  const audio = new Audio(SILENT_WAV)
+  audio.play().then(
+    () => {
+      unlockedAudio = audio
+      unlocking = false
+    },
+    () => {
+      unlocking = false
+    },
+  )
+}
+
+if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
+  for (const type of ['touchend', 'pointerup', 'click', 'keydown']) {
+    window.addEventListener(type, unlockAudio, { capture: true, passive: true })
+  }
+}
+
 function stopAudio() {
+  audioListeners?.abort()
+  audioListeners = null
   if (currentAudio) {
     try {
       currentAudio.pause()
@@ -102,14 +136,17 @@ function stopAudio() {
   }
 }
 
-// onAudio(audio), when given, runs after the element exists and before play(), so a
-// caller (read-aloud highlighting) can attach its own listeners.
+// onAudio(audio, signal), when given, runs after the element exists and before play(),
+// so a caller (read-aloud highlighting) can attach listeners. It must pass `signal`
+// to addEventListener: the element may be reused, and stopAudio() aborts it.
 function playBlob(blob, rate = CLOUD_RATE, { onAudio } = {}) {
   return new Promise((resolve) => {
     stopAudio()
     const url = URL.createObjectURL(blob)
-    const audio = new Audio(url)
-    onAudio?.(audio)
+    const audio = unlockedAudio ?? new Audio(url)
+    if (audio === unlockedAudio) audio.src = url
+    audioListeners = new AbortController()
+    onAudio?.(audio, audioListeners.signal)
     // The cache stores the audio as generated; speed is applied at playback so a
     // rate change never needs a new request.
     audio.playbackRate = rate
@@ -362,7 +399,7 @@ export function speakWords(
   }
 
   // --- the cloud voice, followed by the audio clock
-  const startCloudAudio = (audio) => {
+  const startCloudAudio = (audio, signal) => {
     let starts = []
     let frame = null
     const hasFrames = typeof requestAnimationFrame === 'function'
@@ -381,19 +418,19 @@ export function speakWords(
       stop: () => hasFrames && cancelAnimationFrame(frame),
     }
     engine = cloudEngine
-    audio.addEventListener('loadedmetadata', sync)
-    audio.addEventListener('timeupdate', sync)
-    audio.addEventListener('playing', loop)
+    audio.addEventListener('loadedmetadata', sync, { signal })
+    audio.addEventListener('timeupdate', sync, { signal })
+    audio.addEventListener('playing', loop, { signal })
     audio.addEventListener('ended', () => {
       sync()
       finish()
-    })
+    }, { signal })
     audio.addEventListener('error', () => {
       if (done || localStarted) return
       cloudEngine.stop()
       stopAudio()
       startLocal() // the audio could not be decoded or played: use the device voice
-    })
+    }, { signal })
   }
 
   // --- the on-device voice (only when there is no cloud audio)
