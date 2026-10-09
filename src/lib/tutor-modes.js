@@ -18,9 +18,9 @@ export const MODES = {
     label: { en: 'Standard', fil: 'Karaniwan', taglish: 'Standard' },
     gloss: { en: 'No mode', fil: 'Walang mode', taglish: 'Walang mode' },
     description: {
-      en: 'The regular Teacher Gabay experience.',
-      fil: 'Ang karaniwang karanasan kay Teacher Gabay.',
-      taglish: 'Ang regular na Teacher Gabay experience.',
+      en: 'Teacher Gabay as usual.',
+      fil: 'Si Teacher Gabay gaya ng dati.',
+      taglish: 'Si Teacher Gabay as usual.',
     },
     useCase: {
       en: 'Works for any learner. You can change this any time in Profile.',
@@ -33,9 +33,9 @@ export const MODES = {
     label: { en: 'Kalma', fil: 'Kalma', taglish: 'Kalma' },
     gloss: { en: 'Calm / Focus', fil: 'Kalmado / Nakatutok', taglish: 'Calm / Focus' },
     description: {
-      en: 'Teacher Gabay gives short, calm replies: two sentences, one idea at a time.',
-      fil: 'Maikli at kalmado ang sagot ni Teacher Gabay: dalawang pangungusap, isang ideya bawat sagot.',
-      taglish: 'Maikli at calm ang replies ni Teacher Gabay: two sentences, one idea at a time.',
+      en: 'Short, calm replies. One idea at a time.',
+      fil: 'Maikli at kalmadong sagot. Isang ideya bawat sagot.',
+      taglish: 'Maikli at calm na replies. One idea at a time.',
     },
     useCase: {
       en: 'Designed to support learners who find busy screens or lots of text overwhelming, for example learners with ADHD, autism, or sensory sensitivity.',
@@ -48,9 +48,9 @@ export const MODES = {
     label: { en: 'Pakinig', fil: 'Pakinig', taglish: 'Pakinig' },
     gloss: { en: 'Listen', fil: 'Makinig', taglish: 'Listen' },
     description: {
-      en: 'Replies are written to be heard: numbers and symbols are spoken as words.',
-      fil: 'Isinulat ang mga sagot para pakinggan: binibigkas bilang salita ang mga numero at simbolo.',
-      taglish: 'Ang replies ay isinulat para pakinggan: ang numbers at symbols ay sinasabi bilang words.',
+      en: 'Replies made for listening. Numbers are said as words.',
+      fil: 'Sagot na para pakinggan. Binibigkas ang mga numero.',
+      taglish: 'Replies na para pakinggan. Sinasabi ang numbers as words.',
     },
     useCase: {
       en: 'Designed to support learners who find reading hard, for example learners with dyslexia or low vision, and learners still building reading skills.',
@@ -63,9 +63,9 @@ export const MODES = {
     label: { en: 'Hakbang', fil: 'Hakbang', taglish: 'Hakbang' },
     gloss: { en: 'Step', fil: 'Isang hakbang', taglish: 'Step' },
     description: {
-      en: 'Teacher Gabay shows one step at a time, then asks a quick question to check.',
-      fil: 'Isang hakbang lang ang ipinapakita ni Teacher Gabay, tapos may maikling tanong para tiyakin.',
-      taglish: 'One step lang ang ipinapakita ni Teacher Gabay, tapos may quick question para i-check.',
+      en: 'One step at a time, then a quick check.',
+      fil: 'Isang hakbang bawat sagot, tapos may maikling tanong.',
+      taglish: 'One step at a time, tapos may quick check.',
     },
     useCase: {
       en: 'Designed to support learners who do better with small steps and concrete examples, for example learners with dyscalculia or an intellectual disability.',

@@ -6,6 +6,7 @@ import { hasAnswered, loadStreak } from '../lib/mastery.js'
 import { loadHistory } from '../lib/history.js'
 import { LANGS } from '../lib/lang.js'
 import { MODES, MODE_IDS } from '../lib/tutor-modes.js'
+import ModeIcon from '../ui/ModeIcon.jsx'
 import { makeT } from '../lib/i18n.js'
 import './Progress.css'
 import { isLessonCompleted, isLessonInProgress } from '../lib/progress.js'
@@ -217,14 +218,19 @@ export default function Progress({ competencies, mastery, studentName = '', grad
           </div>
         )}
         <button type="button" className="profile-preference-row" onClick={() => togglePreference('mode')} aria-expanded={expandedPreference === 'mode'}>
-          <span className="profile-preference-icon is-yellow" aria-hidden="true"><ModeIcon /></span>
+          <span className="profile-preference-icon is-yellow" aria-hidden="true"><SparkIcon /></span>
           <strong>{tt('profile.mode')}</strong><span className="profile-preference-value">{MODES[mode]?.label[lang] ?? MODES.none.label[lang]}</span><ChevronIcon expanded={expandedPreference === 'mode'} />
         </button>
         {expandedPreference === 'mode' && (
-          <div className="profile-option-grid is-mode" aria-label={tt('profile.chooseMode')}>
+          <div className="profile-mode-list" role="radiogroup" aria-label={tt('profile.chooseMode')}>
             {MODE_IDS.map((id) => (
-              <button key={id} type="button" onClick={() => onMode?.(id)} aria-pressed={mode === id} className={mode === id ? 'is-active' : ''}>
-                <span>{MODES[id].label[lang]}<small>{MODES[id].gloss[lang]}</small></span>{mode === id && <CheckIcon />}
+              <button key={id} type="button" role="radio" aria-checked={mode === id} onClick={() => onMode?.(id)} className={mode === id ? 'is-active' : ''}>
+                <ModeIcon mode={id} size={44} />
+                <span className="profile-mode-copy">
+                  <strong>{MODES[id].label[lang]}<em>{MODES[id].gloss[lang]}</em></strong>
+                  <span>{MODES[id].description[lang]}</span>
+                </span>
+                <span className="profile-mode-check" aria-hidden="true">{mode === id && <CheckIcon />}</span>
               </button>
             ))}
           </div>
@@ -263,7 +269,7 @@ function CapIcon() {
   return <svg viewBox="0 0 48 38" width="34" height="28" aria-hidden="true"><path d="m3 13 21-10 21 10-21 10L3 13Z" fill="var(--gb-outline)" stroke="var(--gb-outline)" strokeWidth="2" strokeLinejoin="round" /><path d="M12 18v9c7 6 17 6 24 0v-9" fill="var(--gb-outline)" stroke="var(--gb-outline)" strokeWidth="2" strokeLinejoin="round" /><path d="M44 14v12" stroke="var(--gb-outline)" strokeWidth="2.5" strokeLinecap="round" /><circle cx="44" cy="28" r="2.5" fill="var(--gb-primary)" stroke="var(--gb-outline)" strokeWidth="1.5" /></svg>
 }
 
-function ModeIcon() {
+function SparkIcon() {
   return <svg viewBox="0 0 24 24" width="27" height="27" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3l2.2 5.6L20 11l-5.8 2.4L12 19l-2.2-5.6L4 11l5.8-2.4Z" /></svg>
 }
 

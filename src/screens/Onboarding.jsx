@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { set } from 'idb-keyval'
 import { Button, Card, Doodles } from '../ui/Primitives.jsx'
 import { Mascot } from '../ui/Mascot.jsx'
+import ModeIcon from '../ui/ModeIcon.jsx'
 import { makeT } from '../lib/i18n.js'
 import { GRADES } from '../lib/grades.js'
 import { MODES, MODE_IDS, DEFAULT_MODE } from '../lib/tutor-modes.js'
@@ -75,9 +76,10 @@ export default function Onboarding({ lang = 'taglish', onDone }) {
 
         {step === 3 && (
           <>
-            <h1 className="font-display text-3xl font-extrabold">{tt('onboarding.modeTitle')}</h1>
-            <p className="mt-2 text-sm font-bold text-ink/65">{tt('onboarding.modeHint')}</p>
-            <div className="mt-4 grid grid-cols-1 gap-3 text-left" role="radiogroup" aria-label={tt('onboarding.modeTitle')}>
+            <Mascot size={88} float className="mx-auto -mt-2" />
+            <h1 className="mt-1 font-display text-2xl font-extrabold leading-tight">{tt('onboarding.modeTitle')}</h1>
+            <p className="mt-1.5 text-sm font-bold text-ink/60">{tt('onboarding.modeHint')}</p>
+            <div className="mt-4 grid grid-cols-1 gap-2.5 text-left" role="radiogroup" aria-label={tt('onboarding.modeTitle')}>
               {MODE_IDS.map((id) => (
                 <button
                   key={id}
@@ -85,13 +87,25 @@ export default function Onboarding({ lang = 'taglish', onDone }) {
                   role="radio"
                   aria-checked={mode === id}
                   onClick={() => setMode(id)}
-                  className={`gb-btn min-h-[72px] w-full px-4 py-3 text-left ${mode === id ? 'bg-yellow' : 'bg-white'}`}
+                  className={`flex min-h-[56px] w-full items-center gap-3 rounded-[1.25rem] border-[2.5px] border-outline px-4 py-3 text-left ${mode === id ? 'bg-yellow shadow-hard-sm' : 'bg-white'}`}
                 >
-                  <span className="block font-display text-lg font-extrabold leading-tight">
-                    {MODES[id].label[lang]} <span className="text-sm font-bold text-ink/60">· {MODES[id].gloss[lang]}</span>
+                  <ModeIcon mode={id} />
+                  <span className="min-w-0 flex-1">
+                    <span className="flex flex-wrap items-baseline gap-x-2">
+                      <span className="font-display text-lg font-extrabold leading-tight">{MODES[id].label[lang]}</span>
+                      <span className="text-sm font-bold text-ink/60">{MODES[id].gloss[lang]}</span>
+                    </span>
+                    <span className="mt-1 block text-sm font-semibold leading-snug text-ink/80">{MODES[id].description[lang]}</span>
+                    {id !== 'none' && mode === id && (
+                      <span className="mt-1.5 block text-xs font-medium leading-snug text-ink/60">{MODES[id].useCase[lang]}</span>
+                    )}
                   </span>
-                  <span className="mt-1 block text-sm font-bold leading-snug text-ink/80">{MODES[id].description[lang]}</span>
-                  <span className="mt-1 block text-xs font-semibold leading-snug text-ink/65">{MODES[id].useCase[lang]}</span>
+                  <span
+                    aria-hidden="true"
+                    className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-[2.5px] border-outline ${mode === id ? 'bg-outline' : 'bg-white'}`}
+                  >
+                    {mode === id && <span className="h-2 w-2 rounded-full bg-yellow" />}
+                  </span>
                 </button>
               ))}
             </div>
