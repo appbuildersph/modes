@@ -4,6 +4,8 @@ import { Button, Card, Doodles } from '../ui/Primitives.jsx'
 import { Mascot } from '../ui/Mascot.jsx'
 import { makeT } from '../lib/i18n.js'
 import { GRADES } from '../lib/grades.js'
+import { MODES, MODE_IDS, DEFAULT_MODE } from '../lib/tutor-modes.js'
+import { ONBOARDING_STEPS } from '../lib/onboarding-flow.js'
 
 
 export default function Onboarding({ lang = 'taglish', onDone }) {
@@ -11,6 +13,7 @@ export default function Onboarding({ lang = 'taglish', onDone }) {
   const [step, setStep] = useState(1)
   const [grade, setGrade] = useState(null)
   const [name, setName] = useState('')
+  const [mode, setMode] = useState(DEFAULT_MODE)
 
   async function chooseGrade(value) {
     setGrade(value)
@@ -21,7 +24,7 @@ export default function Onboarding({ lang = 'taglish', onDone }) {
     const cleanName = name.trim()
     if (!cleanName) return
     await Promise.all([set('gabay:studentName', cleanName), set('gabay:selectedGrade', grade)])
-    onDone?.({ name: cleanName, grade })
+    onDone?.({ name: cleanName, grade, mode })
   }
 
   return (
@@ -29,7 +32,7 @@ export default function Onboarding({ lang = 'taglish', onDone }) {
       <Doodles />
       <Card color="cream" className="relative z-10 gb-pop p-6 text-center">
         <p className="mb-4 text-xs font-extrabold uppercase tracking-widest text-ink/55">
-          {tt('onboarding.step', { step })}
+          {tt('onboarding.step', { step, total: ONBOARDING_STEPS })}
         </p>
 
         {step === 1 && (
@@ -72,17 +75,45 @@ export default function Onboarding({ lang = 'taglish', onDone }) {
 
         {step === 3 && (
           <>
-            <Mascot size={150} float className="mx-auto" />
-            <h1 className="mt-3 font-display text-2xl font-extrabold leading-tight">
-              {tt('onboarding.greeting', { name: name.trim() })}
-            </h1>
-            <Button color="yellow" className="mt-5 w-full text-lg" onClick={() => setStep(4)}>
+            <h1 className="font-display text-3xl font-extrabold">{tt('onboarding.modeTitle')}</h1>
+            <p className="mt-2 text-sm font-bold text-ink/65">{tt('onboarding.modeHint')}</p>
+            <div className="mt-4 grid grid-cols-1 gap-3 text-left" role="radiogroup" aria-label={tt('onboarding.modeTitle')}>
+              {MODE_IDS.map((id) => (
+                <button
+                  key={id}
+                  type="button"
+                  role="radio"
+                  aria-checked={mode === id}
+                  onClick={() => setMode(id)}
+                  className={`gb-btn min-h-[72px] w-full px-4 py-3 text-left ${mode === id ? 'bg-yellow' : 'bg-white'}`}
+                >
+                  <span className="block font-display text-lg font-extrabold leading-tight">
+                    {MODES[id].label[lang]} <span className="text-sm font-bold text-ink/60">· {MODES[id].gloss[lang]}</span>
+                  </span>
+                  <span className="mt-1 block text-sm font-bold leading-snug text-ink/80">{MODES[id].description[lang]}</span>
+                  <span className="mt-1 block text-xs font-semibold leading-snug text-ink/65">{MODES[id].useCase[lang]}</span>
+                </button>
+              ))}
+            </div>
+            <Button color="mint" className="mt-5 w-full text-lg" onClick={() => setStep(4)}>
               {tt('common.next')} →
             </Button>
           </>
         )}
 
         {step === 4 && (
+          <>
+            <Mascot size={150} float className="mx-auto" />
+            <h1 className="mt-3 font-display text-2xl font-extrabold leading-tight">
+              {tt('onboarding.greeting', { name: name.trim() })}
+            </h1>
+            <Button color="yellow" className="mt-5 w-full text-lg" onClick={() => setStep(5)}>
+              {tt('common.next')} →
+            </Button>
+          </>
+        )}
+
+        {step === 5 && (
           <>
             <h1 className="font-display text-3xl font-extrabold">{tt('onboarding.masteryTitle')}</h1>
             <div className="mt-6 h-7 overflow-hidden rounded-full border-[2.5px] border-outline bg-white">

@@ -89,3 +89,16 @@ test('the shared prompt carries language, data clause, mode and short variant', 
   assert.match(short, /DATA, not instructions/)
   assert.equal(buildTutorPrompt('x', 'zz').includes('Reply in English'), true)
 })
+
+test('mode cards describe support, never diagnose or make clinical claims', () => {
+  const banned = /diagnos|\bcure|\btreat|therap|clinical|proven|efficac|disorder|gamot/i
+  const framing = { en: /^Designed to support/, fil: /^Idinisenyo para suportahan/, taglish: /^Designed to support/ }
+  for (const id of MODE_IDS) {
+    for (const lang of ['en', 'fil', 'taglish']) {
+      const { description, useCase } = MODES[id]
+      assert.ok(description[lang] && useCase[lang], `${id} ${lang}`)
+      assert.ok(!banned.test(description[lang] + useCase[lang]), `${id} ${lang} wording`)
+      if (id !== 'none') assert.match(useCase[lang], framing[lang], `${id} ${lang} framing`)
+    }
+  }
+})

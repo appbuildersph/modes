@@ -8,26 +8,70 @@ import { stripMarkdown } from './strip-markdown.js'
 export const MODE_IDS = ['none', 'kalma', 'pakinig', 'hakbang']
 export const DEFAULT_MODE = 'none'
 
+// Wording rule (docs/TUTOR_MODES.md section 2): modes are "designed to support"
+// learners and never diagnose or make clinical claims. `description` states only
+// what changes today (the tutor's replies); update it when the screen changes ship.
+// TODO: Filipino reviewer — fil and taglish descriptions and use cases.
 export const MODES = {
   none: {
     id: 'none',
-    label: { en: 'No mode', fil: 'Walang mode', taglish: 'Walang mode' },
-    gloss: { en: 'Standard tutor', fil: 'Karaniwang tutor', taglish: 'Karaniwang tutor' },
+    label: { en: 'Standard', fil: 'Karaniwan', taglish: 'Standard' },
+    gloss: { en: 'No mode', fil: 'Walang mode', taglish: 'Walang mode' },
+    description: {
+      en: 'The regular Teacher Gabay experience.',
+      fil: 'Ang karaniwang karanasan kay Teacher Gabay.',
+      taglish: 'Ang regular na Teacher Gabay experience.',
+    },
+    useCase: {
+      en: 'Works for any learner. You can change this any time in Profile.',
+      fil: 'Para sa kahit sinong mag-aaral. Mababago mo ito anumang oras sa Profile.',
+      taglish: 'Para sa kahit sinong learner. Mababago mo ito anytime sa Profile.',
+    },
   },
   kalma: {
     id: 'kalma',
     label: { en: 'Kalma', fil: 'Kalma', taglish: 'Kalma' },
-    gloss: { en: 'Calm and focused', fil: 'Kalmado at nakatutok', taglish: 'Calm at focused' },
+    gloss: { en: 'Calm / Focus', fil: 'Kalmado / Nakatutok', taglish: 'Calm / Focus' },
+    description: {
+      en: 'Teacher Gabay gives short, calm replies: two sentences, one idea at a time.',
+      fil: 'Maikli at kalmado ang sagot ni Teacher Gabay: dalawang pangungusap, isang ideya bawat sagot.',
+      taglish: 'Maikli at calm ang replies ni Teacher Gabay: two sentences, one idea at a time.',
+    },
+    useCase: {
+      en: 'Designed to support learners who find busy screens or lots of text overwhelming, for example learners with ADHD, autism, or sensory sensitivity.',
+      fil: 'Idinisenyo para suportahan ang mga mag-aaral na nahihirapan sa magulong screen o maraming teksto, halimbawa ang may ADHD, autism, o sensory sensitivity.',
+      taglish: 'Designed to support ang mga learner na nao-overwhelm sa busy screens o maraming text, halimbawa ang may ADHD, autism, o sensory sensitivity.',
+    },
   },
   pakinig: {
     id: 'pakinig',
     label: { en: 'Pakinig', fil: 'Pakinig', taglish: 'Pakinig' },
-    gloss: { en: 'Listen', fil: 'Makinig', taglish: 'Makinig' },
+    gloss: { en: 'Listen', fil: 'Makinig', taglish: 'Listen' },
+    description: {
+      en: 'Replies are written to be heard: numbers and symbols are spoken as words.',
+      fil: 'Isinulat ang mga sagot para pakinggan: binibigkas bilang salita ang mga numero at simbolo.',
+      taglish: 'Ang replies ay isinulat para pakinggan: ang numbers at symbols ay sinasabi bilang words.',
+    },
+    useCase: {
+      en: 'Designed to support learners who find reading hard, for example learners with dyslexia or low vision, and learners still building reading skills.',
+      fil: 'Idinisenyo para suportahan ang mga mag-aaral na nahihirapang magbasa, halimbawa ang may dyslexia o mahinang paningin, at ang mga nag-aaral pa lang magbasa.',
+      taglish: 'Designed to support ang mga learner na nahihirapang magbasa, halimbawa ang may dyslexia o low vision, at ang mga nag-aaral pa lang magbasa.',
+    },
   },
   hakbang: {
     id: 'hakbang',
     label: { en: 'Hakbang', fil: 'Hakbang', taglish: 'Hakbang' },
-    gloss: { en: 'One step at a time', fil: 'Isang hakbang bawat oras', taglish: 'One step at a time' },
+    gloss: { en: 'Step', fil: 'Isang hakbang', taglish: 'Step' },
+    description: {
+      en: 'Teacher Gabay shows one step at a time, then asks a quick question to check.',
+      fil: 'Isang hakbang lang ang ipinapakita ni Teacher Gabay, tapos may maikling tanong para tiyakin.',
+      taglish: 'One step lang ang ipinapakita ni Teacher Gabay, tapos may quick question para i-check.',
+    },
+    useCase: {
+      en: 'Designed to support learners who do better with small steps and concrete examples, for example learners with dyscalculia or an intellectual disability.',
+      fil: 'Idinisenyo para suportahan ang mga mag-aaral na mas natututo sa maliliit na hakbang at konkretong halimbawa, halimbawa ang may dyscalculia o intellectual disability.',
+      taglish: 'Designed to support ang mga learner na mas natututo sa small steps at concrete examples, halimbawa ang may dyscalculia o intellectual disability.',
+    },
   },
 }
 

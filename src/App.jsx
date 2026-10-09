@@ -13,6 +13,7 @@ import { initVoices } from './lib/speech.js'
 import { loadLang, saveLang, DEFAULT_LANG } from './lib/lang.js'
 import { loadMode, saveMode } from './lib/mode-pref.js'
 import { DEFAULT_MODE } from './lib/tutor-modes.js'
+import { screenAfterSplash } from './lib/onboarding-flow.js'
 import { t } from './lib/i18n.js'
 import Splash from './screens/Splash.jsx'
 import Onboarding from './screens/Onboarding.jsx'
@@ -204,7 +205,7 @@ export default function App() {
             primeAudio()
             startBgm()
             const name = await get('gabay:studentName')
-            setScreen(name ? 'home' : 'onboarding')
+            setScreen(screenAfterSplash(name))
           }}
         />
       )
@@ -213,8 +214,9 @@ export default function App() {
       return (
         <Onboarding
           lang={lang}
-          onDone={async ({ name, grade: selectedGrade }) => {
+          onDone={async ({ name, grade: selectedGrade, mode: selectedMode }) => {
             setStudentName(name)
+            changeMode(selectedMode ?? DEFAULT_MODE)
             setGrade(selectedGrade)
             const [nextContent] = await Promise.all([loadContentByGrade(selectedGrade), refreshLearning(selectedGrade)])
             setContent(nextContent)

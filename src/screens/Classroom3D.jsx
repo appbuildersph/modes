@@ -17,6 +17,7 @@ import { makeT, localize, localizeChoice } from '../lib/i18n.js'
 import { speechLang } from '../lib/lang.js'
 import { sfx, primeAudio } from '../lib/sound.js'
 import { ChoiceVisual, QuestionVisual } from '../ui/LearningVisual.jsx'
+import ThinkingIndicator from '../ui/ThinkingIndicator.jsx'
 
 const SOURCE_KEY = {
   [SOURCE.NANO]: 'class.source.nano',
@@ -474,6 +475,7 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
               listening={listening}
               transcribing={transcribing}
               thinking={thinking}
+              mode={mode}
               reply={reply}
               onClose={closeAsk}
             />
@@ -590,6 +592,7 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
                   listening={listening}
                   transcribing={transcribing}
                   thinking={thinking}
+                  mode={mode}
                   reply={reply}
                   onClose={closeAsk}
                   replyClass="bg-white"
@@ -606,7 +609,7 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
 
 // Teacher Gabay ask form. Rendered inline under an open question, or inside the
 // bottom sheet the mascot opens while the learner is walking around.
-function AskPanel({ tt, lang, online, question, setQuestion, askGabay, toggleMic, listening, transcribing, thinking, reply, onClose, replyClass = 'bg-cream' }) {
+function AskPanel({ tt, lang, online, question, setQuestion, askGabay, toggleMic, listening, transcribing, thinking, mode, reply, onClose, replyClass = 'bg-cream' }) {
   return (
     <>
       <div className="mb-2 flex items-center justify-between gap-2">
@@ -644,6 +647,7 @@ function AskPanel({ tt, lang, online, question, setQuestion, askGabay, toggleMic
 
       {transcribing && <p className="mt-2 text-sm font-bold text-ink/60">{tt('class.listening')}</p>}
       {!online && <p className="mt-2 text-sm font-bold text-ink/60">{tt('class.offlineNote')}</p>}
+      {thinking && <ThinkingIndicator text={tt('class.thinking')} mode={mode} />}
 
       {reply && (
         <div className={`mt-3 rounded-card border-[2.5px] border-outline p-3 ${replyClass}`}>

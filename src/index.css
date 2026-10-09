@@ -663,3 +663,35 @@ textarea:focus-visible {
   outline: 3px solid var(--gb-focus);
   outline-offset: 3px;
 }
+
+/* Teacher Gabay thinking indicator (ThinkingIndicator.jsx) */
+@keyframes gb-think-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+@keyframes gb-think-dot {
+  0%, 80%, 100% { opacity: 0.25; transform: translateY(0); }
+  40% { opacity: 1; transform: translateY(-3px); }
+}
+@keyframes gb-think-fade {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+.gb-thinking-nova { animation: gb-think-bob 1.2s ease-in-out infinite; }
+.gb-thinking-dots { display: inline-flex; gap: 0.3rem; }
+.gb-thinking-dots i {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 9999px;
+  background: var(--gb-secondary-dark, currentColor);
+  animation: gb-think-dot 1.2s ease-in-out infinite;
+}
+.gb-thinking-dots i:nth-child(2) { animation-delay: 0.15s; }
+.gb-thinking-dots i:nth-child(3) { animation-delay: 0.3s; }
+.gb-thinking.is-calm .gb-thinking-nova { animation: none; }
+.gb-thinking.is-calm .gb-thinking-dots i { animation: gb-think-fade 2s ease-in-out infinite; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .gb-thinking-nova { animation: none; }
+  .gb-thinking-dots i,
+  .gb-thinking.is-calm .gb-thinking-dots i { animation: none; opacity: 0.8; }
+}

@@ -18,6 +18,7 @@ import { lessonTeaching } from '../lib/lesson-teaching.js'
 import { sfx } from '../lib/sound.js'
 import { stripMarkdown } from '../lib/strip-markdown.js'
 import './Classroom.css'
+import ThinkingIndicator from '../ui/ThinkingIndicator.jsx'
 import {
   createRecognizer,
   isRecognitionSupported,
@@ -732,6 +733,7 @@ export default function Classroom({ competency, questions, questionSource = 'bun
                 </div>
                 {transcribing && <p className="mt-2 text-sm font-bold text-ink/60">{tt('class.listening')}</p>}
                 {!online && <p className="mt-2 text-sm text-ink/60">{tt('class.offlineNote')}</p>}
+                {thinking && <ThinkingIndicator text={tt('class.thinking')} mode={mode} />}
                 {reply && (
                   <div className="mt-3 rounded-card border-[2.5px] border-outline bg-cream p-3">
                     <p className="mb-1 text-xs font-bold text-ink/60">

@@ -61,7 +61,10 @@ export const STRINGS = {
   'questions.generatingSub4': { en: 'Almost ready…', fil: 'Halos tapos na…', taglish: 'Konti na lang…' },
 
   // ---- Onboarding / grade ----
-  'onboarding.step': { en: 'Step {step} of 4', fil: 'Hakbang {step} sa 4', taglish: 'Step {step} of 4' },
+  'onboarding.step': { en: 'Step {step} of {total}', fil: 'Hakbang {step} sa {total}', taglish: 'Step {step} of {total}' },
+  'onboarding.modeTitle': { en: 'How should Teacher Gabay help?', fil: 'Paano ka tutulungan ni Teacher Gabay?', taglish: 'Paano ka tutulungan ni Teacher Gabay?' },
+  'onboarding.modeHint': { en: 'An adult can help choose. Anyone can pick any mode, and you can change it later in Profile.', fil: 'Maaaring tumulong ang nakatatanda sa pagpili. Kahit sino ay puwedeng pumili ng kahit anong mode, at mababago ito sa Profile.', taglish: 'Pwedeng tumulong ang adult sa pagpili. Kahit sino pwedeng pumili ng kahit anong mode, at mababago ito later sa Profile.' },
+  'class.thinking': { en: 'Teacher Gabay is thinking...', fil: 'Nag-iisip si Teacher Gabay...', taglish: 'Nag-iisip si Teacher Gabay...' },
   'onboarding.grade': { en: 'What grade are you in?', fil: 'Anong grade ka?', taglish: 'Anong grade ka?' },
   'onboarding.gradeLabel': { en: 'Grade {grade}', fil: 'Grade {grade}', taglish: 'Grade {grade}' },
   'onboarding.name': { en: 'What is your name?', fil: 'Anong pangalan mo?', taglish: 'Anong pangalan mo?' },
