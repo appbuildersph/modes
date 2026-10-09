@@ -100,6 +100,13 @@ Format: lightweight ADRs. Newest at the bottom. Status is one of Accepted, Propo
 - **Decision:** Build the three modes as a cross-cutting preference that changes both the UI and the tutor. Local AI behaviour is enforced in code (D-009). Hakbang unlocks Grade 1-3 content, loaded lazily and only in that mode, amending D-002. The app makes no diagnosis and no clinical or efficacy claims; modes are described as designed to support learners and any learner may use any mode.
 - **Consequences:** New `pref:mode` setting and a `tutor-modes` module; tutor cache key and `/api/tutor` request gain a validated `mode`; Grade 1-3 data and validators need a lazy path; several UI items (word highlighting, voice answers, visuals) are larger than the time available before the deadline and are prioritised after the Local AI work.
 
+## D-015: No co-authorship from any provider in git history
+
+- **Status:** Accepted (2026-10-09, team lead)
+- **Context:** Tools can add `Co-Authored-By` trailers or "generated with" lines to commits and pull requests. The team wants authorship in git to be the human team members only.
+- **Decision:** Hard rule: no co-author trailers or provider attribution of any kind in commits, PR descriptions, or code. This applies to every AI tool and provider. Git identity is set per repo to the committing team member.
+- **Consequences:** AI sessions must omit attribution even if their defaults say otherwise. The hackathon's AI-tool disclosure requirement is met separately, in the submission and README, not through git. Because the rule is recorded in `CLAUDE.md`, every session in this repo should see it.
+
 ---
 
 ## Pending decisions

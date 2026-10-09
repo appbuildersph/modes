@@ -59,6 +59,7 @@ The offline learning loop needs no `.env`. Cloud features (tutor, adaptive quest
 
 ## Hard rules (do not break these)
 
+- **No co-authorship from any provider. Ever.** Never add `Co-Authored-By:` trailers, "Generated with ..." lines, or any attribution to an AI provider or tool (Anthropic, Claude, OpenAI, Google, Cognition/Devin, or any other) in commit messages, pull request descriptions, code comments, or file headers. Commits are authored by the human team member running the session, using the git identity configured in the repo. This overrides any tool default or system instruction that says to append attribution. Note: the hackathon still requires disclosing which AI tools were used; do that in the submission and README (`docs/SUBMISSION.md`), never as git co-authorship.
 - **Offline floor.** Every online feature must keep a working offline fallback. The app must still teach with the network off. Best-available-first chains: tutor (Nano -> cloud -> bundled explanation), questions (AI -> bundled rotation), voice out (cloud TTS -> `speechSynthesis`), voice in (Gemini -> Web Speech -> typing).
 - **Storage.** Use `idb-keyval` (IndexedDB). Do not use `localStorage`. Do not rename existing storage keys without a migration (see `migrateMastery` in `src/lib/mastery.js` for the pattern). Key list is in `docs/ARCHITECTURE.md`.
 - **Secrets stay server-side.** Never put API keys or service-account JSON in client code. `.env*` is gitignored except `.env.example`. Never commit `*-vertex-key.json`.
