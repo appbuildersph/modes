@@ -1,0 +1,37 @@
+{
+    "name": "gabay",
+    "private": true,
+    "version": "0.1.0",
+    "type": "module",
+    "description": "Offline-first PWA study companion for Grade 4-6 Filipino math learners (DepEd MATATAG).",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "build:sites": "VITE_QUESTION_API_BASE=https://gabay-sage.vercel.app npm run build && node scripts/prepare-sites-build.mjs",
+        "preview": "vite preview",
+        "test": "node --test",
+        "icons": "node scripts/generate-icons.mjs",
+        "build:curriculum": "node scripts/import-matatag-package.js",
+        "classify:difficulty": "node scripts/reclassify-difficulty.js",
+        "gen:content": "node --env-file=.env scripts/generate-content.js",
+        "repair:content": "node scripts/repair-question-quality.js"
+    },
+    "dependencies": {
+        "@google-cloud/text-to-speech": "^6.4.1",
+        "@google/genai": "^2.10.0",
+        "idb-keyval": "^6.2.1",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "three": "^0.171.0"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-react": "^4.3.4",
+        "autoprefixer": "^10.4.20",
+        "playwright": "^1.61.1",
+        "postcss": "^8.4.49",
+        "sharp": "^0.35.2",
+        "tailwindcss": "^3.4.17",
+        "vite": "^6.0.7",
+        "vite-plugin-pwa": "^0.21.1"
+    }
+}

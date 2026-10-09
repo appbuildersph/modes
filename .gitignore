@@ -1,0 +1,36 @@
+node_modules
+dist
+dist-ssr
+*.local
+.DS_Store
+.env
+.env.*
+!.env.example
+dev-dist
+
+# Vertex/GCP service-account key — NEVER commit (live credential)
+gabay-vertex-key.json
+*-vertex-key.json
+*-sa-key.json
+
+# Generated content for human review — not merged source
+src/content.generated.json
+# Pasted screenshots / scratch images
+image.png
+
+# Dev tooling / scratch — not part of the app
+.vscode/
+.tmp-chrome-profile*/
+shots/
+*.log
+test-results/
+playwright-report/
+memory/
+
+.vercel
+.env*
+.gstack/
+
+# Local hosting config for OpenAI Sites (machine-specific)
+.openai/
+!.env.example

@@ -1,0 +1,16 @@
+# Files/dirs to exclude from Vercel deploy uploads (not app source).
+node_modules
+dist
+dev-dist
+.git
+.tmp-chrome-profile*
+shots
+test-results
+playwright-report
+memory
+*.log
+gabay-vertex-key.json
+*-vertex-key.json
+image.png
+src/content.generated.json
+.tmp-*
