@@ -1,0 +1,583 @@
+.lesson-brief-page {
+  width: 100%;
+  min-height: 100dvh;
+  padding: 0 1rem 5rem !important;
+  overflow-x: hidden;
+  overflow-y: visible;
+  background: var(--gb-background);
+  color: var(--gb-ink);
+}
+.lesson-brief-page .lesson-brief-doodles > div > svg:first-child { display: none; }
+
+.lesson-brief-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  min-height: 4rem;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 -0.2rem 0.75rem;
+  padding: 0.55rem 0.2rem;
+  background: var(--gb-background);
+}
+.lesson-brief-header-back {
+  min-height: 2.35rem;
+  padding: 0.35rem 0.85rem;
+  border: 2px solid var(--gb-outline);
+  border-radius: 0.8rem;
+  background: #fffdf8;
+  box-shadow: 0 3px 0 rgb(28 20 16 / 58%);
+  font-size: 0.85rem;
+  font-weight: 900;
+}
+.lesson-brief-header-meta,.lesson-brief-brand { display: flex; align-items: center; }
+.lesson-brief-header-meta { gap: 0.75rem; }
+.lesson-brief-header-meta > span:first-child {
+  min-height: 2.2rem;
+  gap: 0.4rem;
+  padding: 0.3rem 0.75rem;
+  border-width: 2px;
+  box-shadow: 0 3px 0 rgb(28 20 16 / 50%);
+}
+.lesson-brief-header-meta > span:first-child > span:first-child { width: 0.6rem; height: 0.6rem; }
+.lesson-brief-header-meta > span:first-child > span:last-child { font-size: 0.75rem; }
+.lesson-brief-brand {
+  gap: 0.35rem;
+  font-family: "Baloo 2", system-ui, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+.lesson-brief-brand img { width: 1.8rem !important; height: 1.8rem !important; }
+
+.lesson-brief-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding-bottom: 3.75rem;
+  overflow: visible;
+}
+.lesson-brief-carousel {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) 3.55rem;
+  width: 100%;
+  height: 28rem;
+  flex: 0 0 28rem;
+  overflow: hidden;
+  border: 2.5px solid var(--gb-outline);
+  border-radius: 1.25rem;
+  background: #fffaf0;
+  box-shadow: 5px 6px 0 var(--gb-outline);
+}
+.lesson-brief-slide {
+  position: relative;
+  min-height: 0;
+  padding: 1.15rem 1.2rem 1.45rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+  background:
+    linear-gradient(30deg, rgb(247 210 106 / 6%) 12%, transparent 12.5%, transparent 87%, rgb(37 118 91 / 4%) 87.5%),
+    #fffaf0;
+  background-size: 28px 48px;
+}
+.lesson-brief-slide::-webkit-scrollbar { width: 0.35rem; }
+.lesson-brief-slide::-webkit-scrollbar-track { background: transparent; }
+.lesson-brief-slide::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgb(37 118 91 / 32%);
+}
+.lesson-brief-carousel.is-step-2,
+.lesson-brief-carousel.is-step-2 .lesson-brief-slide,
+.lesson-brief-carousel.is-step-2 .lesson-brief-nav { background-color: #f4a17d; }
+.lesson-brief-slide.is-forward { animation: brief-forward 240ms ease both; }
+.lesson-brief-slide.is-backward { animation: brief-back 240ms ease both; }
+.lesson-brief-section { position: relative; z-index: 1; display: flex; height: 100%; flex-direction: column; }
+.lesson-brief-section-title {
+  margin: 0 0 0.65rem;
+  color: var(--gb-secondary-dark);
+  font-family: "Baloo 2", system-ui, sans-serif;
+  font-size: 1.45rem;
+  font-weight: 900;
+  line-height: 1.1;
+}
+.lesson-brief-domain {
+  width: fit-content;
+  margin-bottom: 0.45rem;
+  padding-left: 0.5rem;
+  border-left: 4px solid var(--gb-primary);
+  color: rgb(28 20 16 / 66%);
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+.lesson-brief-title {
+  max-width: 90%;
+  color: var(--gb-secondary-dark);
+  font-family: "Baloo 2", system-ui, sans-serif;
+  font-size: 1.8rem;
+  font-weight: 900;
+  line-height: 1.02;
+}
+.lesson-brief-explanation {
+  margin-top: 0.55rem;
+  color: rgb(28 20 16 / 78%);
+  font-size: 0.78rem;
+  font-weight: 650;
+  line-height: 1.42;
+}
+.lesson-brief-standard {
+  display: grid;
+  grid-template-columns: 2.15rem minmax(0, 1fr);
+  gap: 0.65rem;
+  align-items: start;
+  margin-top: 0.7rem;
+  padding: 0.65rem 0.7rem;
+  border: 2px solid var(--gb-secondary-dark);
+  border-radius: 0.9rem;
+  background: rgb(255 255 255 / 84%);
+  box-shadow: 0 3px 0 rgb(28 20 16 / 42%), inset 4px 0 0 rgb(143 217 182 / 72%);
+}
+.lesson-brief-check {
+  display: grid;
+  width: 1.95rem;
+  height: 1.95rem;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--gb-secondary-dark);
+  color: white;
+  font-size: 1rem;
+  font-weight: 900;
+}
+.lesson-brief-standard p:first-child { color: var(--gb-secondary-dark); font-size: 0.78rem; }
+.lesson-brief-standard p:last-child { margin-top: 0.1rem; color: rgb(28 20 16 / 64%); font-size: 0.65rem; line-height: 1.35; }
+
+.lesson-brief-task-list {
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 0.75rem;
+}
+.lesson-brief-task-list li {
+  display: grid;
+  grid-template-columns: 2.35rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: center;
+  min-height: 4rem;
+  padding: 0.7rem 0.8rem;
+  border: 1.5px solid rgb(255 255 255 / 70%);
+  border-radius: 1rem;
+  background: rgb(255 250 240 / 62%);
+  box-shadow: 0 3px 0 rgb(170 83 49 / 26%);
+  color: var(--gb-ink);
+  font-size: 0.86rem;
+  font-weight: 850;
+  line-height: 1.3;
+}
+.lesson-brief-task-number {
+  display: grid;
+  width: 2.2rem;
+  height: 2.2rem;
+  place-items: center;
+  border: 2px solid var(--gb-outline);
+  border-radius: 50%;
+  background: #f7d26a;
+  box-shadow: 0 2px 0 var(--gb-outline);
+  font-size: 1rem;
+  font-weight: 900;
+}
+.lesson-brief-illustration {
+  position: absolute;
+  right: 0.4rem;
+  bottom: 0.25rem;
+  width: 4rem;
+  height: 4rem;
+  border: 2px solid var(--gb-secondary-dark);
+  border-radius: 0.45rem;
+  opacity: 0.08;
+  pointer-events: none;
+  transform: rotate(6deg);
+}
+.lesson-brief-slide-2 .lesson-brief-illustration { display: none; }
+
+.lesson-brief-nav {
+  display: grid;
+  grid-template-columns: 5.25rem 1fr 5.25rem;
+  gap: 0.55rem;
+  align-items: center;
+  padding: 0.6rem 0.75rem;
+  border-top: 2px solid rgb(28 20 16 / 22%);
+  background: #fffaf0;
+}
+.lesson-brief-nav-button {
+  display: inline-flex;
+  width: 5.25rem;
+  min-height: 2.35rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  border: 2px solid var(--gb-outline);
+  border-radius: 0.75rem;
+  background: #fffdf8;
+  font-size: 0.76rem;
+  font-weight: 900;
+}
+.lesson-brief-nav-button.is-next {
+  background: #f7d26a;
+  box-shadow: 0 3px 0 var(--gb-outline);
+}
+.lesson-brief-nav-button:disabled { cursor: not-allowed; box-shadow: none; opacity: 0.34; }
+.lesson-brief-dots { display: flex; gap: 0.48rem; align-items: center; justify-content: center; }
+.lesson-brief-dots button {
+  width: 0.62rem;
+  height: 0.62rem;
+  border: 1.5px solid var(--gb-outline);
+  border-radius: 50%;
+  background: #fff;
+}
+.lesson-brief-dots button.is-active { background: #f7d26a; transform: scale(1.2); }
+.lesson-brief-dots button.is-locked { opacity: 0.34; }
+
+.lesson-brief-progress-summary {
+  padding: 0.9rem;
+  border: 2.5px solid var(--gb-outline);
+  border-radius: 1.15rem;
+  background: #fffaf0;
+  box-shadow: 5px 6px 0 var(--gb-outline);
+}
+.lesson-brief-progress-summary > h2 {
+  margin-bottom: 0.7rem;
+  color: var(--gb-secondary-dark);
+  font-family: "Baloo 2", system-ui, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+.lesson-brief-progress-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+.lesson-brief-progress-metric {
+  display: grid;
+  min-width: 0;
+  min-height: 4.65rem;
+  grid-template-columns: 2.2rem minmax(0, 1fr);
+  gap: 0.55rem;
+  align-items: center;
+  padding: 0.65rem;
+  border: 2px solid var(--gb-outline);
+  border-radius: 0.95rem;
+  box-shadow: 0 4px 0 var(--gb-outline);
+}
+.lesson-brief-progress-metric.is-mint { background: #9eddbf; }
+.lesson-brief-progress-metric.is-yellow { background: #f7d26a; }
+.lesson-brief-progress-metric.is-blue { background: #acd8ef; }
+.lesson-brief-progress-metric.is-pink { background: #efb5c3; }
+.lesson-brief-progress-icon {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 1.5px solid var(--gb-outline);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 58%);
+  color: var(--gb-secondary-dark);
+  font-size: 0.75rem;
+  font-weight: 900;
+}
+.lesson-brief-progress-copy { display: flex; min-width: 0; flex-direction: column; line-height: 1.08; }
+.lesson-brief-progress-copy strong {
+  overflow-wrap: anywhere;
+  color: var(--gb-secondary-dark);
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+.lesson-brief-progress-copy small { margin-top: 0.2rem; color: rgb(28 20 16 / 68%); font-size: 0.63rem; font-weight: 800; }
+
+.lesson-brief-entry { display: grid; gap: 0.75rem; }
+.lesson-brief-page .lesson-brief-tutor {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.7rem;
+  border: 2.5px solid var(--gb-outline);
+  border-radius: 1.15rem;
+  background: #fffaf0;
+  box-shadow: 5px 6px 0 var(--gb-outline);
+}
+.lesson-brief-page .lesson-brief-tutor-mascot { display: grid; width: 4rem; place-items: center; }
+.lesson-brief-page .lesson-brief-tutor-mascot img { width: 3.8rem !important; height: 3.8rem !important; object-fit: contain; }
+.lesson-brief-page .lesson-brief-tutor-message { min-width: 0; }
+.lesson-brief-page .lesson-brief-tutor-message .gb-card {
+  min-height: 4rem;
+  padding: 0.8rem 0.9rem;
+  border-width: 2px;
+  border-radius: 0.95rem;
+  box-shadow: 0 3px 0 rgb(28 20 16 / 48%);
+}
+.lesson-brief-page .lesson-brief-tutor-message .gb-card > div:first-child {
+  color: var(--gb-ink);
+  font-size: 0.8rem;
+  font-weight: 750;
+  line-height: 1.4;
+}
+.lesson-brief-page .lesson-brief-tutor-message .gb-card > div:last-child {
+  top: 50%;
+  bottom: auto;
+  left: -0.55rem;
+  width: 1rem;
+  height: 1rem;
+  border-right: 0;
+  border-bottom: 0;
+  border-left: 2px solid var(--gb-outline);
+  transform: translateY(-50%) rotate(45deg);
+}
+.lesson-brief-mode-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+.lesson-brief-mode-button {
+  width: 100%;
+  min-height: 3.55rem;
+  border: 2.5px solid var(--gb-outline);
+  border-radius: 1.15rem;
+  box-shadow: 0 5px 0 var(--gb-outline);
+  color: var(--gb-ink);
+  font-size: 0.95rem;
+  font-weight: 900;
+}
+.lesson-brief-mode-button:first-child { background: #9eddbf !important; }
+.lesson-brief-mode-button:last-child { background: #acd8ef !important; }
+.lesson-brief-entry.is-locked .lesson-brief-mode-button {
+  filter: grayscale(0.28);
+  box-shadow: 0 4px 0 #65706b;
+  opacity: 0.48;
+}
+.lesson-brief-entry.is-unlocked .lesson-brief-mode-button { animation: brief-unlock 380ms cubic-bezier(.2,.8,.2,1) both; }
+.lesson-brief-lock {
+  position: relative;
+  display: inline-block;
+  width: 0.65rem;
+  height: 0.55rem;
+  margin-right: 0.35rem;
+  border: 1.5px solid currentColor;
+  border-radius: 0.1rem;
+}
+.lesson-brief-lock::before {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  width: 0.42rem;
+  height: 0.34rem;
+  border: 1.5px solid currentColor;
+  border-bottom: 0;
+  border-radius: 0.35rem 0.35rem 0 0;
+  content: "";
+  transform: translateX(-50%);
+}
+.lesson-brief-page-sound {
+  right: max(0.75rem, calc((100vw - 430px) / 2 + 0.75rem)) !important;
+  bottom: calc(76px + max(0.35rem, env(safe-area-inset-bottom))) !important;
+}
+
+@keyframes brief-forward { from { opacity: 0; transform: translateX(0.8rem); } to { opacity: 1; transform: none; } }
+@keyframes brief-back { from { opacity: 0; transform: translateX(-0.8rem); } to { opacity: 1; transform: none; } }
+@keyframes brief-unlock { 0% { opacity: 0.48; transform: translateY(0.2rem); } 65% { transform: translateY(-0.08rem); } 100% { opacity: 1; transform: none; } }
+
+@media (max-width: 350px) {
+  .lesson-brief-page { padding-inline: 0.65rem !important; }
+  .lesson-brief-header { min-height: 3.6rem; }
+  .lesson-brief-header-meta { gap: 0.45rem; }
+  .lesson-brief-brand { font-size: 0.98rem; }
+  .lesson-brief-carousel { height: 28.5rem; flex-basis: 28.5rem; }
+
+  .lesson-brief-slide { padding-inline: 0.85rem; }
+  .lesson-brief-title { font-size: 1.6rem; }
+  .lesson-brief-explanation { font-size: 0.72rem; }
+  .lesson-brief-task-list li { min-height: 3.75rem; font-size: 0.8rem; }
+  .lesson-brief-progress-metric { grid-template-columns: 1.8rem minmax(0, 1fr); padding: 0.5rem; }
+  .lesson-brief-progress-icon { width: 1.7rem; height: 1.7rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lesson-brief-slide,.lesson-brief-entry.is-unlocked .lesson-brief-mode-button { animation: none; }
+}
+
+/* Use the available Lesson Overview space for larger, more readable copy */
+.lesson-brief-slide-1 .lesson-brief-section-title {
+  font-size: 1.65rem;
+}
+.lesson-brief-slide-1 .lesson-brief-domain {
+  font-size: 0.75rem;
+}
+.lesson-brief-slide-1 .lesson-brief-title {
+  font-size: 2.05rem;
+  line-height: 1.06;
+}
+.lesson-brief-slide-1 .lesson-brief-explanation {
+  margin-top: 0.75rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+.lesson-brief-slide-1 .lesson-brief-standard {
+  margin-top: 0.9rem;
+  padding: 0.8rem;
+}
+.lesson-brief-slide-1 .lesson-brief-standard p:first-child {
+  font-size: 0.88rem;
+}
+.lesson-brief-slide-1 .lesson-brief-standard p:last-child {
+  font-size: 0.72rem;
+  line-height: 1.4;
+}
+/* Match What You Will Do to the Lesson Overview visual system */
+.lesson-brief-carousel.is-step-2,
+.lesson-brief-carousel.is-step-2 .lesson-brief-nav {
+  background: #fffaf0;
+}
+.lesson-brief-carousel.is-step-2 .lesson-brief-slide {
+  background:
+    linear-gradient(30deg, rgb(247 210 106 / 6%) 12%, transparent 12.5%, transparent 87%, rgb(37 118 91 / 4%) 87.5%),
+    #fffaf0;
+  background-size: 28px 48px;
+}
+.lesson-brief-slide-2 .lesson-brief-section-title {
+  font-size: 1.65rem;
+}
+.lesson-brief-slide-2 .lesson-brief-task-list {
+  gap: 0.5rem;
+  margin-top: 0.55rem;
+}
+.lesson-brief-slide-2 .lesson-brief-task-list li {
+  min-height: 3.35rem;
+  padding: 0.55rem 0.7rem;
+  border: 2px solid rgb(37 118 91 / 38%);
+  border-radius: 0.95rem;
+  background: rgb(255 255 255 / 82%);
+  box-shadow: 0 3px 0 rgb(37 118 91 / 24%);
+  font-size: 0.86rem;
+  line-height: 1.3;
+}
+.lesson-brief-slide-2 .lesson-brief-task-number {
+  background: #f7d26a;
+}
+.lesson-brief-learning-tip {
+  display: grid;
+  grid-template-columns: 2.15rem minmax(0, 1fr);
+  gap: 0.65rem;
+  align-items: center;
+  min-height: 4.3rem;
+  margin-top: 0.65rem;
+  padding: 0.65rem 0.7rem;
+  border: 2px solid var(--gb-secondary-dark);
+  border-radius: 0.9rem;
+  background: rgb(255 255 255 / 84%);
+  box-shadow: 0 3px 0 rgb(28 20 16 / 42%), inset 4px 0 0 rgb(143 217 182 / 72%);
+}
+.lesson-brief-learning-tip-icon {
+  position: relative;
+  display: grid;
+  width: 1.95rem;
+  height: 1.95rem;
+  place-items: center;
+  border-radius: 50%;
+  background: #9eddbf;
+  color: transparent;
+  font-size: 0;
+}
+.lesson-brief-learning-tip-icon::before {
+  width: 0.7rem;
+  height: 0.85rem;
+  border: 2px solid var(--gb-secondary-dark);
+  border-radius: 50% 50% 42% 42%;
+  content: "";
+}
+.lesson-brief-learning-tip-icon::after {
+  position: absolute;
+  bottom: 0.35rem;
+  width: 0.45rem;
+  border-bottom: 2px solid var(--gb-secondary-dark);
+  content: "";
+}
+.lesson-brief-learning-tip h3 {
+  color: var(--gb-secondary-dark);
+  font-size: 0.84rem;
+  font-weight: 900;
+}
+.lesson-brief-learning-tip p {
+  margin-top: 0.15rem;
+  color: rgb(28 20 16 / 68%);
+  font-size: 0.69rem;
+  font-weight: 650;
+  line-height: 1.35;
+}
+@media (max-width: 350px) {
+  .lesson-brief-slide-2 .lesson-brief-task-list { gap: 0.4rem; }
+  .lesson-brief-slide-2 .lesson-brief-task-list li { min-height: 3.15rem; padding-block: 0.45rem; font-size: 0.8rem; }
+  .lesson-brief-learning-tip { min-height: 4rem; margin-top: 0.5rem; padding-block: 0.5rem; }
+  .lesson-brief-learning-tip p { font-size: 0.64rem; }
+}
+/* Fill the taller Lesson Overview slide with readable content, not blank spacing */
+.lesson-brief-slide-1 .lesson-brief-section-title {
+  font-size: 1.9rem;
+  line-height: 1.08;
+}
+.lesson-brief-slide-1 .lesson-brief-domain {
+  margin-bottom: 0.6rem;
+  font-size: 0.84rem;
+}
+.lesson-brief-slide-1 .lesson-brief-title {
+  font-size: 2.35rem;
+  line-height: 1.05;
+}
+.lesson-brief-slide-1 .lesson-brief-explanation {
+  margin-top: 0.9rem;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+.lesson-brief-slide-1 .lesson-brief-standard {
+  grid-template-columns: 2.4rem minmax(0, 1fr);
+  gap: 0.75rem;
+  margin-top: 1.05rem;
+  padding: 0.9rem;
+}
+.lesson-brief-slide-1 .lesson-brief-check {
+  width: 2.2rem;
+  height: 2.2rem;
+  font-size: 1.15rem;
+}
+.lesson-brief-slide-1 .lesson-brief-standard p:first-child {
+  font-size: 1rem;
+}
+.lesson-brief-slide-1 .lesson-brief-standard p:last-child {
+  margin-top: 0.2rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+@media (max-width: 350px) {
+  .lesson-brief-slide-1 .lesson-brief-section-title { font-size: 1.75rem; }
+  .lesson-brief-slide-1 .lesson-brief-title { font-size: 2.15rem; }
+  .lesson-brief-slide-1 .lesson-brief-explanation { font-size: 0.9rem; }
+  .lesson-brief-slide-1 .lesson-brief-standard p:first-child { font-size: 0.9rem; }
+  .lesson-brief-slide-1 .lesson-brief-standard p:last-child { font-size: 0.74rem; }
+}
+/* Compact both slides while distributing their lower cards safely */
+.lesson-brief-slide-1 .lesson-brief-explanation {
+  margin-bottom: 0.65rem;
+}
+.lesson-brief-slide-1 .lesson-brief-standard {
+  margin-top: auto;
+}
+.lesson-brief-slide-2 .lesson-brief-task-list {
+  margin-bottom: 0.55rem;
+}
+.lesson-brief-slide-2 .lesson-brief-learning-tip {
+  margin-top: auto;
+}
+.lesson-brief-slide-2 .lesson-brief-steps-label {
+  margin-bottom: 0.25rem;
+  color: rgb(28 20 16 / 68%);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+.lesson-brief-slide-2 .lesson-brief-steps-label + .lesson-brief-task-list {
+  margin-top: 0.35rem;
+}
