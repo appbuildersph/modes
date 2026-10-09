@@ -13,6 +13,13 @@
 // NEVER commit creds. If GCP_PROJECT/GCP_SA_KEY are unset the handler returns a
 // curriculum-grounded placeholder so the full client chain stays testable.
 //
+// Edge backend (D-018): TUTOR_BACKEND=edge (read per request) answers from a model
+// served on the team's own machine instead of Vertex. Env vars:
+//   EDGE_LLM_URL           OpenAI-compatible server, default http://127.0.0.1:1234 (LM Studio)
+//   EDGE_MODEL             default google/gemma-4-e2b
+//   EDGE_TIMEOUT_MS        upstream timeout, default 20000
+// The upstream server must never be exposed directly; only this handler is.
+//
 // Uses the modern Google Gen AI SDK (@google/genai) in Vertex mode — the old
 // @google-cloud/vertexai SDK is deprecated (removal June 2026).
 //
@@ -24,6 +31,7 @@ import { GoogleGenAI } from '@google/genai'
 import { getAllContent } from '../src/lib/content-catalog.js'
 import { guard, parseBody } from './_shared.js'
 import { buildTutorPrompt, isKnownLang, DEFAULT_LANG } from '../src/lib/tutor-prompt.js'
+import { MODE_IDS, normalizeMode } from '../src/lib/tutor-modes.js'
 
 const LOCATION = process.env.GCP_LOCATION || 'us-central1'
 const MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-pro'
@@ -47,6 +55,7 @@ export function validateRequest(body) {
   if (question.length > MAX_QUESTION_CHARS) return 'question_too_long'
   if (typeof body.ref !== 'string' || !catalogByRef.has(body.ref)) return 'unknown_ref'
   if (body.lang !== undefined && !isKnownLang(body.lang)) return 'invalid_language'
+  if (body.mode !== undefined && !MODE_IDS.includes(body.mode)) return 'invalid_mode'
   return null
 }
 
@@ -79,6 +88,34 @@ function placeholder() {
   return 'Teacher Gabay is resting. Please try again soon.'
 }
 
+// Edge backend: one chat completion against an OpenAI-compatible local server.
+// reasoning_effort 'none' is required for Gemma 4 on LM Studio: without it every
+// token goes to reasoning_content and the visible content comes back empty.
+async function edgeComplete(system, question) {
+  const base = (process.env.EDGE_LLM_URL || 'http://127.0.0.1:1234').replace(/\/+$/, '')
+  const timeoutMs = Number(process.env.EDGE_TIMEOUT_MS) || 20_000
+  const response = await fetch(`${base}/v1/chat/completions`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: process.env.EDGE_MODEL || 'google/gemma-4-e2b',
+      temperature: 0.4,
+      max_tokens: 300,
+      reasoning_effort: 'none',
+      messages: [
+        { role: 'system', content: system },
+        { role: 'user', content: question },
+      ],
+    }),
+    signal: AbortSignal.timeout(timeoutMs),
+  })
+  if (!response.ok) throw new Error('edge upstream error')
+  const data = await response.json()
+  const text = data?.choices?.[0]?.message?.content
+  if (typeof text !== 'string' || !text.trim()) throw new Error('empty completion')
+  return text.trim()
+}
+
 export default async function handler(req, res) {
   if (await guard(req, res, { bucket: 'tutor', limit: RATE_LIMIT, maxBytes: MAX_BODY_BYTES })) return
 
@@ -90,7 +127,21 @@ export default async function handler(req, res) {
 
   const question = String(body.question).trim()
   const lang = body.lang ?? DEFAULT_LANG
-  const system = gabayPrompt(catalogByRef.get(body.ref)?.competency ?? '', lang)
+  const mode = normalizeMode(body.mode)
+  const competency = catalogByRef.get(body.ref)?.competency ?? ''
+
+  if (process.env.TUTOR_BACKEND === 'edge') {
+    try {
+      // The compact prompt: small local models loop on the long one (D-009).
+      const text = await edgeComplete(gabayPrompt(competency, lang, { mode, short: true }), question)
+      return res.status(200).json({ text, source: 'edge' })
+    } catch {
+      // Not echoed: upstream errors can carry local URLs and model details.
+      return res.status(502).json({ error: 'edge_failed' })
+    }
+  }
+
+  const system = gabayPrompt(competency, lang, { mode })
 
   const ai = genaiClient()
 

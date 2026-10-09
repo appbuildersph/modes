@@ -33,7 +33,9 @@ export function cors(req, res) {
   const origin = req.headers.origin
   if (origin && allowedOrigin(origin, req.headers.host)) res.setHeader('Access-Control-Allow-Origin', origin)
   res.setHeader('Vary', 'Origin')
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+  // ngrok's free tier can answer browser requests with an HTML warning page unless
+  // this header is sent, so the preflight must allow it (edge tunnel, D-018).
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, ngrok-skip-browser-warning')
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
 }
 

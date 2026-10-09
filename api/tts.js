@@ -12,6 +12,14 @@
 //   TTS_LANG     optional language code (default fil-PH)
 //
 // Unset creds -> 501 so the client uses speechSynthesis.
+//
+// Provider switch (read per request): TTS_PROVIDER = google (default) | elevenlabs
+//   ELEVENLABS_API_KEY     server-only secret, sent as the xi-api-key header
+//   ELEVENLABS_VOICE_ID    required; pick by ear (no default on purpose)
+//   ELEVENLABS_MODEL       default eleven_flash_v2_5 (lists Filipino, low latency)
+//   ELEVENLABS_TIMEOUT_MS  default 15000
+// Either provider unconfigured -> 501; a failed ElevenLabs call -> 502. Both make the
+// client fall back to speechSynthesis.
 
 import textToSpeech from '@google-cloud/text-to-speech'
 import { guard, parseBody } from './_shared.js'
@@ -28,6 +36,45 @@ const EN_LANG = 'en-US'
 function voiceFor(lang) {
   if (lang === 'en') return { name: EN_VOICE, languageCode: EN_LANG }
   return { name: VOICE, languageCode: LANG }
+}
+
+const useElevenLabs = () => process.env.TTS_PROVIDER === 'elevenlabs'
+
+// Null when the key or voice is missing, so the handler answers 501 like Google does.
+function elevenLabsConfig() {
+  const apiKey = process.env.ELEVENLABS_API_KEY
+  const voiceId = process.env.ELEVENLABS_VOICE_ID
+  if (!apiKey || !voiceId) return null
+  return {
+    apiKey,
+    voiceId,
+    model: process.env.ELEVENLABS_MODEL || 'eleven_flash_v2_5',
+    timeoutMs: Number(process.env.ELEVENLABS_TIMEOUT_MS) || 15_000,
+  }
+}
+
+// language_code is deliberately not sent: ElevenLabs documents it as ISO 639-1,
+// Filipino has no such code, and multilingual_v2 rejects the field anyway. The
+// model detects the language from the text.
+async function elevenLabsSynthesize(config, text) {
+  const response = await fetch(
+    `https://api.elevenlabs.io/v1/text-to-speech/${encodeURIComponent(config.voiceId)}?output_format=mp3_44100_64`,
+    {
+      method: 'POST',
+      headers: {
+        'xi-api-key': config.apiKey,
+        'Content-Type': 'application/json',
+        Accept: 'audio/mpeg',
+      },
+      body: JSON.stringify({ text, model_id: config.model }),
+      signal: AbortSignal.timeout(config.timeoutMs),
+    },
+  )
+  if (!response.ok) throw new Error('elevenlabs upstream error')
+  if (!(response.headers.get('content-type') || '').includes('audio')) throw new Error('not audio')
+  const buf = Buffer.from(await response.arrayBuffer())
+  if (!buf.length) throw new Error('empty audio')
+  return buf
 }
 
 function getCredentials() {
@@ -56,9 +103,10 @@ export default async function handler(req, res) {
   // origin + rate-limit floor as the rest. It previously had none.
   if (await guard(req, res, { bucket: 'tts', limit: RATE_LIMIT, maxBytes: MAX_BODY_BYTES })) return
 
-  const client = ttsClient()
+  const elevenLabs = useElevenLabs() ? elevenLabsConfig() : null
+  const client = useElevenLabs() ? null : ttsClient()
   // Not configured — signal client to fall back to speechSynthesis.
-  if (!client) return res.status(501).json({ error: 'tts_unconfigured' })
+  if (!elevenLabs && !client) return res.status(501).json({ error: 'tts_unconfigured' })
 
   const { body, error: parseError } = parseBody(req, MAX_BODY_BYTES)
   if (parseError) return res.status(parseError === 'invalid_json' ? 400 : 413).json({ error: parseError })
@@ -70,6 +118,19 @@ export default async function handler(req, res) {
   }
   // Gabay lines are short; cap hard to guard cost/latency.
   const clipped = text.slice(0, 800)
+
+  if (elevenLabs) {
+    try {
+      const buf = await elevenLabsSynthesize(elevenLabs, clipped)
+      res.setHeader('Content-Type', 'audio/mpeg')
+      res.setHeader('Cache-Control', 'public, max-age=86400')
+      return res.status(200).send(buf)
+    } catch {
+      // Not echoed: upstream errors can carry account details.
+      return res.status(502).json({ error: 'tts_failed' })
+    }
+  }
+
   const { name, languageCode } = voiceFor(body?.lang)
 
   try {

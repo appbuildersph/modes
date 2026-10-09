@@ -34,6 +34,18 @@ test('tutor API accepts only the documented request contract', () => {
   assert.equal(validateRequest(null), 'invalid_body')
 })
 
+test('mode is optional and allow-listed', () => {
+  for (const mode of ['none', 'kalma', 'pakinig', 'hakbang']) {
+    assert.equal(validateRequest({ ...VALID, mode }), null)
+  }
+  assert.equal(validateRequest(VALID), null)
+  assert.equal(validateRequest({ ...VALID, mode: 'zen' }), 'invalid_mode')
+  assert.equal(validateRequest({ ...VALID, mode: 'KALMA' }), 'invalid_mode')
+  assert.equal(validateRequest({ ...VALID, mode: null }), 'invalid_mode')
+  assert.equal(validateRequest({ ...VALID, mode: 7 }), 'invalid_mode')
+  assert.equal(validateRequest({ ...VALID, mode: { toString: () => 'kalma' } }), 'invalid_mode')
+})
+
 test('the system prompt is built from the curriculum, never from the client', async () => {
   const res = mockResponse()
   await handler(
@@ -68,6 +80,9 @@ test('preflight requests are answered', async () => {
   await handler(mockRequest({ method: 'OPTIONS', headers: { origin: 'https://app.example.com', host: 'app.example.com' } }), res)
   assert.equal(res.statusCode, 204)
   assert.equal(res.headers['Access-Control-Allow-Origin'], 'https://app.example.com')
+  // The edge client sends this header on every request (ngrok free-tier warning page).
+  assert.match(res.headers['Access-Control-Allow-Headers'], /Content-Type/)
+  assert.match(res.headers['Access-Control-Allow-Headers'], /ngrok-skip-browser-warning/)
 })
 
 test('requests from an unlisted origin are refused', async () => {
