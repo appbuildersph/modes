@@ -1,14 +1,14 @@
-# Product Requirements Document — Gabay
+# Product Requirements Document — Local AI Math Companion
 
-Status: draft v0.2, 2026-10-09. Owner: Team CrossCampus. This PRD describes the product as it exists in this repo ("Current") and what is being added ("Planned"). Anything marked **Unconfirmed** is a proposal that needs a team decision.
+Status: draft v0.2, 2026-10-09. Owner: Hackathon Team. This PRD describes the product as it exists in this repo ("Current") and what is being added ("Planned"). Anything marked **Unconfirmed** is a proposal that needs a team decision.
 
-**Context: hackathon.** This work is the team's entry in the AppBuildersPH Hackathon 2026 (theme Local AI). Official judging criteria are in `docs/JUDGING.md` (Problem and Usefulness 25%, Local AI Implementation 25%, Technical Execution 20%, Innovation 15%, Product and Demo Quality 15%) and rules in `docs/HACKATHON.md`. Submission deadline is 10:00 AM on 2026-10-10. Where this PRD lists P1/P2 items that do not help the live Local AI demo, defer them. The FR-A1 to FR-A6 requirements (on-device model) are the hackathon deliverable; everything else is the pre-existing base to protect, not extend.
+**Context: hackathon.** This work is the team's entry in the AppBuildersPH Hackathon 2026 (theme Local AI). Official judging criteria are in `docs/JUDGING.md` (Problem and Usefulness 25%, Local AI Implementation 25%, Technical Execution 20%, Innovation 15%, Product and Demo Quality 15%) and rules in `docs/HACKATHON.md`. Submission deadline is 10:00 AM on 2026-10-10. Where this PRD lists P1/P2 items that do not help the live Local AI demo, defer them. The FR-A1 to FR-A6 requirements (on-device model) are the hackathon deliverable; everything else is the foundation to protect, not extend.
 
 ## 1. Summary
 
 **The product is an offline-first tutor.** The tutor must work with no network; every cloud feature is an optional upgrade. **The on-device model is Gemma 4 E2B** (confirmed 2026-10-10, unverified on device; see `docs/LOCAL_AI.md`). **The demo device is an iPhone 13 running the installed PWA.**
 
-Gabay is an offline-first PWA study companion for Filipino Grade 4-6 learners studying Mathematics under the DepEd MATATAG curriculum. A friendly tutor mascot, Teacher Gabay, explains lessons, checks answers, answers questions (text or voice), and tracks mastery, all of which keep working without internet. When a connection exists, the app upgrades itself: cloud Gemini tutoring, adaptive AI-generated practice, natural Filipino text-to-speech, and Gemini transcription.
+This project is an offline-first PWA study companion for Filipino Grade 4-6 learners studying Mathematics under the DepEd MATATAG curriculum. A friendly AI tutor mascot explains lessons, checks answers, answers questions (text or voice), and tracks mastery, all of which keep working without internet. When a connection exists, the app upgrades itself: cloud AI tutoring, adaptive AI-generated practice, natural Filipino text-to-speech, and transcription.
 
 The current workstream adds an **open-source on-device language model** so the AI tutor itself can run offline on iPhone, where Chrome's built-in Gemini Nano does not exist.
 
@@ -24,7 +24,7 @@ The current workstream adds an **open-source on-device language model** so the A
 | ID | Goal |
 |---|---|
 | G1 | A learner can complete the full learning loop (lesson, practice, feedback, mastery) with the network off, on the first load after install and on every later load. |
-| G2 | Teacher Gabay can answer a learner's math question fully on-device on an iPhone, using an open-source model, with no network call. (Planned) |
+| G2 | The AI tutor can answer a learner's math question fully on-device or on a local edge server, using an open-source model, with no external network call. (Planned) |
 | G3 | AI behaviour degrades gracefully: best available option first, never a broken screen. |
 | G4 | Content is grounded in DepEd MATATAG Grades 4-6 and presented in English, Tagalog, or Taglish. |
 | G5 | The tutor teaches rather than answers: guided steps, short, warm, plain text, Filipino real-life contexts. |
@@ -38,7 +38,7 @@ The current workstream adds an **open-source on-device language model** so the A
 - User accounts, cloud sync, leaderboards, or any server-side learner profile.
 - A native App Store app in this phase (Capacitor is deferred; see `docs/DECISIONS.md`).
 - Training or fine-tuning a model in this phase (may be revisited if base-model Filipino quality is inadequate).
-- Replacing the teacher. Gabay supports classroom and home study; printable term packets exist for teachers.
+- Replacing the teacher. The app supports classroom and home study.
 
 ## 5. Users
 
@@ -46,7 +46,7 @@ The current workstream adds an **open-source on-device language model** so the A
 |---|---|---|
 | **Learner, Grade 4-6 (primary)** | Understand a lesson, practise, get encouraging feedback, ask questions by typing or speaking, do it on a phone | Ages roughly 9-12. Reads English, Tagalog, or a mix. May share a family phone. |
 | **Learner who benefits from a mode (primary)** | Kalma: learners with ADHD, autism, or sensory sensitivity who need a calm, low-stimulus, predictable screen. Pakinig: learners with dyslexia, low vision, or weak reading who need large clear text and read-aloud. Hakbang: learners with dyscalculia or intellectual disability who need one concrete step at a time | Described as design intent, not diagnosis. Any learner may choose any mode |
-| **Teacher (secondary)** | Printable lesson plans, quizzes, activity sheets, and exams aligned to MATATAG; trust that content is curriculum-correct | Served today by the PDF packets in `Term1-3/` and the root PDFs, generated from `_src/`. No in-app teacher view exists. |
+| **Teacher (secondary)** | Trust that content is curriculum-correct | No in-app teacher view exists. |
 | **Parent/guardian (tertiary)** | Confidence the app is safe, private, and works without data | No accounts, no tracking. |
 | **Developer/AI agent** | Clear contracts and docs | See `CLAUDE.md`, `docs/ARCHITECTURE.md`. |
 
@@ -56,7 +56,7 @@ Verified by reading the code in this repo on 2026-10-09. The test suite has not 
 
 - **Curriculum:** 155 competencies (Grade 4: 54, Grade 5: 49, Grade 6: 52) and 1,571 bundled practice items across three domains: Number and Algebra, Measurement and Geometry, Statistics and Probability. Each competency has explanation, worked example, items, game tags, and a source trace.
 - **Flow:** Splash -> Onboarding (name, grade) -> Home/Lessons -> Topic picker (browse or practice) -> Lesson brief -> Classroom (2D) or 3D Classroom -> Progress. Bottom navigation: Lessons, Practice, Games, Profile.
-- **Classroom:** explanation and worked example, guided practice with step-by-step items, answer checking tolerant of formatting, feedback, and "Ask Teacher Gabay" (text or voice input, spoken replies).
+- **Classroom:** explanation and worked example, guided practice with step-by-step items, answer checking tolerant of formatting, feedback, and "Ask Teacher" (text or voice input, spoken replies).
 - **Mastery:** per-grade mastery score per competency, spaced-repetition due ticks, daily streak, attempt history for review. Bands: red below 40%, orange 40-69%, green 70% and up; a lesson is complete at 100%.
 - **Games (4):** store, garden, house, fiesta. Each draws on competencies tagged for that theme and uses the same question-session pipeline.
 - **3D classroom:** Three.js scene with textured, themeable room; falls back to 2D.
@@ -191,8 +191,7 @@ Baselines are not yet measured. Fill these in as data becomes available.
 4. Is the model download offered to the learner, the guardian, or a teacher-managed flow?
 5. Should the bundled Filipino/Taglish content be translated properly (all bundled item text is currently English in every language field)?
 6. Where will the app be hosted for the next phase (affects `QUESTION_CORS_ORIGINS` and `VITE_QUESTION_API_BASE`)?
-7. Does a pre-existing project qualify, and what disclosure do the organisers expect? (ask in the hackathon Telegram group; see `docs/HACKATHON.md` section 8.1)
-8. Is a native wrapper still wanted later for Android and for native model runtimes?
+7. Is a native wrapper still wanted later for Android and for native model runtimes?
 
 ## 13. Release notes for the PRD
 

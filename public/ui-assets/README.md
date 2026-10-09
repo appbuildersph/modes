@@ -1,4 +1,4 @@
-# Gabay UI learning assets
+# UI learning assets
 
 Reusable, text-free visual objects for Grade 1-3 math lessons.
 
@@ -15,7 +15,7 @@ artwork. Keep learner-facing labels in the app's localization system.
 - `wooden-block.png`: number models, place value, patterns, area arrays, and
   perimeter.
 - `monkey-helper.png`: optional encouraging character for visual hints and
-  worked examples; never use it as a substitute for the existing Gabay mascot.
+  worked examples; never use it as a substitute for the main app mascot.
 - `classroom-door.png`, `banderitas-triangle.png`, `round-plate.png`: familiar
   real-world examples of rectangles, triangles, and circles.
 - `pencil.png`, `sorting-basket.png`: reusable measurement, ordering, grouping,

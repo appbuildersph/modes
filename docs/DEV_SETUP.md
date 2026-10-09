@@ -74,8 +74,8 @@ The tunnel URL is public and anyone with it can reach your dev server and any `/
 1. Load the app once online so the service worker precaches the shell. Reload to confirm it is installed.
 2. (Local AI only) Download the model over Wi-Fi; confirm it persists after closing and reopening the app.
 3. Turn on Airplane Mode (not just Wi-Fi off, so cellular is also off).
-4. Reload the app: it must show Gabay, not a browser error.
-5. Complete a lesson and practice; ask Teacher Gabay a question; check the reply source label.
+4. Reload the app: it must show the app, not a browser error.
+5. Complete a lesson and practice; ask the tutor a question; check the reply source label.
 6. Turn the network back on and confirm the app recovers (the `/api/ping` probe runs every 8 seconds).
 
 ## 7. Recording results

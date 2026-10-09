@@ -1,5 +1,5 @@
-/* Hiyang mockup layer on top of Gabay's styles.
-   Page: Gabay's dark desktop backdrop, the phone in the middle, a notes card beside it.
+/* Hiyang mockup layer on top of base styles.
+   Page: dark desktop backdrop, the phone in the middle, a notes card beside it.
    Inside the phone, each mode overrides only what the mode changes. */
 
 /* ---------- page around the phone ---------- */
@@ -85,7 +85,7 @@ body {
 .bottom-nav span { flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border-radius: 16px; border: 2.5px solid transparent; font-size: 13px; font-weight: 800; color: rgb(58 46 42 / 55%); }
 .bottom-nav span.on { background: var(--gb-primary); border-color: var(--gb-outline); box-shadow: 2px 2px 0 var(--gb-outline); color: var(--gb-ink); }
 
-/* ---------- classroom bits written out from Gabay's Tailwind classes ---------- */
+/* ---------- classroom bits written out from Tailwind classes ---------- */
 .classroom-header { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
 .badge-row { display: flex; align-items: center; gap: 8px; }
 .online-badge { display: flex; align-items: center; gap: 0.5rem; border-radius: 999px; border: 2.5px solid var(--gb-outline); background: #fff; padding: 0.25rem 0.75rem; box-shadow: 2px 2px 0 var(--gb-outline); font-size: 0.75rem; font-weight: 700; }
@@ -194,7 +194,7 @@ body {
 .classroom-page.is-practice-tab .classroom-practice-help-button.h-help { width: 3.8rem; height: 3.8rem; min-height: 3.8rem; }
 .classroom-page.is-practice-tab .classroom-practice-help-button.h-help img { width: 3.6rem !important; height: 3.6rem !important; }
 
-/* ---------- glue between the copied Gabay CSS and this static markup ---------- */
+/* ---------- glue between the copied CSS and this static markup ---------- */
 .screen-host { position: absolute; inset: 0; }
 .classroom-teacher-zone { grid-template-columns: minmax(0, 1fr); }
 .h-scaffold { min-width: 0; }

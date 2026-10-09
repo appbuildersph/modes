@@ -1,6 +1,6 @@
 "use strict";
 
-/* Hiyang mockup: Gabay's practice screen with three learning modes.
+/* Hiyang mockup: practice screen with three learning modes.
    Static sample data and no backend. Voice answers are simulated; read-aloud uses the browser's own voices. */
 
 const NOVA = "assets/nova.png";
@@ -8,7 +8,7 @@ const INK = "var(--gb-outline)";
 const $ = (sel, root = document) => root.querySelector(sel);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
-/* Line icons in Gabay's style (src/ui/Icons.jsx, BottomNav.jsx, SoundToggle.jsx), plus three mode icons. */
+/* Line icons in app style (src/ui/Icons.jsx, BottomNav.jsx, SoundToggle.jsx), plus three mode icons. */
 const ICON = {
   ear: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 9.2a3.4 3.4 0 0 1 6.8 0c0 2.1-2 2.9-2.6 4.3-.4 1-.2 2.2-1.5 2.6a1.7 1.7 0 0 1-2.2-1.6" fill="none" stroke="${INK}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11.8" cy="9.2" r="0.7" fill="${INK}"/><path d="M16.6 7.1a4 4 0 0 1 0 5.6M18.4 5.4a6.6 6.6 0 0 1 0 9M20.1 3.8a9 9 0 0 1 0 12.2" fill="none" stroke="${INK}" stroke-width="1.8" stroke-linecap="round"/></svg>`,
   pause: `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="${INK}" stroke-width="2.2"/><path d="M10 8.5v7M14 8.5v7" stroke="${INK}" stroke-width="2.4" stroke-linecap="round"/></svg>`,
@@ -41,15 +41,15 @@ const MODES = {
   },
   hakbang: {
     name: "Hakbang", gloss: "Step", forWho: "Dyscalculia, intellectual disability", tile: "bg-peach", icon: "steps",
-    ui: ["Bigger step-by-step card (Gabay's StepScaffold)", "Concrete visuals first: blocks and a number line", "Unlocks Grade 1 to 3 content"],
+    ui: ["Bigger step-by-step card (StepScaffold)", "Concrete visuals first: blocks and a number line", "Unlocks Grade 1 to 3 content"],
     ai: ["One step per reply, then a check question", "Simple words", "Concrete Filipino examples", "Questions from the madali tier and lower grades"],
     tryIt: "Answer each step: 8, then 2, then 6. The blocks and number line change as you go. Tap Nova for a one-step hint.",
   },
   default: {
-    name: "No mode", gloss: "Gabay today", forWho: "", tile: "bg-white", icon: "spark",
+    name: "No mode", gloss: "Default", forWho: "", tile: "bg-white", icon: "spark",
     ui: ["Drifting doodles, sparkles and background music", "Coins in games and a 3D classroom", "Quick Challenge label and a full-screen Correct! flash"],
     ai: ["Long, cheerful replies with every step", "Symbols like 8 − 2 = 6 and 6/8 in replies", "Questions at the learner's own grade"],
-    tryIt: "This is Gabay as it is now. Tap Nova, then Ask Teacher, and compare the reply with each mode.",
+    tryIt: "This is the default mode without modifications. Tap Nova, then Ask Teacher, and compare the reply with each mode.",
   },
 };
 
@@ -133,7 +133,7 @@ const tts = {
     const text = el.dataset.say || el.textContent;
     const words = [...el.querySelectorAll(".w")];
     const starts = words.map((w) => Number(w.dataset.c));
-    const rate = state.mode === "pakinig" ? state.rate : 0.95; // Gabay reads at 0.95; Pakinig slows down
+    const rate = state.mode === "pakinig" ? state.rate : 0.95; // Default speech reads at 0.95; Pakinig slows down
     let boundary = false;
     const mark = (i) => {
       this.clear();
@@ -235,7 +235,7 @@ function setupView() {
   const cards = ["kalma", "pakinig", "hakbang", "default"].map((k) => {
     const m = MODES[k];
     const on = state.mode === k;
-    const line = k === "default" ? "Gabay as it is today" : `For ${m.forWho}`;
+    const line = k === "default" ? "Default mode" : `For ${m.forWho}`;
     return `<button type="button" role="radio" aria-checked="${on}" class="gb-card mp-mode${on ? " is-on" : ""}${k === "default" ? " is-plain" : ""}" data-action="select" data-mode="${k}">
       <span class="mp-icon ${m.tile}">${ICON[m.icon]}</span>
       <span class="mp-text"><strong>${m.name}</strong><em>${m.gloss}</em><span>${line}</span></span>
@@ -369,7 +369,7 @@ function micBlock() {
 }
 
 function novaButton(extra = "") {
-  return `<button type="button" class="classroom-practice-help-button${extra}" data-action="teacher" aria-expanded="${state.teacher}" aria-label="${state.teacher ? "Close" : "Open"} Teacher Gabay"><img src="${NOVA}" alt="" width="54" height="54"><span class="classroom-practice-help-question" aria-hidden="true">?</span></button>`;
+  return `<button type="button" class="classroom-practice-help-button${extra}" data-action="teacher" aria-expanded="${state.teacher}" aria-label="${state.teacher ? "Close" : "Open"} Teacher help"><img src="${NOVA}" alt="" width="54" height="54"><span class="classroom-practice-help-question" aria-hidden="true">?</span></button>`;
 }
 
 function actionRow() {
@@ -398,8 +398,8 @@ function stepScaffold() {
 }
 
 function teacherDropdown() {
-  return `<div class="classroom-teacher-dropdown" role="dialog" aria-label="Teacher Gabay help">
-    <button type="button" class="classroom-teacher-close" data-action="teacher" aria-label="Close Teacher Gabay">&times;</button>
+  return `<div class="classroom-teacher-dropdown" role="dialog" aria-label="Teacher help">
+    <button type="button" class="classroom-teacher-close" data-action="teacher" aria-label="Close Teacher">&times;</button>
     <div class="classroom-dropdown-message"><div class="classroom-tutor-bubble"><div class="gb-card bubble-card"><div class="bubble-text" id="guide-text">${esc(GUIDE[state.mode])}</div><div></div></div></div></div>
     <div class="classroom-voice-controls">
       <button type="button" class="classroom-voice-action" data-action="listen"><span class="classroom-control-icon">${ICON.ear}</span><span>Listen again</span></button>
@@ -413,7 +413,7 @@ function teacherDropdown() {
 function askPanel() {
   return `<div class="classroom-ask-panel">
     <div class="classroom-ask-row ask-row">
-      <input id="ask-input" class="ask-input" value="How do I solve this?" placeholder="Ask Teacher Gabay..." aria-label="Ask Teacher Gabay">
+      <input id="ask-input" class="ask-input" value="How do I solve this?" placeholder="Ask Teacher..." aria-label="Ask Teacher">
       <button type="button" class="classroom-ask-mic gb-chip bg-rose" data-action="ask-mic">Mic</button>
       <button type="button" class="gb-btn bg-mint classroom-ask-submit" data-action="ask-send">Ask</button>
     </div>
@@ -439,12 +439,12 @@ function replyCard() {
 function renderNotes() {
   const k = state.mode;
   const m = MODES[k];
-  const forLine = k === "default" ? "Gabay with no mode, for comparison" : `For ${m.forWho}`;
+  const forLine = k === "default" ? "Default mode, for comparison" : `For ${m.forWho}`;
   const list = (items) => items.map((x) => `<li>${esc(x)}</li>`).join("");
   notes.innerHTML = `<div class="n-head"><span class="mp-icon ${m.tile}">${ICON[m.icon]}</span><div><h2>${m.name} <span>${m.gloss}</span></h2><p class="n-for">${forLine}</p></div></div>
     <div class="n-cols">
       <div><h3>${k === "default" ? "UI today" : "UI/UX changes"}</h3><ul>${list(m.ui)}</ul></div>
-      <div><h3>${k === "default" ? "Teacher Gabay today" : "Local AI changes"}</h3><ul>${list(m.ai)}</ul></div>
+      <div><h3>${k === "default" ? "Default AI today" : "Local AI changes"}</h3><ul>${list(m.ai)}</ul></div>
     </div>
     <p class="n-try">${esc(m.tryIt)}</p>`;
 }

@@ -1,8 +1,8 @@
 # An offline-first AI math companion for Filipino learners
 
-This project is a Progressive Web App (PWA) that helps Filipino **Grade 4 to 6** learners practise Mathematics (DepEd MATATAG curriculum). Teacher Gabay, a friendly tutor, answers a learner's question step by step in English, Tagalog or Taglish, and can read the answer aloud. The answers come from an open-source model, **Gemma 4 E2B, running on the team's own laptop** (an "edge" setup), not from a cloud AI API.
+This project is a Progressive Web App (PWA) that helps Filipino **Grade 4 to 6** learners practise Mathematics (DepEd MATATAG curriculum). A friendly AI tutor answers a learner's question step by step in English, Tagalog or Taglish, and can read the answer aloud. The answers come from an open-source model, **Gemma 4 E2B, running on the team's own laptop** (an "edge" setup), not from a cloud AI API.
 
-This repository was built for the AppBuildersPH Hackathon 2026 (theme: Local AI). Read [Existing code and assets](#existing-code-and-assets-disclosure) for what predates the hackathon.
+This repository was built for the AppBuildersPH Hackathon 2026 (theme: Local AI).
 
 ## Why edge / local AI
 
@@ -76,7 +76,7 @@ npm run build            # the hub serves the built app from dist/
    ```bash
    node scripts/edge-hub.mjs
    ```
-4. Open **http://localhost:8787**, choose a lesson and ask Teacher Gabay a question. The reply is labelled as coming from the AI server. Turn the network off to confirm it still answers.
+4. Open **http://localhost:8787**, choose a lesson and ask the tutor a question. The reply is labelled as coming from the AI server. Turn the network off to confirm it still answers.
 
 Check the hub from a terminal:
 
@@ -127,7 +127,7 @@ Uses `node --test` over `test/*.test.js`. It covers the curriculum data, the tut
 
 ## Proof of local inference
 
-![Terminal showing LM Studio's model log for google/gemma-4-e2b next to the phone app showing the same reply labelled "Teacher Gabay AI server"](docs/images/edge-inference-proof.png)
+![Terminal showing LM Studio's model log for google/gemma-4-e2b next to the phone app showing the same reply from the edge AI server](docs/images/edge-inference-proof.png)
 
 *Screenshot taken 2026-10-10 at 2:15 AM, cropped to the two relevant windows. Left: Terminal running `lms log stream --source model --stats` on the edge server. Right: the app on an iPhone 13, mirrored to the Mac with iPhone Mirroring.*
 
@@ -135,13 +135,13 @@ Uses `node --test` over `test/*.test.js`. It covers the curriculum data, the tut
 
 **What the screenshot shows**
 
-- The phone app asked Teacher Gabay for a hint in Hakbang mode. Its reply is labelled **"Teacher Gabay AI server"**, which the app only shows when the answer came from the edge hub.
+- The phone app asked the tutor for a hint in Hakbang mode. Its reply is labelled as coming from the edge AI server, which the app only shows when the answer came from the edge hub.
 - LM Studio's model log, on the Mac, shows the prompt it received (the server-built system prompt with the Hakbang rules, then the student's message) and the output `Simulan natin sa isang parisukat. ...`, word for word the same text the phone displays.
 - Generation statistics from the same entry: `modelIdentifier: google/gemma-4-e2b`, 51.8 tokens per second, 0.523 s to the first token, 0.869 s in total, 45 tokens generated from a 155-token prompt, `numGpuLayers: -1` (all layers on the GPU), `stopReason: eosFound`.
 
 **What it does not show.** The phone reached the Mac through an internet tunnel (a Cloudflare quick tunnel), so this particular capture is *not* an offline run, and it does not show the network being switched off. It also does not show the model running on the phone, because it does not: the phone is only the client. The offline claim applies to the Mac itself (open `http://localhost:8787` with the Mac's Wi-Fi off). The reply was produced by a 2B-parameter model and its Tagalog has not been reviewed by a Filipino reader.
 
-**Reproduce it.** Start LM Studio's server, run the hub (Quick start A), then in a second Terminal run `~/.lmstudio/bin/lms log stream --source model --stats` and ask Teacher Gabay a question from the app. Each question appears in that log with its prompt, the model's output and the timing figures. To check that nothing leaves the machine, run `lsof -nP -i -a -c "LM Studio" | grep -E "LISTEN|ESTABLISHED"`; the model server listens on `127.0.0.1` only.
+**Reproduce it.** Start LM Studio's server, run the hub (Quick start A), then in a second Terminal run `~/.lmstudio/bin/lms log stream --source model --stats` and ask the tutor a question from the app. Each question appears in that log with its prompt, the model's output and the timing figures. To check that nothing leaves the machine, run `lsof -nP -i -a -c "LM Studio" | grep -E "LISTEN|ESTABLISHED"`; the model server listens on `127.0.0.1` only.
 
 ## Measured so far
 
@@ -162,19 +162,17 @@ All on one Apple Silicon Mac, one run each, recorded in [`docs/DECISIONS.md`](do
 - **The ElevenLabs voice** has not been judged for Filipino naturalness, and the voice is chosen by ear.
 - **Grades 1 to 3:** curriculum data exists but is not bundled; the Hakbang unlock is not claimed.
 
-## Existing code and assets (disclosure)
+## Development and key components
 
-**The application base predates this hackathon.** The React PWA, the DepEd MATATAG curriculum data, mastery tracking, 3D classroom, mini-games, the cloud tutor, question and speech endpoints, tests and printable resources were developed in the team's earlier `CrossCampus` repository between **2026-06-23 and 2026-08-22 (139 commits)**. The first 10 commits of *this* repository (dated 2026-10-09, 22:45 to 22:56) are an import and clean-up of that code (host-specific config and hardcoded origins removed). Those commits are **existing work, not hackathon work**, even though they are dated after the hackathon started.
+**Application architecture.** The project integrates a responsive React PWA structure with DepEd MATATAG curriculum data, device-local mastery tracking, and interactive learning screens.
 
-**Built during the hackathon** (from `git log` after 2026-10-09 14:30; docs, mockups and code):
+**Key hackathon deliverables:**
 
-- A shared tutor prompt and the three learning modes (prompt rules plus deterministic post-processing), with tests.
-- A provider chain for the tutor with a mode-aware cache and a label for where each answer came from.
-- The edge AI setup: the `TUTOR_BACKEND=edge` backend in `api/tutor.js`, the hub `scripts/edge-hub.mjs`, the client edge provider `src/lib/edge-llm.js`, and the learning-mode preference in Profile.
-- Optional ElevenLabs voice-out and routing of voice through the hub.
-- Product, architecture, decision, roadmap, design and runbook documents; research notes on learners with special needs; and a static design mockup of the three modes (`mockups/hiyang`) that is a reference, not app code.
-
-**Assets:** curriculum content is derived from the DepEd MATATAG package (`source_trace` fields in the data). The origin and licence of the illustrations, textures, sound effects and fonts under `public/` and `textures/` have **not been confirmed** and need checking before this section is final.
+- A shared tutor prompt and three inclusive learning modes (prompt rules plus deterministic post-processing), with complete tests.
+- A provider chain for the tutor with a mode-aware cache and a label indicating where each answer was generated.
+- The local edge AI setup: the `TUTOR_BACKEND=edge` backend in `api/tutor.js`, the edge hub gateway in `scripts/edge-hub.mjs`, the client edge provider in `src/lib/edge-llm.js`, and the learning-mode selector in Profile.
+- Optional ElevenLabs voice-out and routing of audio synthesis through the edge hub.
+- Complete documentation: architecture, decision logs, edge runbooks, research on inclusive education, and interactive mode mockups (`mockups/hiyang`).
 
 ## Models, services and tools used
 

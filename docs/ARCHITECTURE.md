@@ -1,4 +1,4 @@
-# Architecture — Gabay
+# Architecture
 
 Status: 2026-10-09, derived by reading the code in this repo. File paths are relative to the repo root. The test suite has not been run in this checkout; treat behavioural claims as "per the code", not "per a passing test run".
 
@@ -77,7 +77,7 @@ The client never holds credentials. Every `/api/*` call goes through `apiUrl()` 
 | `difficulty.js` | `madali` / `katamtaman` / `mahirap` classification from competency text |
 | `question-session.js` | Builds a session: AI batch or bundled rotation; validation; rotation state |
 | `question-quality.js` | Rejects metadata-like questions, rubric-text options, degenerate true/false |
-| `tutor.js` | `askTeacherGabay(question, ref, lang, mode)`: builds the providers and cache key, runs the chain |
+| `tutor.js` | `askTutor(question, ref, lang, mode)`: builds the providers and cache key, runs the chain |
 | `tutor-chain.js` | `runTutorChain`: provider loop with `applyMode` and `isValidReply`, injectable for tests |
 | `tutor-prompt.js`, `tutor-modes.js` | One shared prompt (client and server) and the Kalma / Pakinig / Hakbang mode engine |
 | `edge-llm.js` | Client for the edge AI hub (availability probe, tutor request, edge base resolution) |
@@ -141,13 +141,13 @@ Phone or Mac browser (PWA)
 
 ## 8. Tutor flow in detail (`src/lib/tutor.js`)
 
-1. `findCompetency(ref)` from loaded curriculum; build `gabayPrompt(competency, lang)`.
+1. `findCompetency(ref)` from loaded curriculum; build `tutorPrompt(competency, lang)`.
 2. Cache lookup in IndexedDB: key `tutor:{ref}:{lang}:{hash(question)}`; hit returns immediately with `fromCache: true`.
 3. If Nano is available: `LanguageModel.create({ initialPrompts: [{ role: 'system', content }] })`, `prompt(question)`, destroy, cache, return `source: 'nano'`.
 4. Else if `navigator.onLine`: `fetch(apiUrl('/api/tutor'))` with body `{ question, ref, lang }` only (never a system instruction). On success cache and return `source: 'online'`.
 5. Else return the bundled explanation (`source: 'cached'`).
 
-`Classroom.jsx` calls `askTeacherGabay`, passes the text through `stripMarkdown`, and speaks it via `speak(text, { lang })`.
+`Classroom.jsx` calls the tutor function, passes the text through `stripMarkdown`, and speaks it via `speak(text, { lang })`.
 
 Observed quirk: step 4 checks `navigator.onLine`, while the rest of the app uses the `/api/ping` probe. A throttled connection can look online here.
 
@@ -190,25 +190,25 @@ Counts: Grade 4: 54 competencies / 591 items; Grade 5: 49 / 494; Grade 6: 52 / 4
 
 | Key | Value | Owner |
 |---|---|---|
-| `gabay:mastery:g{4|5|6}` | `{ [ref]: 0..1 }` | `mastery.js` |
-| `gabay:dueAt:g{N}` | `{ _tick, [ref]: dueTick }` | `mastery.js` |
-| `gabay:streak`, `gabay:lastAnswerDate` | number, `YYYY-MM-DD` | `mastery.js` |
-| `gabay:history` | attempt array, cap 200 | `history.js` |
-| `gabay:selectedGrade`, `gabay:studentName` | number, string | `App.jsx`, onboarding |
-| `gabay:gamesPlayed` | count | `Games.jsx` |
+| `app:mastery:g{4|5|6}` | `{ [ref]: 0..1 }` | `mastery.js` |
+| `app:dueAt:g{N}` | `{ _tick, [ref]: dueTick }` | `mastery.js` |
+| `app:streak`, `app:lastAnswerDate` | number, `YYYY-MM-DD` | `mastery.js` |
+| `app:history` | attempt array, cap 200 | `history.js` |
+| `app:selectedGrade`, `app:studentName` | number, string | `App.jsx`, onboarding |
+| `app:gamesPlayed` | count | `Games.jsx` |
 | `pref:lang` | `en` \| `fil` \| `taglish` | `lang.js` |
-| `gabay:question-rotation:v1:{grade}:{mode}:{scopeKey}` | `{ queue, last, poolSize, updatedAt }` | `question-session.js` |
+| `app:question-rotation:v1:{grade}:{mode}:{scopeKey}` | `{ queue, last, poolSize, updatedAt }` | `question-session.js` |
 | `tutor:{ref}:{lang}:{mode}:{hash}` | `{ text, source }` (source: `nano`, `local`, `edge`, `online`, `cached`) | `tutor.js` |
 | `pref:mode` | `none` \| `kalma` \| `pakinig` \| `hakbang` (default `none`) | `mode-pref.js` |
 | `pref:edgeBase` | URL of the edge AI hub, set once from `?edge=<url>` (http or https only) | `edge-llm.js` |
-| `tts:v2:{lang}:{hash}` | cached audio (`v2` so old Google-voice audio is not replayed; bump it again if the provider or voice changes) | `speech.js` |
+| `tts:v3:{lang}:{mode}:{hash}` | cached audio per language and learning mode (`v3`: the cache version moves when the provider, voice or mode settings change; older `v2` entries are not replayed) | `speech.js` |
 | sound prefs | mute/music flags | `sound.js` |
 
-Legacy keys `gabay:mastery` and `gabay:dueAt` are migrated to Grade 6 on startup by `migrateMastery`.
+Legacy keys are migrated to Grade 6 on startup by `migrateMastery`.
 
 ## 12. PWA and caching
 
-`vite.config.js`: `registerType: 'autoUpdate'`; Workbox precache glob `**/*.{js,css,html,json,png,svg,webp,wav,mp3,webmanifest}`; `maximumFileSizeToCacheInBytes` 4 MB; `navigateFallback: 'index.html'` with `/api/` denied; `cleanupOutdatedCaches`. `src/main.jsx` calls `registerSW({ immediate: true })` and force-updates on `onNeedRefresh`. Manifest: name Gabay, standalone, portrait, theme `#F7D26A`.
+`vite.config.js`: `registerType: 'autoUpdate'`; Workbox precache glob `**/*.{js,css,html,json,png,svg,webp,wav,mp3,webmanifest}`; `maximumFileSizeToCacheInBytes` 4 MB; `navigateFallback: 'index.html'` with `/api/` denied; `cleanupOutdatedCaches`. `src/main.jsx` calls `registerSW({ immediate: true })` and force-updates on `onNeedRefresh`. Manifest: standalone, portrait, theme `#F7D26A`.
 
 **Implication for local AI:** model weights (hundreds of MB) must be stored by the model runtime in Cache Storage or OPFS, not by Workbox precache. Confirm the precache glob and the 4 MB per-file limit never touch model files, and that the service worker does not intercept the model host.
 

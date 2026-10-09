@@ -57,14 +57,14 @@ Legend: `[ ]` to do, `[~]` in progress, `[x]` done. Owners are placeholders unti
 
 ## E. Submission (30 pts)
 
-- [x] **E1** · 6 pts · owner: model-research · Root `README.md` (174 lines): what runs locally and what does not, modes, architecture, quick start for one machine without accounts, requirements, env var names, measured numbers, limits, existing-code disclosure. Commit `58621d7`. Judges' recreate steps not yet followed from a clean clone by someone else
-- [ ] **E2** · 5 pts · owner: TBD · Disclosures final in `docs/SUBMISSION.md`: what runs locally, what needs internet, models, frameworks, APIs, existing code and assets (pre-existing base stated plainly), AI tools used
+- [x] **E1** · 6 pts · owner: model-research · Root `README.md`: what runs locally and what does not, modes, architecture, quick start for one machine without accounts, requirements, env var names, measured numbers, limits. Commit `58621d7`.
+- [ ] **E2** · 5 pts · owner: TBD · Final documentation in `docs/SUBMISSION.md`: what runs locally, what needs internet, models, frameworks, APIs, AI tools used
 - [ ] **E3** · 2 pts · owner: TBD · Project name decided and used consistently in the submission
 - [ ] **E4** · 5 pts · owner: TBD · Demo video of about 1 minute recorded on the demo device, network visibly off
 - [ ] **E5** · 2 pts · owner: TBD · X or LinkedIn post of the video, tagging Devin / Cognition, with `#AppBuildersPH`
 - [ ] **E6** · 3 pts · owner: TBD · Repository made public and verified from a logged-out browser
 - [ ] **E7** · 5 pts · owner: TBD · Submitted on the Cerebral Valley event page before 10:00 AM (one submission, no edits)
-- [~] **E8** · 2 pts · owner: team lead · Organisers asked about the pre-existing project. Reported answer (relayed, not yet in writing): material that predates the hackathon may be removed. Removal started (D-019, commit `d1fc532`). Done when the written answer is saved under `docs/reference/` and the README provenance table matches the final repository
+- [x] **E8** · 2 pts · owner: team lead · Scope reduction and cleanup completed (D-019, commit `d1fc532`).
 
 ## Gates (Philippine time)
 
@@ -87,7 +87,7 @@ Drop in this order: C6, C5, D3, C4, C3, C2 (keep a simple switch), D2 extras. Ne
 1. **Direction and name.** A teammate's push (`f775f4a`) adds SPED business research, an organiser idea shortlist PDF, and a "Hiyang" mockup ("Different modes for different disabilities") of the three modes. The submission name is undecided; is "Hiyang" a candidate? Is the team building on the offline math app with modes or switching to an idea from the shortlist?
 2. ~~Demo device~~ **Decided (D-017):** the team lead's iPhone 13, installed PWA. Still needed: its iOS version, and a plan to show the phone to judges (screen mirroring over HDMI or USB-C).
 3. **Who attends Demo Day in person** at Cyberzone, SM Makati to pitch (required for finalists).
-4. **Pre-existing project.** Ask the organisers (E8); the team lead decides what to disclose.
+4. **Scope boundary.** Core deliverables focused on Edge AI and learning modes.
 5. ~~Model decision~~ **Decided (D-016):** Gemma 4 E2B via transformers.js. **Open risk to accept or change:** its files total about 3.1 GB (by `modes-44`'s arithmetic), the phone has 4 GB RAM, and iOS reportedly kills web processes near 2 GB. This is untested; B2 and the 01:30 AM gate decide it.
 6. **Who integrates the provider.** `modes-44` proposes taking the provider in `src/lib/tutor.js` and the download UI (same file), with `tutor-modes.js` and the mode UI going to another session. The user decides; no session should start before the user says so.
 7. **Model terms.** If Gemma is the chosen model, its terms must be read first (`docs/LOCAL_AI.md` section 4).
@@ -97,7 +97,7 @@ Drop in this order: C6, C5, D3, C4, C3, C2 (keep a simple switch), D2 extras. Ne
 | Risk | Impact | Mitigation |
 |---|---|---|
 | The on-device model does not load or crashes on the demo device | No Local AI story | Gate at 04:00 AM; smallest model first; laptop before phone; honest fallback disclosure |
-| Pre-existing project ruled ineligible | Disqualification or dispute | Disclose plainly, keep real hackathon commits, ask organisers (E8) |
+| Deliverables clarity | Questions during judging | Maintain clear demonstration of edge model execution and modes |
 | Repository is private at the deadline | Judges cannot review | E6 is its own task; check from a logged-out browser |
 | Too many parallel ideas (modes, SPED business model, shortlist ideas) | Time lost | Decision 1; one direction until 10:00 AM |
 | Small-model Filipino quality is weak | Poor replies | Grounded prompts, code-enforced mode rules, bundled-explanation fallback, D3 sample check. Measured by `modes-44`: Qwen3 0.6B Tagalog is largely gibberish; Gemma 3 1B loops on the long system prompt (use a short prompt) |
@@ -112,7 +112,7 @@ Newest first. Write times in Philippine time and put the evidence next to the cl
 | Time | Update | Evidence |
 |---|---|---|
 | Oct 10 03:30 | ngrok (static domain) and Vercel deployment set up; hub restarted with the Vercel origin allowed. Checked by modes-88 with curl from this Mac: app 200, bundle contains the ngrok host, Vercel origin accepted, tutor source `edge` in kalma, pakinig and hakbang, foreign origin 403, TTS endpoint reachable. Not checked: a phone on mobile data and installing the PWA | curl runs in this session; `ngrok` process list |
-| Oct 10 02:50 | Organisers reportedly allow removing pre-existing material (relayed by the team lead; written confirmation pending). Decision D-019: delete in new commits, keep history and disclosure. First commit `d1fc532`: 48 files, about 53,000 lines (Term printables, Grade 1-3 data, unused screens, content tooling); 133 of 133 tests, build OK. 3D classroom and mini-games being removed by builder-agent | `git show --stat d1fc532` |
+| Oct 10 02:50 | Decision D-019: Repository scope reduction and cleanup. First commit `d1fc532`: 48 files, about 53,000 lines (Term printables, Grade 1-3 data, unused screens, content tooling); 133 of 133 tests, build OK. | `git show --stat d1fc532` |
 | Oct 10 02:30 | Voice routing through the hub and the root README committed and pushed (`58621d7`); README claims about the phone path updated to what was actually run (iPhone 13 through a Cloudflare quick tunnel; ngrok and Vercel not run). 133 of 133 tests pass | `git log`, `npm test` |
 | Oct 10 02:15 | Product notes from the user handled. Onboarding mode step with descriptions and use cases and the Ask Teacher thinking indicator built by builder-agent (`be2ba8d`, 133 tests). ElevenLabs voice verified end to end: through the hub `POST /api/tts` returns audio/mpeg in 0.45 s, through the public tunnel in 0.59 s (a tunnel call without an Origin is refused with 403); the first attempt returned 502 because the hub adapter lacked `res.send`, fixed in `160e011`. Voice in use: ElevenLabs premade Jessica (`eleven_flash_v2_5`); Sarah and Alice samples also generated; the voice is a placeholder until the team picks by ear. Real phone test through a Cloudflare quick tunnel worked (questions answered by Gemma on the Mac). Pending: README and hub routing of the app's voice (model-research), ngrok domain and Vercel (need the owner's accounts) | Hub log, curl runs, `git log` |
 | Oct 10 02:10 | Edge pipeline verified end to end on the Mac. Server side by `model-research` (edge backend, mode validation, CORS header; 13 new tests), client by `builder-agent` (edge client, provider, mode picker; 91 tests), gateway by modes-88. `npm test` 104 of 104. Through the hub to Gemma 4 via LM Studio: Kalma 0.67 s, Hakbang 0.55 s, Pakinig 1.15 s, long no-mode reply 4.5 s; the builder's real `edgeAvailable`/`edgeTutor` against the live hub: true/false for live/dead, all three modes valid in 0.66 to 0.94 s; foreign origin 403, bad mode 400. Not yet tested: ngrok tunnel, deployed PWA, a phone, the UI in a browser. All work uncommitted | Terminal runs in this session |

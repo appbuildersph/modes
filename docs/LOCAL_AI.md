@@ -13,7 +13,7 @@ Context: the AppBuildersPH Hackathon 2026 (Local AI) submission deadline is **10
 | Window (approx.) | Goal | Done when |
 |---|---|---|
 | 11:30 PM - 12:30 AM | Baseline and runtime proof. `npm install`, `npm test`. Confirm WebGPU on the **demo laptop** (`'gpu' in navigator`). Load one small model (Gemma 3 1B IT via WebLLM, or Qwen3-0.6B if Gemma access is a problem) in a throwaway page and get one reply | A reply is generated in the browser with the network off after the weights are cached |
-| 12:30 AM - 2:30 AM | Integrate as a provider in `src/lib/tutor.js` (between Nano and `/api/tutor`), lazy load, download button with progress, `navigator.storage.persist()`, missing-model detection, Workbox exclusion | Asking Teacher Gabay in the Classroom returns an on-device reply labelled as such, with the network off |
+| 12:30 AM - 2:30 AM | Integrate as a provider in `src/lib/tutor.js` (between Nano and `/api/tutor`), lazy load, download button with progress, `navigator.storage.persist()`, missing-model detection, Workbox exclusion | Asking the tutor in the Classroom returns an on-device reply labelled as such, with the network off |
 | 2:30 AM - 4:00 AM | Output control: `stripMarkdown`, sentence cap, remove `<think>`, shared grounded prompt, empty/off-topic reply falls through; unit tests for the pure functions | `npm test` passes with new tests |
 | 4:00 AM - 6:00 AM | Optional: real iPhone attempt (HTTPS tunnel, installed PWA). Optional: Kalma/Pakinig/Hakbang if the team has confirmed definitions. Sleep window | A verified iPhone result, or a clear "not verified" statement |
 | 6:00 AM - 8:30 AM | README with judge recreation steps, disclosures (`docs/SUBMISSION.md`), AI Lab results if built, rehearsal of the offline demo on the demo laptop, demo video, social post | Everything in the `docs/SUBMISSION.md` checklist is ticked |
@@ -23,7 +23,7 @@ Rules for this window: pick **one** model and **one** runtime and make them work
 
 ## 1. Why this exists
 
-Teacher Gabay's offline AI path today is Chrome's Prompt API (Gemini Nano, `self.LanguageModel`) in `src/lib/tutor.js`. That API:
+The offline AI path previously used Chrome's Prompt API (Gemini Nano, `self.LanguageModel`) in `src/lib/tutor.js`. That API:
 
 - needs Chrome's own downloaded model and runtime;
 - is not available in any iOS browser (every iOS browser is a WebKit shell, and Safari has no equivalent API);
@@ -114,7 +114,7 @@ Rules: one model instance at a time; load lazily on first question, not at app s
 
 ### 7.3 Prompt and output control
 
-- Build the prompt from one shared function used by both client and server (today `gabayPrompt()` is duplicated and has drifted).
+- Build the prompt from one shared function used by both client and server (the tutor prompt function previously had slight drift).
 - Include the competency text, the bundled `explanation[lang]` and `worked_example[lang]` as grounding so the small model restates and applies rather than invents.
 - Treat the student question and competency text as data, not instructions.
 - Enforce the mode rules in code after generation: strip markdown (`stripMarkdown`), truncate to the mode's sentence limit, spell out fractions and symbols for speech, drop any `<think>` content, and fall through to the next provider if the result is empty or off-topic.

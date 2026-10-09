@@ -20,8 +20,7 @@
 //   EDGE_TIMEOUT_MS        upstream timeout, default 20000
 // The upstream server must never be exposed directly; only this handler is.
 //
-// Uses the modern Google Gen AI SDK (@google/genai) in Vertex mode — the old
-// @google-cloud/vertexai SDK is deprecated (removal June 2026).
+// Uses the modern Google Gen AI SDK (@google/genai) in Vertex mode.
 //
 // SECURITY: the system instruction is built HERE from the request's ref+lang
 // against the bundled curriculum. It is never accepted from the client — doing

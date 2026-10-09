@@ -14,7 +14,7 @@ The project ships three accessibility-oriented learning modes. Each changes both
 
 ## 2. Wording and claims
 
-- The "For" column describes the learners each mode is designed to support. It is **not** a diagnosis, screening, or clinical claim. Gabay does not diagnose and must never ask for or store a diagnosis.
+- The "For" column describes the learners each mode is designed to support. It is **not** a diagnosis, screening, or clinical claim. The app does not diagnose and must never ask for or store a diagnosis.
 - In the submission, pitch, and UI copy, say "designed to support learners who..." and avoid claims of treatment, therapy, or proven outcomes. Do not state efficacy figures that were not measured.
 - Mode names are Filipino words (Kalma, Pakinig, Hakbang). Show the English gloss (Calm/Focus, Listen, Step) alongside where space allows.
 - Any learner may choose any mode; modes are preferences, not labels attached to the learner.
@@ -66,7 +66,7 @@ Keep `applyMode` pure and unit-tested in `test/` with fixed inputs; it is the pa
 The current app deliberately bundles only Grades 4-6 (`src/lib/grades.js`, `docs/DECISIONS.md` D-002). Hakbang "unlocks Grade 1 to 3 content". The Grade 1-3 JSON files exist in `src/curriculum/` (about 13-16k lines each, 47 / 53 / 51 competencies per the import script's expected counts) but are not imported. To honour the confirmed mode definition without regressing the default experience:
 
 - Load Grade 1-3 data lazily and only when Hakbang is active (dynamic `import`, as `content.js` already does for 4-6), so the default bundle does not grow.
-- Update every place that assumes grades 4-6: `GRADES`/`isSupportedGrade`, the onboarding grade picker, mastery keys (`gabay:mastery:g{N}` already generalise), `api/tutor.js` and `api/questions.js` validation (`isSupportedGrade`, `catalogByRef`), and `content-catalog.js`.
+- Update every place that assumes grades 4-6: `GRADES`/`isSupportedGrade`, the onboarding grade picker, mastery storage keys, `api/tutor.js` and `api/questions.js` validation (`isSupportedGrade`, `catalogByRef`), and `content-catalog.js`.
 - Re-check the quality of the Grade 1-3 content before exposing it; earlier code comments say entries for Grade 1 needed repairs (the `COMPETENCY_REPAIRS` note in `curriculum-overrides.js`).
 - Record the change as a decision (`D-014`) and update the PRD scope.
 

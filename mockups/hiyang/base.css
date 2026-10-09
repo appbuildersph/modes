@@ -1,4 +1,4 @@
-/* Gabay design system, adapted from Team CrossCampus's Gabay app
+/* Design system, adapted from the base app
    (src/index.css and tailwind.config.js) so this mockup looks like the real app.
    Tailwind @apply rules and utilities are written out as plain CSS. */
 :root {
@@ -83,7 +83,7 @@ button:focus-visible, input:focus-visible, .gb-btn:focus-visible, .gb-chip:focus
   background-color: var(--gb-background); color: var(--gb-ink);
   font-family: var(--font-body); -webkit-font-smoothing: antialiased;
 }
-/* faint drifting doodles, the same tile Gabay uses behind every screen after the splash */
+/* faint drifting doodles, the same tile used behind every screen after the splash */
 .gb-shell.classroom-page, .gb-shell.modes-page {
   background-image: url("assets/bg-tile.png") !important;
   background-repeat: repeat !important;
@@ -99,7 +99,7 @@ button:focus-visible, input:focus-visible, .gb-btn:focus-visible, .gb-chip:focus
 @keyframes nova-correct { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.35); } }
 .nova-correct { animation: nova-correct 1.5s ease-in-out; }
 
-/* ---------- phone chassis (Gabay's desktop phone frame) ---------- */
+/* ---------- phone chassis (desktop phone frame) ---------- */
 .phone-chassis {
   position: relative; flex-shrink: 0; border-radius: 58px; padding: 14px 10px;
   background: linear-gradient(160deg, #3a3a3e 0%, #1c1c1f 40%, #2a2a2e 100%);

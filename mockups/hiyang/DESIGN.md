@@ -6,7 +6,7 @@ Companion to the clickable mockup in this folder. **Hiyang** is the mockup's wor
 - The mode definitions and the local AI enforcement rules are in `docs/TUTOR_MODES.md`.
 - This file adds what those two do not cover: the layout of each mockup screen, each mode's sample copy, the Hakbang step sequence, and a file-level build map.
 
-Live: https://hiyang-mockup.vercel.app (deep links `#setup`, `#kalma`, `#pakinig`, `#hakbang`, `#default`). Questions and Teacher Gabay replies are fixed samples, voice answers are simulated, and read-aloud uses the browser's built-in voice.
+Live: https://hiyang-mockup.vercel.app (deep links `#setup`, `#kalma`, `#pakinig`, `#hakbang`, `#default`). Questions and tutor replies are fixed samples, voice answers are simulated, and read-aloud uses the browser's built-in voice.
 
 ## Screens
 
@@ -26,7 +26,7 @@ Top to bottom, as in the practice tab of `src/screens/Classroom.jsx`:
 4. Chalkboard panel: label and progress dots, the question, feedback after answering.
 5. Answer card: hint line and answer field (Pakinig adds the mic).
 6. Action row: primary button (Answer, then Next or Try again in the same spot) and the Nova help button.
-7. Teacher Gabay panel, opened from Nova: guidance bubble, Listen again, Pause, Ask Teacher. Ask Teacher opens a question field with Mic and Ask, then a reply card labelled "On-device (offline)".
+7. Tutor panel, opened from Nova: guidance bubble, Listen again, Pause, Ask Teacher. Ask Teacher opens a question field with Mic and Ask, then a reply card labelled "On-device (offline)".
 
 Sample item in No mode, Kalma and Pakinig: "Ana has 8 slices of bibingka. She ate 2 slices. What fraction of the bibingka is left?" Accepted answers: `3/4`, `6/8`, any equal fraction, `0.75`, "three fourths", "six eighths".
 
@@ -71,7 +71,7 @@ Voice engine (open): Kokoro (Apache-2.0) gives better English voices offline but
 
 Item: "Ana has 8 slices of bibingka. She ate 2. How many slices are left?"
 
-| Step | Prompt | Answer | What the visuals do | Teacher Gabay hint |
+| Step | Prompt | Answer | What the visuals do | Tutor hint |
 | --- | --- | --- | --- | --- |
 | 1 | Count all the slices. How many are there? | 8 | Tiles get numbers 1 to 8 | Let's count the slices first. How many slices are there in all? |
 | 2 | How many slices did Ana eat? | 2 | Tiles 7 and 8 turn dashed with a strike | Look at the story again. How many slices did Ana eat? |
@@ -85,7 +85,7 @@ Kept for comparison: drifting doodles, sparkles, "Quick Challenge", the full-scr
 
 ## Build map
 
-Where each mockup behaviour lands in the app, aligned with `docs/TUTOR_MODES.md` sections 4 to 7. Port the mode rules onto the real classes and CSS variables; do not copy this folder's `!important` overrides or `gabay-classroom.css` into the app (`docs/DESIGN.md` section 9).
+Where each mockup behaviour lands in the app, aligned with `docs/TUTOR_MODES.md` sections 4 to 7. Port the mode rules onto the real classes and CSS variables; do not copy this folder's `!important` overrides or `classroom.css` into the app (`docs/DESIGN.md` section 9).
 
 | Area | Change |
 | --- | --- |
@@ -96,7 +96,7 @@ Where each mockup behaviour lands in the app, aligned with `docs/TUTOR_MODES.md`
 | `Classroom.jsx` | Kalma: skip `showCorrectOverlay` and `answer-shake`, show the question count. Pakinig: word-highlighted read-aloud of the question and a voice answer. Hakbang: render the visuals and always go through `StepScaffold`. |
 | `StepScaffold.jsx`, `LearningVisual.jsx`, `visual-assets.js` | Large step card; blocks and number line. |
 | `speech.js` | Rate `0.8` in Pakinig (now `0.95`); word-boundary callback for highlighting. |
-| `src/lib/tutor.js` and `api/tutor.js` | Append `modePrompt()` in both copies of `gabayPrompt()` and keep them in sync. The server accepts an allow-listed `mode` field, never a client-written instruction. The tutor cache key includes the mode. |
+| `src/lib/tutor.js` and `api/tutor.js` | Append `modePrompt()` in both copies of tutor prompt and keep them in sync. The server accepts an allow-listed `mode` field, never a client-written instruction. The tutor cache key includes the mode. |
 | `question-session.js`, `api/questions.js`, `grades.js` | Hakbang: `madali` tier, plus Grade 1 to 3 content loaded lazily and only in Hakbang (`docs/TUTOR_MODES.md` section 6). |
 | `LessonBrief.jsx`, `Games.jsx` | Kalma hides the 3D classroom entry and coins. |
 
@@ -106,12 +106,12 @@ Where each mockup behaviour lands in the app, aligned with `docs/TUTOR_MODES.md`
 | --- | --- |
 | `index.html` | Page shell: header, mode buttons, phone frame, notes card |
 | `app.js` | Screens, sample content, answer checks, read-aloud with word highlighting, simulated mic |
-| `gabay-base.css` | Gabay tokens, `gb-card`, `gb-btn`, `gb-chip`, phone frame (adapted from `src/index.css`) |
-| `gabay-classroom.css` | Copy of `src/screens/Classroom.css`, unchanged |
+| `base.css` | Design tokens, `gb-card`, `gb-btn`, `gb-chip`, phone frame (adapted from `src/index.css`) |
+| `classroom.css` | Copy of `src/screens/Classroom.css`, unchanged |
 | `modes.css` | Page around the phone, setup screen, and each mode's overrides |
-| `assets/nova.png`, `assets/bg-tile.png` | Gabay's mascot and doodle tile |
+| `assets/nova.png`, `assets/bg-tile.png` | Nova mascot and doodle tile |
 
-The live site is the Vercel project `hiyang-mockup` (scope `riecodes-projects`). To redeploy from this folder, link it once with `vercel link --yes --project hiyang-mockup`, then run `vercel deploy --prod --yes` (`.vercel` is gitignored). The styles, Nova and the doodle tile come from the pre-existing Gabay app; disclose them with the rest of the base project (`docs/SUBMISSION.md`).
+The live site is the Vercel project `hiyang-mockup` (scope `riecodes-projects`). To redeploy from this folder, link it once with `vercel link --yes --project hiyang-mockup`, then run `vercel deploy --prod --yes` (`.vercel` is gitignored). The styles, Nova and the doodle tile adapt the base app design system.
 
 ## Open decisions
 

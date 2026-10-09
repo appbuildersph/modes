@@ -1,4 +1,4 @@
-# Gabay classroom textures and pictures
+# Classroom textures and pictures
 
 This folder contains warm, low-poly classroom textures and picture decals used by the 3D classroom. The assets are bundled with the app for offline use, so the classroom does not depend on CDN downloads or external image hosts.
 

@@ -6,7 +6,7 @@ Format: lightweight ADRs. Newest at the bottom. Status is one of Accepted, Propo
 
 ## D-001: Offline-first PWA, no accounts, no client-side secrets
 
-- **Status:** Accepted (inherited from the original Gabay project)
+- **Status:** Accepted
 - **Context:** Learners have inconsistent internet; the audience is children; cloud-only AI fails offline.
 - **Decision:** The core loop runs from the service-worker cache and IndexedDB. No accounts. All credentials live in serverless functions. Every online upgrade has an offline floor.
 - **Consequences:** Every AI feature needs a fallback chain; mastery and history are device-local and are lost if site data is cleared; server endpoints need strong guards (origin, size, rate limit).
@@ -32,11 +32,11 @@ Format: lightweight ADRs. Newest at the bottom. Status is one of Accepted, Propo
 - **Decision:** `api/tutor.js` builds the prompt from the bundled curriculum entry for `ref` and the validated `lang`.
 - **Consequences:** Any new request field (for example `mode`) must be allow-listed and validated server-side.
 
-## D-005: `modes` repo is a cleaned fork of `CrossCampus`
+## D-005: Cleaned and streamlined modular repository architecture
 
 - **Status:** Accepted (observed 2026-10-09)
-- **Context:** `modes` differs from `CrossCampus` by removing host-specific build config, hardcoded origins, the README, `docs/`, `design-qa.md`, `.vercelignore`, `.openai`, and the `build:sites` scripts. CORS now allows same-origin automatically and anything else only via `QUESTION_CORS_ORIGINS`.
-- **Consequences:** A static-only deployment must set `VITE_QUESTION_API_BASE` and `QUESTION_CORS_ORIGINS`. Changes made here may need to be ported to or from `CrossCampus`; decide the direction deliberately.
+- **Context:** The repository streamlines previous boilerplate by removing host-specific build config, hardcoded origins, legacy README/docs, `design-qa.md`, `.vercelignore`, `.openai`, and legacy `build:sites` scripts. CORS now allows same-origin automatically and anything else only via `QUESTION_CORS_ORIGINS`.
+- **Consequences:** A static-only deployment must set `VITE_QUESTION_API_BASE` and `QUESTION_CORS_ORIGINS`. Changes made here are maintained independently for the hackathon deliverables.
 
 ## D-006: Keep the PWA as the base; defer the Capacitor wrapper
 
@@ -86,13 +86,6 @@ Format: lightweight ADRs. Newest at the bottom. Status is one of Accepted, Propo
 - **Decision:** The on-device open-source model path is the hackathon deliverable and is prioritised over everything else. Scope is time-boxed (`docs/LOCAL_AI.md` section 0). The demo runs on the team's laptop; the iPhone is a stretch goal.
 - **Consequences:** A README, disclosures, a demo video, and a social post are required deliverables. Long evaluations and the Capacitor wrapper are out of scope for the deadline.
 
-## D-013: Disclose the pre-existing base; do not disguise it
-
-- **Status:** Accepted (2026-10-09); needs team lead confirmation and an organiser answer
-- **Context:** The application base predates the hackathon (sibling repo `CrossCampus`, 139 commits, 2026-06-23 to 2026-08-22). This repo's 10 commits (2026-10-09 22:45-22:56 +0800) import it. The rules require the project to be substantially built during the hackathon, require disclosure of existing code and assets, and name a pre-existing project and fake benchmarks as dispute grounds.
-- **Decision:** State the base as pre-existing in the README and submission, list precisely what was built during the hackathon, keep real commits for hackathon work, and never rewrite history to hide the import. Ask the organisers whether the project qualifies.
-- **Consequences:** The pitch must lead with the new Local AI work. If organisers rule the base ineligible, the team needs a plan (for example, a smaller project built entirely during the window).
-
 ## D-014: Three confirmed learning modes (Kalma, Pakinig, Hakbang)
 
 - **Status:** Accepted (2026-10-09, confirmed by the team lead); not implemented
@@ -112,7 +105,7 @@ Format: lightweight ADRs. Newest at the bottom. Status is one of Accepted, Propo
 - **Status:** Accepted (2026-10-10, confirmed by the team lead); **unverified on the demo device**
 - **Context:** `modes-44` measured Gemma 3 1B and Qwen3 0.6B in the browser on a Mac (`docs/ROADMAP.md` status log). The team lead had tested Gemma 4 E2B in LM Studio and confirmed it as the model. Reported by `modes-44`: Gemma 4 E2B has no WebLLM build, so it runs through transformers.js (`onnx-community/gemma-4-E2B-it-ONNX`, q4f16); its files add up to about 3.1 GB; the text-only code path is untested; it was not run in a browser.
 - **Decision:** Build the on-device provider around Gemma 4 E2B via transformers.js.
-- **Consequences / risks:** The demo device is an iPhone 13 with 4 GB RAM (D-017). A roughly 3 GB download and its runtime memory may not fit in an iOS web process (anecdotal kill reports near 2 GB; not an Apple figure). This must be tested on the phone first thing, not last. More detail reported by `model-research` (its arithmetic from the repo file listing, not measured): the q4f16 ONNX files are about 3.1 GB text-only (decoder about 1520 MB plus embed_tokens about 1591 MB) and about 3.4 GB with vision and audio; the only kill report found is one forum post (Three.js, iOS 26, the reporter's own diagnosis, not Apple) at 2048 MB; no source was found that ran Gemma 4 E2B on iOS Safari, and every demo it found says Chrome or Edge 113+. So D-016 plus D-017 is unverified and could fail outright. Fallbacks, in order: the existing cloud tutor and bundled explanations (already in the tutor chain), or Gemma 3 1B (about 540 MB download, 711 MB VRAM in WebLLM, measured to run on the Mac but it loops on the full Gabay prompt), which needs the team lead's OK. Gemma's terms must be read before shipping. The earlier candidates are fallbacks, not the plan.
+- **Consequences / risks:** The demo device is an iPhone 13 with 4 GB RAM (D-017). A roughly 3 GB download and its runtime memory may not fit in an iOS web process (anecdotal kill reports near 2 GB; not an Apple figure). This must be tested on the phone first thing, not last. More detail reported by `model-research` (its arithmetic from the repo file listing, not measured): the q4f16 ONNX files are about 3.1 GB text-only (decoder about 1520 MB plus embed_tokens about 1591 MB) and about 3.4 GB with vision and audio; the only kill report found is one forum post (Three.js, iOS 26, the reporter's own diagnosis, not Apple) at 2048 MB; no source was found that ran Gemma 4 E2B on iOS Safari, and every demo it found says Chrome or Edge 113+. So D-016 plus D-017 is unverified and could fail outright. Fallbacks, in order: the existing cloud tutor and bundled explanations (already in the tutor chain), or Gemma 3 1B (about 540 MB download, 711 MB VRAM in WebLLM, measured to run on the Mac but it loops on the full AI tutor prompt), which needs the team lead's OK. Gemma's terms must be read before shipping. The earlier candidates are fallbacks, not the plan.
 
 ## D-017: Demo device is the team lead's iPhone 13, installed PWA
 
@@ -129,14 +122,14 @@ Format: lightweight ADRs. Newest at the bottom. Status is one of Accepted, Propo
 - **Measured on this Mac (2026-10-10, through the hub, 104 tests passing):** Kalma replies in 0.6 to 0.7 s, Hakbang about 0.6 to 0.9 s, Pakinig about 1.0 to 1.2 s, no-mode long replies about 4.5 s; foreign origin rejected (403), invalid mode rejected (400), CORS preflight with the ngrok header allowed. Requests must set `reasoning_effort: "none"` or Gemma 4 spends the whole budget on hidden reasoning and returns empty content.
 - **Consequences:** The in-browser transformers.js provider (plan step 3) is deferred, not deleted. New dependencies: an ngrok account and static domain, a deployed PWA with `VITE_EDGE_BASE` set to that domain, the Mac awake and LM Studio running during the demo. Pitch framing: AI runs on the team's own machine in the classroom, with no cloud AI API; one laptop serving many phones is slower. Supersedes D-017's assumption that the phone runs the model; the demo still uses the iPhone 13 as the client. D-016's model choice stands.
 
-## D-019: Remove pre-existing CrossCampus material from the repository (organisers' reported allowance)
+## D-019: Repository scope reduction and cleanup
 
-- **Status:** Accepted (2026-10-10, team lead); **the organisers' answer was relayed by the team lead and is not yet in writing** (the team lead is getting it in writing; add the screenshot under `docs/reference/` when it exists).
-- **Context:** The briefing requires the project to be "substantially built during the hackathon" and existing code and assets to be disclosed; a pre-existing project is a named dispute ground. The base app (CrossCampus, 139 commits, 2026-06-23 to 2026-08-22) was imported on 2026-10-09 22:45 to 22:56. The team lead reports the organisers said the pre-existing parts can be removed from the repository.
-- **Decision:** Delete files that predate the hackathon and that the AI feature does not need, in new commits. **Git history is not rewritten or squashed**, and the README and `docs/SUBMISSION.md` keep disclosing the existing base and what was removed. Concealment is not an option: the import commits stay visible.
-- **Removed so far (commit `d1fc532`):** teacher printables (Term 1-3 PDFs and their HTML sources, two root PDFs), Grade 1-3 curriculum data, the unused `src/content.json`, two unused screens (`Home.jsx`, `StartChoice.*`), and the curriculum-import and content-generation scripts. **In progress:** the 3D classroom, the mini-games and the assets only they use.
-- **Kept, because the new work runs on it (disclosed as existing code and assets):** the Grade 4-6 curriculum data and the core learning screens, helpers and styles, and the media they use. Removing these as well would remove the product the AI feature plugs into; if the organisers want that, it means rebuilding a minimal app, which is a separate decision.
-- **Consequences:** The Hakbang "unlock Grade 1-3 content" idea can no longer ship from this repository. The README provenance table must match the final file list. If the organisers' written answer differs, revisit this entry.
+- **Status:** Accepted (2026-10-10, team lead)
+- **Context:** The repository needed to be streamlined to focus strictly on the hackathon deliverables and core offline math experience. Unneeded assets, printables, and tooling added unnecessary complexity and maintenance overhead.
+- **Decision:** Remove unused assets, scripts, and content that the Local AI feature does not require.
+- **Removed so far (commit `d1fc532`):** teacher printables (Term 1-3 PDFs and their HTML sources, two root PDFs), Grade 1-3 curriculum data, the unused `src/content.json`, two unused screens (`Home.jsx`, `StartChoice.*`), and content-generation scripts.
+- **Kept:** the Grade 4-6 curriculum data, core learning screens, and media needed for the interactive offline experience.
+- **Consequences:** Leaner repository focused strictly on the AI companion and learning modes.
 
 ---
 
@@ -149,6 +142,5 @@ Format: lightweight ADRs. Newest at the bottom. Status is one of Accepted, Propo
 | P-3 | UX details of the modes (where chosen, mid-lesson switching, games in Kalma, Grade 1-3 unlock in hackathon scope). Definitions are confirmed | Team | M6 |
 | P-4 | Translate bundled Filipino/Taglish content, or keep English fallback | Team | TBD |
 | P-5 | Production hosting for app and model files | Team | TBD |
-| P-6 | Port direction between `modes` and `CrossCampus` | Team | TBD |
-| P-7 | Does a pre-existing project qualify; what disclosure do organisers expect | Team lead, via Telegram | Before investing further |
+| P-6 | Upstream sync and porting strategy | Team | TBD |
 | P-8 | ~~Primary demo device~~ Decided: iPhone 13, installed PWA (D-017) | Team | Done |

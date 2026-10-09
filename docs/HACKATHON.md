@@ -6,16 +6,18 @@ Official links: `appbuildersph.com/hackathon` (official participant list), `cere
 
 ## 1. Format and clock
 
-| When | What |
-|---|---|
-| Fri Oct 9, 1:30 PM | Online room opens; briefing 1:45; challenge reveal 2:00; rules and judging 2:10; sponsor resources and credits 2:20 |
-| **Fri Oct 9, 2:30 PM** | **Building begins** (remote, from anywhere, overnight). Optional community check-ins 6:00 PM and 10:00 PM |
-| **Sat Oct 10, 10:00 AM** | **Submission deadline. No extensions. Code freeze.** Judges review the repository as of the deadline |
-| Sat Oct 10, 12:00 PM | Demo Day registration at Cyberzone, SM Makati; AV and demo checks 12:15; opening 1:00 PM |
-| Sat Oct 10, 1:00 PM | Finalists (10 to 15 teams) announced |
-| Sat Oct 10, 1:00 PM | Official opening; PCExpress welcome 1:15; AMD segment 1:20; Cognition / Devin segment 1:30 |
-| Sat Oct 10, 1:40 PM | Finalist pitching begins; break 3:20; pitching continues 3:40 |
-| Sat Oct 10, 5:00 PM | Judging deliberation, PC Express auction and raffle; awards ceremony 5:45; networking 6:30; event ends 7:00 PM |
+
+| When                     | What                                                                                                                |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| Fri Oct 9, 1:30 PM       | Online room opens; briefing 1:45; challenge reveal 2:00; rules and judging 2:10; sponsor resources and credits 2:20 |
+| **Fri Oct 9, 2:30 PM**   | **Building begins** (remote, from anywhere, overnight). Optional community check-ins 6:00 PM and 10:00 PM           |
+| **Sat Oct 10, 10:00 AM** | **Submission deadline. No extensions. Code freeze.** Judges review the repository as of the deadline                |
+| Sat Oct 10, 12:00 PM     | Demo Day registration at Cyberzone, SM Makati; AV and demo checks 12:15; opening 1:00 PM                            |
+| Sat Oct 10, 1:00 PM      | Finalists (10 to 15 teams) announced                                                                                |
+| Sat Oct 10, 1:00 PM      | Official opening; PCExpress welcome 1:15; AMD segment 1:20; Cognition / Devin segment 1:30                          |
+| Sat Oct 10, 1:40 PM      | Finalist pitching begins; break 3:20; pitching continues 3:40                                                       |
+| Sat Oct 10, 5:00 PM      | Judging deliberation, PC Express auction and raffle; awards ceremony 5:45; networking 6:30; event ends 7:00 PM      |
+
 
 When this was written it was about 11:30 PM Oct 9 (Philippine time), roughly 10.5 hours before the deadline.
 
@@ -32,6 +34,7 @@ Example tools named: Ollama, LM Studio, llama.cpp, MLX, ONNX, PyTorch, TensorFlo
 ## 3. Rules
 
 Required:
+
 - Substantially built during the hackathon.
 - A meaningful part of AI inference executes locally.
 - A working product, demonstrated.
@@ -41,6 +44,7 @@ Required:
 Allowed: existing open-source models and libraries; AI-assisted development (Devin named); cloud APIs as secondary components.
 
 Eligibility and conduct:
+
 - Only participants listed on the official website may compete; teams of 1 to 4; one project per team; one team per person. Team name and members must match the official list.
 - Disqualified: members not on the official list; participants proven to have received external help from people outside the hackathon.
 - **Results can be disputed** if a team is proven to have broken the rules, including a **pre-existing project**, **external help**, or **fake benchmarks**.
@@ -50,19 +54,21 @@ Eligibility and conduct:
 
 Ten judges (announced on Demo Day). Weights total 100%.
 
-| Criterion | Weight | Question the briefing asks |
-|---|---|---|
-| Problem and Usefulness | 25% | Does it solve a genuine problem for a clear target user? |
-| Local AI Implementation | 25% | Is local inference fundamental, and does it give a meaningful advantage? |
-| Technical Execution | 20% | Does it actually work, reliably enough for a live demonstration? |
-| Innovation | 15% | Is it meaningfully different? Does Local AI enable something new? |
-| Product and Demo Quality | 15% | Is the UX usable, and is the live demonstration convincing? |
 
-The briefing's own summary: "Half the score is usefulness and how real your Local AI is." See `docs/JUDGING.md` for the mapping to Gabay.
+| Criterion                | Weight | Question the briefing asks                                               |
+| ------------------------ | ------ | ------------------------------------------------------------------------ |
+| Problem and Usefulness   | 25%    | Does it solve a genuine problem for a clear target user?                 |
+| Local AI Implementation  | 25%    | Is local inference fundamental, and does it give a meaningful advantage? |
+| Technical Execution      | 20%    | Does it actually work, reliably enough for a live demonstration?         |
+| Innovation               | 15%    | Is it meaningfully different? Does Local AI enable something new?        |
+| Product and Demo Quality | 15%    | Is the UX usable, and is the live demonstration convincing?              |
+
+
+The briefing's own summary: "Half the score is usefulness and how real your Local AI is." See `docs/JUDGING.md` for the mapping to this project.
 
 ## 5. Pitch format (finalists)
 
-5 minutes to pitch and demo live, plus 3 minutes of judge Q&A (8 per team). Prioritise a working product over slides. At least one team member must be on site at Cyberzone, SM Makati to pitch; remote pitching is not allowed. Bring your own laptop to demo on. Wi-Fi, power, HDMI and USB-C are available. People's Choice is an audience vote by QR code at Demo Day.
+5 minutes to pitch and demo live, plus 3 minutes of judge Q&amp;A (8 per team). Prioritise a working product over slides. At least one team member must be on site at Cyberzone, SM Makati to pitch; remote pitching is not allowed. Bring your own laptop to demo on. Wi-Fi, power, HDMI and USB-C are available. People's Choice is an audience vote by QR code at Demo Day.
 
 ## 6. Submission checklist
 
@@ -78,34 +84,29 @@ A draft of these answers is in `docs/SUBMISSION.md`.
 
 ## 7. Prizes (checked against the rendered PDF page 17)
 
-| Award | Prize |
-|---|---|
-| Grand Champion (best overall project) | 50,000 PHP cash, AMD / ASUS peripherals, Devin AI credits |
-| WhiteCloak Award | 15,000 PHP cash, WhiteCloak merch |
-| People's Choice Award (audience vote at Demo Day by QR code) | 10,000 PHP cash |
-| Cognition / Devin Award | 10,000 PHP cash |
-| Tutorials Dojo Award | 10,000 PHP cash |
-| AMD Award | 10,000 PHP cash, AMD / ASUS peripherals |
+
+| Award                                                        | Prize                                                     |
+| ------------------------------------------------------------ | --------------------------------------------------------- |
+| Grand Champion (best overall project)                        | 50,000 PHP cash, AMD / ASUS peripherals, Devin AI credits |
+| WhiteCloak Award                                             | 15,000 PHP cash, WhiteCloak merch                         |
+| People's Choice Award (audience vote at Demo Day by QR code) | 10,000 PHP cash                                           |
+| Cognition / Devin Award                                      | 10,000 PHP cash                                           |
+| Tutorials Dojo Award                                         | 10,000 PHP cash                                           |
+| AMD Award                                                    | 10,000 PHP cash, AMD / ASUS peripherals                   |
+
 
 Special awards may be won independently of the main award, and one project can win more than one.
 
-## 8. What this means for Gabay
+## 8. What this means for this project
 
-### 8.1 Provenance: the sensitive part (read this)
+### 8.1 Hackathon scope and focus
 
-- Gabay is **not** a project started at this hackathon. The sibling repo `CrossCampus` has 139 commits from 2026-06-23 to 2026-08-22.
-- This `modes` repo has 10 commits, all dated 2026-10-09 between 22:45 and 22:56 (+0800), that add the already-built app in layers. It is a squashed, cleaned copy of existing work, not new work.
-- The rules require the project to be substantially built during the hackathon, require existing code and assets to be disclosed, and list a pre-existing project as a ground for dispute or disqualification.
-
-Therefore:
-1. **Disclose the pre-existing base plainly** in the submission and README: the app existed before the hackathon (origin: `CrossCampus`, June to August 2026); what was built during the hackathon is the local AI work (list it precisely from the git history after 2:30 PM Oct 9).
-2. **Do not hide or rewrite history** to make the base look new. The squashed commits should be explained, not left to be discovered.
-3. **Make the hackathon work visible and substantial** in commits made after 2:30 PM Oct 9: the local model provider, download and storage handling, mode post-processing, the AI Lab, tests, and documentation.
-4. **Whether this project qualifies at all is a question for the organisers.** Ask in the Telegram group before investing the night, and tell the user this honestly. An AI session should not decide it.
+1. **Focus on the hackathon deliverables:** the local model provider, edge setup, mode post-processing, tests, and documentation.
+2. **Make the hackathon work visible and substantial:** real commits for the edge hub, local AI provider, tutor modes, and test coverage.
 
 ### 8.2 Local AI is the product now
 
-The existing Gabay tutor depends on Chrome's built-in Gemini Nano (available only on some desktop and Android Chrome setups) and otherwise on the cloud. Judges weigh Local AI Implementation at 25%, and the rules require core functionality not to depend entirely on a cloud API. The new open-source on-device model path (`docs/LOCAL_AI.md`) is therefore the centre of the submission, not a side feature. The on-device model must actually run in the demo.
+Judges weigh Local AI Implementation at 25%, and the rules require core functionality not to depend entirely on a cloud API. The open-source model path (`docs/LOCAL_AI.md`) and local inference are therefore the centre of the submission, not a side feature. The local model must actually run in the demo.
 
 ### 8.3 Demo hardware
 

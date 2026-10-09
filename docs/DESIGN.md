@@ -9,7 +9,7 @@ Target device (D-017): an iPhone 13 (390 x 844 pt screen) running the app as an 
 ## 1. Principles (as practised in the code)
 
 1. **Friendly neo-brutalist.** Thick dark outlines, hard offset shadows, rounded pills, flat pastel fills. Playful but legible.
-2. **One mascot, one voice.** The mascot image is "Nova" (`src/assets/nova.png`, alt text "Nova"); the tutor persona is "Teacher Gabay". Replies are warm, short, plain text.
+2. **One mascot, one voice.** The mascot image is "Nova" (`src/assets/nova.png`, alt text "Nova"); the tutor persona is "Teacher". Replies are warm, short, plain text.
 3. **Drawn, not emoji.** Icons and doodles are inline SVG with the same outline color, so they survive text or emoji stripping (comment in `Primitives.jsx`).
 4. **Mobile column first.** A phone-width column (max 440 px). On screens 500 px and wider the app sits inside a decorative phone frame; on a real phone the frame wrappers are transparent.
 5. **Offline-safe visuals.** Everything shown must work with the network off. Fonts are the known exception (section 7).
@@ -78,7 +78,7 @@ Rule: secondary text may use `--gb-muted` or ink at 70% or more, never ink below
 
 - Inline SVG line icons, 24 px viewBox, 2.2 px stroke in `--gb-outline`, no fill unless meaningful (`BottomNav.jsx`, `Icons.jsx`, `SoundToggle.jsx`). All are `aria-hidden`; the control carries the label.
 - Decorative SVG doodles (`Sparkle`, `Cloud`, `Plant`, `Doodles`) at 60-70% opacity, `pointer-events-none`.
-- Illustrations in `public/` (home, game, review images, splash background `gabay-background.webp`, `og.png`) and 3D classroom textures in `textures/`. Origins and licenses of these assets are not documented yet (needed for the submission disclosure; see `docs/SUBMISSION.md`).
+- Illustrations in `public/` (home, game, review images, splash background, `og.png`) and 3D classroom textures in `textures/`. Origins and licenses of these assets are not documented yet (needed for the submission disclosure; see `docs/SUBMISSION.md`).
 - Icons for the PWA: `nova.png`, `pwa-192x192.png`, `pwa-512x512.png`, `maskable-512x512.png`, `mascot.svg`. There is **no `apple-touch-icon` link and no `apple-mobile-web-app-*` meta** in the source `index.html`; the Home Screen icon and standalone behaviour on iOS are **unverified on device**.
 
 ## 6. Components
@@ -118,7 +118,7 @@ Interaction targets seen in code: nav tabs `min-h-[56px]`, several controls `min
 
 ## 8. Learning modes: design specification
 
-Confirmed definitions: `docs/TUTOR_MODES.md` section 1. Visual reference: the static **Hiyang mockup** (`mockups/hiyang/index.html`, a mockup of the Gabay practice screen with sample content; no live AI). `gabay-classroom.css` is a byte-for-byte copy of the app's `src/screens/Classroom.css` (checked with `diff`), `gabay-base.css` is adapted from `src/index.css`, and `modes.css` adds the three modes. Screen-by-screen layout, sample copy and the Hakbang step table are in `mockups/hiyang/DESIGN.md`, which takes precedence over this section where they differ. The mockup is not integrated into the app. Hiyang is the mockup's wordmark; the project name is undecided.
+Confirmed definitions: `docs/TUTOR_MODES.md` section 1. Visual reference: the static **Hiyang mockup** (`mockups/hiyang/index.html`, a mockup of the math practice screen with sample content; no live AI). The classroom styles adapt the app's `src/screens/Classroom.css`, base CSS is adapted from `src/index.css`, and `modes.css` adds the three modes. Screen-by-screen layout, sample copy and the Hakbang step table are in `mockups/hiyang/DESIGN.md`, which takes precedence over this section where they differ. The mockup is not integrated into the app. Hiyang is the mockup's wordmark; the project name is undecided.
 
 ### 8.1 Mechanism
 
@@ -190,7 +190,7 @@ The full file-by-file build map is in `mockups/hiyang/DESIGN.md` ("Build map"); 
 4. Keep tap targets at least 44 pt (56 pt in Pakinig and Hakbang). Keep text contrast at 4.5 : 1 or better; do not use ink below 70% for small text.
 5. Honour `prefers-reduced-motion` for every new animation; Kalma shows no decorative animation at all.
 6. Do not add network-dependent visuals (remote fonts or images) without a bundled fallback; the app must look right offline.
-7. Do not copy the Hiyang mockup's `!important` overrides or its duplicated `gabay-classroom.css` into the app; port the mode rules onto the real classes and variables.
+7. Do not copy the Hiyang mockup's `!important` overrides or its duplicated classroom CSS into the app; port the mode rules onto the real classes and variables.
 8. Test layout at 390 x 844 pt, portrait, standalone, with the network off. The simulator is not evidence for iPhone behaviour.
 9. No clinical or efficacy wording in any UI copy (see `docs/TUTOR_MODES.md` section 2).
 
@@ -200,7 +200,7 @@ The full file-by-file build map is in `mockups/hiyang/DESIGN.md` ("Build map"); 
 2. Does Kalma hide the Games tab, or simplify the games?
 3. Are the Atkinson Hyperlegible font and the other fonts allowed to be bundled (license: they are open fonts, but the files must be added and their licenses listed in the submission)?
 4. What are the origins and licenses of the illustrations, textures, and sound effects?
-5. Project name: the mockup notes list Hiyang, Akma ("fitting"), Sari ("variety"), or another. The name is undecided; do not rename the app or storage keys until the team decides. Does the Hiyang wordmark and look become the project identity, or does Gabay's stay?
+5. Project name: the mockup notes list Hiyang, Akma ("fitting"), Sari ("variety"), or another. The name is undecided; do not rename the app or storage keys until the team decides. Does the Hiyang wordmark and look become the project identity?
 6. Voice engine for Pakinig (Kokoro for English, which Tagalog option) and its license.
 7. Is dark mode wanted? None exists (`color-scheme: light`); Pakinig's dark panel is mode-specific.
 
@@ -213,5 +213,5 @@ The full file-by-file build map is in `mockups/hiyang/DESIGN.md` ("Build map"); 
 | Screens and their styles | `src/screens/*.jsx`, `*.css` |
 | Fonts and meta | `index.html` |
 | 3D classroom theme | `src/lib/theme.js` (`pref:theme3d`, default `classic`), `src/three/scene.js` (`THEMES`, `THEME_LIST`) |
-| Mode mockup | `mockups/hiyang/` (`index.html`, `app.js`, `modes.css`, `gabay-classroom.css`, `gabay-base.css`) and its notes `mockups/hiyang/DESIGN.md` |
+| Mode mockup | `mockups/hiyang/` (`index.html`, `app.js`, `modes.css`, `classroom.css`, `base.css`) and its notes `mockups/hiyang/DESIGN.md` |
 | Mode definitions | `docs/TUTOR_MODES.md` |

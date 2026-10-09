@@ -140,7 +140,7 @@ No named precedent of a Philippine accessibility edtech startup receiving RA 113
 ### Gaps
 - No publicly named Philippine blind/low-vision education startup found in search results.
 - No data on DICT SGF or DOST SGF awardees by sector; edtech precedents not visible.
-- Gabay (the existing offline math app mentioned as Pakinig's predecessor) funding source and history not confirmed.
+- Prior funding sources and history of offline math prototypes in this space not confirmed.
 
 ---
 

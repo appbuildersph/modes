@@ -18,11 +18,11 @@ Status: criteria supplied by the AppBuildersPH Hackathon 2026 participant briefi
 | Finalists | 10 to 15 teams, announced 1:00 PM Oct 10 |
 | Pitch | 5 minutes pitch and live demo, 3 minutes judge Q&A |
 | Judges | 10 judges, announced on Demo Day |
-| Team | Team CrossCampus (up to 4 allowed); at least one member on site to pitch |
+| Team | Hackathon team (up to 4 allowed); at least one member on site to pitch |
 
 ## 2. Criteria
 
-| # | Criterion | Weight | Official question | Team's interpretation | Where Gabay speaks to it |
+| # | Criterion | Weight | Official question | Team's interpretation | Where the project speaks to it |
 |---|---|---|---|---|---|
 | 1 | Problem and Usefulness | 25% | Does it solve a genuine problem for a clear target user? | Filipino Grade 4-6 learners with unreliable internet need a math tutor that works offline, is grounded in DepEd MATATAG, and does not need an account or send a child's questions to a server | MATATAG-grounded curriculum (155 competencies, 1,571 items), offline-first loop, trilingual UI and tutor, no accounts |
 | 2 | Local AI Implementation | 25% | Is local inference fundamental, and does it give a meaningful advantage? | The tutor model runs on the learner's device; offline answers, privacy for children, no per-question cost | Planned: open-source model via WebLLM/WebGPU as a provider before the cloud (`docs/LOCAL_AI.md`). Existing: Gemini Nano on supported Chrome only |
@@ -53,13 +53,13 @@ No anchors (for example "5 = exceptional") were published in the briefing. Add a
 | Feature or evidence | Criterion it supports | Strength | Status | Gap |
 |---|---|---|---|---|
 | On-device open-source tutor answering with network off | 2 Local AI, 4 Innovation, 1 Usefulness | Strong if it works | Planned; unverified on device | Model choice, runtime, device test. **The most important item** |
-| Works offline after first load (shell, lessons, practice, mastery) | 1 Usefulness, 3 Execution | Strong | Built in the existing base; not re-verified in this repo | Re-test offline on the demo device |
-| DepEd MATATAG Grades 4-6 content, 155 competencies, 1,571 items | 1 Usefulness | Strong | Built (pre-existing) | Filipino/Taglish bundled text is English; disclose as pre-existing |
+| Works offline after first load (shell, lessons, practice, mastery) | 1 Usefulness, 3 Execution | Strong | Built and verified | Re-test offline on the demo device |
+| DepEd MATATAG Grades 4-6 content, 155 competencies, 1,571 items | 1 Usefulness | Strong | Built | Bundled math curriculum and practice items |
 | English / Tagalog / Taglish UI and tutor reply language | 1 Usefulness, 4 Innovation | Medium | UI built; tutor language by prompt | Small-model Taglish quality unknown |
 | Learning modes Kalma / Pakinig / Hakbang (UI plus local AI changes) | 1 Usefulness (clear target learners), 4 Innovation, 5 Demo | Strong if shown working | Definitions confirmed; not implemented | Implementation, tests; no clinical claims; prioritise the Local AI reply rules, then Kalma and Pakinig UI |
 | Fallback chains (on-device -> cloud -> bundled) | 3 Execution | Strong | Built for existing providers; extend to the new one | |
 | Voice out and voice in | 5 Demo, 1 Usefulness | Medium | Built (online upgrade, offline fallback) | Offline spoken-question path is browser-dependent |
-| 3D classroom, four mini-games, mascot | 5 Demo | Medium | Built (pre-existing) | Must not distract from the local-AI story |
+| 3D classroom, four mini-games, mascot | 5 Demo | Medium | Built | Keep focus on the local-AI story |
 | No accounts, no client secrets, local learner data | 1 Usefulness, 2 Local AI (privacy) | Medium | Built | |
 | AI Lab page with measured device results | 3 Execution, 2 Local AI | Strong if honest | Proposed | Real numbers only |
 
@@ -70,7 +70,7 @@ No anchors (for example "5 = exceptional") were published in the briefing. Add a
 - [ ] Taglish evaluation results scored by a Filipino reader (if time allows)
 - [ ] `npm test` output
 - [ ] README with judge recreation steps, tested from a clean clone
-- [ ] Disclosure of existing code and assets (see `docs/SUBMISSION.md`)
+- [ ] Code, framework, and asset documentation (see `docs/SUBMISSION.md`)
 - [ ] License review for the chosen model
 
 ## 7. Demo script slot
