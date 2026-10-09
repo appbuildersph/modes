@@ -201,7 +201,7 @@ The full file-by-file build map is in `mockups/hiyang/DESIGN.md` ("Build map"); 
 2. Does Kalma hide the Games tab, or simplify the games?
 3. Are the Atkinson Hyperlegible font and the other fonts allowed to be bundled (license: they are open fonts, but the files must be added and their licenses listed in the submission)?
 4. What are the origins and licenses of the illustrations, textures, and sound effects?
-5. Project name: the mockup notes list Hiyang, Akma ("fitting"), Sari ("variety"), or another. The name is undecided; do not rename the app or storage keys until the team decides. Does the Hiyang wordmark and look become the project identity?
+5. Project name: the mockup notes list Hiyang, Akma ("fitting"), Sari ("variety"), or another. Decided 2026-10-10: the app is **SIBOL** (Student-centered Inclusive Bilingual Offline Learning), with a sprout logo as the app icon and the tutor named Teacher Gabo (commits `520d58e`, `88b176d`). Storage keys were not renamed.
 6. Voice engine for Pakinig (Kokoro for English, which Tagalog option) and its license.
 7. Is dark mode wanted? None exists (`color-scheme: light`); Pakinig's dark panel is mode-specific.
 

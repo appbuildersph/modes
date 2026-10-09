@@ -1,5 +1,25 @@
 # SIBOL: Student-centered Inclusive Bilingual Offline Learning
 
+[![Live app](https://img.shields.io/badge/Live_app-sibol--tutor.vercel.app-2ea44f?logo=vercel&logoColor=white)](https://sibol-tutor.vercel.app)
+<!-- Demo video badge: replace VIDEO_URL and uncomment once the video is up.
+[![Demo video](https://img.shields.io/badge/Demo_video-Watch-red?logo=youtube&logoColor=white)](VIDEO_URL)
+-->
+[![AppBuildersPH Hackathon 2026](https://img.shields.io/badge/AppBuildersPH_Hackathon_2026-Local_AI-orange)](docs/HACKATHON.md)
+
+[![Model: Gemma 4 E2B](https://img.shields.io/badge/Model-Gemma_4_E2B_(Apache_2.0)-4285F4?logo=google&logoColor=white)](docs/SUBMISSION.md)
+[![Runs on LM Studio](https://img.shields.io/badge/Runs_on-LM_Studio_·_MLX_4--bit-6E56CF)](docs/EDGE_RUNBOOK.md)
+[![Edge AI server](https://img.shields.io/badge/Edge_AI_server-MacBook_Air_M5-000000?logo=apple&logoColor=white)](docs/EDGE_RUNBOOK.md)
+[![No cloud AI in the tutor path](https://img.shields.io/badge/Cloud_AI_in_tutor_path-none-success)](#why-edge--local-ai)
+
+[![Offline-first PWA](https://img.shields.io/badge/Offline--first-PWA-5A0FC8?logo=pwa&logoColor=white)](docs/ARCHITECTURE.md)
+![React 19](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
+![Vite 6](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)
+![IndexedDB](https://img.shields.io/badge/Learner_data-on_device_(IndexedDB)-informational)
+
+![Grades 4-6](https://img.shields.io/badge/Grades-4--6_·_DepEd_MATATAG-yellow)
+![Languages](https://img.shields.io/badge/Languages-English_·_Tagalog_·_Taglish-blue)
+[![Learning modes](https://img.shields.io/badge/Modes-Kalma_·_Pakinig_·_Hakbang-ff69b4)](docs/TUTOR_MODES.md)
+
 An offline-first Local AI math companion for Filipino **Grade 4 to 6** learners (DepEd MATATAG curriculum). A friendly AI tutor answers a learner's question step by step in English, Tagalog or Taglish, and can read the answer aloud. The answers come from an open-source model, **Gemma 4 E2B, running on the team's own laptop** (an "edge" setup), not from a cloud AI API.
 
 This repository was built for the AppBuildersPH Hackathon 2026 (theme: Local AI).
@@ -31,6 +51,43 @@ Three modes change both the interface and how the tutor replies. They are design
 Small models follow format instructions unreliably, so the mode rules are also enforced **in code after the model replies** (`src/lib/tutor-modes.js`); a reply that fails validation falls through to the next provider.
 
 **Status:** implemented and tested: the mode preference (onboarding step and Profile screen), the mode-aware tutor prompt, the post-processing rules, per-mode screens (a calmer Kalma screen, large type with read-aloud word highlighting in Pakinig, a step card in Hakbang) and per-mode voice settings. Not built: the Grade 1 to 3 unlock for Hakbang. The modes are a design for different learners, not a tested intervention.
+
+## What you may not see (and why)
+
+Some features are hidden, locked or replaced on purpose, depending on the learning mode, the connection or the learner's progress. If something seems to be missing in a demo, check this list first.
+
+**By learning mode** (flags in `src/lib/mode-ui.js`, styles in `src/styles/modes.css`)
+
+| Feature | Hidden or changed in | What happens instead |
+|---|---|---|
+| **3D classroom** button on the lesson intro | Kalma | Only the 2D classroom is offered. The 3D classroom is still in the app and still available in every other mode. |
+| Background music and the sound toggle | Kalma | No music, and the toggle is hidden |
+| Sound effects, the "correct" celebration overlay, the shake on a wrong answer | Kalma | Plain, quiet feedback |
+| Background doodles, panel decorations, mascot sparkle and animation | Kalma | Plain background. Pakinig also drops the classroom panel decorations so text is easier to read. |
+| "Quick challenge" label | Kalma | Replaced by a question counter ("Question 2 of 5") |
+| Practice question read aloud with word highlighting, slower voice | Pakinig only | Every mode reads Teacher Gabo's lines aloud, but only Pakinig also reads the question with highlighting |
+| Large step-by-step card | Hakbang only | Other modes show the normal-size steps |
+| Grade 1 to 3 content | Everywhere (not built yet) | Planned for Hakbang only; the app teaches Grades 4 to 6 |
+
+**By connection**
+
+| Feature | When offline | What happens instead |
+|---|---|---|
+| Mic button (voice questions) | Shown but disabled ("needs internet"). Hidden completely if the browser supports neither speech recognition nor audio recording. | The learner types the question |
+| ElevenLabs voice | Not reachable | The device's built-in voice (`speechSynthesis`) reads aloud |
+| AI tutor and AI questions | The edge hub cannot be reached | Bundled explanations and the bundled question rotation |
+| Offline banner | Only appears when the connection drops | None needed online |
+
+**By progress or device**
+
+| Feature | Condition | What happens instead |
+|---|---|---|
+| 2D and 3D classroom buttons | Locked until the learner has gone through both lesson intro steps | A lock icon shows on the buttons |
+| Classroom tabs (explanation, example, practice) | Each opens only after the one before it is finished | A lock icon and a "locked" hint |
+| 3D classroom | The device cannot draw 3D (WebGL fails) | A "3D class is not available" message with a button to continue the same questions in 2D |
+| Practice list | Only lessons already answered with mastery below 80% | A "nothing to practise" message |
+| Step-by-step card for a question | Only questions that have steps | The question is shown on its own |
+| Achievements | Locked until earned | Shown with a lock |
 
 ## Architecture
 
