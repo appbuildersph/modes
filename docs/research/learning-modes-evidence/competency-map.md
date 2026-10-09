@@ -1,0 +1,312 @@
+## Grade 1: 47 competencies {'Measurement and Geometry': 11, 'Number and Algebra': 32, 'Statistics and Probability': 4}
+- [1MG-Ia-1] (Measu, madali, 4 items) Identify simple 2-dimensional shapes (triangle, rectangle, square) of different size and in different orientation.
+- [1MG-Ia-2] (Measu, katamtaman, 4 items) Compare and distinguish 2-dimensional shapes according to features such as sides and corners.
+- [1MG-Ia-3] (Measu, katamtaman, 6 items) Compose and decompose triangles, squares, and rectangles.
+- [1NA-Ib-1] (Numbe, madali, 14 items) Count up to 100 (includes counting up or down from a given number and identifying a number that is 1 more or 1 less than a given number).
+- [1NA-Ic-1] (Numbe, madali, 4 items) Read and write numerals up to 100.
+- [1NA-Id-1] (Numbe, madali, 4 items) Recognize and represent numbers up to 100 using a variety of concrete and pictorial models (e.g., number line, block or bar models, and numerals).
+- [1NA-If-1] (Numbe, katamtaman, 13 items) Compare two numbers up to 20.
+- [1NA-If-2] (Numbe, katamtaman, 14 items) Order numbers up to 20 from smallest to largest, and vice versa.
+- [1NA-If-3] (Numbe, madali, 8 items) Describe the position of objects using ordinal numbers: 1st, 2nd, 3rd, up to 10th.
+- [1NA-If-4] (Numbe, katamtaman, 14 items) Compose and decompose numbers up to 10 using concrete materials (e.g., 5 is 5 and 0; 4 and 1; 3 and 2; 2 and 3; 1 and 4; 0 and 5).
+- [1NA-Ih-1] (Numbe, madali, 12 items) Illustrate addition of numbers with sums up to 20 using a variety of concrete and pictorial models and describes addition as “counting up,” and “putting together.”.
+- [1NA-Ih-2] (Numbe, katamtaman, 12 items) Illustrate by applying the following properties of addition, using sums up to 20: a. the sum of zero and any number is equal to the number a. changing the order of the addends does not change the sum.
+- [1NA-Ii-1] (Numbe, mahirap, 14 items) Solve problems (given orally or in pictures) involving addition with sums up to 20.
+- [1MG-Ii-1] (Measu, madali, 12 items) Measure the length of an object and the distance between two objects using non-standard units.
+- [1MG-Ij-1] (Measu, katamtaman, 13 items) Compare lengths and distances using non-standard units.
+- [1MG-Ij-2] (Measu, mahirap, 12 items) Solve problems involving lengths and distances using non-standard units.
+- [1NA-IIa-1] (Numbe, katamtaman, 14 items) Order numbers up to 100 from smallest to largest, and vice versa.
+- [1NA-IIb-1] (Numbe, madali, 14 items) Counts by 2s, 5s and 10s up to 100.
+- [1NA-IIb-2] (Numbe, katamtaman, 14 items) Determine: a. the place value of a digit in a 2-digit number b. the value of a digit c. the digit of a number, given its place value.
+- [1NA-IIc-1] (Numbe, katamtaman, 12 items) Decompose any 2-digit number into tens and ones.
+- [1NA-IIe-1] (Numbe, katamtaman, 14 items) Add numbers by expressing addends as tens and ones (expanded form).
+- [1NA-IIf-1] (Numbe, katamtaman, 14 items) Add numbers with sums up to 100 without regrouping, using a variety of concrete and pictorial models for: a. 2-digit and 1-digit numbers b. 2-digit and 2-digit numbers.
+- [1NA-IIg-1] (Numbe, mahirap, 14 items) Solve problems (given orally or in pictures) involving addition with sums up to 100 without regrouping.
+- [1SP-IIh-1] (Stati, madali, 2 items) Collect data in one variable through a simple interview.
+- [1SP-IIh-2] (Stati, madali, 1 items) Present data in a pictograph without a scale.
+- [1SP-IIh-3] (Stati, katamtaman, 8 items) Interpret a pictograph without a scale.
+- [1SP-IIh-4] (Stati, madali, 1 items) Organize data in a pictograph without a scale into a table.
+- [1NA-IIi-1] (Numbe, katamtaman, 14 items) Illustrate subtraction involving numbers up to 20 using a variety of concrete and pictorial models, and describes subtraction as “taking away.”.
+- [1NA-IIi-2] (Numbe, katamtaman, 14 items) Find the missing number in addition or subtraction sentences involving numbers up to 20.
+- [1NA-IIi-3] (Numbe, katamtaman, 14 items) Write an equivalent expression to a given addition or subtraction expression (e.g., 2+3 = 1+4; 10-5 = 6-1).
+- [1NA-IIj-1] (Numbe, mahirap, 14 items) Solve subtraction problems (given orally or in pictures) where both numbers are less than 20.
+- [1NA-IIj-2] (Numbe, katamtaman, 14 items) Subtract numbers where both numbers are less than 100 using concrete and pictorial models, without regrouping: a. 2-digit minus 1-digit numbers b. 2-digit minus 2-digit numbers.
+- [1NA-IIj-3] (Numbe, katamtaman, 14 items) Subtract numbers by expressing minuends and subtrahends as tens and ones (expanded form), without regrouping.
+- [1NA-IIIa-1] (Numbe, katamtaman, 13 items) Determine the next term/s in a repeating pattern (patterns could use rhythmic properties, visual elements in the arts, …) (e.g., numbers: 2, 4, 2, 4 , ; letters: a, b, c, a, b, c, a, , ,).
+- [1NA-IIIb-1] (Numbe, madali, 14 items) Create repeating patterns using objects, images, or numbers.
+- [1NA-IIIc-1] (Numbe, madali, 13 items) Illustrate 1/2 and 1/4 as parts of a whole.
+- [1NA-IIIc-2] (Numbe, katamtaman, 13 items) Compare 1/2 and 1/4 using models.
+- [1NA-IIId-1] (Numbe, madali, 11 items) Count halves and quarters.
+- [1NA-IIIe-1] (Numbe, madali, 7 items) Recognize coins (excluding centavo coins) and bills up to ₱100 and their notations.
+- [1NA-IIIf-1] (Numbe, katamtaman, 12 items) Determine the value of a number of bills and/or a number of coins (excluding centavo coins) up to ₱100.
+- [1NA-IIIg-1] (Numbe, katamtaman, 5 items) Compare different denominations of peso coins (excluding centavo coins) and bills up to ₱100.
+- [1NA-IIIh-1] (Numbe, mahirap, 14 items) Solve 1-step problems (given orally or in pictures) involving addition of money where the sum is up to ₱100, or subtraction of money where both amounts are less than ₱100.
+- [1MG-IIIh-1] (Measu, madali, 5 items) Identify the position of objects moved in half turn or in quarter turn, in clockwise or in counter-clockwise direction, given an initial facing direction.
+- [1MG-IIIi-1] (Measu, madali, 11 items) Read and write time by the hour, half hour, and quarter hour using an analog clock.
+- [1MG-IIIi-2] (Measu, katamtaman, 12 items) Give the days of the week and months of the year in the correct order.
+- [1MG-IIIj-1] (Measu, katamtaman, 2 items) Determine the day and month of the year using a calendar.
+- [1MG-IIIj-2] (Measu, mahirap, 12 items) Solve problems involving time (hour, half hour, quarter hour, days in a week, and months in a year).
+## Grade 2: 53 competencies {'Measurement and Geometry': 14, 'Number and Algebra': 37, 'Statistics and Probability': 2}
+- [2MG-Ia-1] (Measu, madali, 5 items) Represent and describe circles, half circles and quarter circles.
+- [2MG-Ia-2] (Measu, katamtaman, 5 items) Compose and decompose composite figures made up of squares, rectangles, triangles, circles, half circles, and quarter circles, using cut-outs and square grids.
+- [2MG-Ib-1] (Measu, madali, 5 items) Describe and draw the effect of a one-direction multi-step slide (or translation) in basic shapes and figures.
+- [2NA-Ic-1] (Numbe, madali, 14 items) Count up to 1000.
+- [2NA-Id-1] (Numbe, madali, 6 items) Read and write numerals up to 1000.
+- [2NA-Ie-1] (Numbe, madali, 6 items) Recognize and represent numbers up to 1000 using a variety of concrete and pictorial models, and numerals.
+- [2NA-If-1] (Numbe, madali, 14 items) Count by 2s, 5s, 10s, 20s, 50s, and 100s (not beyond 1000).
+- [2NA-If-2] (Numbe, katamtaman, 14 items) Order numbers up to 1000 from smallest to largest, and vice versa.
+- [2NA-Ig-1] (Numbe, madali, 11 items) Describe the position of objects using ordinal numbers up to 20th.
+- [2NA-Ig-2] (Numbe, katamtaman, 14 items) Determine: a. the place value of a digit in a 3-digit number b. the value of a digit c. the digit of a number, given its place value.
+- [2NA-Ih-1] (Numbe, madali, 14 items) Illustrate addition of 2-digit and by 1-digit numbers as “counting up” on the number line.
+- [2NA-Ih-2] (Numbe, katamtaman, 14 items) Add numbers with sums up to 1000 in expanded form.
+- [2NA-Ih-3] (Numbe, katamtaman, 14 items) Add numbers with sums up to 1000, with or without regrouping.
+- [2NA-Ii-1] (Numbe, katamtaman, 14 items) Illustrate and apply the following properties of addition using sums up to 1000: a. the sum of zero and any number is equal to the number b. changing the order of the addends does not change the sum c. changing the grouping of the addends does not change the sum.
+- [2NA-Ii-2] (Numbe, katamtaman, 13 items) Determine and write the value of a number of bills, or a number of coins, or a combination of bills and coins up to ₱1000 (centavo coins only, peso coins only, peso bills only, combined peso coins and peso bills).
+- [2NA-Ij-1] (Numbe, katamtaman, 14 items) Compare the values of different denominations of peso coins and bills up to ₱1000.
+- [2NA-Ij-2] (Numbe, mahirap, 14 items) Solve problems involving addition with sums up to 1000, including problems involving money, with and without regrouping.
+- [2MG-IIa-1] (Measu, katamtaman, 11 items) Measure and compare lengths of objects, in meters (m) or centimeters (cm), and distance in meters, using appropriate measuring tools.
+- [2MG-IIa-2] (Measu, madali, 12 items) Identify and use the appropriate unit (m or cm) to measure the length of an object and the distance between two locations.
+- [2MG-IIb-1] (Measu, katamtaman, 11 items) Estimate length using meters or centimeters, and distance using meters.
+- [2MG-IIb-2] (Measu, mahirap, 13 items) Solve problems involving length and distance.
+- [2NA-IIc-1] (Numbe, katamtaman, 14 items) Illustrate subtraction of 2-digit by 1-digit on the number line and as an inverse of addition.
+- [2NA-IIc-2] (Numbe, katamtaman, 14 items) Subtract numbers where both numbers are less than 100 with regrouping: a. 2-digit minus 1-digit numbers b. 2-digit minus 2-digit numbers.
+- [2NA-IIc-3] (Numbe, mahirap, 14 items) Solve problems (given orally or in pictures) involving subtraction where both numbers are less than 100, with and without regrouping.
+- [2NA-IIc-4] (Numbe, katamtaman, 14 items) Subtract numbers, where both numbers are less than 1000, with and without regrouping.
+- [2NA-IIc-5] (Numbe, mahirap, 14 items) Solve 1- and 2-step problems involving subtraction where both numbers are less than 1000 (including problems involving money), with and without regrouping.
+- [2NA-IIc-6] (Numbe, katamtaman, 12 items) Determine the next term/s in increasing or decreasing patterns, e.g., numbers, letters and rhythmic properties, visual elements in arts, and repetitions.
+- [2NA-IIc-7] (Numbe, madali, 14 items) Create increasing or decreasing patterns.
+- [2SP-IIh-1] (Stati, madali, 1 items) Present raw data, or data in tabular form, in a pictograph with a scale, or vice versa.
+- [2SP-IIh-2] (Stati, katamtaman, 10 items) Interpret data in tabular form and in a pictograph with or without a scale.
+- [2NA-IIi-1] (Numbe, madali, 14 items) Count the number of concrete objects in a group by repeated addition and create equal groups, using language such as “5 groups of 3” and “5 threes”.
+- [2NA-IIj-1] (Numbe, madali, 12 items) Illustrate and write multiplication as repeated addition, using a variety of concrete and pictorial models and numerals, and using: a. groups of equal quantities b. Arrays c. counting by multiples d. equal jumps on a number line.
+- [2NA-IIIa-1] (Numbe, katamtaman, 12 items) Multiply numbers using the 2, 3, 4, 5, and 10 multiplication tables.
+- [2NA-IIIb-1] (Numbe, mahirap, 13 items) Solve multiplication problems using the 2, 3, 4, 5, and 10 multiplication tables, including problems involving money.
+- [2NA-IIIb-2] (Numbe, madali, 13 items) Illustrate division through equal distribution of a number of objects into several groups.
+- [2NA-IIIc-1] (Numbe, katamtaman, 14 items) Illustrate and write division expressions using a variety of concrete and pictorial models and numerals, in modelling division as: a. equal sharing or formation of equal groups of objects b. repeated subtraction.
+- [2NA-IIIc-2] (Numbe, katamtaman, 14 items) Divide numbers using the 2, 3, 4, 5, and 10 multiplication tables.
+- [2NA-IIId-1] (Numbe, katamtaman, 14 items) Find the missing number in a number sentence involving multiplication or division by 2, 3, 4, 5, and 10.
+- [2NA-IIId-2] (Numbe, madali, 14 items) Distinguish even and odd numbers using division by 2.
+- [2NA-IIId-3] (Numbe, mahirap, 13 items) Solve division problems using the 2, 3, 4, 5, and 10 multiplication tables, including problems involving money.
+- [2NA-IIIe-1] (Numbe, madali, 12 items) Represent and identify unit fractions with denominators 2, 3, 4, 5, 6, and 8.
+- [2NA-IIIe-2] (Numbe, madali, 12 items) Read and write unit fractions in fraction notation.
+- [2NA-IIIf-1] (Numbe, katamtaman, 13 items) Order unit fractions from smallest to largest, and vice versa.
+- [2NA-IIIf-2] (Numbe, madali, 11 items) Represent and identify similar fractions with denominators 2, 3, 4, 5, 6, and 8 using groups of objects, fraction charts, fraction tiles, and the number line.
+- [2NA-IIIg-1] (Numbe, madali, 12 items) Read and write similar fractions in fraction notation.
+- [2NA-IIIg-2] (Numbe, katamtaman, 14 items) Order similar fractions from smallest to largest, and vice versa.
+- [2MG-IIIg-1] (Measu, madali, 2 items) Describe the duration of an event in terms of number of days and/or weeks using a calendar.
+- [2MG-IIIh-1] (Measu, madali, 13 items) Read and write time in hours and minutes, with a.m. and p.m., using an analog clock.
+- [2MG-IIIi-1] (Measu, mahirap, 13 items) Solve problems involving elapsed time (minutes in an hour, hours in a day, days in a week), including timetables.
+- [2MG-IIIi-2] (Measu, madali, 4 items) Identify and explain the difference between straight and curved lines, and flat and curved surfaces of 3-dimensional objects.
+- [2MG-IIIi-3] (Measu, katamtaman, 12 items) Identify and measure the perimeter of a plane figure using appropriate tools.
+- [2MG-IIIj-1] (Measu, katamtaman, 12 items) Find the perimeter of triangles, squares, and rectangles.
+- [2MG-IIIj-2] (Measu, mahirap, 13 items) Solve problems involving the perimeter of triangles, squares, and rectangles.
+## Grade 3: 51 competencies {'Measurement and Geometry': 16, 'Number and Algebra': 30, 'Statistics and Probability': 5}
+- [3MG-Ia-1] (Measu, katamtaman, 13 items) Illustrate and estimate the area of a square or rectangle using square tile units.
+- [3MG-Ia-2] (Measu, mahirap, 13 items) Explore inductively the derivation of the formulas for the areas of a square and a rectangle using square tile units.
+- [3MG-Ib-1] (Measu, katamtaman, 11 items) Find the areas of squares and rectangles in sq. cm and sq. m.
+- [3MG-Ib-2] (Measu, mahirap, 13 items) Solve problems involving areas of squares and rectangles.
+- [3MG-Ib-3] (Measu, madali, 4 items) Recognize, using models, and draw a point, line, line segment, and ray.
+- [3MG-Ic-1] (Measu, madali, 4 items) Recognize and draw parallel, intersecting, and perpendicular lines.
+- [3MG-Ic-2] (Measu, madali, 4 items) Identify and draw line segments of equal length using a ruler.
+- [3NA-Id-1] (Numbe, madali, 8 items) Represent numbers up to 10 000 using pictorial models and numerals.
+- [3NA-Ie-1] (Numbe, madali, 8 items) Read and write numbers up to 10 000 in numerals and in words.
+- [3NA-If-1] (Numbe, madali, 13 items) Describe the position of objects using ordinal numbers up to 100th.
+- [3NA-Ig-1] (Numbe, katamtaman, 14 items) Determine: a. the place value of a digit in a 4-digit number b. the value of a digit c. the digit of number, given its place value.
+- [3NA-Ii-1] (Numbe, katamtaman, 14 items) Round numbers to the nearest ten, hundred, or thousand.
+- [3NA-Ii-2] (Numbe, katamtaman, 13 items) Compare numbers up to 10 000 using the symbols =, >, and <.
+- [3NA-Ij-1] (Numbe, katamtaman, 14 items) Order numbers up to 10 000 from smallest to largest, and vice versa.
+- [3MG-IIa-1] (Measu, madali, 13 items) Measure mass in grams (g), kilograms (kg) and/or milligrams (mg), using appropriate measuring tools.
+- [3MG-IIa-2] (Measu, katamtaman, 11 items) Estimate mass of an object using grams, kilograms, and/or milligrams.
+- [3MG-IIa-3] (Measu, katamtaman, 13 items) Compare masses of objects including the use of a balance scale.
+- [3MG-IIb-1] (Measu, madali, 13 items) Measure capacity in liters (L) and/or milliliters (mL), using appropriate measuring tools.
+- [3MG-IIb-2] (Measu, katamtaman, 11 items) Estimate capacity using liters and/or milliliters.
+- [3MG-IIb-3] (Measu, katamtaman, 13 items) Compare capacities of two containers.
+- [3NA-IIc-1] (Numbe, madali, 14 items) Read and write money in words and using: a. Philippine currency symbols (₱ and PhP) up to ₱10 000 b. the centavo sign.
+- [3NA-IIc-2] (Numbe, katamtaman, 14 items) Add numbers with sums up to 10 000, with and without regrouping.
+- [3NA-IId-1] (Numbe, katamtaman, 14 items) Estimate the sum of addends with up to 4 digits.
+- [3NA-IId-2] (Numbe, mahirap, 14 items) Solve problems involving addition of numbers with sums up to 10 000, including problems involving money.
+- [3NA-IIe-1] (Numbe, katamtaman, 14 items) Subtract numbers, where both numbers are less than 10 000, with and without regrouping.
+- [3NA-IIf-1] (Numbe, katamtaman, 14 items) Estimate the difference of two numbers of up to 4 digits.
+- [3NA-IIf-2] (Numbe, mahirap, 14 items) Perform addition and subtraction of 3 to 4 numbers of up to 2 digits, observing correct order of operations.
+- [3NA-IIh-1] (Numbe, mahirap, 14 items) Solve problems involving addition and subtraction with 3 to 4 numbers of up to 2 digits, including problems involving money.
+- [3SP-IIh-1] (Stati, madali, 12 items) Collect data from experiments with a small number of possible outcomes (e.g., rolling a die or tossing a coin).
+- [3SP-IIi-1] (Stati, madali, 1 items) Present data in tables and single bar graphs (horizontal and vertical).
+- [3SP-IIi-2] (Stati, katamtaman, 9 items) Interpret data in tables and single bar graphs (horizontal and vertical).
+- [3SP-IIj-1] (Stati, mahirap, 1 items) Solve problems using data presented in a single bar graph (horizontal and vertical).
+- [3SP-IIj-2] (Stati, katamtaman, 13 items) Describe and compare outcomes in real-life situations using the following terms: equally likely, less/least likely, more/most likely, certain, and impossible.
+- [3NA-IIIa-1] (Numbe, katamtaman, 14 items) Multiply numbers using the 6, 7, 8, and 9 multiplication tables.
+- [3NA-IIIb-1] (Numbe, katamtaman, 13 items) Illustrate and apply properties of multiplication for the 6, 7, 8, and 9 multiplication tables: a. one multiplied by any number is equal to the number b. zero multiplied by any number is zero c. changing the order of the numbers being multiplied does not change the product d. changing the grouping of the numbers being multiplied does not change the product e. multiplying the sum of two addends by a number is the same as the sum of the products of a number by each addend.
+- [3NA-IIIc-1] (Numbe, katamtaman, 13 items) Multiply numbers with and without regrouping: a. 2- to 3-digit numbers by a 1-digit number b. 2- to 4-digit numbers by a number whose leading digit is the only non-zero digit, with products up to 10 000.
+- [3NA-IIIc-2] (Numbe, katamtaman, 14 items) Estimate the product of 2- to 3-digit numbers by 1- to 2-digit numbers by estimating the factors using multiples of 10.
+- [3NA-IIId-1] (Numbe, mahirap, 13 items) Solve 1-to 2-step multiplication problems, including problems involving money.
+- [3NA-IIId-2] (Numbe, katamtaman, 14 items) Determine the missing term/s in a pattern with repeating and increasing components or repeating and decreasing components (e.g., 1a, 1b, 1c, 2a, 2b, 2c, …).
+- [3NA-IIId-3] (Numbe, katamtaman, 14 items) Explain how to generate a given pattern with repeating and increasing components or repeating and decreasing components.
+- [3NA-IIIe-1] (Numbe, madali, 14 items) Illustrate division through equal jumps on the number line and as inverse of multiplication.
+- [3NA-IIIf-1] (Numbe, katamtaman, 14 items) Divide numbers using the 6, 7, 8, and 9 multiplication tables.
+- [3NA-IIIf-2] (Numbe, katamtaman, 14 items) Find the missing number in a number sentence involving multiplication or division by 6, 7, 8, and 9 (e.g., x 7 = 56; 56 ÷ = 7).
+- [3NA-IIIg-1] (Numbe, katamtaman, 13 items) Divide numbers with and without remainder: a. 2- to 3-digit numbers by 1-digit number without remainder b. 2-digit numbers by 1-digit number with remainder c. 2- to 4-digit numbers by 10,100, and 1000.
+- [3NA-IIIh-1] (Numbe, katamtaman, 14 items) Estimate the quotient of 2- to 3-digit numbers divided by 1- to 2-digit numbers, using multiples of 10 or 100 as appropriate.
+- [3NA-IIIh-2] (Numbe, mahirap, 13 items) Solve division problems involving 2- to 3 -digit numbers by a 1-digit number, including problems involving money.
+- [3NA-IIIh-3] (Numbe, madali, 14 items) Represent fractions that are equal to one and greater than one using models.
+- [3NA-IIIh-4] (Numbe, katamtaman, 13 items) Add and subtract similar fractions using models.
+- [3MG-IIIi-1] (Measu, madali, 5 items) Describe and draw the effect of a two-direction multi-step slide (or translation) in basic shapes and figures.
+- [3MG-IIIj-1] (Measu, madali, 5 items) Identify shapes or figures that show line symmetry by drawing the line of symmetry.
+- [3MG-IIIj-2] (Measu, katamtaman, 5 items) Complete a figure that is symmetric with respect to a line.
+## Grade 4: 54 competencies {'Measurement and Geometry': 13, 'Number and Algebra': 37, 'Statistics and Probability': 4}
+- [4MG-Ia-1] (Measu, madali, 4 items) Illustrate different angles (right, acute, and obtuse) using models.
+- [4MG-Ia-2] (Measu, madali, 4 items) Measure and draw angles using a protractor.
+- [4MG-Ib-1] (Measu, madali, 4 items) Draw and state the properties of triangles and quadrilaterals.
+- [4MG-Ic-1] (Measu, katamtaman, 4 items) Classify triangles and quadrilaterals according to sides and angles.
+- [4MG-Ic-2] (Measu, katamtaman, 4 items) Differentiate different quadrilaterals.
+- [4MG-Id-1] (Measu, katamtaman, 13 items) Find the perimeter of quadrilaterals that are not squares or rectangles.
+- [4MG-Id-2] (Measu, mahirap, 12 items) Find the perimeter of composite figures composed of triangles and quadrilaterals.
+- [4NA-Ie-1] (Numbe, madali, 8 items) Read and write numbers up to 1 000 000 in numerals and in words.
+- [4NA-Ie-2] (Numbe, katamtaman, 14 items) Determine: a. the place value of a digit in a 6-digit number b. the value of a digit c. the digit of number, given its place value.
+- [4NA-If-1] (Numbe, katamtaman, 13 items) Compare numbers up to 1 000 000 using =, < and >.
+- [4NA-If-2] (Numbe, katamtaman, 14 items) Round numbers to the nearest hundred thousand.
+- [4NA-If-3] (Numbe, katamtaman, 14 items) Estimate the sum and difference of two 5- to 6-digit numbers by rounding the addends to the nearest large place value of the numbers.
+- [4NA-Ig-1] (Numbe, katamtaman, 14 items) Add numbers with sums up to 1 000 000 and subtracts numbers where both numbers are less than 1 000 000, with and without regrouping.
+- [4NA-Ig-2] (Numbe, katamtaman, 14 items) Multiply two numbers with and without regrouping: a. 3- to 4-digit numbers by a 1-digit number b. 2- to 3-digit numbers by 2-digit numbers, with products up to 1 000 000.
+- [4NA-Ig-3] (Numbe, katamtaman, 14 items) Estimate the result of multiplying two numbers where the product is less than 1 000 000.
+- [4NA-Ii-1] (Numbe, mahirap, 14 items) Solve multi-step problems involving one or more of the four operations with results of calculations up to 1 000 000, including problems involving money.
+- [4NA-Ii-2] (Numbe, katamtaman, 14 items) Divide two numbers with and without regrouping: a. 3- to 4-digit numbers by 1-digit numbers b. 2- to 3-digit numbers by 2-digit numbers.
+- [4NA-Ii-3] (Numbe, katamtaman, 14 items) Estimate the quotient when dividing 3- to 4-digit dividends by 1- to 2-digit divisors, by first estimating the dividends and divisors using multiples of 10.
+- [4NA-IIa-1] (Numbe, madali, 14 items) Represent situations involving one or more of the four operations using a number sentence.
+- [4NA-IIa-2] (Numbe, mahirap, 14 items) Perform two or more different operations by applying the MDAS rules.
+- [4MG-IIc-1] (Measu, katamtaman, 12 items) Convert common units of measure from larger to smaller units, and vice versa: a. meter and centimeter b. kilometer and meter c. kilogram and gram d. gram and milligram e. liter and milliliter.
+- [4MG-IIc-2] (Measu, katamtaman, 12 items) Convert time measures from smaller to larger units, and vice versa: a. seconds to minutes b. minutes to hours c. hours to days d. days to weeks e. weeks to months f. months to years.
+- [4MG-IId-1] (Measu, mahirap, 13 items) Solve problems involving conversion of units of length, mass, capacity, and time, including problems involving elapsed time in hours and minutes.
+- [4NA-IIe-1] (Numbe, madali, 12 items) Identify proper fractions, improper fractions, and mixed numbers.
+- [4NA-IIe-2] (Numbe, madali, 13 items) Rewrite improper fractions into mixed numbers, and vice versa.
+- [4NA-IIe-3] (Numbe, madali, 14 items) Plot fraction (proper fractions, improper fractions, and mixed numbers) with denominators 2, 4, 5, and 10 on the number line.
+- [4NA-IIf-1] (Numbe, katamtaman, 12 items) Add and subtract similar fractions: a. two proper fractions b. two mixed numbers c. a mixed number and a proper fraction d. a whole number and a proper fraction e. a whole number and a mixed number.
+- [4NA-IIg-1] (Numbe, madali, 11 items) Represent dissimilar fractions, with denominators up to 10, using models.
+- [4NA-IIg-2] (Numbe, katamtaman, 12 items) Compare dissimilar fractions using the symbols =, >, and <.
+- [4NA-IIh-1] (Numbe, katamtaman, 14 items) Order dissimilar fractions from smallest to largest, and vice versa.
+- [4NA-IIh-2] (Numbe, katamtaman, 14 items) Generate equivalent fractions using models.
+- [4NA-IIi-1] (Numbe, katamtaman, 12 items) Determine equivalent fractions.
+- [4NA-IIi-2] (Numbe, madali, 13 items) Identify the multiples of given numbers up to 100.
+- [4NA-IIi-3] (Numbe, katamtaman, 13 items) Find all the factors of a given number up to 100.
+- [4NA-IIi-4] (Numbe, madali, 13 items) Reduce fractions to simplest form.
+- [4NA-IIIa-1] (Numbe, mahirap, 14 items) Add and subtract dissimilar fractions using models.
+- [4NA-IIIb-1] (Numbe, mahirap, 13 items) Add and subtract dissimilar fractions: a. two proper fractions b. two mixed numbers c. a mixed number and a proper fraction d. a whole number and a proper fraction e. a whole number and a mixed number.
+- [4NA-IIIc-1] (Numbe, mahirap, 13 items) Solve multi-step problems involving addition and/or subtraction of fractions.
+- [4MG-IIId-1] (Measu, madali, 5 items) Identify symmetry with respect to a line.
+- [4MG-IIId-2] (Measu, katamtaman, 5 items) Complete a figure that is symmetric with respect to a line.
+- [4MG-IIId-3] (Measu, katamtaman, 5 items) Draws the image of an object after applying reflection with respect to a line, including glide reflection.
+- [4SP-IIIe-1] (Stati, madali, 2 items) Collect data with time element using appropriate sources.
+- [4SP-IIIe-2] (Stati, madali, 1 items) Present data in a tabular form, or in a single line graph.
+- [4SP-IIIf-1] (Stati, katamtaman, 1 items) Interpret data presented in a tabular form, or in a single line graph.
+- [4SP-IIIf-2] (Stati, mahirap, 3 items) Solve problems using data for at most two variables in a tabular form, or in a single line graph.
+- [4NA-IIIg-1] (Numbe, katamtaman, 14 items) Describe the rule used to generate a given simple pattern.
+- [4NA-IIIg-2] (Numbe, katamtaman, 14 items) Complete a number sentence: a. to represent a property of operations (e.g., 4 + 3 = 3 + ) (commutative property of addition) b. to represent equivalent number facts (e.g., 4 + = 6 + 3).
+- [4NA-IIIg-3] (Numbe, madali, 14 items) Represent decimal numbers using models and manipulatives to show the relationship to fractions.
+- [4NA-IIIg-4] (Numbe, madali, 14 items) Read and write decimal numbers with decimal parts to hundredths.
+- [4NA-IIIi-1] (Numbe, katamtaman, 14 items) Determine: a. the place value to hundredths of a digit in a given decimal number b. the value of a digit c. the digit of number, given its place value.
+- [4NA-IIIi-2] (Numbe, katamtaman, 7 items) Convert decimal numbers to fractions, and fractions with denominators 10 or 100 to decimals.
+- [4NA-IIIi-3] (Numbe, madali, 14 items) Plot decimal numbers with tenth decimal part on the number line.
+- [4NA-IIIi-4] (Numbe, katamtaman, 14 items) Compare and order decimal numbers with decimal parts to hundredths.
+- [4NA-IIIi-5] (Numbe, katamtaman, 14 items) Round decimal numbers to the nearest whole number and to the nearest tenth.
+## Grade 5: 49 competencies {'Measurement and Geometry': 18, 'Number and Algebra': 23, 'Statistics and Probability': 8}
+- [5MG-Ia-1] (Measu, madali, 12 items) Describe a 12- and 24-hour clock system.
+- [5MG-Ia-2] (Measu, katamtaman, 10 items) Convert 12-hour time to 24-hour time, and vice-versa.
+- [5MG-Ia-3] (Measu, mahirap, 11 items) Solve problems involving 12- and 24-hour time.
+- [5MG-Ib-1] (Measu, katamtaman, 13 items) Compare the time in different world time zones to the time in the Philippines using a world time zone map.
+- [5MG-Ib-2] (Measu, mahirap, 11 items) Solve problems on comparing the time in different world time zones to the time in the Philippines.
+- [5NA-Ic-1] (Numbe, mahirap, 14 items) Perform three or more different operations by applying the GMDAS rules.
+- [5NA-Ic-2] (Numbe, katamtaman, 13 items) Multiply fractions using models.
+- [5NA-Ic-3] (Numbe, katamtaman, 14 items) Multiply a fraction by a fraction.
+- [5NA-Ie-1] (Numbe, mahirap, 14 items) Solve multi-step problems involving multiplication of fractions that may or may not also involve addition or subtraction of fractions.
+- [5MG-If-1] (Measu, madali, 12 items) Identify the height of a parallelogram, triangle, and trapezoid, in different orientations.
+- [5MG-If-2] (Measu, katamtaman, 13 items) Find the area of a parallelogram, triangle, and trapezoid, in sq. cm or sq. m, using formulas.
+- [5MG-If-3] (Measu, katamtaman, 13 items) Estimate the areas of triangles and quadrilaterals (parallelogram, rhombus, trapezoid) using grids.
+- [5NA-Ih-1] (Numbe, katamtaman, 12 items) Divide fractions using models.
+- [5NA-Ih-2] (Numbe, katamtaman, 14 items) Divide a fraction by a fraction.
+- [5NA-Ii-1] (Numbe, mahirap, 13 items) Solve multi-step problems involving division of fractions that may or may not involve the other operations with fractions.
+- [5NA-Ij-1] (Numbe, katamtaman, 14 items) Determine: a. The place value to thousandths of a digit in a given decimal number b. The value of a digit c. The digit of a number, given its place value.
+- [5NA-Ij-2] (Numbe, madali, 14 items) Read and write decimal numbers with decimal parts to thousandths.
+- [5NA-IIa-1] (Numbe, katamtaman, 7 items) Convert terminating decimals to fractions, and vice versa.
+- [5NA-IIa-2] (Numbe, katamtaman, 14 items) Compare and order decimal numbers with decimal parts to thousandths.
+- [5NA-IIb-1] (Numbe, katamtaman, 14 items) Round decimal numbers to the nearest thousandths.
+- [5NA-IIb-2] (Numbe, katamtaman, 14 items) Add and subtract decimal numbers with decimal parts of up to 3 decimal places.
+- [5NA-IIc-1] (Numbe, mahirap, 14 items) Solve multi-step problems involving addition and/or subtraction of decimals, including problems involving money.
+- [5NA-IId-1] (Numbe, katamtaman, 7 items) Use divisibility rules to find common factors of numbers: a. divisibility rules for 2, 5, and 10 b. divisibility rules for 3, 6, and 9 c. divisibility rules for 4, 8, 11, and 12.
+- [5NA-IId-2] (Numbe, madali, 13 items) Distinguish prime numbers from composite numbers using the Sieve of Eratosthenes.
+- [5SP-IIf-1] (Stati, madali, 2 items) Collects bivariate data from interview, questionnaire, and other appropriate sources.
+- [5SP-IIf-2] (Stati, madali, 1 items) Identify the appropriate graph (bar graph or line graph) to represent a given set of data.
+- [5SP-IIg-1] (Stati, katamtaman, 1 items) Construct double bar graphs and double line graphs.
+- [5SP-IIg-2] (Stati, katamtaman, 1 items) Interpret data presented in a double bar graph or a double line graph.
+- [5SP-IIg-3] (Stati, mahirap, 1 items) Draw conclusions or make inferences based on data presented in a double bar graph or a double line graph.
+- [5SP-IIi-1] (Stati, mahirap, 1 items) Solve problems using data presented in a double bar graph or a double line graph.
+- [5SP-IIj-1] (Stati, katamtaman, 12 items) Describe probability as a measure of the chance of an event occurring.
+- [5SP-IIj-2] (Stati, katamtaman, 13 items) Calculate the theoretical probability of a simple event by listing all possible outcomes.
+- [5NA-IIIa-1] (Numbe, katamtaman, 13 items) Estimate each of two decimal numbers to the nearest whole number to estimate their product.
+- [5NA-IIIa-2] (Numbe, katamtaman, 13 items) Multiply decimal numbers with decimal parts of up to 2 decimal places.
+- [5NA-IIIa-3] (Numbe, mahirap, 14 items) Solve multi-step problems involving multiplication of decimals that may or may not also involve addition or subtraction of decimals, including problems involving money.
+- [5NA-IIIc-1] (Numbe, katamtaman, 13 items) Estimate the quotient when dividing two decimal numbers by estimating the dividend and divisor to the nearest whole number.
+- [5NA-IIIc-2] (Numbe, katamtaman, 13 items) Divide: a. 1- to 2-digit whole numbers resulting in a terminating decimal quotient (e.g., 4 ÷ 5 = 0.8) b. a decimal of up to 2 decimal places by a 1- to 2-digit whole number, resulting in a terminating decimal quotient of up to 3 decimal places.
+- [5NA-IIIc-3] (Numbe, mahirap, 14 items) Solve multi-step problems involving division of decimals that may or may not also involve the other operations with decimals, including problems involving money.
+- [5NA-IIIe-1] (Numbe, mahirap, 14 items) Perform three or more different operations with fractions and decimals by applying the GMDAS rules.
+- [5MG-IIIf-1] (Measu, madali, 4 items) Illustrate different solid figures using concrete and pictorial models.
+- [5MG-IIIf-2] (Measu, madali, 4 items) Relate plane figures to solid figures using concrete and pictorial models.
+- [5MG-IIIg-1] (Measu, katamtaman, 4 items) Describe and differentiate prisms and pyramids using their vertices, faces, and/or edges.
+- [5MG-IIIg-2] (Measu, madali, 4 items) Illustrate and describe solid figures and their nets.
+- [5MG-IIIh-1] (Measu, madali, 4 items) Make models of solid figures.
+- [5MG-IIIh-2] (Measu, katamtaman, 13 items) Illustrate and find the surface area of solid figures.
+- [5MG-IIIi-1] (Measu, mahirap, 13 items) Solve problems involving the surface area of solid figures.
+- [5MG-IIIi-2] (Measu, madali, 4 items) Describe and distinguish cubes and rectangular prisms.
+- [5MG-IIIj-1] (Measu, katamtaman, 13 items) Estimate the volume of a cube and of a rectangular prism using non-standard units of measurement.
+- [5MG-IIIj-2] (Measu, katamtaman, 5 items) Draw the image of an object after applying rotation about a point given an angle of rotation, clockwise or counterclockwise.
+## Grade 6: 52 competencies {'Measurement and Geometry': 20, 'Number and Algebra': 26, 'Statistics and Probability': 6}
+- [6MG-Ia-1] (Measu, katamtaman, 4 items) Explore whether or not a shape tessellates.
+- [6MG-Ia-2] (Measu, katamtaman, 4 items) Tessellate a surface using different shapes, including triangles, squares, and rectangles.
+- [6MG-Ib-1] (Measu, madali, 5 items) Draw resulting images of shapes that undergo translation, reflection, rotation.
+- [6NA-Ic-1] (Numbe, katamtaman, 14 items) Add and subtract decimals with decimal parts of up to 4 decimal places.
+- [6NA-Ic-2] (Numbe, mahirap, 14 items) Solve multi-step problems involving addition and/or subtraction of decimals, including problems involving money.
+- [6NA-Id-1] (Numbe, katamtaman, 14 items) Mentally multiply decimals of up to 2 decimal places by 0.1, 0.01, 0.001, 10, 100, and 1000.
+- [6NA-Id-2] (Numbe, mahirap, 14 items) Solve multi-step problems involving multiplication of decimals that may or may not also involve addition or subtraction of decimals, including problems involving money.
+- [6NA-Ie-1] (Numbe, katamtaman, 3 items) Divide: a. 1- to 2-digit whole numbers resulting in a repeating (non-terminating) decimal quotient. (e. g., 1/3 = 0.3333 … ) b. a whole number by a decimal of 1 decimal place.
+- [6NA-Ie-2] (Numbe, katamtaman, 14 items) Mentally divide: a. decimals of up to 4 decimal places by 0.1, 0.01, and 0.001 b. decimals of up to 2 decimal places by 10, 100, and 1000.
+- [6NA-If-1] (Numbe, mahirap, 14 items) Solve problems involving division of decimals that may or may not involve the other operations with decimals and/or whole numbers.
+- [6NA-If-2] (Numbe, katamtaman, 13 items) Obtain products that result from multiplying different combinations of fractions, whole numbers, and mixed numbers.
+- [6NA-If-3] (Numbe, mahirap, 14 items) Solve multi-step problems involving multiplication that may or may not involve addition or subtraction of different combinations of fractions, whole numbers, and mixed numbers.
+- [6NA-Ih-1] (Numbe, katamtaman, 12 items) Divide different combinations of fractions, whole numbers, and mixed numbers.
+- [6NA-Ih-2] (Numbe, mahirap, 12 items) Solve multi-step problems involving division of different combinations of fractions, whole numbers, and mixed numbers that may or may not involve any of the other operations of fractions.
+- [6NA-Ii-1] (Numbe, madali, 14 items) Describe the relationship between quantities using ratio for: a. part-whole relationships b. part-part relationships.
+- [6NA-Ii-2] (Numbe, madali, 12 items) Express one number as a fraction of another given their ratio, and vice versa.
+- [6NA-Ii-3] (Numbe, katamtaman, 14 items) Identify and write equivalent ratios.
+- [6NA-Ii-4] (Numbe, mahirap, 14 items) Solve problems involving ratio.
+- [6NA-IIa-1] (Numbe, madali, 14 items) Illustrate ratio and proportion in given situations using tables and/or the double number line model.
+- [6NA-IIa-2] (Numbe, katamtaman, 13 items) Find how many times one value is larger than another given their ratio, and vice versa.
+- [6NA-IIb-1] (Numbe, mahirap, 13 items) Solve problems involving ratio and proportion.
+- [6NA-IIc-1] (Numbe, madali, 5 items) Illustrate and explain the relationships between percentages, fractions, and decimals.
+- [6NA-IIc-2] (Numbe, madali, 5 items) Identify and explain the uses of percentages.
+- [6NA-IId-1] (Numbe, madali, 10 items) Write numbers in exponential form e.g., 2 x 2 x 2 = 2 3 and vice versa, e.g. 2 3 = 2 x 2 x 2.
+- [6NA-IId-2] (Numbe, katamtaman, 10 items) Give the value of numbers expressed in exponential form.
+- [6NA-IIe-1] (Numbe, mahirap, 14 items) Perform calculations involving numbers in exponential form by applying the GEMDAS rules.
+- [6MG-IIf-1] (Measu, katamtaman, 2 items) Determine appropriate units for measuring volume and capacity.
+- [6MG-IIf-2] (Measu, katamtaman, 7 items) Convert cu. cm to L, and vice versa.
+- [6MG-IIg-1] (Measu, katamtaman, 13 items) Find the volume of a cube and of a rectangular prism using standard units of measurement.
+- [6MG-IIg-2] (Measu, mahirap, 13 items) Solve problems involving volumes of cubes and rectangular prisms.
+- [6MG-IIg-3] (Measu, mahirap, 13 items) Solve problems involving capacity.
+- [6MG-IIi-1] (Measu, katamtaman, 7 items) Convert sq. cm to sq. m, and vice versa.
+- [6MG-IIi-2] (Measu, mahirap, 13 items) Find the area, in sq. m or sq. cm, of composite figures composed of triangles, squares, and rectangles.
+- [6MG-IIj-1] (Measu, mahirap, 13 items) Solve problems involving the perimeter and area of triangles, parallelograms, trapezoids, and composite figures composed of triangles, squares, and rectangles.
+- [6MG-IIIa-1] (Measu, madali, 6 items) Draw circles with different radii using a pair of compasses.
+- [6MG-IIIa-2] (Measu, madali, 2 items) Identify and describes the parts of a circle.
+- [6MG-IIIb-1] (Measu, madali, 8 items) Measure the circumference of circles using appropriate tools.
+- [6MG-IIIb-2] (Measu, katamtaman, 3 items) Approximate the value of pi ( 𝜋 ) (the ratio of the circumference to the diameter).
+- [6MG-IIIc-1] (Measu, katamtaman, 3 items) Find the circumference of a circle using C = 𝜋 d or C = 2 𝜋 r.
+- [6MG-IIIc-2] (Measu, mahirap, 8 items) Explore inductively the area of a circle leading to the formula A= 𝜋 r 2.
+- [6MG-IIId-1] (Measu, katamtaman, 5 items) Find the area of a circle using the formula.
+- [6MG-IIId-2] (Measu, mahirap, 11 items) Find the area of composite figures composed of any two or more of the following: triangle, square, rectangle, circle, and semicircle.
+- [6MG-IIId-3] (Measu, mahirap, 7 items) Solve problems involving circumference and area of circles, and composite figures.
+- [6SP-IIIf-1] (Stati, katamtaman, 6 items) Find the angle measures and/or percentages based on the given data for a pie graph.
+- [6SP-IIIf-2] (Stati, katamtaman, 2 items) Construct a pie graph using appropriate tools.
+- [6SP-IIIg-1] (Stati, katamtaman, 12 items) Interpret data presented in a pie graph.
+- [6SP-IIIg-2] (Stati, katamtaman, 1 items) Interpret data from digital media that are presented in tabular or graphical form.
+- [6SP-IIIh-1] (Stati, mahirap, 12 items) Draw conclusions or make inferences based on data presented in a pie graph.
+- [6SP-IIIh-2] (Stati, mahirap, 9 items) Solve problems using data presented in a pie graph.
+- [6NA-IIIi-1] (Numbe, katamtaman, 7 items) Determine the common factors and the greatest common factor (GCF) of two numbers using the following methods: listing, prime factorization, and continuous division.
+- [6NA-IIIi-2] (Numbe, katamtaman, 7 items) Find the common multiples and least common multiple (LCM) of two numbers using the following methods: listing, prime factorization, and continuous division.
+- [6NA-IIIi-3] (Numbe, mahirap, 7 items) Solve problems involving GCF and LCM.
