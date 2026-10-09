@@ -16,7 +16,9 @@ import '@fontsource/nunito/latin-800.css'
 import '@fontsource/atkinson-hyperlegible/latin-400.css'
 import '@fontsource/atkinson-hyperlegible/latin-700.css'
 import './styles/modes.css'
+import './styles/motion.css'
 import { rememberEdgeBase } from './lib/edge-llm.js'
+import { installMotion } from './lib/motion.js'
 
 // Keep the offline shell fresh. Without this, an older installed PWA can keep
 // serving a stale cached bundle while offline.
@@ -32,6 +34,9 @@ const updateSW = registerSW({
 
 // Pin the Teacher Gabay AI server from ?edge=<url> so the installed PWA keeps it.
 rememberEdgeBase().catch(() => {})
+
+// Installed before the first render so the splash gets the startup entrance.
+installMotion(document.getElementById('root'))
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

@@ -1,0 +1,27 @@
+/* Shared spring for CSS-side motion. The JS layer (src/lib/motion.js) handles
+   press bounce and entrances; this file retunes the existing per-screen
+   transitions and keyframes to the same spring so everything feels like one
+   system. Kalma and reduced motion keep the original soft easing. */
+:root { --gb-spring: cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Hover lifts and pressed-shadow shifts on every control land with a bounce.
+     !important because each screen sets its own `transition` shorthand. */
+  :root:not([data-mode='kalma']) :is(button, a[href], summary, [role='button'], [role='tab'], [role='switch'], [role='option']) {
+    transition-timing-function: var(--gb-spring) !important;
+  }
+
+  :root:not([data-mode='kalma']) .gb-pop { animation-duration: 0.45s; animation-timing-function: var(--gb-spring); }
+  :root:not([data-mode='kalma']) .classroom-page .classroom-explanation,
+  :root:not([data-mode='kalma']) .classroom-page .classroom-example { animation-duration: 460ms; animation-timing-function: var(--gb-spring); }
+  :root:not([data-mode='kalma']) .lesson-brief-slide.is-forward,
+  :root:not([data-mode='kalma']) .lesson-brief-slide.is-backward { animation-duration: 420ms; animation-timing-function: var(--gb-spring); }
+
+  /* The splash arrow nudges forward so the start button invites a tap. */
+  :root:not([data-mode='kalma']) .splash-start-arrow { display: inline-block; animation: gb-arrow-nudge 1.6s var(--gb-spring) 1.4s infinite; }
+}
+
+@keyframes gb-arrow-nudge {
+  0%, 60%, 100% { translate: 0 0; }
+  30% { translate: 0.3rem 0; }
+}
