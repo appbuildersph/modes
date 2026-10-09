@@ -149,6 +149,18 @@ All on the edge server (MacBook Air, Apple M5, 16 GB). The phone test above is t
 
 **Benchmark, 2026-10-10 04:26 PHT** (`node scripts/bench-edge.mjs --runs 3`; every run is in [`docs/benchmarks/edge-2026-10-10.json`](docs/benchmarks/edge-2026-10-10.json)). Gemma 4 E2B in LM Studio with the exact prompt and settings the app sends; one Grade 4 fractions question in English and Tagalog, 3 runs per mode, after one untimed warm-up. Token counts come from LM Studio's `usage` field.
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/benchmarks/reply-time-dark.svg">
+  <img src="docs/benchmarks/reply-time-light.svg" alt="Bar chart: median full tutor reply time per mode. Hakbang 0.56 s, Kalma 0.77 s, Pakinig 1.14 s, no mode 5.13 s, with fastest-to-slowest ranges." width="720">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/benchmarks/decode-speed-dark.svg">
+  <img src="docs/benchmarks/decode-speed-light.svg" alt="Scatter chart: decode speed against reply length for 24 replies. Replies of 100 or more tokens sit at 48 to 53 tokens per second; short replies scatter from 40 to 115." width="720">
+</picture>
+
+*Charts are drawn from the raw JSON by `node scripts/bench-charts.mjs`; the table below has the same numbers.*
+
 | Mode | Reply length (median) | First token (median) | Full reply, median (range) | Decode speed (median) |
 |---|---|---|---|---|
 | No mode | 246 tokens | 0.20 s | 5.13 s (2.32-5.88 s) | 51.0 tok/s |
