@@ -111,7 +111,7 @@ Where each mockup behaviour lands in the app, aligned with `docs/TUTOR_MODES.md`
 | `modes.css` | Page around the phone, setup screen, and each mode's overrides |
 | `assets/nova.png`, `assets/bg-tile.png` | Gabay's mascot and doodle tile |
 
-Deploy from this folder with `vercel deploy --prod --yes` (project `hiyang-mockup`; `.vercel` is gitignored). The styles, Nova and the doodle tile come from the pre-existing Gabay app; disclose them with the rest of the base project (`docs/SUBMISSION.md`).
+The live site is the Vercel project `hiyang-mockup` (scope `riecodes-projects`). To redeploy from this folder, link it once with `vercel link --yes --project hiyang-mockup`, then run `vercel deploy --prod --yes` (`.vercel` is gitignored). The styles, Nova and the doodle tile come from the pre-existing Gabay app; disclose them with the rest of the base project (`docs/SUBMISSION.md`).
 
 ## Open decisions
 
