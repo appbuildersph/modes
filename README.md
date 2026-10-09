@@ -125,11 +125,30 @@ npm test
 
 Uses `node --test` over `test/*.test.js`. It covers the curriculum data, the tutor prompt and mode rules, the provider chain, the edge backend, the voice endpoint and the speech routing, all with fake networks and no model. At the time of writing, 133 tests passed on the team's Mac (the count changes as tests are added). The tests do not prove the model's reply quality.
 
+## Proof of local inference
+
+![Terminal showing LM Studio's model log for google/gemma-4-e2b next to the phone app showing the same reply labelled "Teacher Gabay AI server"](docs/images/edge-inference-proof.png)
+
+*Screenshot taken 2026-10-10 at 2:15 AM, cropped to the two relevant windows. Left: Terminal running `lms log stream --source model --stats` on the edge server. Right: the app on an iPhone 13, mirrored to the Mac with iPhone Mirroring.*
+
+**The edge server:** a MacBook Air (Apple M5, 16 GB) running LM Studio with the MLX build of **Gemma 4 E2B** (`google/gemma-4-e2b`, 4-bit, 4.37 GB). It is the E2B model, not another size; the identifier in the log is the one LM Studio reports.
+
+**What the screenshot shows**
+
+- The phone app asked Teacher Gabay for a hint in Hakbang mode. Its reply is labelled **"Teacher Gabay AI server"**, which the app only shows when the answer came from the edge hub.
+- LM Studio's model log, on the Mac, shows the prompt it received (the server-built system prompt with the Hakbang rules, then the student's message) and the output `Simulan natin sa isang parisukat. ...`, word for word the same text the phone displays.
+- Generation statistics from the same entry: `modelIdentifier: google/gemma-4-e2b`, 51.8 tokens per second, 0.523 s to the first token, 0.869 s in total, 45 tokens generated from a 155-token prompt, `numGpuLayers: -1` (all layers on the GPU), `stopReason: eosFound`.
+
+**What it does not show.** The phone reached the Mac through an internet tunnel (a Cloudflare quick tunnel), so this particular capture is *not* an offline run, and it does not show the network being switched off. It also does not show the model running on the phone, because it does not: the phone is only the client. The offline claim applies to the Mac itself (open `http://localhost:8787` with the Mac's Wi-Fi off). The reply was produced by a 2B-parameter model and its Tagalog has not been reviewed by a Filipino reader.
+
+**Reproduce it.** Start LM Studio's server, run the hub (Quick start A), then in a second Terminal run `~/.lmstudio/bin/lms log stream --source model --stats` and ask Teacher Gabay a question from the app. Each question appears in that log with its prompt, the model's output and the timing figures. To check that nothing leaves the machine, run `lsof -nP -i -a -c "LM Studio" | grep -E "LISTEN|ESTABLISHED"`; the model server listens on `127.0.0.1` only.
+
 ## Measured so far
 
 All on one Apple Silicon Mac, one run each, recorded in [`docs/DECISIONS.md`](docs/DECISIONS.md) (D-018) and [`docs/ROADMAP.md`](docs/ROADMAP.md). The phone test above is the only phone result; no on-phone model numbers exist, because the model does not run on the phone.
 
 - Short Kalma and Hakbang replies through the hub took roughly 0.6 to 1.3 s; longer no-mode replies about 4.5 s. Model speed was about 45 to 51 tokens per second.
+- One captured phone question (Hakbang mode, [screenshot above](#proof-of-local-inference)): 51.8 tokens per second, 0.523 s to the first token, 0.869 s total, on the MacBook Air M5.
 - A request from a foreign origin is rejected (403); an unknown mode is rejected (400).
 - ElevenLabs voice through the hub returned audio in 0.45 s locally and 0.59 s through the public tunnel (one short Taglish line; Filipino naturalness not judged).
 
