@@ -143,6 +143,20 @@ Uses `node --test` over `test/*.test.js`. It covers the curriculum data, the tut
 
 **Reproduce it.** Start LM Studio's server, run the hub (Quick start A), then in a second Terminal run `~/.lmstudio/bin/lms log stream --source model --stats` and ask the tutor a question from the app. Each question appears in that log with its prompt, the model's output and the timing figures. To check that nothing leaves the machine, run `lsof -nP -i -a -c "LM Studio" | grep -E "LISTEN|ESTABLISHED"`; the model server listens on `127.0.0.1` only.
 
+### Offline proof: the Mac with Wi-Fi off
+
+<img src="docs/images/verification/wifi-off-screen.png" alt="Mac desktop at 5:08 AM with Wi-Fi off: Chrome at localhost:8787 shows a tutor reply labelled Teacher Gabay AI server; a Terminal shows the per-mode checks passing" width="720">
+
+<img src="docs/images/verification/wifi-off-app.png" alt="The app at localhost:8787 with Wi-Fi off, showing the reply labelled Teacher Gabay AI server" width="260">
+
+*Recorded 2026-10-10 at 5:07-5:08 AM PHT on the edge server (MacBook Air, Apple M5) with its Wi-Fi switched off. Full, unedited log: [`docs/images/verification/wifi-off-log.txt`](docs/images/verification/wifi-off-log.txt).*
+
+- **The Mac was really offline.** Before any test, the script logged Wi-Fi power off, no default route, `ping 1.1.1.1` unreachable and `https://www.google.com` unreachable. It checked again after the app run, and the Mac was still offline.
+- **Gemma answered in every mode.** `node scripts/edge-mode-check.mjs` passed 8 of 8 (4 modes x English and Tagalog), with mode replies taking 0.41 to 1.16 s.
+- **The app answered from the local model.** Chrome on the Mac opened `http://localhost:8787`, and in Hakbang mode the learner asked "Ano ang right angle? Paano ko ito makikilala?". The request log shows `POST /api/tutor 200`, and the reply is labelled "Teacher Gabay AI server". The tutor stays on the open lesson's topic (angles).
+- **What this does not cover.** A phone cannot reach the Mac with the Wi-Fi off, because the ngrok tunnel needs the internet; a phone on the same local network or hotspot (runbook) has not been tested yet. The spoken voice offline is the device's built-in voice, because ElevenLabs is a cloud service.
+- **A bug this test found, now fixed.** A first run at 4:50 AM answered only from the cached explanation. The build served on localhost sent its AI calls to the ngrok URL, which needs the internet. Fixed in `0251388` (localhost now uses its own hub first) before this run.
+
 ## Measured so far
 
 All on the edge server (MacBook Air, Apple M5, 16 GB). The phone test above is the only phone result; no on-phone model numbers exist, because the model does not run on the phone.

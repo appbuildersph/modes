@@ -1,0 +1,62 @@
+# Wi-Fi-off run, 2026-10-10, times in PHT. Unattended script output, unedited below this header.
+# Mac: MacBook Air M5 16 GB. Model: google/gemma-4-e2b in LM Studio on 127.0.0.1:1234, hub on 127.0.0.1:8787, app at http://localhost:8787.
+
+[05:06:48] waiting for Wi-Fi to be turned off (10 min max)
+[05:07:37] OFFLINE. Proof:
+Wi-Fi Power (en0): Off
+default route: route: writing to routing socket: not in table
+ping 1.1.1.1: unreachable
+https://www.google.com: 000 (000 = no connection)
+	status: inactive
+[05:07:39] LM Studio and hub (both on 127.0.0.1)
+lmstudio /v1/models: 200
+hub /api/ping: 204
+[05:07:39] per-mode live check (scripts/edge-mode-check.mjs)
+
+[PASS] none/en 5035ms
+  To add proper fractions like 3/4 and 1/4, you need to check if they have the same denominator. Look at the denominators. Both fractions are with a denominator of 4. Add the numerators together. Add 3 and 1. 3 + 1 = 4 Keep the same denominator. The result is 4/4. Simplify the fraction if possible. 4/4 is equal to 1. So, 3/4 + 1/4 = 1. Now, let's look at 5/4. Identify the numerator and the denominator. The numerator is 5 and the denominator is 4. Compare the numerator to the denominator. Is the numerator greater than or equal to the denominator? 5 is greater than 4. If the numerator is greater than or equal to the denominator, it is an improper fraction. So, yes, 5/4 is an improper fraction.
+
+[PASS] none/fil 5777ms
+  Tutulungan kita sa fractions. Para sa unang tanong, ang 3/4 + 1/4. Tingnan kung pareho ba ang denominators (ang ibabang numero). Sa 3/4 at 1/4, pareho ang denominator, na si 4. Kung magkapareho ang denominators, pwede mo nang pagsamahin ang numerators (ang itaas na numero). I-add ang 3 at 1. 3 + 1 = 4. Panatilihin ang denominator. Ang sagot ay 4/4. I-simplify ang fraction kung kinakailangan. Ang 4/4 ay katumbas ng 1 (dahil ang numerator at denominator ay magkapareho). Para sa pangalawang tanong, ang 5/4 ba ay improper fraction? Tandaan natin ang definition ng improper fraction. Ang improper fraction ay isang fraction kung saan ang numerator (itaas) ay mas malaki kaysa o katumbas ng denominator (ibaba). Ihambing ang numerator at denominator ng 5/4. Ang numerator ay 5. Ang denominator ay 4. Tingnan kung mas malaki ang numerator kaysa denominator. 5 ay mas
+
+[PASS] kalma/en 593ms
+  Adding fractions with the same denominator is straightforward. Is 5/4 an improper fraction because the numerator is larger than the denominator?
+
+[PASS] kalma/fil 665ms
+  Ang pagdaragdag ng proper fractions ay nagreresulta sa isang improper fraction. Ano ang gusto mong gawin sa mga fraction na ito?
+
+[PASS] pakinig/en 1160ms
+  To add three fourths and one fourth, you add the numerators together. The denominator stays the same for addition. So, three fourths plus one fourth equals four fourths. Yes, five fourths is an improper fraction because the numerator is greater than the denominator.
+
+[PASS] pakinig/fil 1023ms
+  Ang tatlong kuinta at isang kuinta ay nagiging apat na kuinta. Ang limang kuinta ay improper fraction dahil mas malaki ito kaysa isa. Ito ay isang halimbawa ng improper fraction.
+
+[PASS] hakbang/en 624ms
+  Let us look at the fraction three over four, which is 3/4. Is 3/4 a proper fraction?
+
+[PASS] hakbang/fil 413ms
+  Ang 3/4 ay proper fraction, improper fraction, o mixed number? Naiintindihan mo ba hanggang dito?
+
+All mode checks passed against http://127.0.0.1:8787
+[05:07:54] mode check exit: 0
+[05:07:54] screen capture (menu bar shows Wi-Fi state)
+[05:07:54] app run in visible Chrome via http://localhost:8787 (Hakbang), then full-screen capture
+help buttons: 1
+ask inputs: 1
+thinking shown: 1
+source: × For Question 1, read what is being asked and compare each choice carefully before deciding. Listen again Pause Ask Teacher Mic Ask Teacher Gabay AI server Draw a corner of a book or a piece of paper. Is it like the corner of a square?
+reply: Draw a corner of a book or a piece of paper. Is it like the corner of a square?
+api GET /api/ping 204
+api GET /api/ping 204
+api GET /api/ping 204
+api GET /api/ping 204
+api GET /api/ping 204
+api POST /api/questions 404
+console: Failed to load resource: the server responded with a status of 404 (Not Found)
+api GET /api/ping 204
+api POST /api/tutor 200
+api GET /api/ping 204
+api GET /api/ping 204
+[05:08:40] still offline after app run: yes
+[05:08:40] ALL OFFLINE CHECKS DONE. Waiting for Wi-Fi to come back
+[05:08:46] back online: yes

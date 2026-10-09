@@ -86,7 +86,7 @@ Through the tunnel (**not yet run**): the same `/api/ping` and `/api/tutor` call
 
 Every mode, live (**verified 2026-10-10, 8 of 8 pass**): `node scripts/edge-mode-check.mjs` sends one question per mode in English and Tagalog. It runs each reply through `applyMode()` the same way the app does, and checks the mode rules: Kalma at most two sentences with no `!`, Pakinig with no math symbols, Hakbang ending in a check question. It exits non-zero on any failure.
 
-Zero connectivity (**not yet run with Wi-Fi off**): turn the Mac's Wi-Fi off, then run `node scripts/edge-mode-check.mjs`. Next, open `http://localhost:8787`, ask the tutor, and check that the reply is labelled "Teacher Gabay AI server". Every request stays on 127.0.0.1 (hub to LM Studio), so nothing in the path needs the internet, but no one has watched it run with Wi-Fi off yet.
+Zero connectivity (**verified 2026-10-10 05:07 PHT, Mac only**): turn the Mac's Wi-Fi off, then run `node scripts/edge-mode-check.mjs` (8 of 8 passed). Next, open `http://localhost:8787`, ask the tutor, and check that the reply is labelled "Teacher Gabay AI server" (it was; `POST /api/tutor 200`). Every request stays on 127.0.0.1 (hub to LM Studio). Evidence: `docs/images/verification/wifi-off-*` and the README "Offline proof" section. The first attempt (04:50) showed only the cached explanation because the localhost build sent its AI calls to the ngrok URL; fixed in `0251388`.
 
 Phone over local Wi-Fi or hotspot, no internet (**verified from the Mac's LAN address only, not yet from a phone**):
 
