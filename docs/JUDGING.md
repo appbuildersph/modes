@@ -25,9 +25,9 @@ Status: criteria supplied by the AppBuildersPH Hackathon 2026 participant briefi
 | # | Criterion | Weight | Official question | Team's interpretation | Where the project speaks to it |
 |---|---|---|---|---|---|
 | 1 | Problem and Usefulness | 25% | Does it solve a genuine problem for a clear target user? | Filipino Grade 4-6 learners with unreliable internet need a math tutor that works offline, is grounded in DepEd MATATAG, and does not need an account or send a child's questions to a server | MATATAG-grounded curriculum (155 competencies, 1,571 items), offline-first loop, trilingual UI and tutor, no accounts |
-| 2 | Local AI Implementation | 25% | Is local inference fundamental, and does it give a meaningful advantage? | The tutor model runs on the learner's device; offline answers, privacy for children, no per-question cost | Planned: open-source model via WebLLM/WebGPU as a provider before the cloud (`docs/LOCAL_AI.md`). Existing: Gemini Nano on supported Chrome only |
+| 2 | Local AI Implementation | 25% | Is local inference fundamental, and does it give a meaningful advantage? | The tutor model runs locally on hardware the class controls (edge AI, in scope per briefing p.6); offline answers on the laptop, children's questions not sent to a cloud AI API, no per-question cost | Built (D-018): Gemma 4 E2B in LM Studio (MLX) on the team's MacBook Air, behind `scripts/edge-hub.mjs`; phones use it over a tunnel. Measured numbers in `docs/SUBMISSION.md`. The in-phone model was tried and failed (D-018) |
 | 3 | Technical Execution | 20% | Does it actually work, reliably enough for a live demonstration? | Reliable offline demo with fallbacks; no crash; graceful failure | Existing fallback chains; the demo path must be rehearsed with the network off; physical-device evidence |
-| 4 | Innovation | 15% | Is it meaningfully different? Does Local AI enable something new? | Offline AI tutoring in Taglish for children on commodity phones, with three accessibility-oriented modes (Kalma, Pakinig, Hakbang) that change both the interface and how the on-device AI replies | Local model plus the three confirmed learning modes (Kalma, Pakinig, Hakbang) enforced in code; verified arithmetic checks |
+| 4 | Innovation | 15% | Is it meaningfully different? Does Local AI enable something new? | Offline AI tutoring in Taglish for children from a local edge server, with three accessibility-oriented modes (Kalma, Pakinig, Hakbang) that change both the interface and how the local AI replies | Local model plus the three confirmed learning modes (Kalma, Pakinig, Hakbang) enforced in code; verified arithmetic checks |
 | 5 | Product and Demo Quality | 15% | Is the UX usable, and is the live demonstration convincing? | Child-friendly UI, one clear story, working live | Existing mobile-first UI, mascot, games, 3D classroom; demo script in `docs/SUBMISSION.md` |
 
 Official source: the participant briefing PDF, page 14, "HOW YOU'LL BE SCORED / Judging criteria". The briefing's summary line: "Half the score is usefulness and how real your Local AI is."
@@ -52,30 +52,31 @@ No anchors (for example "5 = exceptional") were published in the briefing. Add a
 
 | Feature or evidence | Criterion it supports | Strength | Status | Gap |
 |---|---|---|---|---|
-| On-device open-source tutor answering with network off | 2 Local AI, 4 Innovation, 1 Usefulness | Strong if it works | Planned; unverified on device | Model choice, runtime, device test. **The most important item** |
+| Local open-source tutor (Gemma 4 E2B on the team's laptop) answering with network off | 2 Local AI, 4 Innovation, 1 Usefulness | Strong | Built; replies verified on the Mac (also with Wi-Fi off, 2026-10-10 05:07) and on an iPhone 13 as a client | Installed PWA on the iPhone 13 reported working by the team lead (05:32); capture a phone screenshot or recording. **The most important item** |
 | Works offline after first load (shell, lessons, practice, mastery) | 1 Usefulness, 3 Execution | Strong | Built and verified | Re-test offline on the demo device |
 | DepEd MATATAG Grades 4-6 content, 155 competencies, 1,571 items | 1 Usefulness | Strong | Built | Bundled math curriculum and practice items |
 | English / Tagalog / Taglish UI and tutor reply language | 1 Usefulness, 4 Innovation | Medium | UI built; tutor language by prompt | Small-model Taglish quality unknown |
-| Learning modes Kalma / Pakinig / Hakbang (UI plus local AI changes) | 1 Usefulness (clear target learners), 4 Innovation, 5 Demo | Strong if shown working | Definitions confirmed; not implemented | Implementation, tests; no clinical claims; prioritise the Local AI reply rules, then Kalma and Pakinig UI |
-| Fallback chains (on-device -> cloud -> bundled) | 3 Execution | Strong | Built for existing providers; extend to the new one | |
+| Learning modes Kalma / Pakinig / Hakbang (UI plus local AI changes) | 1 Usefulness (clear target learners), 4 Innovation, 5 Demo | Strong if shown working | Built: mode picker, mode-aware prompt, rules enforced in code, per-mode screens and voice, with tests | Show live; no clinical claims; Grade 1-3 unlock not built |
+| Fallback chains (cache -> Nano -> edge hub -> cloud -> bundled) | 3 Execution | Strong | Built and tested; LM Studio-stopped and hub-down fallbacks checked (`docs/images/verification/`) | Rehearse live |
 | Voice out and voice in | 5 Demo, 1 Usefulness | Medium | Built (online upgrade, offline fallback) | Offline spoken-question path is browser-dependent |
 | 3D classroom, four mini-games, mascot | 5 Demo | Medium | Built | Keep focus on the local-AI story |
 | No accounts, no client secrets, local learner data | 1 Usefulness, 2 Local AI (privacy) | Medium | Built | |
-| AI Lab page with measured device results | 3 Execution, 2 Local AI | Strong if honest | Proposed | Real numbers only |
+| Measured edge results (`scripts/bench-edge.mjs`, raw JSON in `docs/benchmarks/`) | 3 Execution, 2 Local AI | Strong if honest | Done on the Mac | Real numbers only; no phone-side numbers exist |
 
 ## 6. Evidence checklist
 
-- [ ] Screen recording on the demo device, network visibly off, on-device AI answering
-- [ ] Measured results table (model, device, load time, tokens per second, crashes), raw logs kept
+- [x] Screenshots and log with the Mac's Wi-Fi off, the local model answering (`docs/images/verification/wifi-off-*`)
+- [ ] Screen recording (the demo video) with the network visibly off
+- [x] Measured results table with raw output (`docs/SUBMISSION.md`, `docs/benchmarks/edge-2026-10-10.json`)
 - [ ] Taglish evaluation results scored by a Filipino reader (if time allows)
-- [ ] `npm test` output
-- [ ] README with judge recreation steps, tested from a clean clone
+- [x] `npm test` output (all pass; count in `docs/SUBMISSION.md` section 4)
+- [ ] README with judge recreation steps, tested from a clean clone (partly: clone, install, test and build checked on this Mac)
 - [ ] Code, framework, and asset documentation (see `docs/SUBMISSION.md`)
-- [ ] License review for the chosen model
+- [x] License review for the chosen model (Apache 2.0 per the official model card, checked 2026-10-10; see `docs/SUBMISSION.md`)
 
 ## 7. Demo script slot
 
-See `docs/SUBMISSION.md` sections 5 and 6 for the video and pitch outlines. The 5-minute live pitch must show the on-device AI working on the team's own laptop with the network visibly off, and must have a rehearsed fallback for each step that depends on the model.
+See `docs/SUBMISSION.md` sections 5 and 6 for the video and pitch outlines. The 5-minute live pitch must show the local model working on the team's own laptop with the network visibly off, and must have a rehearsed fallback for each step that depends on the model.
 
 ## 8. Additions from the team lead
 

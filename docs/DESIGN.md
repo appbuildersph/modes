@@ -4,7 +4,7 @@ Status: 2026-10-10. Written by reading the code in this repo (`tailwind.config.j
 
 **Two design files; the mockup notes take precedence.** `mockups/hiyang/DESIGN.md` (added by `rieCodes`, commits `a3e1cca` and `2f16a11`, pushed after this file) is the team's newest design direction. Wherever it differs from this file, follow it: the layout of each mockup screen, the sample copy for each mode, the Hakbang step sequence, the build map, and the open decisions (project name candidates, Pakinig voice engine, where the mode is chosen). It also has the live mockup (https://hiyang-mockup.vercel.app, deep links `#setup`, `#kalma`, `#pakinig`, `#hakbang`, `#default`). The mockup notes themselves hand exact sizes, colors and contrast ratios to this file, so the tokens, components, accessibility audit, and per-mode values stay here. If the mockup notes change, update the matching lines here instead of keeping two versions, and link rather than copy values.
 
-Target device (D-017): an iPhone 13 (390 x 844 pt screen) running the app as an installed Home Screen PWA, portrait.
+Target device (D-017): an iPhone 13 (390 x 844 pt screen) running the app as an installed Home Screen PWA, portrait. Since D-018 the phone is a client of the edge AI hub; the Mac's own browser at `http://localhost:8787` is the offline demo surface.
 
 ## 1. Principles (as practised in the code)
 

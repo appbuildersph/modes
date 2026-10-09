@@ -2,7 +2,7 @@
 
 Status: 2026-10-10. Read this if you (or your Claude session) need to get the local model running. Machine, simulator, and iPhone steps are in `docs/DEV_SETUP.md` (Mac); this file covers only the model. On Windows, also read `docs/MODEL_SETUP_WINDOWS.md`.
 
-**Verified vs assumed.** Nothing here has been run on a real iPhone yet. The model choice (Gemma 4 E2B, D-016) is unverified on the demo device (D-017). Sizes below are reported file-size sums, not measurements.
+**Superseded for the demo (D-018).** This file describes the in-browser route, which failed on the iPhone 13 (Gemma 4 E2B's page was killed during download; Gemma 3 1B loaded, then crashed). The model now runs on the team's laptop in LM Studio; use `docs/EDGE_RUNBOOK.md` and the README Quick start instead. Kept for reference. Sizes below are reported file-size sums, not measurements.
 
 ## 1. Policy: the model is NOT in the repo
 

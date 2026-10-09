@@ -2,7 +2,7 @@
 
 Start with the root `CLAUDE.md` (also useful for humans). Everything here is meant to be tracked in git and shared with all collaborators.
 
-Key facts: the project is an **offline-first tutor**; the on-device **model is Gemma 4 E2B** (confirmed, unverified on the demo device); the **demo device is an iPhone 13 installed PWA**; the project **name is undecided**; it has three confirmed learning modes (Kalma, Pakinig, Hakbang).
+Key facts: the project is an **offline-first tutor**; the **model is Gemma 4 E2B running on an edge AI server** (the team's MacBook Air via LM Studio, D-018; it does not run on the phone); the **demo** is the Mac's own browser with Wi-Fi off, plus an iPhone 13 PWA as a client over a tunnel; the project **name is undecided**; it has three confirmed learning modes (Kalma, Pakinig, Hakbang).
 
 | Document | Purpose |
 |---|---|

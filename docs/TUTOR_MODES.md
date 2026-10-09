@@ -1,6 +1,6 @@
 # Learning Modes — Kalma, Pakinig, Hakbang
 
-Status: **CONFIRMED by the team lead on 2026-10-09** (definition table supplied as an image and transcribed below). **NOT IMPLEMENTED**: nothing in `src/` or `api/` implements modes today; the only code matches for "hakbang" are the ordinary Tagalog word for "step" in UI strings. Implementation details not in the table are marked *proposed*.
+Status: **CONFIRMED by the team lead on 2026-10-09** (definition table supplied as an image and transcribed below). **IMPLEMENTED (2026-10-10)**: mode picker (onboarding and Profile), mode-aware server prompt, rules enforced in code after the model replies (`src/lib/tutor-modes.js`), per-mode screens (`src/lib/mode-ui.js`, `src/styles/modes.css`) and per-mode voice, with tests. Not built: the Grade 1-3 unlock (section 6). Implementation details not in the table are marked *proposed*.
 
 The project ships three accessibility-oriented learning modes. Each changes both the UI/UX and the local AI behaviour, so the same lesson can be taught in a way that fits different learners.
 

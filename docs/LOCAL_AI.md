@@ -1,12 +1,12 @@
 # Local AI — on-device open-source model for the offline tutor
 
-**Model: Gemma 4 E2B (confirmed by the team lead 2026-10-10), through transformers.js; not yet verified on the iPhone 13 demo device** (`docs/DECISIONS.md` D-016, D-017). The other models below are earlier candidates and fallbacks. The product is an offline-first tutor, and the model must serve that goal.
+**Superseded for the demo by D-018:** Gemma 4 E2B now runs on the team's laptop in LM Studio (MLX), not in the phone's browser; the in-browser attempts on the iPhone 13 failed. This file is the research snapshot that led there (`docs/DECISIONS.md` D-016 to D-018). The other models below are earlier candidates and fallbacks. The product is an offline-first tutor, and the model must serve that goal.
 
 Status: research snapshot, 2026-10-09. Nothing here has been verified on a real iPhone. Model facts below were gathered by a separate research session and have not been independently re-checked. **Re-verify any fact that decides a purchase, license, or ship decision.**
 
 ## 0. Hackathon time-boxed plan (supersedes the long plan below where they conflict)
 
-> **Update 2026-10-10:** the model is now Gemma 4 E2B and the demo device is an iPhone 13 installed PWA, so the plan's laptop-first steps below are superseded: test the model on the phone first (HTTPS tunnel, Safari Web Inspector), and use the Mac only for development. See `docs/ROADMAP.md` gates.
+> **Update 2026-10-10 (later superseded by D-018, edge AI on the laptop):** the model is now Gemma 4 E2B and the demo device is an iPhone 13 installed PWA, so the plan's laptop-first steps below are superseded: test the model on the phone first (HTTPS tunnel, Safari Web Inspector), and use the Mac only for development. See `docs/ROADMAP.md` gates.
 
 Context: the AppBuildersPH Hackathon 2026 (Local AI) submission deadline is **10:00 AM on 2026-10-10**; this was written at about 11:30 PM on 2026-10-09 (`docs/HACKATHON.md`). The sections after this one are the full research and design; the full evaluation (section 8) and iPhone acceptance checklist (section 9) do not fit. The proposal below is the minimum that makes Local AI real in the demo. The team lead decides; adjust as needed.
 

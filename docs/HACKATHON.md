@@ -103,22 +103,23 @@ Special awards may be won independently of the main award, and one project can w
 
 1. **Focus on the hackathon deliverables:** the local model provider, edge setup, mode post-processing, tests, and documentation.
 2. **Make the hackathon work visible and substantial:** real commits for the edge hub, local AI provider, tutor modes, and test coverage.
+3. **Disclose existing code and assets accurately.** The briefing requires it (FAQ: "Disclose any existing code or assets") and names a "pre-existing project" as a dispute ground. The disclosure belongs in the submission form and the README (`docs/SUBMISSION.md`).
 
 ### 8.2 Local AI is the product now
 
-Judges weigh Local AI Implementation at 25%, and the rules require core functionality not to depend entirely on a cloud API. The open-source model path (`docs/LOCAL_AI.md`) and local inference are therefore the centre of the submission, not a side feature. The local model must actually run in the demo.
+Judges weigh Local AI Implementation at 25%, and the rules require core functionality not to depend entirely on a cloud API. The open-source model and local inference are therefore the centre of the submission, not a side feature. The local model must actually run in the demo. Since D-018 the model (Gemma 4 E2B) runs on the team's laptop as an edge AI server through LM Studio; the briefing's in-scope list (page 6) names "Edge AI", "Offline AI", "Hybrid local + cloud systems" and "AI on PCs, laptops, phones, or edge hardware", and page 10 names LM Studio and MLX. Describe it as running on a local edge server, never as running on the phone.
 
 ### 8.3 Demo hardware
 
-Finalists demo on their own device and laptop (the briefing says to bring your own laptop; HDMI and USB-C are available). **Decision (D-017): the demo runs on the team lead's iPhone 13 as an installed PWA.** That is the highest-risk path (iOS memory limits, a roughly 3 GB model, no simulator evidence), so test it early, rehearse screen mirroring to HDMI or USB-C, and keep a laptop-browser run as a backup only if it is also verified. Decide in advance what is shown if the phone fails on stage.
+Finalists demo on their own device and laptop (the briefing says to bring your own laptop; HDMI and USB-C are available). **Current plan (D-018, superseding D-017's on-phone model):** the model runs on the team's MacBook Air (LM Studio, Gemma 4 E2B). The strongest demo is the Mac's own browser at `http://localhost:8787` with Wi-Fi visibly off, the reply labelled as coming from the edge AI server. The iPhone 13 is shown second as a client of the same hub through the ngrok tunnel (needs venue internet). Rehearse both, rehearse screen mirroring to HDMI or USB-C, and decide in advance what is shown if the tunnel or venue Wi-Fi fails (answer: stay on the Mac). Runbook: `docs/EDGE_RUNBOOK.md`.
 
 ### 8.4 Honesty about benchmarks
 
-"Fake benchmarks" is named as a dispute ground. Only report numbers measured on the device shown. Label simulator results as simulator results. Keep raw logs. See `docs/LOCAL_AI.md` section 8 for what to record.
+"Fake benchmarks" is named as a dispute ground. Only report numbers measured on the device shown. Label simulator results as simulator results. Keep raw logs. The measured edge numbers and their raw output are in `docs/SUBMISSION.md` ("Measured performance") and `docs/benchmarks/`.
 
 ### 8.5 Time box
 
-About 10 hours remain at writing. The plan in `docs/LOCAL_AI.md` and `docs/PRD.md` must be cut to what fits (see the time-boxed plan in `docs/LOCAL_AI.md` section 0). Do not start the Capacitor wrapper or fine-tuning.
+As of about 5:00 AM Oct 10, about 5 hours remain. Only submission items, the demo path and bug fixes fit now (checklist: `docs/SUBMISSION.md` sections 4 and 7). Do not start the Capacitor wrapper, fine-tuning or new features.
 
 ## 9. FAQ digest
 

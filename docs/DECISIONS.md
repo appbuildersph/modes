@@ -88,7 +88,7 @@ Format: lightweight ADRs. Newest at the bottom. Status is one of Accepted, Propo
 
 ## D-014: Three confirmed learning modes (Kalma, Pakinig, Hakbang)
 
-- **Status:** Accepted (2026-10-09, confirmed by the team lead); not implemented
+- **Status:** Accepted (2026-10-09, confirmed by the team lead); implemented 2026-10-10 (prompt rules, code-enforced post-processing, per-mode UI and voice; Grade 1-3 unlock not built)
 - **Context:** The team wants the same lessons to fit learners with different needs. The lead supplied a definition table: Kalma (calm/focus: ADHD, autism, sensory sensitivity), Pakinig (listen: dyslexia, low vision, weak readers), Hakbang (step: dyscalculia, intellectual disability), each with UI/UX changes and local AI changes (`docs/TUTOR_MODES.md`).
 - **Decision:** Build the three modes as a cross-cutting preference that changes both the UI and the tutor. Local AI behaviour is enforced in code (D-009). Hakbang unlocks Grade 1-3 content, loaded lazily and only in that mode, amending D-002. The app makes no diagnosis and no clinical or efficacy claims; modes are described as designed to support learners and any learner may use any mode.
 - **Consequences:** New `pref:mode` setting and a `tutor-modes` module; tutor cache key and `/api/tutor` request gain a validated `mode`; Grade 1-3 data and validators need a lazy path; several UI items (word highlighting, voice answers, visuals) are larger than the time available before the deadline and are prioritised after the Local AI work.
@@ -102,14 +102,14 @@ Format: lightweight ADRs. Newest at the bottom. Status is one of Accepted, Propo
 
 ## D-016: On-device model is Gemma 4 E2B
 
-- **Status:** Accepted (2026-10-10, confirmed by the team lead); **unverified on the demo device**
+- **Status:** Accepted (2026-10-10, confirmed by the team lead). The model choice stands; the transformers.js runtime is superseded by D-018 (LM Studio on the team's laptop)
 - **Context:** `modes-44` measured Gemma 3 1B and Qwen3 0.6B in the browser on a Mac (`docs/ROADMAP.md` status log). The team lead had tested Gemma 4 E2B in LM Studio and confirmed it as the model. Reported by `modes-44`: Gemma 4 E2B has no WebLLM build, so it runs through transformers.js (`onnx-community/gemma-4-E2B-it-ONNX`, q4f16); its files add up to about 3.1 GB; the text-only code path is untested; it was not run in a browser.
 - **Decision:** Build the on-device provider around Gemma 4 E2B via transformers.js.
 - **Consequences / risks:** The demo device is an iPhone 13 with 4 GB RAM (D-017). A roughly 3 GB download and its runtime memory may not fit in an iOS web process (anecdotal kill reports near 2 GB; not an Apple figure). This must be tested on the phone first thing, not last. More detail reported by `model-research` (its arithmetic from the repo file listing, not measured): the q4f16 ONNX files are about 3.1 GB text-only (decoder about 1520 MB plus embed_tokens about 1591 MB) and about 3.4 GB with vision and audio; the only kill report found is one forum post (Three.js, iOS 26, the reporter's own diagnosis, not Apple) at 2048 MB; no source was found that ran Gemma 4 E2B on iOS Safari, and every demo it found says Chrome or Edge 113+. So D-016 plus D-017 is unverified and could fail outright. Fallbacks, in order: the existing cloud tutor and bundled explanations (already in the tutor chain), or Gemma 3 1B (about 540 MB download, 711 MB VRAM in WebLLM, measured to run on the Mac but it loops on the full AI tutor prompt), which needs the team lead's OK. Gemma's terms must be read before shipping. The earlier candidates are fallbacks, not the plan.
 
 ## D-017: Demo device is the team lead's iPhone 13, installed PWA
 
-- **Status:** Accepted (2026-10-10, team lead)
+- **Status:** Accepted (2026-10-10, team lead); **partly superseded by D-018**: the phone is now a client, the model runs on the laptop
 - **Decision:** The live demo and the recorded video run the app as an installed Home Screen PWA on an iPhone 13. Offline claims are only valid if shown there with the network off.
 - **Consequences:** Physical-device testing is the priority (the simulator is not evidence). Needs the phone's iOS version (Safari WebGPU is believed to need iOS 26 or later; unverified), an HTTPS tunnel (`cloudflared` is installed on the Mac), and Safari Web Inspector. At Demo Day the phone must be shown to judges; HDMI or USB-C screen mirroring should be rehearsed. Supersedes the earlier laptop-first suggestion in `docs/HACKATHON.md` section 8.3 and `docs/LOCAL_AI.md` section 0.
 
@@ -137,7 +137,7 @@ Format: lightweight ADRs. Newest at the bottom. Status is one of Accepted, Propo
 
 | # | Question | Owner | Needed by |
 |---|---|---|---|
-| P-1 | ~~Final model and runtime~~ Decided: Gemma 4 E2B via transformers.js (D-016); still to be verified on the iPhone 13 | Team | Verify by 01:30 AM |
+| P-1 | ~~Final model and runtime~~ Decided: Gemma 4 E2B (D-016) in LM Studio on the team's laptop (D-018); the in-phone route failed | Team | Verify by 01:30 AM |
 | P-2 | Minimum supported iPhone and iOS version | Team | M2 |
 | P-3 | UX details of the modes (where chosen, mid-lesson switching, games in Kalma, Grade 1-3 unlock in hackathon scope). Definitions are confirmed | Team | M6 |
 | P-4 | Translate bundled Filipino/Taglish content, or keep English fallback | Team | TBD |

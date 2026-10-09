@@ -6,11 +6,11 @@ Status: draft v0.2, 2026-10-09. Owner: Hackathon Team. This PRD describes the pr
 
 ## 1. Summary
 
-**The product is an offline-first tutor.** The tutor must work with no network; every cloud feature is an optional upgrade. **The on-device model is Gemma 4 E2B** (confirmed 2026-10-10, unverified on device; see `docs/LOCAL_AI.md`). **The demo device is an iPhone 13 running the installed PWA.**
+**The product is an offline-first tutor.** The tutor must work with no network; every cloud feature is an optional upgrade. **The model is Gemma 4 E2B, running on a local edge server** (the team's laptop through LM Studio; D-016, D-018). The in-phone route failed; the iPhone 13 PWA is a client of the laptop.
 
 This project is an offline-first PWA study companion for Filipino Grade 4-6 learners studying Mathematics under the DepEd MATATAG curriculum. A friendly AI tutor mascot explains lessons, checks answers, answers questions (text or voice), and tracks mastery, all of which keep working without internet. When a connection exists, the app upgrades itself: cloud AI tutoring, adaptive AI-generated practice, natural Filipino text-to-speech, and transcription.
 
-The current workstream adds an **open-source on-device language model** so the AI tutor itself can run offline on iPhone, where Chrome's built-in Gemini Nano does not exist.
+The current workstream adds an **open-source local language model** for the AI tutor. The in-browser route on the iPhone failed, so (D-018) Gemma 4 E2B runs on a local edge server, the team's laptop through LM Studio; the laptop answers with no internet, and phones reach it over a tunnel.
 
 ## 2. Problem
 

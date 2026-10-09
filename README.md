@@ -30,7 +30,7 @@ Three modes change both the interface and how the tutor replies. They are design
 
 Small models follow format instructions unreliably, so the mode rules are also enforced **in code after the model replies** (`src/lib/tutor-modes.js`); a reply that fails validation falls through to the next provider.
 
-**Status:** the mode preference (onboarding step and Profile screen), the mode-aware tutor prompt, the post-processing rules and their tests are implemented. The mode-specific screen changes in `docs/TUTOR_MODES.md` (plain Kalma layout, Pakinig large type with word highlighting, Hakbang scaffold, Grade 1 to 3 unlock) are **not claimed as shipped** unless shown working in the demo.
+**Status:** implemented and tested: the mode preference (onboarding step and Profile screen), the mode-aware tutor prompt, the post-processing rules, per-mode screens (a calmer Kalma screen, large type with read-aloud word highlighting in Pakinig, a step card in Hakbang) and per-mode voice settings. Not built: the Grade 1 to 3 unlock for Hakbang. The modes are a design for different learners, not a tested intervention.
 
 ## Architecture
 
@@ -60,6 +60,7 @@ More detail: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), decisions in [`docs
 This is the path for judges. It needs Node, LM Studio and the model.
 
 ```bash
+git clone https://github.com/appbuildersph/modes.git && cd modes
 npm install
 npm test                 # Node test runner, no network or model needed
 npm run build            # the hub serves the built app from dist/
@@ -123,7 +124,7 @@ Names only; real values go in a local `.env` (gitignored, never committed). The 
 npm test
 ```
 
-Uses `node --test` over `test/*.test.js`. It covers the curriculum data, the tutor prompt and mode rules, the provider chain, the edge backend, the voice endpoint and the speech routing, all with fake networks and no model. At the time of writing, 187 tests passed on the team's Mac (the count changes as tests are added). The tests do not prove the model's reply quality.
+Uses `node --test` over `test/*.test.js`. It covers the curriculum data, the tutor prompt and mode rules, the provider chain, the edge backend, the voice endpoint and the speech routing, all with fake networks and no model. On 2026-10-10 all tests passed on the team's Mac (198 at the last count) and in a fresh clone (the count changes as tests are added). The tests do not prove the model's reply quality.
 
 ## Proof of local inference
 
@@ -198,7 +199,7 @@ Earlier single runs, recorded in [`docs/DECISIONS.md`](docs/DECISIONS.md) (D-018
 - **The model does not run on the phone.** In-browser attempts on an iPhone 13 failed (Safari 27.0.1): Gemma 4 E2B's page was killed during the roughly 3 GB download, and Gemma 3 1B loaded and then crashed; the browser reported a 683 MB maximum GPU buffer. That is why the model runs on a laptop instead. See D-018.
 - **Filipino quality is unverified.** Gemma 4 E2B's model card does not list Filipino among its languages. No Filipino benchmark exists for models this small, and no Filipino reader has reviewed the replies. Treat Tagalog and Taglish quality as unproven.
 - **Small-model output needs guard rails.** In earlier tests, small models broke the mode rules (markdown, long replies, loops), which is why the rules are enforced in code.
-- **The phone-to-laptop path** was run once on an iPhone 13 (Safari, installed from a Cloudflare quick tunnel, app and hub on one address): questions reached the hub and Gemma answered them (hub log `POST /api/tutor 200`, 0.65 to 1.0 s). The ngrok static domain and a Vercel deployment are documented in the runbook but have **not** been run. Offline operation is only valid on the laptop itself.
+- **The phone-to-laptop path** was run once on an iPhone 13 (Safari, installed from a Cloudflare quick tunnel, app and hub on one address): questions reached the hub and Gemma answered them (hub log `POST /api/tutor 200`, 0.65 to 1.0 s). The ngrok static domain and the Vercel deployment (`hiyang.vercel.app`, also `math-companion-edge.vercel.app`, redeployed 2026-10-10 around 05:15) are set up and were checked from the Mac. The team lead reported the app installed as a PWA on the iPhone 13 from `hiyang.vercel.app` working (05:32); no phone screenshot of that is in the repo yet. Offline operation is only valid on the laptop itself.
 - **A tunnel URL is public.** Origin allow-listing and rate limits protect it, but non-browser clients can forge an origin. Stop the tunnel when not demoing.
 - **The ElevenLabs voice** has not been judged for Filipino naturalness, and the voice is chosen by ear.
 - **Grades 1 to 3:** curriculum data exists but is not bundled; the Hakbang unlock is not claimed.
@@ -209,7 +210,7 @@ Earlier single runs, recorded in [`docs/DECISIONS.md`](docs/DECISIONS.md) (D-018
 
 **Key hackathon deliverables:**
 
-- A shared tutor prompt and three inclusive learning modes (prompt rules plus deterministic post-processing), with complete tests.
+- A shared tutor prompt and three inclusive learning modes (prompt rules plus deterministic post-processing), with tests.
 - A provider chain for the tutor with a mode-aware cache and a label indicating where each answer was generated.
 - The local edge AI setup: the `TUTOR_BACKEND=edge` backend in `api/tutor.js`, the edge hub gateway in `scripts/edge-hub.mjs`, the client edge provider in `src/lib/edge-llm.js`, and the learning-mode selector in Profile.
 - Optional ElevenLabs voice-out and routing of audio synthesis through the edge hub.
@@ -217,10 +218,11 @@ Earlier single runs, recorded in [`docs/DECISIONS.md`](docs/DECISIONS.md) (D-018
 
 ## Models, services and tools used
 
-- **Model:** Gemma 4 E2B (`google/gemma-4-e2b`), run through LM Studio (MLX 4-bit). Google's model card lists the licence as Apache 2.0; the licence of the converted MLX build has not been checked. It was chosen after testing candidates (Gemma 3 1B and Qwen3 0.6B) in the browser.
-- **Runtime and tooling:** LM Studio, ngrok (tunnel), Vercel (hosting the PWA, if used), React 19, Vite 6, Tailwind CSS 3, vite-plugin-pwa, idb-keyval, Three.js, Node's built-in test runner.
+- **Model:** Gemma 4 E2B (`google/gemma-4-e2b`), run through LM Studio (MLX 4-bit). Apache 2.0 according to the official model card (`huggingface.co/google/gemma-4-E2B-it`); LM Studio serves a community MLX 4-bit conversion of those weights. It was chosen after testing candidates (Gemma 3 1B and Qwen3 0.6B) in the browser.
+- **Runtime and tooling:** LM Studio with Apple MLX (model runtime), ngrok (tunnel), Cloudflare quick tunnel (first phone test), Vercel (hosting the PWA), React 19, Vite 6, Tailwind CSS 3, vite-plugin-pwa, idb-keyval, Three.js, Node's built-in test runner.
 - **Optional cloud services:** ElevenLabs (voice), Google Vertex AI / Gemini and Google Cloud Text-to-Speech (older fallback endpoints), Upstash Redis (optional rate limiting).
-- **AI development tools:** AI coding assistants were used for planning, research, code and documentation during the hackathon (including Claude Code by Anthropic). The team must complete this list with every other tool used.
+- **Fonts:** Atkinson Hyperlegible, Baloo 2 and Nunito, bundled through the `@fontsource` packages, all under the SIL Open Font License 1.1.
+- **AI development tools:** Claude Code (Anthropic) for planning, research, code, tests and documentation; OpenAI Codex and Cursor for code assistance; ChatGPT / OpenAI image generation for the illustrations and textures.
 
 ## Licence
 
