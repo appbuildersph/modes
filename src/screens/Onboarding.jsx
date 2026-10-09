@@ -3,6 +3,7 @@ import { set } from 'idb-keyval'
 import { Button, Card, Doodles } from '../ui/Primitives.jsx'
 import { Mascot } from '../ui/Mascot.jsx'
 import ModeIcon from '../ui/ModeIcon.jsx'
+import ModePreview from '../ui/ModePreview.jsx'
 import { makeT } from '../lib/i18n.js'
 import { GRADES } from '../lib/grades.js'
 import { MODES, MODE_IDS, DEFAULT_MODE } from '../lib/tutor-modes.js'
@@ -76,9 +77,11 @@ export default function Onboarding({ lang = 'taglish', onDone }) {
 
         {step === 3 && (
           <>
-            <Mascot size={88} float className="mx-auto -mt-2" />
-            <h1 className="mt-1 font-display text-2xl font-extrabold leading-tight">{tt('onboarding.modeTitle')}</h1>
+            <h1 className="font-display text-2xl font-extrabold leading-tight">{tt('onboarding.modeTitle')}</h1>
             <p className="mt-1.5 text-sm font-bold text-ink/60">{tt('onboarding.modeHint')}</p>
+            <div className="mt-4">
+              <ModePreview mode={mode} tt={tt} lang={lang} />
+            </div>
             <div className="mt-4 grid grid-cols-1 gap-2.5 text-left" role="radiogroup" aria-label={tt('onboarding.modeTitle')}>
               {MODE_IDS.map((id) => (
                 <button

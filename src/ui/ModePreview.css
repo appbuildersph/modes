@@ -1,0 +1,276 @@
+/* Onboarding mode preview (ModePreview.jsx). One set of elements per mode, all
+   mounted; [data-preview] picks which are shown and the transitions carry the
+   change, so switching modes morphs colour, size and shape in place. Kalma's
+   own state uses a soft ease with no overshoot (docs/DESIGN.md section 8). */
+
+.mode-preview {
+  --mp-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --mp-ease: var(--mp-spring);
+  --mp-bg: var(--gb-background);
+  --mp-ms: 520ms;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 196px;
+  padding: 10px;
+  overflow: hidden;
+  border: 2.5px solid var(--gb-outline);
+  border-radius: 1.4rem;
+  background: var(--mp-bg);
+  box-shadow: 3px 3px 0 var(--gb-outline);
+  text-align: left;
+  isolation: isolate;
+  transition: background-color 450ms ease;
+}
+.mode-preview[data-preview='kalma'] { --mp-bg: var(--gb-secondary-soft); --mp-ease: cubic-bezier(0.25, 0.1, 0.25, 1); }
+.mode-preview[data-preview='pakinig'] { --mp-bg: #dcedf7; }
+.mode-preview[data-preview='hakbang'] { --mp-bg: #fde4d3; }
+
+/* Standard's dotted paper fades out rather than snapping (gradients cannot transition). */
+.mode-preview::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background-image: radial-gradient(rgb(28 20 16 / 12%) 1.2px, transparent 1.4px);
+  background-size: 14px 14px;
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+.mode-preview[data-preview='none']::before { opacity: 1; }
+
+/* ---------- Doodles (Standard only) ---------- */
+.mp-doodle {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+  scale: 0.2;
+  transition: opacity 300ms ease, scale var(--mp-ms) var(--mp-ease);
+}
+.mp-doodle-star { top: 40px; right: 12px; color: var(--gb-primary-dark); font-size: 1rem; rotate: 14deg; }
+.mp-doodle-dot { bottom: 52px; left: 6px; width: 10px; height: 10px; border: 2px solid var(--gb-outline); border-radius: 50%; background: var(--gb-rose); }
+.mp-doodle-ring { top: 8px; left: 46%; width: 12px; height: 12px; border: 2px solid var(--gb-outline); border-radius: 4px; background: var(--gb-lavender); rotate: 20deg; }
+.mode-preview[data-preview='none'] .mp-doodle { opacity: 1; scale: 1; animation: mp-bob 2.6s ease-in-out infinite; }
+.mode-preview[data-preview='none'] .mp-doodle-dot { animation-delay: -0.9s; }
+.mode-preview[data-preview='none'] .mp-doodle-ring { animation-delay: -1.7s; }
+
+@keyframes mp-bob { 50% { translate: 0 -4px; } }
+
+/* ---------- Top bar ---------- */
+.mp-top { position: relative; flex: none; height: 34px; }
+
+.mp-mascot { position: absolute; top: 0; left: 0; width: 34px; height: 34px; }
+.mp-pose {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  scale: 0.5;
+  rotate: -14deg;
+  transition: opacity 260ms ease, scale var(--mp-ms) var(--mp-ease), rotate var(--mp-ms) var(--mp-ease);
+}
+.mp-pose.is-on { opacity: 1; scale: 1; rotate: 0deg; transition-delay: 90ms; }
+
+.mp-chip {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 24px;
+  padding: 0 9px;
+  border: 2px solid var(--gb-outline);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--gb-outline);
+  font-size: 0.68rem;
+  font-weight: 900;
+  white-space: nowrap;
+  opacity: 0;
+  translate: 0 -50%;
+  scale: 0.6;
+  transform-origin: right center;
+  transition: opacity 260ms ease, scale var(--mp-ms) var(--mp-ease), translate var(--mp-ms) var(--mp-ease);
+}
+.mp-stars { background: var(--gb-primary); letter-spacing: 0.05em; }
+.mp-counter { border-color: transparent; background: rgb(36 93 84 / 12%); color: var(--gb-secondary-dark); font-weight: 800; }
+.mp-speaker { background: var(--gb-primary); }
+.mp-steps { gap: 5px; background: #fff; }
+.mp-steps i { width: 14px; height: 6px; border-radius: 999px; background: var(--gb-divider); }
+.mp-steps i:first-child { background: var(--gb-peach); }
+
+.mode-preview[data-preview='none'] .mp-stars,
+.mode-preview[data-preview='kalma'] .mp-counter,
+.mode-preview[data-preview='pakinig'] .mp-speaker,
+.mode-preview[data-preview='hakbang'] .mp-steps { opacity: 1; scale: 1; transition-delay: 90ms; }
+
+/* ---------- Question panel: one box that changes shape ---------- */
+.mp-panel {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  border: 2.5px solid var(--gb-outline);
+  border-radius: 1rem;
+  background: #fff;
+  color: var(--gb-ink);
+  box-shadow: 3px 3px 0 var(--gb-outline);
+  rotate: -1.2deg;
+  transition:
+    background-color 420ms ease,
+    color 420ms ease,
+    border-radius var(--mp-ms) var(--mp-ease),
+    box-shadow var(--mp-ms) ease,
+    rotate var(--mp-ms) var(--mp-ease),
+    scale var(--mp-ms) var(--mp-ease);
+}
+.mode-preview[data-preview='kalma'] .mp-panel {
+  border-radius: 0.7rem;
+  background: var(--gb-secondary-dark);
+  color: #fff;
+  box-shadow: 2px 2px 0 var(--gb-outline);
+  rotate: 0deg;
+}
+.mode-preview[data-preview='pakinig'] .mp-panel {
+  border-radius: 1.1rem;
+  background: #111;
+  color: #fff7cc;
+  rotate: 0deg;
+}
+.mode-preview[data-preview='hakbang'] .mp-panel {
+  border-radius: 1.3rem;
+  box-shadow: 4px 4px 0 var(--gb-outline);
+  rotate: 0deg;
+  scale: 1.02;
+}
+
+/* Each mode's content is a layer; the outgoing one blurs away as the next sharpens. */
+.mp-layer {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  margin: 0;
+  padding: 8px 12px;
+  text-align: center;
+  opacity: 0;
+  scale: 0.9;
+  filter: blur(6px);
+  pointer-events: none;
+  transition: opacity 260ms ease, filter 300ms ease, scale var(--mp-ms) var(--mp-ease);
+}
+.mode-preview[data-preview='none'] .mp-question,
+.mode-preview[data-preview='kalma'] .mp-question,
+.mode-preview[data-preview='pakinig'] .mp-words,
+.mode-preview[data-preview='hakbang'] .mp-step {
+  opacity: 1;
+  scale: 1;
+  filter: blur(0);
+  transition-delay: 110ms;
+}
+
+.mp-question {
+  font-family: 'Baloo 2', system-ui, sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.15;
+  transition-property: opacity, filter, scale, font-size, letter-spacing;
+}
+.mode-preview[data-preview='kalma'] .mp-question {
+  font-family: 'Nunito', system-ui, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.mp-words {
+  display: block;
+  align-content: center;
+  font-family: 'Atkinson Hyperlegible', 'Nunito', system-ui, sans-serif;
+  font-size: 1.12rem;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.03em;
+  word-spacing: 0.12em;
+}
+.mp-word { border-radius: 5px; }
+.mode-preview[data-preview='pakinig'] .mp-word {
+  animation: mp-read calc(var(--n) * 0.55s) calc(var(--i) * 0.55s + 0.5s) steps(1, end) infinite;
+}
+
+/* Lit for roughly one word's share of the loop, like the read-aloud highlight. */
+@keyframes mp-read {
+  0% { background: var(--gb-primary); color: var(--gb-outline); box-shadow: 0 0 0 2px var(--gb-primary); }
+  15%, 100% { background: transparent; color: inherit; box-shadow: none; }
+}
+
+.mp-step { gap: 4px; justify-items: center; }
+.mp-step-label {
+  color: #a0502a;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.mp-step-prompt {
+  font-family: 'Baloo 2', system-ui, sans-serif;
+  font-size: 1.55rem;
+  font-weight: 800;
+  line-height: 1.05;
+}
+.mp-blocks { display: flex; align-items: center; gap: 3px; }
+.mp-blocks b { margin: 0 3px; font-size: 0.8rem; }
+.mp-blocks i {
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--gb-outline);
+  border-radius: 3px;
+  background: var(--gb-sky);
+  scale: 0;
+  transition: scale 420ms var(--mp-spring);
+}
+.mp-blocks i.is-b { background: var(--gb-secondary); }
+.mode-preview[data-preview='hakbang'] .mp-blocks i { scale: 1; transition-delay: calc(var(--i) * 45ms + 200ms); }
+
+/* ---------- Answer row ---------- */
+.mp-answer {
+  display: flex;
+  flex: none;
+  gap: 6px;
+  height: 32px;
+  transition: height var(--mp-ms) var(--mp-ease);
+}
+.mp-input,
+.mp-go {
+  border: 2.5px solid var(--gb-outline);
+  border-radius: 999px;
+  transition:
+    background-color 420ms ease,
+    box-shadow 420ms ease,
+    width var(--mp-ms) var(--mp-ease),
+    border-radius var(--mp-ms) var(--mp-ease);
+}
+.mp-input { flex: 1; background: #fff; }
+.mp-go {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  background: var(--gb-primary);
+  box-shadow: 0 2px 0 var(--gb-outline);
+  font-weight: 900;
+}
+.mode-preview[data-preview='kalma'] .mp-go { background: var(--gb-secondary); box-shadow: none; }
+.mode-preview[data-preview='pakinig'] .mp-answer { height: 38px; }
+.mode-preview[data-preview='hakbang'] .mp-answer { height: 40px; }
+.mode-preview[data-preview='hakbang'] .mp-input { border-radius: 0.8rem; }
+.mode-preview[data-preview='hakbang'] .mp-go { width: 64px; border-radius: 0.8rem; background: var(--gb-secondary); }
+
+@media (prefers-reduced-motion: reduce) {
+  .mode-preview,
+  .mode-preview *,
+  .mode-preview::before {
+    transition-duration: 1ms !important;
+    transition-delay: 0s !important;
+    animation: none !important;
+  }
+}
