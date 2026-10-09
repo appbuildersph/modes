@@ -28,7 +28,8 @@ const updateSW = registerSW({
     updateSW(true)
   },
   onRegisteredSW(_swUrl, registration) {
-    registration?.update()
+    // Rejects when the app starts offline; the next launch checks again.
+    registration?.update().catch(() => {})
   },
 })
 
