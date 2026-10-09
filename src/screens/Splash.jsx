@@ -15,7 +15,7 @@ export default function Splash({ onStart, lang = 'taglish' }) {
 
         <section className="splash-info-card gb-pop" aria-labelledby="splash-title">
           <span className="splash-card-sparkle" aria-hidden="true">&#10022;</span>
-          <h1 id="splash-title" className="splash-title">Gabay</h1>
+          <h1 id="splash-title" className="splash-title">SIBOL</h1>
           <p className="splash-tagline">{tt('splash.tagline')}</p>
         </section>
 

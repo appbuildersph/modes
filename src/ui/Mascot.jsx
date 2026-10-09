@@ -35,7 +35,7 @@ function prefersReducedMotion() {
 // `pose` overrides the mode-driven pose ('none' | 'kalma' | 'pakinig' | 'hakbang').
 // `animated` plays the calm clip in Kalma mode. The clip has a black background
 // baked in (no alpha), so it renders inside a round badge, never loose on the page.
-export function Mascot({ size = 96, className = '', float = false, alt = 'Nova', pose, animated = false }) {
+export function Mascot({ size = 96, className = '', float = false, alt = 'Gabo', pose, animated = false }) {
   const mode = useActiveMode()
   const key = pose ?? mode
   const src = POSES[key] ?? POSES.none

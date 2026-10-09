@@ -1,4 +1,4 @@
-// Voice-OUT: Teacher Gabay reads aloud. Best-available-first chain:
+// Voice-OUT: Teacher Gabo reads aloud. Best-available-first chain:
 //   1. online -> POST /api/tts (edge hub when the app has one, else this host; the
 //      server speaks with ElevenLabs or Google Cloud TTS, voice follows language)
 //   2. floor  -> on-device speechSynthesis (works fully OFFLINE, robotic)
@@ -297,12 +297,19 @@ async function speakCloud(text, lang, gen, rate, voiceMode) {
   return await playBlob(blob, rate)
 }
 
+// Voices spell an all-caps "SIBOL" letter by letter; say it as the word "sibol".
+// Same length, so word offsets used for Pakinig highlighting stay aligned.
+export function spokenText(text) {
+  return String(text ?? '').replace(/\bSIBOL\b/g, 'Sibol')
+}
+
 // Public API. speak(text, { lang, rate, mode }). Tries cloud TTS, falls back to local.
 // `mode` (kalma | pakinig | hakbang) selects the cloud voice character and delivery.
 // `rate` is optional: it replaces the default speed on either path (cloud
 // playbackRate, local utterance rate).
 export function speak(text, { lang = DEFAULT_LANG, rate, mode } = {}) {
   if (!text) return
+  text = spokenText(text)
   stopSpeaking()
   const gen = token
   const voiceMode = normalizeMode(mode) // unknown or missing -> 'none'
@@ -391,6 +398,7 @@ export function speakWords(
   text,
   { lang = DEFAULT_LANG, rate, mode: modeId, onWord, onEnd, loadAudio = getCloudBlob } = {},
 ) {
+  text = spokenText(text)
   const words = String(text ?? '').match(/\S+/g) ?? []
   if (!words.length) return false
   stopSpeaking()

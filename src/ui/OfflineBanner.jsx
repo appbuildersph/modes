@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 const BACK_ONLINE_MS = 2500
 
 // App-wide connection panel. The per-screen badge is small, and a learner who
-// loses signal mid-lesson should see at once that Gabay keeps teaching offline.
+// loses signal mid-lesson should see at once that Gabo keeps teaching offline.
 // `online` comes from App.jsx (OS events plus the /api/ping probe).
 export default function OfflineBanner({ online, tt }) {
   const [state, setState] = useState(online ? 'hidden' : 'offline')

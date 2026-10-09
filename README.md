@@ -1,6 +1,6 @@
-# An offline-first AI math companion for Filipino learners
+# SIBOL: Student-centered Inclusive Bilingual Offline Learning
 
-This project is a Progressive Web App (PWA) that helps Filipino **Grade 4 to 6** learners practise Mathematics (DepEd MATATAG curriculum). A friendly AI tutor answers a learner's question step by step in English, Tagalog or Taglish, and can read the answer aloud. The answers come from an open-source model, **Gemma 4 E2B, running on the team's own laptop** (an "edge" setup), not from a cloud AI API.
+An offline-first Local AI math companion for Filipino **Grade 4 to 6** learners (DepEd MATATAG curriculum). A friendly AI tutor answers a learner's question step by step in English, Tagalog or Taglish, and can read the answer aloud. The answers come from an open-source model, **Gemma 4 E2B, running on the team's own laptop** (an "edge" setup), not from a cloud AI API.
 
 This repository was built for the AppBuildersPH Hackathon 2026 (theme: Local AI).
 

@@ -84,7 +84,7 @@ export default function TopicPicker({
         <div className="topic-picker-brand flex items-center gap-2">
           <OnlineBadge online={online} />
           <Mascot size={36} />
-          <span className="font-display text-xl font-extrabold">Gabay</span>
+          <span className="font-display text-xl font-extrabold">SIBOL</span>
         </div>
       </div>
 

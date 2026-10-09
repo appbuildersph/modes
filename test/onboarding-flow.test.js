@@ -23,5 +23,5 @@ test('the step counter reads the real number of steps in every language', () => 
 test('the thinking indicator is calm in Kalma and has text in every language', () => {
   assert.equal(thinkingClass('kalma'), 'gb-thinking is-calm')
   for (const mode of ['none', 'pakinig', 'hakbang', undefined]) assert.equal(thinkingClass(mode), 'gb-thinking')
-  for (const lang of ['en', 'fil', 'taglish']) assert.match(t('class.thinking', lang), /Teacher Gabay/)
+  for (const lang of ['en', 'fil', 'taglish']) assert.match(t('class.thinking', lang), /Teacher Gabo/)
 })

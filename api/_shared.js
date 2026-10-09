@@ -1,4 +1,4 @@
-// Shared request-guard helpers for every Gabay serverless function.
+// Shared request-guard helpers for every SIBOL serverless function.
 //
 // Each handler used to roll its own CORS / rate limiting, which meant
 // /api/tts and /api/transcribe shipped with NO limit at all while

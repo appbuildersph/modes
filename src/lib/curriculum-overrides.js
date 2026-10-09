@@ -1,7 +1,7 @@
 import teachingOverrides from '../curriculum/teaching-overrides.json' with { type: 'json' }
 
 // Per-competency repairs: rebuild an item set for a competency whose source
-// content is unusable. Empty now that Gabay is Grades 4-6 — every entry here
+// content is unusable. Empty now that SIBOL is Grades 4-6 — every entry here
 // targeted Grade 1. Add entries keyed by competency ref when a 4-6 topic needs
 // the same treatment.
 const COMPETENCY_REPAIRS = Object.freeze({})

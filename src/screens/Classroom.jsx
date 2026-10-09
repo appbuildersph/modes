@@ -91,7 +91,7 @@ export default function Classroom({ competency, questions, questionSource = 'bun
   const contentEndRef = useRef(null)
   const teacherZoneRef = useRef(null)
 
-  // --- Teacher Gabay live tutor ---
+  // --- Teacher Gabo live tutor ---
   const [askOpen, setAskOpen] = useState(false)
   const [question, setQuestion] = useState('')
   const [reply, setReply] = useState(null)
@@ -166,7 +166,7 @@ export default function Classroom({ competency, questions, questionSource = 'bun
     }
   }, [teacherOpen])
 
-  // What Teacher Gabay "says" — drives both the bubble and voice-out.
+  // What Teacher Gabo "says" — drives both the bubble and voice-out.
   const bubble = useMemo(() => {
     if (tab === 'explain') return tt('class.bubble.explain')
     if (tab === 'example') return localize(teaching.example.teacherLine, lang)
@@ -179,7 +179,7 @@ export default function Classroom({ competency, questions, questionSource = 'bun
   const practiceGuidance = tt('class.bubble.practiceHelp', { n: idx + 1, total: c.items.length })
   const teacherDialogue = reply?.text ? plain(reply.text) : tab === 'practice' ? practiceGuidance : bubble
 
-  // Auto read aloud whenever Gabay's line changes (voice-out, works offline).
+  // Auto read aloud whenever Gabo's line changes (voice-out, works offline).
   useEffect(() => {
     setPaused(false)
     // Pakinig reads the new question itself (ReadAloudText); don't talk over it.

@@ -2,7 +2,7 @@
 
 Read this first. It is the entry point for any AI session working in this repo. Deeper detail lives in `docs/`.
 
-**Project name: undecided.** The team has not chosen the final hackathon submission name; do not rename the app, storage keys, or package, and do not present a tentative label as the final name in submission text, until the team decides.
+**Project name: SIBOL** (Student-centered Inclusive Bilingual Offline Learning), decided by the team 2026-10-10. Do not rename storage keys or the package without a migration.
 
 **Model: Gemma 4 E2B, running on an edge AI server: the team's MacBook Air (Apple M5, 16 GB) through LM Studio** (`google/gemma-4-e2b`, MLX 4-bit, 4.37 GB), behind the gateway `scripts/edge-hub.mjs` (D-018). The in-browser route on the iPhone 13 was tried and failed (Gemma 4 E2B's page was killed during download; Gemma 3 1B loaded, then crashed), so **the model does not run on the phone; never claim it does.** The Mac's own browser at `http://localhost:8787` works with no internet; phones (the iPhone 13 PWA is the demo client) reach the hub through an ngrok tunnel. Runbook: `docs/EDGE_RUNBOOK.md`.
 
@@ -88,7 +88,7 @@ The offline learning loop and the edge hub need no `.env`. Optional features (El
 
 ## Known gaps (as of 2026-10-10)
 
-- **Submission blockers:** the repo must be public by the deadline; a demo video and social post are required; project name and team list in `docs/SUBMISSION.md` are still TBD (existing code & assets disclosure completed).
+- **Submission blockers:** the repo must be public by the deadline; a demo video and social post are required; the team list in `docs/SUBMISSION.md` is still TBD.
 - Provenance: base foundation code cleaned up for hackathon build.
 - `npm test` passes in this checkout and in a clean clone (count in `docs/SUBMISSION.md` section 4).
 - Bundled Filipino and Taglish question text is not translated: in all 1,571 bundled items, `q.fil` equals `q.en`, and in all 155 competencies the data-file `explanation.fil` equals `explanation.en`. Localized lesson text comes from `src/lib/lesson-teaching.js` rules and `src/lib/i18n.js`. Do not use the curriculum JSON as a source of Taglish examples for a model.

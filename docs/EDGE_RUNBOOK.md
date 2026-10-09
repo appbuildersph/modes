@@ -67,7 +67,7 @@ Guards against the built-in voice taking over by accident (2026-10-10):
 
 ### Current live setup (2026-10-10)
 
-- **Hub:** `EDGE_SERVE_APP=1 QUESTION_CORS_ORIGINS=https://math-companion-edge.vercel.app node --env-file=.env scripts/edge-hub.mjs`. Keep `QUESTION_CORS_ORIGINS` when restarting, or the Vercel app's requests are refused.
+- **Hub:** `EDGE_SERVE_APP=1 QUESTION_CORS_ORIGINS=https://sibol-tutor.vercel.app,https://hiyang.vercel.app,https://math-companion-edge.vercel.app node --env-file=.env scripts/edge-hub.mjs`. Keep `QUESTION_CORS_ORIGINS` when restarting, or the Vercel app's requests are refused.
 - **Tunnel:** `ngrok http --url=tweed-thinner-quickly.ngrok-free.dev 8787`. Stop it with `pkill ngrok`.
 - **Verified from this Mac only:** the app and its manifest and service worker, the tunnel host baked into the bundle, the origin check, tutor replies in all three modes, and the voice endpoint. **Not yet verified:** a phone on mobile data, installing the PWA, and the ngrok browser warning page for direct HTML visits.
 

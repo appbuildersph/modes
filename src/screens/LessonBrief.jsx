@@ -28,7 +28,7 @@ export default function LessonBrief({ competency: c, score = 0, answered = false
     <div className="lesson-brief-doodles"><Doodles /></div>
     <header className="lesson-brief-header">
       <button className="lesson-brief-header-back" onClick={onBack}>{tt('common.back')}</button>
-      <div className="lesson-brief-header-meta"><OnlineBadge online={online} /><span className="lesson-brief-brand"><Mascot size={22} />Gabay</span></div>
+      <div className="lesson-brief-header-meta"><OnlineBadge online={online} /><span className="lesson-brief-brand"><Mascot size={22} />SIBOL</span></div>
     </header>
     <main className="lesson-brief-content">
       <div className={`lesson-brief-carousel is-step-${step + 1}`} aria-label="Lesson introduction">

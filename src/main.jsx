@@ -33,7 +33,7 @@ const updateSW = registerSW({
   },
 })
 
-// Pin the Teacher Gabay AI server from ?edge=<url> so the installed PWA keeps it.
+// Pin the Teacher Gabo AI server from ?edge=<url> so the installed PWA keeps it.
 rememberEdgeBase().catch(() => {})
 
 // Installed before the first render so the splash gets the startup entrance.

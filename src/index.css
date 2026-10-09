@@ -5,7 +5,7 @@
 :root {
   color-scheme: light;
 
-  /* Gabay core palette */
+  /* SIBOL core palette */
   --gb-background: #fbf1da;
   --gb-surface: #fffaf0;
   --gb-surface-strong: #ffffff;
@@ -664,7 +664,7 @@ textarea:focus-visible {
   outline-offset: 3px;
 }
 
-/* Teacher Gabay thinking indicator (ThinkingIndicator.jsx) */
+/* Teacher Gabo thinking indicator (ThinkingIndicator.jsx) */
 @keyframes gb-think-bob {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-4px); }

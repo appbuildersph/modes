@@ -7,9 +7,9 @@ Status: DRAFT, updated 2026-10-10 ~05:00 PHT for the edge AI hub design (D-018).
 
 | Field                    | Value                                                                                                                                                                                                                                                                                     |
 | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Project name             | **UNDECIDED.** The team has not chosen the final submission name. Decide before submitting, since the name is typed once into the form |
-| Short description        | Offline AI math companion for Filipino Grade 4-6 learners, with AI tutoring on the learner's own device or local edge server. |
-| Team name and members    | TBD. Names must match the official list on appbuildersph.com/hackathon exactly. TBD: confirm who is registered and present |
+| Project name             | **SIBOL** (Student-centered Inclusive Bilingual Offline Learning)                                                                                                                                                                                                                        |
+| Short description        | Offline Local AI math companion for Filipino Grade 4–6 learners, featuring adaptive tutoring modes (Kalma, Pakinig, Hakbang) powered by an on-device edge model without cloud AI APIs.                                                                                                   |
+| Team name and members    | TBD. Names must match the official list on appbuildersph.com/hackathon exactly. TBD: confirm who is registered and present                                                                                                                                                                |
 | Public GitHub repository | `https://github.com/appbuildersph/modes` (origin of this checkout; confirm it is the repository to submit and that it is **public** before 10:00 AM)                                                                                                                                      |
 | Demo video               | TBD (ideally about 1 minute)                                                                                                                                                                                                                                                              |
 | X / LinkedIn post URL    | TBD (tag Devin / Cognition, include `#AppBuildersPH`)                                                                                                                                                                                                                                     |
@@ -50,7 +50,7 @@ The project has three modes, Kalma (calm/focus), Pakinig (listen), and Hakbang (
 | Item                                                                | Needed for                                                                       |
 | ------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
 | Phone to laptop (ngrok tunnel, `tweed-thinner-quickly.ngrok-free.dev`) | A phone reaching the edge AI server over the internet. The laptop itself does not need it |
-| PWA hosting (Vercel, `hiyang.vercel.app`, also `math-companion-edge.vercel.app`) | Serving the app's static files to phones; the first load installs the PWA and precaches the shell |
+| PWA hosting (Vercel, `sibol-tutor.vercel.app`; older aliases `hiyang.vercel.app` and `math-companion-edge.vercel.app` point to the same project) | Serving the app's static files to phones; the first load installs the PWA and precaches the shell |
 | ElevenLabs text-to-speech (cloud API, via the hub's `/api/tts`)      | Natural spoken replies (optional; the reply text is sent to ElevenLabs). Offline floor: the device's `speechSynthesis` |
 | Cloud Gemini tutor (`/api/tutor` without the edge backend)          | Older fallback only; not configured in the demo deployment (no cloud credentials set) |
 | Adaptive AI question generation (`/api/questions`), Gemini transcription (`/api/transcribe`), Google Cloud Text-to-Speech | Older optional cloud features; not configured in the demo. Offline floors: bundled question rotation, Web Speech or typing, `speechSynthesis` |
@@ -81,6 +81,7 @@ Measured 2026-10-10 04:26 PHT with `node scripts/bench-edge.mjs --runs 3`. Raw o
 
 - **Steady decode speed: about 48-53 tok/s.** That is the range over the 6 replies of 100+ tokens. Short replies show higher and noisier numbers (up to 115 tok/s) because a 20-token reply is timed over a few tenths of a second and LM Studio may send several tokens per stream chunk. Do not quote 115 tok/s as the model's speed.
 - **Through the real request path** (hub `/api/tutor` on the same Mac, non-streamed, one request per mode and language, all 8 returned 200 with `source: "edge"`): median 0.82 s, range 0.41-5.48 s. The mode replies (Kalma, Pakinig, Hakbang) took 0.41-1.36 s; the no-mode replies took 4.97-5.48 s because they are long.
+- **Prompt changes since this run:** the published numbers predate two prompt changes: an off-topic clause added to every prompt (commit `5fcd3c0`) and the tutor rename from "Teacher Gabay" to "Teacher Gabo". A re-run on the current prompt exists but is not published yet; until it is, treat these numbers as from the earlier prompt.
 - **Not measured:** time over the network from a phone (tunnel or same Wi-Fi), anything running inside the phone, memory use, power, model load time from cold, answer quality or correctness. One question, one machine, 3 runs, so treat these as indicative, not a formal benchmark. Other sessions could have been using LM Studio at the same time; none was seen, but it was not prevented.
 - **Earlier numbers in `docs/ROADMAP.md`** (45-51 tok/s, mode replies 0.55-1.5 s on the same Mac) agree with these. The Gemma 3 1B / Qwen3 0.6B numbers there were reported by another session and not re-run, so do not quote them.
 
@@ -159,7 +160,7 @@ Problem and user (30s) -> live offline demo (2.5 min) -> how local AI works and 
 
 ### Social post (X or LinkedIn; attach the demo video)
 
-> We built [PROJECT NAME] for the #AppBuildersPH Hackathon 2026 (Local AI): a math tutor for Filipino Grade 4-6 learners that keeps working when the internet doesn't. The tutor's AI, Gemma 4 E2B, runs on a laptop in the room through LM Studio, not on a cloud AI API. With the Wi-Fi off, it still answers in English, Tagalog or Taglish. Three learning modes, Kalma, Pakinig and Hakbang, change both the screen and how the AI replies. Built with help from AI coding tools. @cognition @DevinAI [repo link]
+> We built SIBOL (Student-centered Inclusive Bilingual Offline Learning) for the #AppBuildersPH Hackathon 2026 (Local AI): a math tutor for Filipino Grade 4-6 learners that keeps working when the internet doesn't. The tutor's AI, Gemma 4 E2B, runs on a laptop in the room through LM Studio, not on a cloud AI API. With the Wi-Fi off, it still answers in English, Tagalog or Taglish. Three learning modes, Kalma, Pakinig and Hakbang, change both the screen and how the AI replies. Built with help from AI coding tools. @cognition @DevinAI [repo link]
 
 Before posting: fill in the name and link, check the handles to tag (Devin / Cognition) on the platform, and only keep claims the video shows.
 

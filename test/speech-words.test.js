@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import {
   speak, speakWords, stopSpeaking, pauseSpeaking, resumeSpeaking,
   wordSpans, wordIndexAt, estimateWordMs, wordStartTimes, isSpeaking,
-  LOCAL_RATE, BOUNDARY_WAIT_MS,
+  LOCAL_RATE, BOUNDARY_WAIT_MS, spokenText,
 } from '../src/lib/speech.js'
 
 // --- fakes -----------------------------------------------------------------
@@ -530,4 +530,11 @@ test('speak() passes an optional rate to the on-device fallback, default unchang
   await waitSpoken()
   assert.equal(spoken[0].rate, LOCAL_RATE)
   if (realNavigator) Object.defineProperty(globalThis, 'navigator', realNavigator)
+})
+
+test('spokenText says SIBOL as a word and keeps word offsets', () => {
+  const text = 'Ako si SIBOL.'
+  assert.equal(spokenText(text), 'Ako si Sibol.')
+  assert.deepEqual(wordSpans(spokenText(text)), wordSpans(text))
+  assert.equal(spokenText('SIBOLAN'), 'SIBOLAN')
 })

@@ -1,4 +1,4 @@
-// Serverless proxy for Teacher Gabay (Node runtime).
+// Serverless proxy for Teacher Gabo (Node runtime).
 // Kept SEPARATE from the client — this is the ONLY place Vertex/Gemini creds live.
 // The PWA POSTs { question, ref, lang } here; this returns { text, source }.
 //
@@ -84,7 +84,7 @@ function genaiClient() {
 }
 
 function placeholder() {
-  return 'Teacher Gabay is resting. Please try again soon.'
+  return 'Teacher Gabo is resting. Please try again soon.'
 }
 
 // Edge backend: one chat completion against an OpenAI-compatible local server.

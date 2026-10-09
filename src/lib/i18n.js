@@ -1,6 +1,6 @@
 // Global UI string table. Every user-facing label flows through t(key, lang)
 // so picking a language in the header switches the WHOLE app — nav, buttons,
-// lessons, feedback, assessments, transcripts — except the app title "Gabay".
+// lessons, feedback, assessments, transcripts — except the app title "SIBOL".
 //
 // Languages match content.json + lang.js: 'en' (English), 'fil' (Tagalog),
 // 'taglish' (natural Tagalog-English mix, the default).
@@ -39,9 +39,9 @@ export const STRINGS = {
   // TODO: Filipino reviewer — offline panel.
   'offline.title': { en: "You're offline", fil: 'Offline ka', taglish: 'Offline ka' },
   'offline.body': {
-    en: 'Gabay keeps teaching with saved lessons.',
-    fil: 'Tuloy ang pagtuturo ni Gabay gamit ang mga naka-save na aralin.',
-    taglish: 'Tuloy pa rin si Gabay with saved lessons.',
+    en: 'Gabo keeps teaching with saved lessons.',
+    fil: 'Tuloy ang pagtuturo ni Gabo gamit ang mga naka-save na aralin.',
+    taglish: 'Tuloy pa rin si Gabo with saved lessons.',
   },
   'offline.backTitle': { en: 'Back online', fil: 'Online ka na ulit', taglish: 'Back online ka na' },
   'common.language': { en: 'Language', fil: 'Wika', taglish: 'Wika' },
@@ -63,29 +63,29 @@ export const STRINGS = {
   'common.yes': { en: 'Yes', fil: 'Oo', taglish: 'Oo' },
   'common.no': { en: 'No', fil: 'Hindi', taglish: 'Hindi' },
   'questions.generating': { en: 'Preparing your questions…', fil: 'Inihahanda ang mga tanong…', taglish: 'Preparing your questions…' },
-  'questions.generatingSub': { en: 'Teacher Gabay is building this practice session.', fil: 'Inihahanda ni Teacher Gabay ang pagsasanay mo.', taglish: 'Binubuo ni Teacher Gabay ang practice session mo.' },
+  'questions.generatingSub': { en: 'Teacher Gabo is building this practice session.', fil: 'Inihahanda ni Teacher Gabo ang pagsasanay mo.', taglish: 'Binubuo ni Teacher Gabo ang practice session mo.' },
   'questions.generatingSub2': { en: 'Matching questions to your level…', fil: 'Inihahanda ayon sa antas mo…', taglish: 'Ini-adjust ayon sa level mo…' },
   'questions.generatingSub3': { en: 'Double-checking every answer…', fil: 'Tinitiyak na tama ang mga sagot…', taglish: 'Tinitingnan kung tama lahat ng sagot…' },
   'questions.generatingSub4': { en: 'Almost ready…', fil: 'Halos tapos na…', taglish: 'Konti na lang…' },
 
   // ---- Onboarding / grade ----
   'onboarding.step': { en: 'Step {step} of {total}', fil: 'Hakbang {step} sa {total}', taglish: 'Step {step} of {total}' },
-  'onboarding.modeTitle': { en: 'How should Teacher Gabay help?', fil: 'Paano ka tutulungan ni Teacher Gabay?', taglish: 'Paano ka tutulungan ni Teacher Gabay?' },
+  'onboarding.modeTitle': { en: 'How should Teacher Gabo help?', fil: 'Paano ka tutulungan ni Teacher Gabo?', taglish: 'Paano ka tutulungan ni Teacher Gabo?' },
   'onboarding.modeHint': { en: 'An adult can help choose. Anyone can pick any mode, and you can change it later in Profile.', fil: 'Maaaring tumulong ang nakatatanda sa pagpili. Kahit sino ay puwedeng pumili ng kahit anong mode, at mababago ito sa Profile.', taglish: 'Pwedeng tumulong ang adult sa pagpili. Kahit sino pwedeng pumili ng kahit anong mode, at mababago ito later sa Profile.' },
   'class.questionCount': { en: 'Question {n} of {total}', fil: 'Tanong {n} sa {total}', taglish: 'Question {n} of {total}' },
   'class.readAgain': { en: 'Read again', fil: 'Basahin muli', taglish: 'Basahin ulit' },
   'class.readSpeed': { en: 'Reading speed', fil: 'Bilis ng pagbasa', taglish: 'Reading speed' },
   'mode.switching': { en: 'Switching mode', fil: 'Nagpapalit ng mode', taglish: 'Switching mode' },
-  'class.thinking': { en: 'Teacher Gabay is thinking...', fil: 'Nag-iisip si Teacher Gabay...', taglish: 'Nag-iisip si Teacher Gabay...' },
+  'class.thinking': { en: 'Teacher Gabo is thinking...', fil: 'Nag-iisip si Teacher Gabo...', taglish: 'Nag-iisip si Teacher Gabo...' },
   'onboarding.grade': { en: 'What grade are you in?', fil: 'Anong grade ka?', taglish: 'Anong grade ka?' },
   'onboarding.gradeLabel': { en: 'Grade {grade}', fil: 'Grade {grade}', taglish: 'Grade {grade}' },
   'onboarding.name': { en: 'What is your name?', fil: 'Anong pangalan mo?', taglish: 'Anong pangalan mo?' },
   'onboarding.namePlaceholder': { en: 'Your name', fil: 'Pangalan mo', taglish: 'Name mo' },
   'onboarding.next': { en: 'Next', fil: 'Sunod', taglish: 'Sunod' },
   'onboarding.greeting': {
-    en: 'Hello, {name}! I am Teacher Gabay, your math guide.',
-    fil: 'Kumusta, {name}! Ako si Teacher Gabay, ang iyong gabay sa Math.',
-    taglish: 'Kumusta, {name}! Ako si Teacher Gabay, ang iyong math guide.',
+    en: 'Hello, {name}! I am Teacher Gabo, your math guide.',
+    fil: 'Kumusta, {name}! Ako si Teacher Gabo, ang iyong gabay sa Math.',
+    taglish: 'Kumusta, {name}! Ako si Teacher Gabo, ang iyong math guide.',
   },
   'onboarding.masteryTitle': { en: 'Grow your Mastery', fil: 'Palakihin ang Mastery', taglish: 'Grow your Mastery' },
   'onboarding.mastery': {
@@ -131,7 +131,7 @@ export const STRINGS = {
 
   // ---- Home ----
   'home.hallwayTag': { en: 'Classroom Hallway', fil: 'Hallway ng Silid-Aralan', taglish: 'Hallway ng Silid-Aralan' },
-  'home.greeting': { en: 'Hello, Ka-Gabay!', fil: 'Kumusta, Ka-Gabay!', taglish: 'Kumusta, Ka-Gabay!' },
+  'home.greeting': { en: 'Hello, Ka-SIBOL!', fil: 'Kumusta, Ka-SIBOL!', taglish: 'Kumusta, Ka-SIBOL!' },
   'home.greetingName': { en: 'Hello, {name}!', fil: 'Kumusta, {name}!', taglish: 'Kumusta, {name}!' },
   'home.grade': { en: 'Grade {grade}', fil: 'Grade {grade}', taglish: 'Grade {grade}' },
   'home.subtitle': { en: 'Where shall we go today?', fil: 'Saan tayo pupunta ngayon?', taglish: 'Saan tayo pupunta ngayon?' },
@@ -139,7 +139,7 @@ export const STRINGS = {
   'home.lessons.title': { en: 'Lessons', fil: 'Mga Aralin', taglish: 'Mga Aralin' },
   'home.lessons.status': { en: 'New lesson', fil: 'Bagong aralin', taglish: 'Bagong aralin' },
   'home.lessons.cta': { en: 'Open', fil: 'Buksan', taglish: 'Buksan' },
-  'home.classroom.title': { en: 'Teacher Gabay', fil: 'Teacher Gabay', taglish: 'Teacher Gabay' },
+  'home.classroom.title': { en: 'Teacher Gabo', fil: 'Teacher Gabo', taglish: 'Teacher Gabo' },
   'home.classroom.status': { en: 'AI tutor', fil: 'AI tutor', taglish: 'AI tutor' },
   'home.classroom.cta': { en: 'Enter', fil: 'Pasukin', taglish: 'Pasukin' },
   'home.games.title': { en: 'Mini Games', fil: 'Mga Laro', taglish: 'Mini Games' },
@@ -212,7 +212,7 @@ export const STRINGS = {
   'brief.lessonSteps': { en: 'Lesson Steps', fil: 'Mga Hakbang sa Aralin', taglish: 'Lesson Steps' },
   'brief.whatYouDo': { en: 'Your Learning Plan', fil: 'Iyong Plano sa Pag-aaral', taglish: 'Your Learning Plan' },
   'brief.task.understandShort': { en: 'Understand the lesson.', fil: 'Intindihin ang aralin.', taglish: 'Understand the lesson.' },
-  'brief.task.answerShort': { en: "Answer Teacher Gabay's questions.", fil: 'Sagutin ang mga tanong ni Teacher Gabay.', taglish: "Answer Teacher Gabay's questions." },
+  'brief.task.answerShort': { en: "Answer Teacher Gabo's questions.", fil: 'Sagutin ang mga tanong ni Teacher Gabo.', taglish: "Answer Teacher Gabo's questions." },
   'brief.task.askShort': { en: 'Ask for help if something is unclear.', fil: 'Humingi ng tulong kung may hindi malinaw.', taglish: 'Ask for help if something is unclear.' },
   'brief.task.understand': {
     en: 'Understand the lesson: {topic}.',
@@ -220,9 +220,9 @@ export const STRINGS = {
     taglish: 'Intindihin ang aralin: {topic}.',
   },
   'brief.task.answer': {
-    en: "Answer Teacher Gabay's questions on the board.",
-    fil: 'Sagutin ang mga tanong ni Teacher Gabay sa pisara.',
-    taglish: 'Sagutin ang mga tanong ni Teacher Gabay sa pisara.',
+    en: "Answer Teacher Gabo's questions on the board.",
+    fil: 'Sagutin ang mga tanong ni Teacher Gabo sa pisara.',
+    taglish: 'Sagutin ang mga tanong ni Teacher Gabo sa pisara.',
   },
   'brief.task.ask': {
     en: 'Ask if something is unclear — raise your hand!',
@@ -234,9 +234,9 @@ export const STRINGS = {
   'brief.questions': { en: 'Questions', fil: 'Mga Tanong', taglish: 'Mga Tanong' },
   'brief.level': { en: 'Level', fil: 'Antas', taglish: 'Antas' },
   'brief.learningTip': { en: 'Learning tip', fil: 'Tip sa pag-aaral', taglish: 'Learning tip' },
-  'brief.learningTipText': { en: 'Take your time, read each part carefully, and ask Teacher Gabay whenever you need help.', fil: 'Maglaan ng oras, basahing mabuti ang bawat bahagi, at tanungin si Teacher Gabay kapag kailangan mo ng tulong.', taglish: 'Take your time, read each part carefully, and ask Teacher Gabay whenever you need help.' },
+  'brief.learningTipText': { en: 'Take your time, read each part carefully, and ask Teacher Gabo whenever you need help.', fil: 'Maglaan ng oras, basahing mabuti ang bawat bahagi, at tanungin si Teacher Gabo kapag kailangan mo ng tulong.', taglish: 'Take your time, read each part carefully, and ask Teacher Gabo whenever you need help.' },
   'brief.beforeBegin': { en: 'Before you begin', fil: 'Bago ka magsimula', taglish: 'Before you begin' },
-  'brief.beforeBeginText': { en: "Read each part carefully, answer Teacher Gabay's questions, and ask for help whenever something is unclear.", fil: 'Basahing mabuti ang bawat bahagi, sagutin ang mga tanong ni Teacher Gabay, at humingi ng tulong kapag may hindi malinaw.', taglish: "Read each part carefully, answer Teacher Gabay's questions, and ask for help whenever something is unclear." },
+  'brief.beforeBeginText': { en: "Read each part carefully, answer Teacher Gabo's questions, and ask for help whenever something is unclear.", fil: 'Basahing mabuti ang bawat bahagi, sagutin ang mga tanong ni Teacher Gabo, at humingi ng tulong kapag may hindi malinaw.', taglish: "Read each part carefully, answer Teacher Gabo's questions, and ask for help whenever something is unclear." },
   'brief.readBeforeEntering': { en: 'Please read all the lesson information before entering the class!', fil: 'Please read all the lesson information before entering the class!', taglish: 'Please read all the lesson information before entering the class!' },
   'brief.ready': { en: "I'm ready inside the class. Let's go!", fil: 'Handa na ako sa loob ng klase. Tara!', taglish: 'Handa na ako sa loob ng klase. Tara!' },
   'brief.enter2d': { en: 'Enter 2D Class', fil: 'Pumasok sa 2D Class', taglish: 'Pumasok sa 2D Class' },
@@ -251,16 +251,16 @@ export const STRINGS = {
   'class.guide.explain': { en: 'Make sure to read the key idea first before continuing.', fil: 'Basahin muna ang pangunahing ideya bago magpatuloy.', taglish: 'Make sure na basahin muna ang Key Idea bago magpatuloy.' },
   'class.guide.example': { en: 'Study each step in the example before continuing.', fil: 'Pag-aralan ang bawat hakbang sa halimbawa bago magpatuloy.', taglish: 'Study each step sa example bago magpatuloy.' },
   'class.guide.practice': { en: 'You are ready. Start the practice when you feel prepared.', fil: 'Handa ka na. Simulan ang pagsasanay kapag handa ka na.', taglish: 'Ready ka na. Start the practice kapag handa ka na.' },
-  'class.teacherName': { en: 'Teacher Gabay', fil: 'Gurong Gabay', taglish: 'Teacher Gabay' },
-  'class.teacherPanel': { en: 'Teacher Gabay help', fil: 'Tulong ni Gurong Gabay', taglish: 'Teacher Gabay help' },
-  'class.teacherOpen': { en: 'Open Teacher Gabay', fil: 'Buksan si Gurong Gabay', taglish: 'Buksan si Teacher Gabay' },
-  'class.teacherClose': { en: 'Close Teacher Gabay', fil: 'Isara si Gurong Gabay', taglish: 'Isara si Teacher Gabay' },
+  'class.teacherName': { en: 'Teacher Gabo', fil: 'Gurong Gabo', taglish: 'Teacher Gabo' },
+  'class.teacherPanel': { en: 'Teacher Gabo help', fil: 'Tulong ni Gurong Gabo', taglish: 'Teacher Gabo help' },
+  'class.teacherOpen': { en: 'Open Teacher Gabo', fil: 'Buksan si Gurong Gabo', taglish: 'Buksan si Teacher Gabo' },
+  'class.teacherClose': { en: 'Close Teacher Gabo', fil: 'Isara si Gurong Gabo', taglish: 'Isara si Teacher Gabo' },
   'class.helpPrompt': { en: 'Need help? You can ask me anytime!', fil: 'Kailangan mo ba ng tulong? Maaari mo akong tanungin anumang oras!', taglish: 'Need help? Pwede mo akong tanungin anytime!' },
   'class.listenAgain': { en: 'Listen again', fil: 'Pakinggan ulit', taglish: 'Pakinggan ulit' },
   'class.play': { en: 'Resume', fil: 'Ituloy', taglish: 'Ituloy' },
   'class.pause': { en: 'Pause', fil: 'I-pause', taglish: 'I-pause' },
   'class.raiseHand': { en: 'Ask Teacher', fil: 'Itaas ang kamay', taglish: 'Itaas ang kamay' },
-  'class.askPlaceholder': { en: 'Ask Teacher Gabay...', fil: 'Itanong kay Teacher Gabay...', taglish: 'Itanong kay Teacher Gabay...' },
+  'class.askPlaceholder': { en: 'Ask Teacher Gabo...', fil: 'Itanong kay Teacher Gabo...', taglish: 'Itanong kay Teacher Gabo...' },
   'class.speak': { en: 'Speak', fil: 'Magsalita', taglish: 'Magsalita' },
   'class.mic': { en: 'Mic', fil: 'Mic', taglish: 'Mic' },
   'class.micStop': { en: 'Stop', fil: 'Itigil', taglish: 'Itigil' },
@@ -268,9 +268,9 @@ export const STRINGS = {
   'class.listening': { en: 'Listening... one moment.', fil: 'Pinapakinggan kita... sandali lang.', taglish: 'Pinapakinggan kita... sandali lang.' },
   'class.listeningShort': { en: 'One moment, I am listening...', fil: 'Sandali, pinapakinggan kita...', taglish: 'Sandali, pinapakinggan kita...' },
   'class.offlineNote': {
-    en: 'Offline: Gabay still answers using on-device AI or cached explanations. Mic needs internet.',
-    fil: 'Offline: sasagot pa rin si Gabay gamit ang on-device AI o naka-cache na paliwanag. Mic ay online lang.',
-    taglish: 'Offline: sasagot pa rin si Gabay gamit ang on-device AI o cached na paliwanag. Mic ay online lang.',
+    en: 'Offline: Gabo still answers using on-device AI or cached explanations. Mic needs internet.',
+    fil: 'Offline: sasagot pa rin si Gabo gamit ang on-device AI o naka-cache na paliwanag. Mic ay online lang.',
+    taglish: 'Offline: sasagot pa rin si Gabo gamit ang on-device AI o cached na paliwanag. Mic ay online lang.',
   },
   'class.micOfflineTitle': { en: 'Mic — needs internet', fil: 'Mic — kailangan ng internet', taglish: 'Mic — kailangan ng internet' },
   'class.askError': { en: 'There was a problem answering. Please try again.', fil: 'May problema sa pagsagot. Subukan ulit.', taglish: 'May problema sa pagsagot. Subukan ulit.' },
@@ -282,8 +282,8 @@ export const STRINGS = {
   'class.repeat': { en: 'Repeat', fil: 'Ulitin', taglish: 'Ulitin' },
   'class.source.nano': { en: 'On-device (offline)', fil: 'On-device (offline)', taglish: 'On-device (offline)' },
   'class.source.local': { en: 'On-device AI (offline)', fil: 'On-device AI (offline)', taglish: 'On-device AI (offline)' },
-  'class.source.edge': { en: 'Teacher Gabay AI server', fil: 'Teacher Gabay AI server', taglish: 'Teacher Gabay AI server' },
-  'class.source.online': { en: 'Teacher Gabay (online)', fil: 'Teacher Gabay (online)', taglish: 'Teacher Gabay (online)' },
+  'class.source.edge': { en: 'Teacher Gabo AI server', fil: 'Teacher Gabo AI server', taglish: 'Teacher Gabo AI server' },
+  'class.source.online': { en: 'Teacher Gabo (online)', fil: 'Teacher Gabo (online)', taglish: 'Teacher Gabo (online)' },
   'class.source.cached': { en: 'Cached explanation', fil: 'Naka-cache na paliwanag', taglish: 'Naka-cache na paliwanag' },
   'class.reviewMissed': { en: "Let's review what we missed:", fil: 'Balikan natin ang mga namali:', taglish: 'Balikan natin ang mga namali:' },
   'class.keyIdea': { en: 'Key idea', fil: 'Pangunahing Ideya', taglish: 'Key Idea' },
@@ -297,7 +297,7 @@ export const STRINGS = {
   },
   'classroom.correctOverlay': { en: 'Correct! 🌟', fil: 'Tama! 🌟', taglish: 'Tama! 🌟' },
   'classroom.retry': { en: 'Try again', fil: 'Subukan ulit', taglish: 'Subukan ulit' },
-  'classroom.readSolution': { en: 'Read Nova’s explanation…', fil: 'Basahin ang paliwanag ni Nova…', taglish: 'Basahin ang explanation ni Nova…' },
+  'classroom.readSolution': { en: 'Read Gabo’s explanation…', fil: 'Basahin ang paliwanag ni Gabo…', taglish: 'Basahin ang explanation ni Gabo…' },
   // dynamic teacher lines ({n}=number, {total}=total)
   'class.bubble.explain': {
     en: 'Look at the key idea first. Then open the example to see it in action.',
@@ -416,7 +416,7 @@ export const STRINGS = {
   'band.green': { en: 'Doing great', fil: 'Mabuti', taglish: 'Magaling na' },
 
   // ---- Games (Tindahan) ----
-  'games.title': { en: 'Gabay Games', fil: 'Gabay Games', taglish: 'Gabay Games' },
+  'games.title': { en: 'SIBOL Games', fil: 'SIBOL Games', taglish: 'SIBOL Games' },
   'games.store': { en: 'Store Game', fil: 'Tindahan Game', taglish: 'Tindahan Game' },
   'games.tagline': {
     en: 'Compute totals, discounts, ratios, and percent while you sell.',
@@ -537,7 +537,7 @@ export const STRINGS = {
   '3d.intro.s2': { en: 'Tap the Answer button.', fil: 'I-tap ang Sagutin.', taglish: 'I-tap ang Sagutin.' },
   '3d.intro.s3': { en: 'Type your answer, then send.', fil: 'Isulat ang sagot, tapos ipasa.', taglish: 'I-type ang sagot mo, tapos send.' },
   '3d.intro.go': { en: "Got it!", fil: 'Sige!', taglish: 'Sige!' },
-  // Gabay is phone-first: lead with the on-screen joystick, mention the keys second.
+  // SIBOL is phone-first: lead with the on-screen joystick, mention the keys second.
   '3d.coach.move': {
     en: 'Drag the yellow joystick to walk.',
     fil: 'I-drag ang dilaw na joystick para maglakad.',

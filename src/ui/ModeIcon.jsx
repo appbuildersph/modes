@@ -1,7 +1,7 @@
 import { Mascot } from './Mascot.jsx'
 
 // Mode icon tiles, drawn after the Hiyang mockup (mockups/hiyang/app.js ICON):
-// calm sun over waves, an ear with sound waves, a staircase, and Nova for Standard.
+// calm sun over waves, an ear with sound waves, a staircase, and Gabo for Standard.
 const TILE = { none: 'bg-white', kalma: 'bg-mint', pakinig: 'bg-sky', hakbang: 'bg-peach' }
 
 const stroke = { fill: 'none', stroke: 'currentColor', strokeLinecap: 'round', strokeLinejoin: 'round' }

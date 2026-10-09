@@ -20,8 +20,8 @@ export default defineConfig({
         navigateFallbackDenylist: [/^\/api\//],
       },
       manifest: {
-        name: 'Gabay',
-        short_name: 'Gabay',
+        name: 'SIBOL',
+        short_name: 'SIBOL',
         description:
           'Offline-first math study companion for Filipino learners (DepEd MATATAG).',
         theme_color: '#F7D26A',

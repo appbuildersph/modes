@@ -1,4 +1,4 @@
-// Gabay's scope: Grades 4-6 of the DepEd MATATAG mathematics curriculum.
+// SIBOL's scope: Grades 4-6 of the DepEd MATATAG mathematics curriculum.
 // Every grade picker, storage key, and API validator reads from here.
 export const GRADES = [4, 5, 6]
 export const MIN_GRADE = GRADES[0]

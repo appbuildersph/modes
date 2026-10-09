@@ -8,7 +8,7 @@ import { edgeAvailable, edgeTutor } from './edge-llm.js'
 import { runTutorChain } from './tutor-chain.js'
 import { apiUrl } from './api-base.js'
 
-// Teacher Gabay tutor — best-available-first fallback chain (build plan §8):
+// Teacher Gabo tutor — best-available-first fallback chain (build plan §8):
 //   1. on-device Gemini Nano (works OFFLINE on capable laptops)
 //   2. on-device open model via transformers.js (SOURCE.LOCAL; added with local-llm.js)
 //   3. edge hub: Gemma on the Mac over the LAN (SOURCE.EDGE, D-018)
@@ -69,7 +69,7 @@ export async function askTeacherGabay(question, ref, lang = DEFAULT_LANG, mode =
       },
     },
     {
-      // Teacher Gabay AI server: Gemma on the team's Mac, reached over the network (D-018).
+      // Teacher Gabo AI server: Gemma on the team's Mac, reached over the network (D-018).
       source: SOURCE.EDGE,
       available: () => edgeAvailable(),
       run: () => edgeTutor({ question, ref, lang, mode: normalizeMode(mode) }),

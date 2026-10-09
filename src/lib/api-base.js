@@ -1,4 +1,4 @@
-// Origin for the Gabay serverless functions.
+// Origin for the SIBOL serverless functions.
 //
 // When the PWA and the functions share an origin this is '' and every call
 // stays relative. A static-only host has no functions of its own, so

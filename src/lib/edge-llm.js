@@ -1,6 +1,6 @@
 import { get, set } from 'idb-keyval'
 
-// Edge AI hub client (D-018): the PWA asks a Teacher Gabay server running on the
+// Edge AI hub client (D-018): the PWA asks a Teacher Gabo server running on the
 // team's Mac (LM Studio, Gemma 4 E2B behind it) over the network, so no model
 // has to fit inside the phone's browser. The server builds the system prompt
 // from ref + lang + mode itself; this client never sends one. Injectable like

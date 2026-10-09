@@ -1,5 +1,5 @@
 // Strip markdown syntax from AI-generated text so it renders as plain prose.
-// Applied to Teacher Gabay replies before display and TTS.
+// Applied to Teacher Gabo replies before display and TTS.
 export function stripMarkdown(s) {
   return String(s ?? '')
     .replace(/^#{1,6}\s+/gm, '')

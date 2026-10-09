@@ -186,7 +186,7 @@ export default async function handler(req, res) {
   if (body?.lang !== undefined && !['en', 'fil', 'taglish'].includes(body.lang)) {
     return res.status(400).json({ error: 'invalid_language' })
   }
-  // Gabay lines are short; cap hard to guard cost/latency.
+  // SIBOL lines are short; cap hard to guard cost/latency.
   const clipped = text.slice(0, 800)
 
   if (elevenLabs) {

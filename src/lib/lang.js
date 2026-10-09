@@ -1,5 +1,5 @@
 // Global language preference (English / Tagalog / Taglish). The student picks
-// once; it drives lesson explanations, feedback, quizzes, and Teacher Gabay's
+// once; it drives lesson explanations, feedback, quizzes, and Teacher Gabo's
 // voice + reply language. Persisted offline in IndexedDB. Default English.
 
 import { get, set } from 'idb-keyval'

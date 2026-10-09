@@ -19,9 +19,9 @@ export const MODES = {
     label: { en: 'Standard', fil: 'Karaniwan', taglish: 'Standard' },
     gloss: { en: 'No mode', fil: 'Walang mode', taglish: 'Walang mode' },
     description: {
-      en: 'Teacher Gabay as usual.',
-      fil: 'Si Teacher Gabay gaya ng dati.',
-      taglish: 'Si Teacher Gabay as usual.',
+      en: 'Teacher Gabo as usual.',
+      fil: 'Si Teacher Gabo gaya ng dati.',
+      taglish: 'Si Teacher Gabo as usual.',
     },
     useCase: {
       en: 'Works for any learner. You can change this any time in Profile.',

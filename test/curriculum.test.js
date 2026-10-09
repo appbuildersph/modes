@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import { getAllContent, getContentByGrade } from '../src/lib/content-catalog.js'
 import { DIFFICULTIES, difficultyFor } from '../src/lib/difficulty.js'
 
-// Grades 4-6 only — Gabay's scope. Index 0 is Grade 4.
+// Grades 4-6 only — SIBOL's scope. Index 0 is Grade 4.
 const EXPECTED = [54, 49, 52]
 const FIRST_GRADE = 4
 const SUPPORTED = new Set(['numeric', 'mcq', 'matching', 'true_false'])

@@ -62,7 +62,7 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
   const [themeOpen, setThemeOpen] = useState(false)
   const [nudge, setNudge] = useState(null) // 'needAnswer' | 'needNumber' | null — gentle input validation
   const [coachStep, setCoachStep] = useState(null)
-  // Teacher Gabay — the mascot is the way in, same tutor as the 2D classroom.
+  // Teacher Gabo — the mascot is the way in, same tutor as the 2D classroom.
   const [askOpen, setAskOpen] = useState(false)
   const [question, setQuestion] = useState('')
   const [reply, setReply] = useState(null)
@@ -460,7 +460,7 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
           </div>
         </div>
       )}
-      {/* Teacher Gabay — the mascot opens it as a bottom sheet while walking around */}
+      {/* Teacher Gabo — the mascot opens it as a bottom sheet while walking around */}
       {askOpen && !modal && !done && (
         <div className="absolute inset-0 z-[45] flex items-end justify-center overflow-hidden bg-black/30 p-3" onClick={closeAsk}>
           <div className="gb-card gb-pop max-h-[62%] w-full max-w-md overflow-y-auto bg-white p-4" onClick={(e) => e.stopPropagation()}>
@@ -492,7 +492,7 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
                 {tt('common.question')} {idx + 1} / {c.items.length}
               </span>
               <div className="flex items-center gap-2">
-                {/* the same Teacher Gabay the mascot opens — stuck learners can ask mid-question */}
+                {/* the same Teacher Gabo the mascot opens — stuck learners can ask mid-question */}
                 <button
                   type="button"
                   className={`gb-chip min-h-[44px] gap-1.5 pl-1.5 pr-3 text-sm shadow-hard-sm ${askOpen ? 'bg-yellow' : 'bg-lavender'}`}
@@ -578,7 +578,7 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
               <p className="mt-2 px-1 text-sm font-extrabold text-[var(--gb-danger)]">{tt('common.' + nudge)}</p>
             )}
 
-            {/* Teacher Gabay, inline under the question — the question stays usable */}
+            {/* Teacher Gabo, inline under the question — the question stays usable */}
             {askOpen && (
               <div className="gb-pop mt-4 rounded-card border-[2.5px] border-outline bg-cream p-3">
                 <AskPanel
@@ -607,7 +607,7 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
   )
 }
 
-// Teacher Gabay ask form. Rendered inline under an open question, or inside the
+// Teacher Gabo ask form. Rendered inline under an open question, or inside the
 // bottom sheet the mascot opens while the learner is walking around.
 function AskPanel({ tt, lang, online, question, setQuestion, askGabay, toggleMic, listening, transcribing, thinking, mode, reply, onClose, replyClass = 'bg-cream' }) {
   return (
