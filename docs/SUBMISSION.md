@@ -52,6 +52,16 @@ The project has three modes, Kalma (calm/focus), Pakinig (listen), and Hakbang (
 
 **Chosen: Gemma 4 E2B** (confirmed by the team lead 2026-10-10), run on-device through transformers.js (`onnx-community/gemma-4-E2B-it-ONNX`, q4f16). **Do not list it as running until it has been verified on the demo device (iPhone 13).** Record exact name, size, quantization, source, and the license terms (read them first). Earlier candidates evaluated but not chosen: Gemma 3 1B, Qwen3 0.6B. Existing cloud models used by the pre-existing server code: Gemini (`gemini-2.5-pro` for the tutor, `gemini-2.5-flash` for questions and transcription by default).
 
+### Services and tools added during the hackathon (disclose all)
+
+| Item | Role |
+|---|---|
+| LM Studio (app) and `google/gemma-4-e2b` (MLX 4-bit, 4.37 GB) | Runs the language model on the team's Mac. Verify and record the exact model license before submitting |
+| ElevenLabs API (`eleven_flash_v2_5`, premade voice) | Cloud text-to-speech for Teacher Gabay's spoken replies; **a cloud API, not local AI**; optional, with the phone's built-in voice as the offline fallback |
+| Cloudflare quick tunnel (`cloudflared`), ngrok if used | Lets phones reach the hub on the team's Mac over the internet |
+| Vercel (if the PWA is deployed there) | Hosts the PWA's static files |
+| Claude Code (Anthropic) | AI development tool used by the team for planning, code and documentation |
+
 ### Technologies and frameworks
 
 React 19, Vite 6, Tailwind CSS 3, vite-plugin-pwa (Workbox), idb-keyval (IndexedDB), Three.js, `@google/genai`, `@google-cloud/text-to-speech`, Node serverless functions, `node --test`, Playwright and sharp (tooling). Local AI runtime: TBD (WebLLM / WebGPU is the leading option).

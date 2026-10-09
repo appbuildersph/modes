@@ -12,6 +12,7 @@ Key facts: the project is an **offline-first tutor**; the on-device **model is G
 | [PRD.md](PRD.md) | Product requirements |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | How the code works |
 | [LOCAL_AI.md](LOCAL_AI.md) | On-device open-source model: research, plan, risks (section 0 is the time-boxed plan) |
+| [EDGE_RUNBOOK.md](EDGE_RUNBOOK.md) | Start order, ngrok tunnel, Vercel deploy, verification commands, and demo-day checklist for the edge AI hub |
 | [DESIGN.md](DESIGN.md) | Design system as it is today, accessibility audit, and the UI specification for the three modes |
 | [TUTOR_MODES.md](TUTOR_MODES.md) | Proposed Kalma / Pakinig / Hakbang modes (unconfirmed) |
 | [DEV_SETUP.md](DEV_SETUP.md) | Mac, simulator, and iPhone setup and offline test procedure |

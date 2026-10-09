@@ -5,15 +5,15 @@ Goal: reach **100%** before the AppBuildersPH Hackathon submission deadline, **1
 ## Progress
 
 <!-- progress:start -->
-**Overall: 16% complete** (16 of 100 points done; 0 points in progress, not counted).
+**Overall: 38% complete** (38 of 100 points done; 0 points in progress, not counted).
 
-`###.................` 16%
+`########............` 38%
 
 | Workstream | Done | In progress | To do | |
 |---|---|---|---|---|
 | A. Foundation and baseline | 10 / 10 | 0 | 0 | `####################` |
-| B. Local AI core: the on-device tutor | 6 / 30 | 0 | 24 | `####................` |
-| C. Learning modes: Kalma, Pakinig, Hakbang | 0 / 20 | 0 | 20 | `....................` |
+| B. Local AI core: the on-device tutor | 17 / 30 | 0 | 13 | `###########.........` |
+| C. Learning modes: Kalma, Pakinig, Hakbang | 11 / 20 | 0 | 9 | `###########.........` |
 | D. Quality and evidence | 0 / 10 | 0 | 10 | `....................` |
 | E. Submission | 0 / 30 | 0 | 30 | `....................` |
 <!-- progress:end -->
@@ -36,15 +36,15 @@ Legend: `[ ]` to do, `[~]` in progress, `[x]` done. Owners are placeholders unti
 ## B. Local AI core: the on-device tutor (30 pts)
 
 - [x] **B1** · 6 pts · owner: team lead decision · Model and runtime chosen: Gemma 4 E2B through transformers.js (D-016). Choice recorded. **Not yet loaded in a browser or on the iPhone 13; that is B2/B5 and the 01:30 AM gate**
-- [ ] **B2** · 8 pts · owner: modes-44 (proposed) · Add the on-device model as a provider in `src/lib/tutor.js` (between Gemini Nano and `/api/tutor`), lazy loaded, falls through on failure
-- [ ] **B3** · 6 pts · owner: modes-44 (proposed) · Download with consent and progress, persistent storage request, detect missing model and recover; Workbox must not precache or intercept model files
-- [ ] **B4** · 3 pts · owner: TBD · One shared grounded prompt for client and server (fix the `gabayPrompt()` drift); student text treated as data
-- [ ] **B5** · 7 pts · owner: TBD · Offline end to end on the iPhone 13 installed PWA: network off (airplane mode), learner asks a question, an on-device reply appears and is labelled on-device (screen recorded)
+- [x] **B2** · 8 pts · owner: builder-agent, model-research, modes-88 · Edge AI hub provider in the tutor chain: Gemma 4 E2B in LM Studio on the team's Mac. Client `src/lib/edge-llm.js` (`9e333ea`), server backend and gateway (`c6900f9`, `160e011`). Verified: a real phone question went through the public tunnel to Gemma (hub log: `POST /api/tutor 200` in 0.65 to 1.0 s, LM Studio logged matching requests); 133 tests pass
+- [ ] **B3** · 6 pts · owner: modes-88 · Make the hub reachable from phones: ngrok static domain tunnelling to the hub, PWA deployed with `VITE_EDGE_BASE`, `QUESTION_CORS_ORIGINS` set to the PWA origin, Mac kept awake and LM Studio model pinned (re-scoped from the in-browser download screen by D-018)
+- [x] **B4** · 3 pts · owner: builder-agent · One shared grounded prompt for client and server (`src/lib/tutor-prompt.js`, used by `src/lib/tutor.js` and `api/tutor.js`); student text treated as data. Commit `8bfd7bb`
+- [ ] **B5** · 7 pts · owner: TBD · Hybrid demo verified and recorded: (a) the Mac with Wi-Fi off answers from Gemma at `http://localhost:8787`; (b) the iPhone 13 through the deployed PWA and the ngrok tunnel gets an answer labelled "Teacher Gabay AI server"; (c) with LM Studio stopped the app falls back to cloud or bundled without breaking
 
 ## C. Learning modes: Kalma, Pakinig, Hakbang (20 pts)
 
-- [ ] **C1** · 8 pts · owner: modes-88 / TadeyRuk session (proposed) · `src/lib/tutor-modes.js` with mode prompts and a pure, unit-tested `applyMode` enforcing each mode's reply rules in code (`docs/TUTOR_MODES.md` section 4)
-- [ ] **C2** · 3 pts · owner: modes-88 / TadeyRuk session (proposed) · Mode selection stored on the device and passed to the tutor; tutor cache key includes the mode; visible mode switch
+- [x] **C1** · 8 pts · owner: builder-agent · `src/lib/tutor-modes.js` with mode prompts and a pure, unit-tested `applyMode` enforcing each mode's reply rules in code. Commit `8bfd7bb`. Filipino spoken forms and Hakbang check questions still marked for a Filipino reviewer (D3)
+- [x] **C2** · 3 pts · owner: builder-agent · Mode chosen in onboarding (new step, with description and use case) and changeable in Profile; stored as `pref:mode`, passed to the tutor, part of the cache key. Commits `9e333ea`, `be2ba8d`; 133 tests pass. Not yet checked on a phone screen
 - [ ] **C3** · 3 pts · owner: TBD · Kalma UI: plain background, no music, 3D, coins or doodles, one question per screen (visual reference: `mockups/hiyang`) (spec: `docs/DESIGN.md` section 8)
 - [ ] **C4** · 3 pts · owner: TBD · Pakinig UI: large font, high contrast, wide spacing, slower speech, auto read-aloud (spec: `docs/DESIGN.md` section 8)
 - [ ] **C5** · 2 pts · owner: TBD · Hakbang UI: bigger StepScaffold, concrete visuals first (spec: `docs/DESIGN.md` section 8)
@@ -112,6 +112,10 @@ Newest first. Write times in Philippine time and put the evidence next to the cl
 
 | Time | Update | Evidence |
 |---|---|---|
+| Oct 10 02:15 | Product notes from the user handled. Onboarding mode step with descriptions and use cases and the Ask Teacher thinking indicator built by builder-agent (`be2ba8d`, 133 tests). ElevenLabs voice verified end to end: through the hub `POST /api/tts` returns audio/mpeg in 0.45 s, through the public tunnel in 0.59 s (a tunnel call without an Origin is refused with 403); the first attempt returned 502 because the hub adapter lacked `res.send`, fixed in `160e011`. Voice in use: ElevenLabs premade Jessica (`eleven_flash_v2_5`); Sarah and Alice samples also generated; the voice is a placeholder until the team picks by ear. Real phone test through a Cloudflare quick tunnel worked (questions answered by Gemma on the Mac). Pending: README and hub routing of the app's voice (model-research), ngrok domain and Vercel (need the owner's accounts) | Hub log, curl runs, `git log` |
+| Oct 10 02:10 | Edge pipeline verified end to end on the Mac. Server side by `model-research` (edge backend, mode validation, CORS header; 13 new tests), client by `builder-agent` (edge client, provider, mode picker; 91 tests), gateway by modes-88. `npm test` 104 of 104. Through the hub to Gemma 4 via LM Studio: Kalma 0.67 s, Hakbang 0.55 s, Pakinig 1.15 s, long no-mode reply 4.5 s; the builder's real `edgeAvailable`/`edgeTutor` against the live hub: true/false for live/dead, all three modes valid in 0.66 to 0.94 s; foreign origin 403, bad mode 400. Not yet tested: ngrok tunnel, deployed PWA, a phone, the UI in a browser. All work uncommitted | Terminal runs in this session |
+| Oct 10 01:20 | **Pivot to edge AI (D-018).** iPhone in-browser tests: Gemma 4 E2B page killed during download; Gemma 3 1B loaded then the page crashed. Decision: Gemma 4 E2B runs in LM Studio on this Mac (127.0.0.1:1234), phones use it over the local network. Measured on the Mac with the app's prompt and mode engine: 45 to 51 tok/s; Kalma and Hakbang replies 0.65 to 1.5 s; `reasoning_effort: "none"` is required. Found: Pakinig replies came back in English and long; one Hakbang reply kept a "Check question:" label | Terminal runs in this session; user screenshots |
+| Oct 10 01:00 | Builder pushed `8bfd7bb` (shared prompt plus mode engine) and `6cca992` (injectable provider chain, mode in the cache key, on-device label); re-checked here: `npm test` 82 of 82 pass, no co-author lines. iPhone 13 (Safari 27.0.1, via iPhone Mirroring) opened the lab page: WebGPU present, `shader-f16` true, max GPU buffer **683 MB**, storage quota 38.4 GB; Gemma 4 E2B download running (13%, 297 MB stored at 00:56). Load and reply not yet known | Screenshots from the user; `git log`; `npm test` |
 | Oct 10 01:00 | `model-research` added detail to the Gemma 4 E2B risk: files about 3.1 GB text-only (decoder 1520 MB plus embed_tokens 1591 MB, its arithmetic from the repo listing), about 3.4 GB with vision and audio; one forum report of an iOS web process killed at 2048 MB (not Apple); nothing found that ran it on iOS Safari. Recorded in D-016 and the risk table; it also suggests an early load-only phone test, awaiting the user's go-ahead | Message from `model-research` |
 | Oct 10 00:55 | `docs/DESIGN.md` written from the current code: tokens, components, accessibility audit (8 findings, including pinch-zoom disabled and low-contrast nav labels), and the UI spec for Kalma, Pakinig, Hakbang from the Hiyang mockup. Not committed | `docs/DESIGN.md` |
 | Oct 10 00:40 | **Team lead decisions:** model = Gemma 4 E2B (confirmed); project name still undecided; demo device = iPhone 13 installed PWA. Recorded in D-016 and D-017 and across the docs. Conflict flagged, not resolved: about 3.1 GB model files versus a 4 GB RAM phone. Nothing has been run on the phone yet. B1 marked done (a choice, not a verification) | `docs/DECISIONS.md` D-016, D-017 |

@@ -77,7 +77,11 @@ The client never holds credentials. Every `/api/*` call goes through `apiUrl()` 
 | `difficulty.js` | `madali` / `katamtaman` / `mahirap` classification from competency text |
 | `question-session.js` | Builds a session: AI batch or bundled rotation; validation; rotation state |
 | `question-quality.js` | Rejects metadata-like questions, rubric-text options, degenerate true/false |
-| `tutor.js` | `askTeacherGabay`: provider chain and cache (the main file the local AI changes) |
+| `tutor.js` | `askTeacherGabay(question, ref, lang, mode)`: builds the providers and cache key, runs the chain |
+| `tutor-chain.js` | `runTutorChain`: provider loop with `applyMode` and `isValidReply`, injectable for tests |
+| `tutor-prompt.js`, `tutor-modes.js` | One shared prompt (client and server) and the Kalma / Pakinig / Hakbang mode engine |
+| `edge-llm.js` | Client for the edge AI hub (availability probe, tutor request, edge base resolution) |
+| `mode-pref.js` | Persisted learning mode (`pref:mode`) |
 | `strip-markdown.js` | Removes markdown from tutor text before display and TTS |
 | `speech.js` | Voice out: cloud TTS then `speechSynthesis`; audio cache; stop/pause/resume |
 | `voicein.js` | Voice in: MediaRecorder -> `/api/transcribe`, else Web Speech, else typing |
@@ -115,10 +119,25 @@ Note: `api/_shared.js` `guard()` is POST-only and returns 405 for other methods,
 |---|---|---|---|---|
 | Tutor reply | On-device Gemini Nano (`self.LanguageModel`, if `availability() === 'available'`) | `POST /api/tutor` (Vertex/Gemini) | none | Bundled `competency.explanation[lang]`, else fixed offline message |
 | Questions | `POST /api/questions` (generate then independently verify) | none | none | Bundled rotation from `competency.items` |
-| Voice out | `POST /api/tts` (Google Cloud TTS) | none | none | `window.speechSynthesis` |
+| Voice out | `POST /api/tts`: ElevenLabs when `TTS_PROVIDER=elevenlabs` (needs `ELEVENLABS_API_KEY` and `ELEVENLABS_VOICE_ID`, default model `eleven_flash_v2_5`), otherwise Google Cloud TTS | none | none | `window.speechSynthesis` |
 | Voice in | MediaRecorder -> `POST /api/transcribe` | Web Speech API | none | Typing |
 
-The local-AI work inserts a new provider between Nano and `/api/tutor` in the tutor chain. See `docs/LOCAL_AI.md`.
+The tutor chain is now `cache -> Nano -> edge hub -> /api/tutor (cloud) -> bundled explanation`, built by `runTutorChain` in `src/lib/tutor-chain.js`; every provider's text goes through `applyMode` and falls through to the next provider if `isValidReply` rejects it. The in-browser model (transformers.js) is deferred (D-018).
+
+### Edge AI hub (D-018)
+
+```
+Phone or Mac browser (PWA)
+  -> POST {edge base}/api/tutor { question, ref, lang, mode }         src/lib/edge-llm.js
+     -> ngrok static domain (phones) or http://localhost:8787 (the Mac itself, no internet)
+        -> scripts/edge-hub.mjs on 127.0.0.1:8787                      imports api/tutor.js
+           -> LM Studio 127.0.0.1:1234, model google/gemma-4-e2b       reasoning_effort "none" required
+```
+
+- The edge base is resolved in this order: `pref:edgeBase` (IndexedDB), `VITE_EDGE_BASE`, same origin when the page is on `localhost` or `127.0.0.1`; if none applies the edge provider is skipped.
+- The hub serves the built app (`dist/`) only to local hosts. Requests that arrive through the tunnel can reach `/api/tutor`, `/api/ping` and `/api/tts` and nothing else. LM Studio is never exposed. Because `/api/tts` is billed per character, tunnelled calls must also carry an allowed `Origin` header and share an hourly cap (`EDGE_TTS_MAX_PER_HOUR`, default 300).
+- `/api/tutor` runs with `TUTOR_BACKEND=edge`, builds the prompt on the server from the curriculum entry (`buildTutorPrompt` in `src/lib/tutor-prompt.js`), and uses the usual `guard()` origin allow-list (`QUESTION_CORS_ORIGINS` must list the deployed PWA origin) and rate limit.
+- Edge requests send `ngrok-skip-browser-warning: 1`, which the server allows in CORS.
 
 ## 8. Tutor flow in detail (`src/lib/tutor.js`)
 
@@ -138,7 +157,7 @@ Observed quirk: step 4 checks `navigator.onLine`, while the rest of the app uses
 |---|---|---|---|---|
 | `POST /api/tutor` | `tutor.js` | Gemini tutor reply; prompt built server-side from `ref` + `lang`; returns `{ text, source }`; no creds -> `placeholder` text; failure -> 502 `vertex_failed` | `TUTOR_RATE_LIMIT` (10) | 8 KB |
 | `POST /api/questions` | `questions.js` | Generate a batch with schema-constrained JSON, validate, then run an independent verifier model pass; themes: store, garden, house, fiesta | `QUESTION_RATE_LIMIT` (8) | 24 KB |
-| `POST /api/tts` | `tts.js` | Cloud TTS, `fil-PH-Wavenet-A` (or English `en-US-Neural2-F`), returns `audio/mpeg`; 501 when unconfigured so the client falls back | `TTS_RATE_LIMIT` (30) | 4 KB |
+| `POST /api/tts` | `tts.js` | Cloud TTS (ElevenLabs when `TTS_PROVIDER=elevenlabs`, else Google `fil-PH-Wavenet-A` / `en-US-Neural2-F`), returns `audio/mpeg`; 501 when unconfigured and 502 on upstream failure, so the client falls back | `TTS_RATE_LIMIT` (30) | 4 KB |
 | `POST /api/transcribe` | `transcribe.js` | Gemini audio transcription (allowed mimes: webm, ogg, mp4, mpeg, wav) | `STT_RATE_LIMIT` (10) | 1.5 MB |
 | any `/api/ping` | `ping.js` | 204 connectivity probe | none | none |
 
@@ -179,8 +198,10 @@ Counts: Grade 4: 54 competencies / 591 items; Grade 5: 49 / 494; Grade 6: 52 / 4
 | `gabay:gamesPlayed` | count | `Games.jsx` |
 | `pref:lang` | `en` \| `fil` \| `taglish` | `lang.js` |
 | `gabay:question-rotation:v1:{grade}:{mode}:{scopeKey}` | `{ queue, last, poolSize, updatedAt }` | `question-session.js` |
-| `tutor:{ref}:{lang}:{hash}` | `{ text, source }` | `tutor.js` |
-| `tts:{lang}:{hash}` | cached audio | `speech.js` |
+| `tutor:{ref}:{lang}:{mode}:{hash}` | `{ text, source }` (source: `nano`, `local`, `edge`, `online`, `cached`) | `tutor.js` |
+| `pref:mode` | `none` \| `kalma` \| `pakinig` \| `hakbang` (default `none`) | `mode-pref.js` |
+| `pref:edgeBase` | URL of the edge AI hub, set once from `?edge=<url>` (http or https only) | `edge-llm.js` |
+| `tts:v2:{lang}:{hash}` | cached audio (`v2` so old Google-voice audio is not replayed; bump it again if the provider or voice changes) | `speech.js` |
 | sound prefs | mute/music flags | `sound.js` |
 
 Legacy keys `gabay:mastery` and `gabay:dueAt` are migrated to Grade 6 on startup by `migrateMastery`.

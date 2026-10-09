@@ -34,6 +34,7 @@ This repo is the team's entry in the **AppBuildersPH Hackathon 2026, theme "Loca
 | `docs/PRD.md` | You need the product goals, requirements, scope, and success metrics |
 | `docs/ARCHITECTURE.md` | You are changing code: layers, data flow, storage keys, API endpoints, fallback chains |
 | `docs/LOCAL_AI.md` | You work on the on-device model: research findings, candidates, plan, risks |
+| `docs/EDGE_RUNBOOK.md` | You start, expose, deploy against, or rehearse the edge AI hub (LM Studio, hub, ngrok, Vercel) |
 | `docs/DESIGN.md` | You touch the UI: tokens, components, accessibility audit, and the UI specification for the three modes |
 | `docs/TUTOR_MODES.md` | You work on the three confirmed learning modes Kalma / Pakinig / Hakbang (definitions confirmed; not yet implemented) |
 | `docs/DEV_SETUP.md` | You set up the Mac, simulator, or real iPhone for testing |
