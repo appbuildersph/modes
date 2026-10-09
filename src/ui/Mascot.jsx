@@ -1,8 +1,8 @@
 import { useState, useSyncExternalStore } from 'react'
-import calmPng from '../assets/gabo/gabo-calm.png'
-import listenPng from '../assets/gabo/gabo-listen.png'
-import hakbangPng from '../assets/gabo/gabo-hakbang.png'
-import starPng from '../assets/gabo/gabo-star-pose.png'
+import calmImg from '../assets/gabo/gabo-calm.webp'
+import listenImg from '../assets/gabo/gabo-listen.webp'
+import hakbangImg from '../assets/gabo/gabo-hakbang.webp'
+import starImg from '../assets/gabo/gabo-star-pose.webp'
 import winkImg from '../assets/gabo/gabo-wink.webp'
 import playImg from '../assets/gabo/gabo-play.webp'
 import studyImg from '../assets/gabo/gabo-study.webp'
@@ -10,10 +10,10 @@ import headImg from '../assets/gabo/gabo-head.webp'
 
 // One pose per learning mode; 'none' gets the cheerful default.
 const POSES = {
-  none: starPng,
-  kalma: calmPng,
-  pakinig: listenPng,
-  hakbang: hakbangPng,
+  none: starImg,
+  kalma: calmImg,
+  pakinig: listenImg,
+  hakbang: hakbangImg,
   // Scene poses: shown only in Standard mode, so a chosen mode keeps its own pose.
   wink: winkImg,
   play: playImg,
@@ -59,7 +59,7 @@ export function Mascot({ size = 96, className = '', float = false, alt = 'Gabo',
         style={{ width: size, height: size }}
         width={size}
         height={size}
-        poster={calmPng}
+        poster={calmImg}
         autoPlay
         loop
         muted
