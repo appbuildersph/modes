@@ -1,0 +1,525 @@
+{
+  "measuredAt": "2026-10-09T20:26:14.801Z",
+  "machine": {
+    "cpu": "Apple M5",
+    "memoryGB": 16,
+    "platform": "darwin 25.6.0",
+    "node": "v24.19.0"
+  },
+  "server": {
+    "url": "http://127.0.0.1:1234",
+    "model": "google/gemma-4-e2b",
+    "settings": {
+      "temperature": 0.4,
+      "max_tokens": 300,
+      "reasoning_effort": "none",
+      "prompt": "compact (short: true)"
+    }
+  },
+  "question": {
+    "ref": "4NA-IIe-1",
+    "en": "What is 3/4 + 1/4? And is 5/4 an improper fraction?",
+    "fil": "Ano ang 3/4 + 1/4? At ang 5/4 ba ay improper fraction?"
+  },
+  "runsPerModeAndLang": 3,
+  "direct": {
+    "overall": {
+      "ttftSec": {
+        "median": 0.2036802914999971,
+        "range": [
+          0.14643250000000263,
+          0.37081570799999825
+        ]
+      },
+      "totalSec": {
+        "median": 1.043890916999997,
+        "range": [
+          0.3526697499999937,
+          5.878222124999999
+        ]
+      },
+      "completionTokens": {
+        "median": 44.5,
+        "range": [
+          14,
+          282
+        ]
+      },
+      "decodeTokPerSec": {
+        "median": 55.91583296590112,
+        "range": [
+          40.581654734578095,
+          115.2152864096928
+        ]
+      }
+    },
+    "byMode": {
+      "none": {
+        "ttftSec": {
+          "median": 0.20248252049999974,
+          "range": [
+            0.1488836250000022,
+            0.2497164589999993
+          ]
+        },
+        "totalSec": {
+          "median": 5.127182458499999,
+          "range": [
+            2.3195075839999992,
+            5.878222124999999
+          ]
+        },
+        "completionTokens": {
+          "median": 245.5,
+          "range": [
+            113,
+            282
+          ]
+        },
+        "decodeTokPerSec": {
+          "median": 50.98498673251228,
+          "range": [
+            47.97600483104434,
+            53.346163924054025
+          ]
+        }
+      },
+      "kalma": {
+        "ttftSec": {
+          "median": 0.1690411460000032,
+          "range": [
+            0.14643250000000263,
+            0.37081570799999825
+          ]
+        },
+        "totalSec": {
+          "median": 0.7662297295000026,
+          "range": [
+            0.5943603330000041,
+            1.0114992919999968
+          ]
+        },
+        "completionTokens": {
+          "median": 29.5,
+          "range": [
+            27,
+            38
+          ]
+        },
+        "decodeTokPerSec": {
+          "median": 56.35567736276026,
+          "range": [
+            40.581654734578095,
+            62.34627645652696
+          ]
+        }
+      },
+      "pakinig": {
+        "ttftSec": {
+          "median": 0.19119962549999947,
+          "range": [
+            0.15686637499999778,
+            0.23221679099999892
+          ]
+        },
+        "totalSec": {
+          "median": 1.1386333959999995,
+          "range": [
+            0.8538535830000037,
+            1.2344261249999982
+          ]
+        },
+        "completionTokens": {
+          "median": 53,
+          "range": [
+            40,
+            59
+          ]
+        },
+        "decodeTokPerSec": {
+          "median": 55.96939653150599,
+          "range": [
+            52.76501263873759,
+            57.06033985238751
+          ]
+        }
+      },
+      "hakbang": {
+        "ttftSec": {
+          "median": 0.22139724999999635,
+          "range": [
+            0.19945500000000174,
+            0.2734386249999989
+          ]
+        },
+        "totalSec": {
+          "median": 0.5573898124999996,
+          "range": [
+            0.3526697499999937,
+            1.2209871249999997
+          ]
+        },
+        "completionTokens": {
+          "median": 23,
+          "range": [
+            14,
+            55
+          ]
+        },
+        "decodeTokPerSec": {
+          "median": 73.61572447982618,
+          "range": [
+            53.154288689800836,
+            115.2152864096928
+          ]
+        }
+      }
+    },
+    "rows": [
+      {
+        "run": 0,
+        "mode": "none",
+        "lang": "en",
+        "ttftSec": 0.20236033300000053,
+        "totalSec": 5.195054000000001,
+        "promptTokens": 125,
+        "completionTokens": 259,
+        "decodeTokPerSec": 51.67551169928407,
+        "chars": 892
+      },
+      {
+        "run": 0,
+        "mode": "none",
+        "lang": "fil",
+        "ttftSec": 0.20260470799999894,
+        "totalSec": 5.878222124999999,
+        "promptTokens": 127,
+        "completionTokens": 282,
+        "decodeTokPerSec": 49.510032011377206,
+        "chars": 865
+      },
+      {
+        "run": 0,
+        "mode": "kalma",
+        "lang": "en",
+        "ttftSec": 0.37081570799999825,
+        "totalSec": 1.0114992919999968,
+        "promptTokens": 146,
+        "completionTokens": 27,
+        "decodeTokPerSec": 40.581654734578095,
+        "chars": 144
+      },
+      {
+        "run": 0,
+        "mode": "kalma",
+        "lang": "fil",
+        "ttftSec": 0.1821642090000023,
+        "totalSec": 0.8144135840000017,
+        "promptTokens": 148,
+        "completionTokens": 35,
+        "decodeTokPerSec": 53.77624928454857,
+        "chars": 154
+      },
+      {
+        "run": 0,
+        "mode": "pakinig",
+        "lang": "en",
+        "ttftSec": 0.16658883399999833,
+        "totalSec": 1.0762825419999973,
+        "promptTokens": 172,
+        "completionTokens": 49,
+        "decodeTokPerSec": 52.76501263873759,
+        "chars": 230
+      },
+      {
+        "run": 0,
+        "mode": "pakinig",
+        "lang": "fil",
+        "ttftSec": 0.23221679099999892,
+        "totalSec": 1.2344261249999982,
+        "promptTokens": 175,
+        "completionTokens": 57,
+        "decodeTokPerSec": 55.876550038197955,
+        "chars": 208
+      },
+      {
+        "run": 0,
+        "mode": "hakbang",
+        "lang": "en",
+        "ttftSec": 0.20507662499999788,
+        "totalSec": 1.2209871249999997,
+        "promptTokens": 161,
+        "completionTokens": 55,
+        "decodeTokPerSec": 53.154288689800836,
+        "chars": 148
+      },
+      {
+        "run": 0,
+        "mode": "hakbang",
+        "lang": "fil",
+        "ttftSec": 0.2734386249999989,
+        "totalSec": 0.46238208300000044,
+        "promptTokens": 163,
+        "completionTokens": 17,
+        "decodeTokPerSec": 84.68141828969738,
+        "chars": 62
+      },
+      {
+        "run": 1,
+        "mode": "none",
+        "lang": "en",
+        "ttftSec": 0.15748183300000165,
+        "totalSec": 5.180826333000001,
+        "promptTokens": 125,
+        "completionTokens": 242,
+        "decodeTokPerSec": 47.97600483104434,
+        "chars": 754
+      },
+      {
+        "run": 1,
+        "mode": "none",
+        "lang": "fil",
+        "ttftSec": 0.2497164589999993,
+        "totalSec": 5.073538583999998,
+        "promptTokens": 127,
+        "completionTokens": 248,
+        "decodeTokPerSec": 51.20420977380049,
+        "chars": 815
+      },
+      {
+        "run": 1,
+        "mode": "kalma",
+        "lang": "en",
+        "ttftSec": 0.14643250000000263,
+        "totalSec": 0.5943603330000041,
+        "promptTokens": 146,
+        "completionTokens": 27,
+        "decodeTokPerSec": 58.045064594143916,
+        "chars": 144
+      },
+      {
+        "run": 1,
+        "mode": "kalma",
+        "lang": "fil",
+        "ttftSec": 0.22082291700000498,
+        "totalSec": 0.7180458750000034,
+        "promptTokens": 148,
+        "completionTokens": 32,
+        "decodeTokPerSec": 62.34627645652696,
+        "chars": 135
+      },
+      {
+        "run": 1,
+        "mode": "pakinig",
+        "lang": "en",
+        "ttftSec": 0.15686637499999778,
+        "totalSec": 0.8538535830000037,
+        "promptTokens": 172,
+        "completionTokens": 40,
+        "decodeTokPerSec": 55.95511589360427,
+        "chars": 189
+      },
+      {
+        "run": 1,
+        "mode": "pakinig",
+        "lang": "fil",
+        "ttftSec": 0.2158104170000006,
+        "totalSec": 1.2009842500000014,
+        "promptTokens": 175,
+        "completionTokens": 57,
+        "decodeTokPerSec": 56.842760256300835,
+        "chars": 208
+      },
+      {
+        "run": 1,
+        "mode": "hakbang",
+        "lang": "en",
+        "ttftSec": 0.20475587499999529,
+        "totalSec": 0.6523975419999988,
+        "promptTokens": 161,
+        "completionTokens": 29,
+        "decodeTokPerSec": 62.55003066995499,
+        "chars": 103
+      },
+      {
+        "run": 1,
+        "mode": "hakbang",
+        "lang": "fil",
+        "ttftSec": 0.26219137500000217,
+        "totalSec": 0.37502362500000164,
+        "promptTokens": 163,
+        "completionTokens": 14,
+        "decodeTokPerSec": 115.2152864096928,
+        "chars": 50
+      },
+      {
+        "run": 2,
+        "mode": "none",
+        "lang": "en",
+        "ttftSec": 0.1488836250000022,
+        "totalSec": 4.915875833999999,
+        "promptTokens": 125,
+        "completionTokens": 243,
+        "decodeTokPerSec": 50.765763691224066,
+        "chars": 796
+      },
+      {
+        "run": 2,
+        "mode": "none",
+        "lang": "fil",
+        "ttftSec": 0.2200126670000027,
+        "totalSec": 2.3195075839999992,
+        "promptTokens": 127,
+        "completionTokens": 113,
+        "decodeTokPerSec": 53.346163924054025,
+        "chars": 345
+      },
+      {
+        "run": 2,
+        "mode": "kalma",
+        "lang": "en",
+        "ttftSec": 0.1552260840000017,
+        "totalSec": 0.6064382089999999,
+        "promptTokens": 146,
+        "completionTokens": 27,
+        "decodeTokPerSec": 57.622564996452844,
+        "chars": 144
+      },
+      {
+        "run": 2,
+        "mode": "kalma",
+        "lang": "fil",
+        "ttftSec": 0.15591808300000412,
+        "totalSec": 0.8275610830000005,
+        "promptTokens": 148,
+        "completionTokens": 38,
+        "decodeTokPerSec": 55.08878972906767,
+        "chars": 152
+      },
+      {
+        "run": 2,
+        "mode": "pakinig",
+        "lang": "en",
+        "ttftSec": 0.16371945799999957,
+        "totalSec": 0.8603510830000014,
+        "promptTokens": 172,
+        "completionTokens": 40,
+        "decodeTokPerSec": 55.98367716940772,
+        "chars": 189
+      },
+      {
+        "run": 2,
+        "mode": "pakinig",
+        "lang": "fil",
+        "ttftSec": 0.21778424999999696,
+        "totalSec": 1.2342520829999994,
+        "promptTokens": 175,
+        "completionTokens": 59,
+        "decodeTokPerSec": 57.06033985238751,
+        "chars": 229
+      },
+      {
+        "run": 2,
+        "mode": "hakbang",
+        "lang": "en",
+        "ttftSec": 0.19945500000000174,
+        "totalSec": 1.141698709000004,
+        "promptTokens": 161,
+        "completionTokens": 54,
+        "decodeTokPerSec": 56.24871728382097,
+        "chars": 139
+      },
+      {
+        "run": 2,
+        "mode": "hakbang",
+        "lang": "fil",
+        "ttftSec": 0.23771787499999483,
+        "totalSec": 0.3526697499999937,
+        "promptTokens": 163,
+        "completionTokens": 14,
+        "decodeTokPerSec": 113.09080430397618,
+        "chars": 50
+      }
+    ]
+  },
+  "hub": {
+    "url": "http://127.0.0.1:8787",
+    "overall": {
+      "totalSec": {
+        "median": 0.8167447290000018,
+        "range": [
+          0.41112275000000226,
+          5.476740249999995
+        ]
+      }
+    },
+    "statuses": [
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200
+    ],
+    "rows": [
+      {
+        "mode": "none",
+        "lang": "en",
+        "status": 200,
+        "source": "edge",
+        "totalSec": 5.476740249999995
+      },
+      {
+        "mode": "none",
+        "lang": "fil",
+        "status": 200,
+        "source": "edge",
+        "totalSec": 4.974817290999999
+      },
+      {
+        "mode": "kalma",
+        "lang": "en",
+        "status": 200,
+        "source": "edge",
+        "totalSec": 0.6131580000000031
+      },
+      {
+        "mode": "kalma",
+        "lang": "fil",
+        "status": 200,
+        "source": "edge",
+        "totalSec": 0.7644517080000005
+      },
+      {
+        "mode": "pakinig",
+        "lang": "en",
+        "status": 200,
+        "source": "edge",
+        "totalSec": 0.8690377500000032
+      },
+      {
+        "mode": "pakinig",
+        "lang": "fil",
+        "status": 200,
+        "source": "edge",
+        "totalSec": 1.357337250000004
+      },
+      {
+        "mode": "hakbang",
+        "lang": "en",
+        "status": 200,
+        "source": "edge",
+        "totalSec": 0.6961706669999985
+      },
+      {
+        "mode": "hakbang",
+        "lang": "fil",
+        "status": 200,
+        "source": "edge",
+        "totalSec": 0.41112275000000226
+      }
+    ]
+  }
+}
