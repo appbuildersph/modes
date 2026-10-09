@@ -31,6 +31,6 @@ memory/
 .env*
 .gstack/
 
-# Local hosting config for OpenAI Sites (machine-specific)
+# Local hosting config (machine-specific)
 .openai/
 !.env.example

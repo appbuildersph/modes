@@ -1,4 +1,4 @@
-// Serverless Gemini speech-to-text for Voice-IN (Vercel Function, Node runtime).
+// Serverless Gemini speech-to-text for Voice-IN (Node runtime).
 // The PWA records mic audio (MediaRecorder), base64-encodes it, and POSTs
 // { audio, mimeType } here. Gemini multimodal transcribes Taglish far better
 // than the browser Web Speech API. Returns { text, source }.

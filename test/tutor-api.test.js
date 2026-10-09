@@ -65,21 +65,20 @@ test('non-POST methods are rejected with an Allow header', async () => {
 
 test('preflight requests are answered', async () => {
   const res = mockResponse()
-  await handler(mockRequest({ method: 'OPTIONS', headers: { origin: 'https://gabay-sage.vercel.app' } }), res)
+  await handler(mockRequest({ method: 'OPTIONS', headers: { origin: 'https://app.example.com', host: 'app.example.com' } }), res)
   assert.equal(res.statusCode, 204)
-  assert.equal(res.headers['Access-Control-Allow-Origin'], 'https://gabay-sage.vercel.app')
+  assert.equal(res.headers['Access-Control-Allow-Origin'], 'https://app.example.com')
 })
 
 test('requests from an unlisted origin are refused', async () => {
   const res = mockResponse()
-  await handler(mockRequest({ headers: { origin: 'https://evil.example.com' }, body: VALID }), res)
+  await handler(mockRequest({ headers: { origin: 'https://evil.example.com', host: 'app.example.com' }, body: VALID }), res)
   assert.equal(res.statusCode, 403)
 })
 
-test('the shared origin allow-list covers the deployment targets', () => {
-  assert.equal(allowedOrigin('https://gabay-sage.vercel.app'), true)
-  assert.equal(allowedOrigin('https://gabay-preview.vercel.app'), true)
-  assert.equal(allowedOrigin('https://anything.openai.site'), true)
-  assert.equal(allowedOrigin('https://evil.example.com'), false)
-  assert.equal(allowedOrigin('https://gabay-sage.vercel.app.evil.com'), false)
+test('the shared origin check allows same-origin and rejects look-alike hosts', () => {
+  assert.equal(allowedOrigin('https://app.example.com', 'app.example.com'), true)
+  assert.equal(allowedOrigin('https://evil.example.com', 'app.example.com'), false)
+  assert.equal(allowedOrigin('https://app.example.com.evil.com', 'app.example.com'), false)
+  assert.equal(allowedOrigin('not a url', 'app.example.com'), false)
 })

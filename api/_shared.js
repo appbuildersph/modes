@@ -10,20 +10,28 @@ const rateLimitBuckets = new Map()
 // often, but a long-lived one must not grow an unbounded IP map.
 const MAX_TRACKED_IPS = 10_000
 
-export function allowedOrigin(origin) {
+// Same-origin calls (the PWA and the functions served from one host) always
+// pass. Any other origin must be listed in QUESTION_CORS_ORIGINS
+// (comma-separated, exact match).
+export function allowedOrigin(origin, host) {
   if (!origin) return true
-  const configured = (process.env.QUESTION_CORS_ORIGINS || 'https://gabay-sage.vercel.app')
+  if (host) {
+    try {
+      if (new URL(origin).host === host) return true
+    } catch {
+      return false
+    }
+  }
+  return (process.env.QUESTION_CORS_ORIGINS || '')
     .split(',')
     .map((value) => value.trim())
     .filter(Boolean)
-  return configured.includes(origin)
-    || /^https:\/\/[a-z0-9-]+\.openai\.site$/i.test(origin)
-    || /^https:\/\/gabay(?:-[a-z0-9-]+)?\.vercel\.app$/i.test(origin)
+    .includes(origin)
 }
 
 export function cors(req, res) {
   const origin = req.headers.origin
-  if (origin && allowedOrigin(origin)) res.setHeader('Access-Control-Allow-Origin', origin)
+  if (origin && allowedOrigin(origin, req.headers.host)) res.setHeader('Access-Control-Allow-Origin', origin)
   res.setHeader('Vary', 'Origin')
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
@@ -35,7 +43,7 @@ export function clientIp(req) {
     .trim()
 }
 
-// Upstash/Vercel KV counter. Returns null when unconfigured so the caller can
+// Upstash Redis REST counter. Returns null when unconfigured so the caller can
 // fall back to the per-instance map.
 async function durableRateLimit(bucket, ip, limit) {
   const url = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL
@@ -85,7 +93,7 @@ export async function guard(req, res, { bucket, limit, maxBytes }) {
     res.status(405).json({ error: 'method_not_allowed' })
     return true
   }
-  if (!allowedOrigin(req.headers.origin)) {
+  if (!allowedOrigin(req.headers.origin, req.headers.host)) {
     res.status(403).json({ error: 'origin_not_allowed' })
     return true
   }

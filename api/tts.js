@@ -1,4 +1,4 @@
-// Serverless Google Cloud Text-to-Speech for Voice-OUT (Vercel Function, Node).
+// Serverless Google Cloud Text-to-Speech for Voice-OUT (Node runtime).
 // The PWA POSTs { text } here; this returns audio/mpeg bytes in a native
 // Filipino (fil-PH) voice. ONLINE-ONLY — the client falls back to on-device
 // speechSynthesis when offline or when this is unconfigured.

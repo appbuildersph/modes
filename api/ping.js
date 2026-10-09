@@ -1,4 +1,4 @@
-// Cheap connectivity probe (Vercel Function, Node runtime).
+// Cheap connectivity probe (Node runtime).
 //
 // navigator.onLine and the window online/offline events don't fire when
 // DevTools' Network throttling dropdown is set to "Offline" — that preset

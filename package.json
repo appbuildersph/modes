@@ -7,7 +7,6 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "build:sites": "VITE_QUESTION_API_BASE=https://gabay-sage.vercel.app npm run build && node scripts/prepare-sites-build.mjs",
         "preview": "vite preview",
         "test": "node --test",
         "icons": "node scripts/generate-icons.mjs",

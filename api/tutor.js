@@ -1,10 +1,10 @@
-// Serverless proxy for Teacher Gabay (Vercel Function, Node runtime).
+// Serverless proxy for Teacher Gabay (Node runtime).
 // Kept SEPARATE from the client — this is the ONLY place Vertex/Gemini creds live.
 // The PWA POSTs { question, ref, lang } here; this returns { text, source }.
 //
-// Deploy on Vercel: this file at /api/tutor is auto-exposed as POST /api/tutor.
+// Exposed as POST /api/tutor.
 //
-// Required Vercel env vars (Project Settings -> Environment Variables):
+// Required env vars:
 //   GCP_PROJECT            your Google Cloud project id
 //   GCP_LOCATION           region, e.g. us-central1  (optional, defaults below)
 //   GCP_SA_KEY             service-account JSON, single-line (stringified)

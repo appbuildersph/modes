@@ -39,10 +39,20 @@ test('server rejects questions that quiz learners about curriculum metadata', ()
   assert.equal(validateGeneratedQuestions(questions, request), false)
 })
 
-test('CORS accepts production, preview, and Sites origins but rejects arbitrary hosts', () => {
-  assert.equal(allowedOrigin('https://gabay-sage.vercel.app'), true)
-  assert.equal(allowedOrigin('https://gabay-sage-feature-123.vercel.app'), true)
-  assert.equal(allowedOrigin('https://gabay-git-feature-preview.vercel.app'), true)
-  assert.equal(allowedOrigin('https://gabay.openai.site'), true)
-  assert.equal(allowedOrigin('https://attacker.example'), false)
+test('CORS accepts same-origin and configured origins but rejects arbitrary hosts', () => {
+  const saved = process.env.QUESTION_CORS_ORIGINS
+  try {
+    delete process.env.QUESTION_CORS_ORIGINS
+    assert.equal(allowedOrigin(undefined), true)
+    assert.equal(allowedOrigin('https://app.example.com', 'app.example.com'), true)
+    assert.equal(allowedOrigin('https://attacker.example', 'app.example.com'), false)
+    assert.equal(allowedOrigin('https://static.example.com'), false)
+    process.env.QUESTION_CORS_ORIGINS = 'https://static.example.com, https://other.example.com'
+    assert.equal(allowedOrigin('https://static.example.com'), true)
+    assert.equal(allowedOrigin('https://other.example.com', 'app.example.com'), true)
+    assert.equal(allowedOrigin('https://static.example.com.evil.com'), false)
+  } finally {
+    if (saved === undefined) delete process.env.QUESTION_CORS_ORIGINS
+    else process.env.QUESTION_CORS_ORIGINS = saved
+  }
 })
