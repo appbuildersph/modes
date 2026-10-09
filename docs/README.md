@@ -19,5 +19,8 @@ Key facts: the project is an **offline-first tutor**; the on-device **model is u
 ## Source material
 
 - [Participant briefing PDF](reference/AppBuildersPH-Hackathon-2026-Participant-Briefing.pdf): the organisers' 29-page briefing dated October 9, 2026. It is the source for the hackathon rules, judging criteria, prizes, schedule, and submission requirements. The digest in `HACKATHON.md` points back to it; if the two ever disagree, the PDF wins.
+- [Idea shortlist PDF](reference/AppBuildersPH-Idea-Shortlist.pdf): the team's shortlist of hackathon ideas from the ideation session on 2026-10-09.
+- [SPED math app business model](research/sped-math-business-model.md): report on how an offline math app for Filipino learners with disabilities could be funded (institutional procurement, CSR, grants). Raw research notes are in [research/sped-math-business-model/](research/sped-math-business-model/).
+- Hiyang mockup (`../mockups/hiyang/`): static HTML mockup of the Kalma, Pakinig and Hakbang modes on the Gabay UI, with sample content and no live AI. Open `mockups/hiyang/index.html` in a browser.
 
 Keep binary reference files small and in `docs/reference/`. Do not put secrets, credentials, or personal data in any file here.

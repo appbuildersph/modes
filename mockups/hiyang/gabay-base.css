@@ -1,0 +1,132 @@
+/* Gabay design system, adapted from Team CrossCampus's Gabay app
+   (src/index.css and tailwind.config.js) so this mockup looks like the real app.
+   Tailwind @apply rules and utilities are written out as plain CSS. */
+:root {
+  color-scheme: light;
+  --gb-background: #fbf1da;
+  --gb-surface: #fffaf0;
+  --gb-surface-strong: #ffffff;
+  --gb-frame: #c8b89a;
+  --gb-primary: #f7d26a;
+  --gb-primary-hover: #e5b943;
+  --gb-primary-soft: #fff0ba;
+  --gb-primary-dark: #9b6810;
+  --gb-secondary: #8fd9b6;
+  --gb-secondary-hover: #70c99f;
+  --gb-secondary-soft: #dff4eb;
+  --gb-secondary-dark: #245d54;
+  --gb-sky: #a9d8f0;
+  --gb-rose: #f4c3d0;
+  --gb-rose-soft: #f9e5e2;
+  --gb-peach: #f4a87c;
+  --gb-peach-hover: #e99162;
+  --gb-lavender: #cdbcec;
+  --gb-lavender-soft: #eee8fa;
+  --gb-lavender-dark: #725bb6;
+  --gb-ink: #3a2e2a;
+  --gb-muted: #62564e;
+  --gb-outline: #1c1410;
+  --gb-divider: #dfd0ba;
+  --gb-success: #25765b;
+  --gb-info: #237ca6;
+  --gb-danger: #c0414b;
+  --gb-focus: #237ca6;
+  --font-display: "Baloo 2", "Fredoka", system-ui, sans-serif;
+  --font-body: "Nunito", system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: 0; padding: 0; }
+img, svg { display: block; }
+h1, h2, h3, p { margin: 0; }
+h1, h2, h3 { font-family: var(--font-display); color: var(--gb-ink); }
+
+/* ---------- components (gb-card, gb-btn, gb-chip) ---------- */
+.gb-card { border-radius: 24px; border: 2.5px solid var(--gb-outline); background: #fff; box-shadow: 4px 4px 0 0 var(--gb-outline); }
+.gb-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  border-radius: 999px; border: 2.5px solid var(--gb-outline); padding: 0.75rem 1.25rem;
+  font-family: var(--font-display); font-weight: 700; color: var(--gb-ink);
+  box-shadow: 4px 4px 0 0 var(--gb-outline); transition: transform 0.15s;
+}
+.gb-btn:active:not(:disabled) { transform: translate(2px, 2px); box-shadow: 2px 2px 0 0 var(--gb-outline); }
+.gb-btn:hover:not(:disabled) { filter: brightness(0.96) saturate(1.04); }
+.gb-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.gb-chip {
+  display: inline-flex; align-items: center; gap: 0.25rem;
+  border-radius: 999px; border: 2.5px solid var(--gb-outline); padding: 0.25rem 0.75rem;
+  font-size: 0.875rem; font-weight: 700; color: var(--gb-ink);
+}
+.gb-hover-lift { transition: transform 0.15s ease, box-shadow 0.15s ease; }
+.gb-hover-lift:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 0 var(--gb-outline); }
+
+/* utilities used by the copied markup */
+.bg-white { background-color: #fff; }
+.bg-yellow { background-color: var(--gb-primary); }
+.bg-mint { background-color: var(--gb-secondary); }
+.bg-sky { background-color: var(--gb-sky); }
+.bg-rose { background-color: var(--gb-rose); }
+.bg-peach { background-color: var(--gb-peach); }
+.bg-lavender { background-color: var(--gb-lavender); }
+.bg-cream { background-color: var(--gb-background); }
+.shadow-hard-sm { box-shadow: 2px 2px 0 0 var(--gb-outline); }
+.font-display { font-family: var(--font-display); }
+.w-full { width: 100%; }
+
+button:focus-visible, input:focus-visible, .gb-btn:focus-visible, .gb-chip:focus-visible { outline: 3px solid var(--gb-focus); outline-offset: 3px; }
+
+/* ---------- app shell inside the phone ---------- */
+.gb-shell {
+  position: relative; width: 100%; height: 100%;
+  overflow-y: auto; overflow-x: hidden; padding-top: 20px;
+  background-color: var(--gb-background); color: var(--gb-ink);
+  font-family: var(--font-body); -webkit-font-smoothing: antialiased;
+}
+/* faint drifting doodles, the same tile Gabay uses behind every screen after the splash */
+.gb-shell.classroom-page, .gb-shell.modes-page {
+  background-image: url("assets/bg-tile.png") !important;
+  background-repeat: repeat !important;
+  background-size: 380px 380px !important;
+  animation: gb-doodles-drift 150s linear infinite;
+}
+@keyframes gb-doodles-drift { from { background-position: 0 0; } to { background-position: 380px 380px; } }
+
+@keyframes gb-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.gb-float { animation: gb-float 3s ease-in-out infinite; }
+@keyframes answer-shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-7px); } 75% { transform: translateX(7px); } }
+.answer-shake { animation: answer-shake 0.4s ease-in-out 3; }
+@keyframes nova-correct { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.35); } }
+.nova-correct { animation: nova-correct 1.5s ease-in-out; }
+
+/* ---------- phone chassis (Gabay's desktop phone frame) ---------- */
+.phone-chassis {
+  position: relative; flex-shrink: 0; border-radius: 58px; padding: 14px 10px;
+  background: linear-gradient(160deg, #3a3a3e 0%, #1c1c1f 40%, #2a2a2e 100%);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 32px 80px rgba(0, 0, 0, 0.6), 0 8px 20px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12), inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+}
+.phone-chassis::before {
+  content: ""; position: absolute; right: -4px; top: 120px; width: 4px; height: 70px;
+  background: linear-gradient(180deg, #3a3a3e 0%, #2a2a2e 100%); border-radius: 0 3px 3px 0;
+}
+.phone-chassis::after {
+  content: ""; position: absolute; left: -4px; top: 100px; width: 4px; height: 40px;
+  background: linear-gradient(180deg, #3a3a3e 0%, #2a2a2e 100%); border-radius: 3px 0 0 3px;
+  box-shadow: 0 52px 0 #2a2a2e, 0 54px 0 #3a3a3e;
+}
+.phone-screen-bezel { border-radius: 46px; overflow: hidden; background: #000; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.8); }
+.phone-root {
+  position: relative; width: 430px; height: min(900px, calc(100dvh - 150px)); min-height: 640px;
+  border-radius: 46px; overflow: hidden; transform: translateZ(0);
+}
+@media (max-width: 499px) {
+  .phone-chassis { padding: 0; border-radius: 0; background: none; box-shadow: none; width: 100%; }
+  .phone-chassis::before, .phone-chassis::after { display: none; }
+  .phone-screen-bezel { border-radius: 0; }
+  .phone-root { width: 100%; height: 86dvh; min-height: 560px; border-radius: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gb-shell.classroom-page, .gb-shell.modes-page, .gb-float, .answer-shake, .nova-correct { animation: none !important; }
+}
