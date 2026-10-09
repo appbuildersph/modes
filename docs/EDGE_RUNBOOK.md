@@ -52,7 +52,7 @@ EDGE_SERVE_APP=1 node --env-file=.env scripts/edge-hub.mjs
 cloudflared tunnel --no-autoupdate --url http://127.0.0.1:8787      # prints https://<random>.trycloudflare.com
 ```
 
-Open that URL on the phone. The hub marks its API replies with `X-Edge-Hub: 1`, so the app recognises it and uses the "Teacher Gabay AI server" provider by itself. The URL changes every time the tunnel restarts.
+Open that URL on the phone. The hub marks its API replies with `X-Edge-Hub: 1`, so the app recognises it and uses the edge AI server provider by itself. The URL changes every time the tunnel restarts.
 
 ### Voice (ElevenLabs)
 
@@ -71,9 +71,15 @@ curl -s http://127.0.0.1:8787/api/tutor -X POST -H 'Content-Type: application/js
 
 Through the tunnel (**not yet run**): the same `/api/ping` and `/api/tutor` calls against `https://<your-name>.ngrok-free.app`, adding `-H 'Origin: https://<your-vercel-domain>' -H 'ngrok-skip-browser-warning: 1'`. A request from any other origin must return 403.
 
-Hybrid, no internet (**not yet run**): turn the Mac's Wi-Fi off, open `http://localhost:8787`, Profile, pick a mode, open a lesson, ask Teacher Gabay. The reply must be labelled "Teacher Gabay AI server".
+Hybrid, no internet (**not yet run**): turn the Mac's Wi-Fi off, open `http://localhost:8787`, Profile, pick a mode, open a lesson, ask the tutor. The reply must be labelled as coming from the edge AI server.
 
 Failure path (**not yet run**): stop LM Studio (`lms server stop`); the app must still answer from the cloud or the bundled explanation without an error screen.
+
+## 3b. Demo Day settings
+
+- **Rate limits.** The server limits requests per client address (`x-forwarded-for`): tutor 10 per minute and voice 30 per minute by default. On shared venue Wi-Fi every phone arrives from the same public address, so judges would share that budget and fall back to bundled text mid-demo. Put `TUTOR_RATE_LIMIT=60` and `TTS_RATE_LIMIT=60` in `.env` and restart the hub (done on this Mac on 2026-10-10; tested: 14 rapid tutor requests from one address all returned 200). `EDGE_TTS_MAX_PER_HOUR` (default 300) still caps tunnelled voice calls.
+- **ElevenLabs quota.** The Starter plan allows 39,749 characters per month (379 used on 2026-10-10). A spoken reply is roughly 100 to 200 characters, so the plan covers a few hundred replies in total. When the quota runs out the endpoint returns an error and the app falls back to the phone's built-in voice.
+- **ngrok free plan limits** (reported by `builder-agent` from ngrok's documentation, not checked by us): about 20,000 HTTP requests per month, 4,000 per minute, 1 GB transfer per month, 3 endpoints. Enough for a demo. The tunnel is a third-party service and must be disclosed in the submission (`docs/SUBMISSION.md`).
 
 ## 4. What the tunnel exposes
 
