@@ -1,0 +1,1990 @@
+[
+  {
+    "ref": "6NA-Ia-1",
+    "domain": "Number and Algebra",
+    "content_standard": "The four fundamental operations on decimals.",
+    "competency": "Perform the four fundamental operations on decimals.",
+    "performance_standard": "Add, subtract, multiply, and divide decimals in money and measurement situations.",
+    "explanation": {
+      "en": "To add or subtract decimals, line up the decimal points and compute as with whole numbers. To multiply, ignore the points first, then the product has as many decimal places as the factors together. To divide, shift both points so the divisor is a whole number, then divide.",
+      "fil": "Sa pagdaragdag o pagbabawas ng desimal, ihanay ang mga tuldok at kalkulahin parang buong bilang. Sa pagpaparami, huwag munang pansinin ang tuldok; ang sagot ay may kasindami ng decimal places ng magkasamang factor. Sa paghahati, igalaw ang dalawang tuldok para maging buong bilang ang panghati.",
+      "taglish": "Pag add o subtract ng decimals, i-align mo yung mga tuldok tapos compute parang whole numbers. Pag multiply, parang whole numbers muna, tapos bilangin yung total decimal places ng factors. Pag divide, igalaw mo yung tuldok para whole number na yung divisor."
+    },
+    "worked_example": {
+      "en": "Aling Rosa buys 2.5 kg of fish at ₱180.00/kg and pays ₱500. Cost = 2.5 × 180 = ₱450; change = 500 − 450 = ₱50.00.",
+      "fil": "Bumili si Aling Rosa ng 2.5 kg isda sa ₱180.00/kg at nagbayad ng ₱500. Halaga = 2.5 × 180 = ₱450; sukli = 500 − 450 = ₱50.00.",
+      "taglish": "Bumili si Aling Rosa ng 2.5 kg isda sa ₱180.00/kg, bayad ₱500. Cost = 2.5 × 180 = ₱450; sukli = 500 − 450 = ₱50.00."
+    },
+    "items": [
+      {
+        "q": "15.7 + 9.86 = ?",
+        "answer": "25.56",
+        "type": "numeric",
+        "solution": {
+          "en": "Align the points: 15.70 + 9.86 = **25.56**.",
+          "fil": "Ihanay ang tuldok: 15.70 + 9.86 = **25.56**.",
+          "taglish": "I-align ang tuldok: 15.70 + 9.86 = **25.56**."
+        }
+      },
+      {
+        "q": "50.4 − 27.9 = ?",
+        "answer": "22.5",
+        "type": "numeric",
+        "solution": {
+          "en": "Align the points: 50.4 − 27.9 = **22.5**.",
+          "fil": "Ihanay ang tuldok: 50.4 − 27.9 = **22.5**.",
+          "taglish": "I-align: 50.4 − 27.9 = **22.5**."
+        }
+      },
+      {
+        "q": "6.3 × 0.7 = ?",
+        "answer": "4.41",
+        "type": "numeric",
+        "solution": {
+          "en": "63 × 7 = 441; two decimal places → **4.41**.",
+          "fil": "63 × 7 = 441; dalawang decimal place → **4.41**.",
+          "taglish": "63 × 7 = 441; two decimal places → **4.41**."
+        }
+      },
+      {
+        "q": "8.4 ÷ 0.6 = ?",
+        "answer": "14",
+        "type": "numeric",
+        "solution": {
+          "en": "Shift points: 84 ÷ 6 = **14**.",
+          "fil": "Igalaw ang tuldok: 84 ÷ 6 = **14**.",
+          "taglish": "Igalaw yung tuldok: 84 ÷ 6 = **14**."
+        }
+      },
+      {
+        "q": {
+          "en": "A notebook costs ₱48.75. How much do 4 notebooks cost? (number only)",
+          "fil": "Ang notebook ay ₱48.75. Magkano ang 4 na notebook? (bilang lang)",
+          "taglish": "Ang notebook ay ₱48.75. Magkano ang 4 na notebook? (number lang)"
+        },
+        "answer": "195",
+        "type": "numeric",
+        "solution": {
+          "en": "48.75 × 4 = **₱195.00**.",
+          "fil": "48.75 × 4 = **₱195.00**.",
+          "taglish": "48.75 × 4 = **₱195.00**."
+        }
+      }
+    ],
+    "grade": 6,
+    "difficulty": "madali",
+    "visual": "<svg viewBox=\"0 0 320 110\" role=\"img\" aria-label=\"Place value grid\"><rect x=\"8\" y=\"8\" width=\"304\" height=\"94\" rx=\"14\" fill=\"#FBF1DA\" stroke=\"#1C1410\" stroke-width=\"4\"/><path d=\"M110 8v94M210 8v94\" stroke=\"#1C1410\" stroke-width=\"3\"/><text x=\"58\" y=\"38\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"800\">ONES</text><text x=\"160\" y=\"38\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"800\">TENTHS</text><text x=\"260\" y=\"38\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"800\">HUNDREDTHS</text><text x=\"58\" y=\"78\" text-anchor=\"middle\" font-size=\"28\" font-weight=\"800\">3</text><text x=\"160\" y=\"78\" text-anchor=\"middle\" font-size=\"28\" font-weight=\"800\">4</text><text x=\"260\" y=\"78\" text-anchor=\"middle\" font-size=\"28\" font-weight=\"800\">5</text></svg>"
+  },
+  {
+    "ref": "6NA-Ib-2",
+    "domain": "Number and Algebra",
+    "content_standard": "Multi-step problems involving decimals.",
+    "competency": "Solve multi-step routine and non-routine problems involving decimals.",
+    "performance_standard": "Plan and solve real-life money and measurement problems that need more than one decimal operation.",
+    "explanation": {
+      "en": "Real problems often need two or more steps. Read carefully, decide which operations to use and in what order, keep the decimal point aligned with money, then check if the answer makes sense.",
+      "fil": "Maraming problema ang nangangailangan ng dalawa o higit pang hakbang. Basahing mabuti, piliin kung anong operasyon at ano ang una, panatilihing nakahanay ang tuldok sa pera, at suriin kung makatuwiran ang sagot.",
+      "taglish": "Maraming problema, more than one step. Basahin mabuti, decide kung anong operations at order, alignin yung tuldok sa pera, tapos check kung may sense yung sagot."
+    },
+    "worked_example": {
+      "en": "Buy 1.5 kg of sugar at ₱60.00/kg and 0.5 kg of salt at ₱20.00/kg. Total = (1.5×60) + (0.5×20) = 90 + 10 = ₱100.00.",
+      "fil": "Bumili ng 1.5 kg asukal sa ₱60.00/kg at 0.5 kg asin sa ₱20.00/kg. Kabuuan = (1.5×60) + (0.5×20) = 90 + 10 = ₱100.00.",
+      "taglish": "Bumili ng 1.5 kg sugar sa ₱60.00/kg at 0.5 kg salt sa ₱20.00/kg. Total = (1.5×60) + (0.5×20) = 90 + 10 = ₱100.00."
+    },
+    "items": [
+      {
+        "q": {
+          "en": "Aling Rosa buys 2.5 kg of fish at ₱180/kg and pays ₱500. How much change? (number only)",
+          "fil": "Bumili si Aling Rosa ng 2.5 kg isda sa ₱180/kg, bayad ₱500. Magkano ang sukli? (bilang lang)",
+          "taglish": "Bumili si Aling Rosa ng 2.5 kg isda sa ₱180/kg, bayad ₱500. Magkano sukli? (number lang)"
+        },
+        "answer": "50",
+        "type": "numeric",
+        "solution": {
+          "en": "Cost 2.5×180 = 450; 500 − 450 = **₱50**.",
+          "fil": "Halaga 2.5×180 = 450; 500 − 450 = **₱50**.",
+          "taglish": "Cost 2.5×180 = 450; 500 − 450 = **₱50**."
+        },
+        "steps": [
+          {
+            "en": "Find the total cost: 2.5 × 180.",
+            "fil": "Hanapin ang halaga: 2.5 × 180.",
+            "taglish": "Find the total cost: 2.5 × 180."
+          },
+          {
+            "en": "Subtract the cost from 500.",
+            "fil": "Ibawas ang halaga sa 500.",
+            "taglish": "Subtract the cost from 500."
+          }
+        ],
+        "step_answers": [
+          "450",
+          "50"
+        ]
+      },
+      {
+        "q": {
+          "en": "You buy 3 notebooks at ₱48.75 each and pay ₱200. Change? (number only)",
+          "fil": "Bumili ka ng 3 notebook sa ₱48.75 bawat isa, bayad ₱200. Sukli? (bilang lang)",
+          "taglish": "Bumili ka ng 3 notebook sa ₱48.75 each, bayad ₱200. Sukli? (number lang)"
+        },
+        "answer": "53.75",
+        "type": "numeric",
+        "solution": {
+          "en": "3×48.75 = 146.25; 200 − 146.25 = **₱53.75**.",
+          "fil": "3×48.75 = 146.25; 200 − 146.25 = **₱53.75**.",
+          "taglish": "3×48.75 = 146.25; 200 − 146.25 = **₱53.75**."
+        },
+        "steps": [
+          {
+            "en": "Find the cost of 3 notebooks.",
+            "fil": "Hanapin ang halaga ng 3 notebook.",
+            "taglish": "Find the cost ng 3 notebooks."
+          },
+          {
+            "en": "Subtract that cost from 200.",
+            "fil": "Ibawas ang halaga sa 200.",
+            "taglish": "Subtract that cost from 200."
+          }
+        ],
+        "step_answers": [
+          "146.25",
+          "53.75"
+        ]
+      },
+      {
+        "q": {
+          "en": "A 12.5 m rope is cut into 2.5 m pieces. How many pieces?",
+          "fil": "Ang 12.5 m na lubid ay hinati sa tig-2.5 m. Ilang piraso?",
+          "taglish": "Ang 12.5 m na lubid, hinati sa tig-2.5 m. Ilang piraso?"
+        },
+        "answer": "5",
+        "type": "numeric",
+        "solution": {
+          "en": "12.5 ÷ 2.5 = **5** pieces.",
+          "fil": "12.5 ÷ 2.5 = **5** piraso.",
+          "taglish": "12.5 ÷ 2.5 = **5** pieces."
+        }
+      },
+      {
+        "q": {
+          "en": "Eggs cost ₱8.50 each. Buy 6 and pay ₱100. Change? (number only)",
+          "fil": "Ang itlog ay ₱8.50 bawat isa. Bumili ng 6, bayad ₱100. Sukli? (bilang lang)",
+          "taglish": "Ang itlog ₱8.50 each. Bumili ng 6, bayad ₱100. Sukli? (number lang)"
+        },
+        "answer": "49",
+        "type": "numeric",
+        "solution": {
+          "en": "6×8.50 = 51; 100 − 51 = **₱49**.",
+          "fil": "6×8.50 = 51; 100 − 51 = **₱49**.",
+          "taglish": "6×8.50 = 51; 100 − 51 = **₱49**."
+        }
+      },
+      {
+        "q": {
+          "en": "Rice is ₱52.50/kg. How much for 2 kg plus a ₱8.50 egg? (number only)",
+          "fil": "Ang bigas ay ₱52.50/kg. Magkano ang 2 kg dagdag ang ₱8.50 na itlog? (bilang lang)",
+          "taglish": "Ang bigas ₱52.50/kg. Magkano ang 2 kg plus ₱8.50 na itlog? (number lang)"
+        },
+        "answer": "113.5",
+        "type": "numeric",
+        "solution": {
+          "en": "2×52.50 = 105; 105 + 8.50 = **₱113.50**.",
+          "fil": "2×52.50 = 105; 105 + 8.50 = **₱113.50**.",
+          "taglish": "2×52.50 = 105; 105 + 8.50 = **₱113.50**."
+        }
+      }
+    ],
+    "grade": 6,
+    "difficulty": "katamtaman"
+  },
+  {
+    "ref": "6NA-Ic-3",
+    "domain": "Number and Algebra",
+    "content_standard": "Addition and subtraction of fractions and mixed numbers.",
+    "competency": "Add and subtract fractions and mixed numbers (like and unlike denominators).",
+    "performance_standard": "Add and subtract fractions in recipe, sharing, and measurement situations and express answers in lowest terms.",
+    "explanation": {
+      "en": "Fractions can only be added or subtracted when they share the same denominator. Find the Least Common Denominator, rename each fraction, add or subtract the numerators, then simplify. For mixed numbers, regroup a whole as a fraction when needed.",
+      "fil": "Maidaragdag o maibabawas lang ang mga praksyon kapag pareho ang denominator. Hanapin ang Least Common Denominator, palitan ang bawat praksyon, idagdag o ibawas ang numerator, tapos i-simplify. Sa mixed number, mag-regroup ng buo kung kailangan.",
+      "taglish": "Pwede lang mag-add o subtract ng fractions kapag same denominator. Hanapin yung LCD, i-rename, tapos add/subtract yung numerators, then simplify. Sa mixed numbers, mag-regroup ng whole kung kailangan."
+    },
+    "worked_example": {
+      "en": "1/2 + 1/3: LCD is 6, so 3/6 + 2/6 = 5/6.",
+      "fil": "1/2 + 1/3: ang LCD ay 6, kaya 3/6 + 2/6 = 5/6.",
+      "taglish": "1/2 + 1/3: LCD is 6, so 3/6 + 2/6 = 5/6."
+    },
+    "items": [
+      {
+        "q": "1/4 + 3/8 = ?",
+        "answer": "5/8",
+        "type": "mcq",
+        "options": [
+          "5/8",
+          "4/12",
+          "1/2",
+          "5/12"
+        ],
+        "solution": {
+          "en": "LCD 8: 2/8 + 3/8 = **5/8**.",
+          "fil": "LCD 8: 2/8 + 3/8 = **5/8**.",
+          "taglish": "LCD 8: 2/8 + 3/8 = **5/8**."
+        }
+      },
+      {
+        "q": "7/10 − 2/5 = ?",
+        "answer": "3/10",
+        "type": "mcq",
+        "options": [
+          "3/10",
+          "5/10",
+          "1/2",
+          "3/5"
+        ],
+        "solution": {
+          "en": "2/5 = 4/10; 7/10 − 4/10 = **3/10**.",
+          "fil": "2/5 = 4/10; 7/10 − 4/10 = **3/10**.",
+          "taglish": "2/5 = 4/10; 7/10 − 4/10 = **3/10**."
+        }
+      },
+      {
+        "q": "3 1/3 + 2 1/6 = ?",
+        "answer": "5 1/2",
+        "type": "mcq",
+        "options": [
+          "5 1/2",
+          "5 2/9",
+          "5 1/6",
+          "6 1/2"
+        ],
+        "solution": {
+          "en": "1/3 = 2/6; 2/6 + 1/6 = 3/6 = 1/2; wholes 3+2 = 5 → **5 1/2**.",
+          "fil": "1/3 = 2/6; 2/6 + 1/6 = 3/6 = 1/2; buo 3+2 = 5 → **5 1/2**.",
+          "taglish": "1/3 = 2/6; 2/6 + 1/6 = 1/2; 3+2 = 5 → **5 1/2**."
+        }
+      },
+      {
+        "q": "5 − 2 3/4 = ?",
+        "answer": "2 1/4",
+        "type": "mcq",
+        "options": [
+          "2 1/4",
+          "3 1/4",
+          "2 3/4",
+          "3 3/4"
+        ],
+        "solution": {
+          "en": "5 = 4 4/4; 4 4/4 − 2 3/4 = **2 1/4**.",
+          "fil": "5 = 4 4/4; 4 4/4 − 2 3/4 = **2 1/4**.",
+          "taglish": "5 = 4 4/4; 4 4/4 − 2 3/4 = **2 1/4**."
+        }
+      },
+      {
+        "q": {
+          "en": "Ana read 2/5 of a book on Monday and 1/3 on Tuesday. What part in all?",
+          "fil": "Nagbasa si Ana ng 2/5 ng libro noong Lunes at 1/3 noong Martes. Anong bahagi lahat?",
+          "taglish": "Nagbasa si Ana ng 2/5 ng libro noong Monday at 1/3 noong Tuesday. Anong part lahat?"
+        },
+        "answer": "11/15",
+        "type": "mcq",
+        "options": [
+          "11/15",
+          "3/8",
+          "3/15",
+          "2/8"
+        ],
+        "solution": {
+          "en": "LCD 15: 6/15 + 5/15 = **11/15**.",
+          "fil": "LCD 15: 6/15 + 5/15 = **11/15**.",
+          "taglish": "LCD 15: 6/15 + 5/15 = **11/15**."
+        }
+      }
+    ],
+    "grade": 6,
+    "difficulty": "madali",
+    "visual": "<svg viewBox=\"0 0 320 100\" role=\"img\" aria-label=\"Fraction bar\"><rect x=\"10\" y=\"22\" width=\"300\" height=\"56\" rx=\"12\" fill=\"white\" stroke=\"#1C1410\" stroke-width=\"4\"/><path d=\"M85 22v56M160 22v56M235 22v56\" stroke=\"#1C1410\" stroke-width=\"3\"/><path d=\"M12 24h146v52H12z\" fill=\"#F7D26A\"/><text x=\"160\" y=\"96\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"800\">2 / 4 = 1 / 2</text></svg>"
+  },
+  {
+    "ref": "6NA-Id-4",
+    "domain": "Number and Algebra",
+    "content_standard": "Multiplication and division of fractions, whole and mixed numbers.",
+    "competency": "Multiply and divide fractions, whole numbers, and mixed numbers.",
+    "performance_standard": "Use multiplication and division of fractions to solve measuring and sharing problems.",
+    "explanation": {
+      "en": "To multiply fractions, multiply the numerators and the denominators, then simplify (change mixed numbers to improper first). To divide, multiply by the reciprocal of the divisor. Remember: 'of' usually means multiply.",
+      "fil": "Para i-multiply ang mga praksyon, paramihin ang numerator at denominator, tapos i-simplify (gawing improper muna ang mixed number). Para maghati, i-multiply sa reciprocal ng panghati. Tandaan: ang 'of' ay kadalasang multiply.",
+      "taglish": "Para mag-multiply ng fractions, multiply yung numerators at denominators, tapos simplify (improper muna yung mixed). Para mag-divide, i-multiply sa reciprocal ng divisor. Tandaan: 'of' = multiply."
+    },
+    "worked_example": {
+      "en": "2/3 × 3/4 = 6/12 = 1/2. And 3 ÷ 1/4 = 3 × 4 = 12.",
+      "fil": "2/3 × 3/4 = 6/12 = 1/2. At 3 ÷ 1/4 = 3 × 4 = 12.",
+      "taglish": "2/3 × 3/4 = 6/12 = 1/2. Tapos 3 ÷ 1/4 = 3 × 4 = 12."
+    },
+    "items": [
+      {
+        "q": "3/5 × 5/9 = ?",
+        "answer": "1/3",
+        "type": "mcq",
+        "options": [
+          "1/3",
+          "8/14",
+          "15/45",
+          "3/9"
+        ],
+        "solution": {
+          "en": "15/45 = **1/3** (or cancel 5 and 3).",
+          "fil": "15/45 = **1/3** (o i-cancel ang 5 at 3).",
+          "taglish": "15/45 = **1/3** (cancel 5 and 3)."
+        }
+      },
+      {
+        "q": "2 1/4 × 2/3 = ?",
+        "answer": "1 1/2",
+        "type": "mcq",
+        "options": [
+          "1 1/2",
+          "2 1/2",
+          "1 1/3",
+          "4/7"
+        ],
+        "solution": {
+          "en": "9/4 × 2/3 = 18/12 = 3/2 = **1 1/2**.",
+          "fil": "9/4 × 2/3 = 18/12 = 3/2 = **1 1/2**.",
+          "taglish": "9/4 × 2/3 = 18/12 = **1 1/2**."
+        }
+      },
+      {
+        "q": "5/6 ÷ 2/3 = ?",
+        "answer": "1 1/4",
+        "type": "mcq",
+        "options": [
+          "1 1/4",
+          "5/9",
+          "10/18",
+          "1 1/2"
+        ],
+        "solution": {
+          "en": "5/6 × 3/2 = 15/12 = 5/4 = **1 1/4**.",
+          "fil": "5/6 × 3/2 = 15/12 = **1 1/4**.",
+          "taglish": "5/6 × 3/2 = 15/12 = **1 1/4**."
+        }
+      },
+      {
+        "q": "8 ÷ 4/5 = ?",
+        "answer": "10",
+        "type": "numeric",
+        "solution": {
+          "en": "8 × 5/4 = 40/4 = **10**.",
+          "fil": "8 × 5/4 = 40/4 = **10**.",
+          "taglish": "8 × 5/4 = 40/4 = **10**."
+        }
+      },
+      {
+        "q": {
+          "en": "How many 1/2-metre ribbons can be cut from 6 metres?",
+          "fil": "Ilang 1/2-metrong laso ang makukuha sa 6 metro?",
+          "taglish": "Ilang 1/2-meter na ribbon ang makukuha sa 6 meters?"
+        },
+        "answer": "12",
+        "type": "numeric",
+        "solution": {
+          "en": "6 ÷ 1/2 = 6 × 2 = **12**.",
+          "fil": "6 ÷ 1/2 = 6 × 2 = **12**.",
+          "taglish": "6 ÷ 1/2 = 6 × 2 = **12**."
+        }
+      }
+    ],
+    "grade": 6,
+    "difficulty": "mahirap"
+  },
+  {
+    "ref": "6NA-Ie-5",
+    "domain": "Number and Algebra",
+    "content_standard": "Number theory: factors and multiples (GCF and LCM).",
+    "competency": "Find the GCF and LCM of two to three numbers and apply them to problems.",
+    "performance_standard": "Use GCF and LCM to solve grouping, sharing, and scheduling problems.",
+    "explanation": {
+      "en": "The GCF (Greatest Common Factor) is the largest number that divides the given numbers — use it to make equal groups. The LCM (Least Common Multiple) is the smallest number all of them go into — use it for events that repeat or for a common denominator.",
+      "fil": "Ang GCF (Greatest Common Factor) ang pinakamalaking bilang na nakakahati sa lahat — gamit sa pantay na grupo. Ang LCM (Least Common Multiple) ang pinakamaliit na bilang na napupuntahan ng lahat — gamit sa paulit-ulit na pangyayari o common denominator.",
+      "taglish": "GCF = pinakamalaking number na kayang humati sa lahat — gamit sa equal groups. LCM = pinakamaliit na number na napupuntahan ng lahat — gamit sa paulit-ulit o common denominator."
+    },
+    "worked_example": {
+      "en": "24 = 2³×3 and 36 = 2²×3². GCF = 2²×3 = 12; LCM = 2³×3² = 72.",
+      "fil": "24 = 2³×3 at 36 = 2²×3². GCF = 2²×3 = 12; LCM = 2³×3² = 72.",
+      "taglish": "24 = 2³×3 at 36 = 2²×3². GCF = 12; LCM = 72."
+    },
+    "items": [
+      {
+        "q": "GCF of 18 and 24 = ?",
+        "answer": "6",
+        "type": "numeric",
+        "solution": {
+          "en": "Common factors: 1,2,3,6 → largest **6**.",
+          "fil": "Magkapareho: 1,2,3,6 → pinakamalaki **6**.",
+          "taglish": "Common: 1,2,3,6 → pinakamalaki **6**."
+        }
+      },
+      {
+        "q": "LCM of 6 and 9 = ?",
+        "answer": "18",
+        "type": "numeric",
+        "solution": {
+          "en": "Multiples of 9: 9,18; of 6: 6,12,18 → **18**.",
+          "fil": "Multiples ng 9: 9,18; ng 6: 6,12,18 → **18**.",
+          "taglish": "Multiples ng 9: 9,18; ng 6: ...18 → **18**."
+        }
+      },
+      {
+        "q": "GCF of 20 and 35 = ?",
+        "answer": "5",
+        "type": "numeric",
+        "solution": {
+          "en": "20 = 5×4, 35 = 5×7 → GCF **5**.",
+          "fil": "20 = 5×4, 35 = 5×7 → GCF **5**.",
+          "taglish": "20 = 5×4, 35 = 5×7 → GCF **5**."
+        }
+      },
+      {
+        "q": "LCM of 4, 6, and 8 = ?",
+        "answer": "24",
+        "type": "numeric",
+        "solution": {
+          "en": "Smallest number 4, 6, 8 all divide is **24**.",
+          "fil": "Pinakamaliit na napupuntahan ng 4, 6, 8 ay **24**.",
+          "taglish": "Pinakamaliit na divisible ng 4,6,8 = **24**."
+        }
+      },
+      {
+        "q": {
+          "en": "24 red and 36 blue balloons go into identical bunches with none left. Greatest number of bunches?",
+          "fil": "24 pulang at 36 asul na lobo ay gagawing magkakaparehong bigkis na walang matira. Pinakamaraming bigkis?",
+          "taglish": "24 red at 36 blue balloons gagawing same na bunches, walang matira. Pinakamarami?"
+        },
+        "answer": "12",
+        "type": "numeric",
+        "solution": {
+          "en": "Use GCF(24,36) = **12** bunches.",
+          "fil": "Gamitin ang GCF(24,36) = **12** bigkis.",
+          "taglish": "GCF(24,36) = **12** bunches."
+        }
+      }
+    ],
+    "grade": 6,
+    "difficulty": "katamtaman"
+  },
+  {
+    "ref": "6NA-If-6",
+    "domain": "Number and Algebra",
+    "content_standard": "Exponential form and order of operations (GEMDAS).",
+    "competency": "Read and write numbers in exponential form and evaluate expressions using GEMDAS.",
+    "performance_standard": "Simplify multi-operation expressions correctly using exponents and GEMDAS.",
+    "explanation": {
+      "en": "Exponential form means a base used as a factor a number of times (5³ = 5×5×5 = 125). GEMDAS gives the order of operations: Grouping, Exponents, Multiply/Divide (left to right), then Add/Subtract (left to right).",
+      "fil": "Ang exponential form ay base na ginagamit bilang factor nang ilang beses (5³ = 5×5×5 = 125). Ang GEMDAS ang ayos: Grouping, Exponents, Multiply/Divide (kaliwa pakanan), tapos Add/Subtract (kaliwa pakanan).",
+      "taglish": "Exponential form = base na ginagamit as factor ilang beses (5³ = 125). GEMDAS yung order: Grouping, Exponents, Multiply/Divide, tapos Add/Subtract — left to right."
+    },
+    "worked_example": {
+      "en": "2 + 3 × 4² = 2 + 3 × 16 = 2 + 48 = 50 (Exponents, then Multiply, then Add).",
+      "fil": "2 + 3 × 4² = 2 + 3 × 16 = 2 + 48 = 50 (Exponents, tapos Multiply, tapos Add).",
+      "taglish": "2 + 3 × 4² = 2 + 48 = 50 (Exponents, then Multiply, then Add)."
+    },
+    "items": [
+      {
+        "q": "Write 4 × 4 × 4 in exponential form.",
+        "answer": "4³",
+        "type": "mcq",
+        "options": [
+          "4³",
+          "3⁴",
+          "4×3",
+          "12"
+        ],
+        "solution": {
+          "en": "4 used 3 times = **4³**.",
+          "fil": "4 ginamit 3 beses = **4³**.",
+          "taglish": "4 used 3 times = **4³**."
+        }
+      },
+      {
+        "q": "Value of 2⁴ = ?",
+        "answer": "16",
+        "type": "numeric",
+        "solution": {
+          "en": "2×2×2×2 = **16**.",
+          "fil": "2×2×2×2 = **16**.",
+          "taglish": "2×2×2×2 = **16**."
+        }
+      },
+      {
+        "q": "3 + 4 × 5 = ?",
+        "answer": "23",
+        "type": "numeric",
+        "solution": {
+          "en": "Multiply first: 4×5 = 20; 3 + 20 = **23**.",
+          "fil": "Multiply muna: 4×5 = 20; 3 + 20 = **23**.",
+          "taglish": "Multiply muna: 20; 3 + 20 = **23**."
+        }
+      },
+      {
+        "q": "(10 − 4)² ÷ 9 = ?",
+        "answer": "4",
+        "type": "numeric",
+        "solution": {
+          "en": "Grouping 6, then 6² = 36; 36 ÷ 9 = **4**.",
+          "fil": "Grouping 6, tapos 6² = 36; 36 ÷ 9 = **4**.",
+          "taglish": "Grouping 6, 6² = 36; 36 ÷ 9 = **4**."
+        }
+      },
+      {
+        "q": "2³ + 18 ÷ 3 − 1 = ?",
+        "answer": "13",
+        "type": "numeric",
+        "solution": {
+          "en": "8 + 6 − 1 = **13**.",
+          "fil": "8 + 6 − 1 = **13**.",
+          "taglish": "8 + 6 − 1 = **13**."
+        }
+      }
+    ],
+    "grade": 6,
+    "difficulty": "mahirap"
+  },
+  {
+    "ref": "6MG-Ig-7",
+    "domain": "Measurement and Geometry",
+    "content_standard": "Tessellation of plane figures.",
+    "competency": "Identify shapes that tessellate and create tessellation patterns (Filipino designs).",
+    "performance_standard": "Design an original tessellation and explain why a shape does or does not tessellate.",
+    "explanation": {
+      "en": "A tessellation is a repeating pattern of shapes that covers a flat surface with no gaps or overlaps. A regular shape tessellates by itself only when its interior angle divides 360° evenly — true for the equilateral triangle (60°), square (90°), and regular hexagon (120°).",
+      "fil": "Ang tessellation ay paulit-ulit na pattern ng hugis na walang puwang o pagsasapaw. Nakaka-tessellate nang mag-isa ang regular na hugis kapag ang panloob na anggulo ay nakakahati nang pantay sa 360° — totoo sa tatsulok (60°), parisukat (90°), at hexagon (120°).",
+      "taglish": "Tessellation = paulit-ulit na pattern ng shapes, walang gaps o overlaps. Nakaka-tessellate nang mag-isa kapag yung interior angle ay divisible sa 360° — like triangle (60°), square (90°), hexagon (120°)."
+    },
+    "worked_example": {
+      "en": "A regular hexagon has a 120° interior angle, and 360 ÷ 120 = 3 meet at a point, so it tessellates.",
+      "fil": "Ang hexagon ay may 120° na anggulo, at 360 ÷ 120 = 3 ang magkikita sa isang punto, kaya nakaka-tessellate.",
+      "taglish": "Ang hexagon may 120° na angle, 360 ÷ 120 = 3 ang nagkikita sa point, kaya tumetessellate."
+    },
+    "items": [
+      {
+        "q": {
+          "en": "Which regular shape tessellates by itself?",
+          "fil": "Aling regular na hugis ang nakaka-tessellate nang mag-isa?",
+          "taglish": "Aling regular shape ang nakaka-tessellate mag-isa?"
+        },
+        "answer": "Regular hexagon",
+        "type": "mcq",
+        "options": [
+          "Regular hexagon",
+          "Regular pentagon",
+          "Regular octagon",
+          "Circle"
+        ],
+        "solution": {
+          "en": "Its 120° angle divides 360° evenly → **regular hexagon**.",
+          "fil": "Ang 120° nito ay humahati nang pantay sa 360° → **hexagon**.",
+          "taglish": "Yung 120° nito divisible sa 360° → **hexagon**."
+        }
+      },
+      {
+        "q": "Angles meeting at a point in a tessellation add up to ___°",
+        "answer": "360",
+        "type": "numeric",
+        "solution": {
+          "en": "They must total **360°** with no gaps.",
+          "fil": "Dapat **360°** ang kabuuan, walang puwang.",
+          "taglish": "Dapat **360°** ang total, walang gaps."
+        }
+      },
+      {
+        "q": "A square's interior angle is 90°. How many meet at a point? (360 ÷ 90)",
+        "answer": "4",
+        "type": "numeric",
+        "solution": {
+          "en": "360 ÷ 90 = **4** squares.",
+          "fil": "360 ÷ 90 = **4** parisukat.",
+          "taglish": "360 ÷ 90 = **4** squares."
+        }
+      },
+      {
+        "q": {
+          "en": "Which shape does NOT tessellate by itself?",
+          "fil": "Aling hugis ang HINDI nakaka-tessellate nang mag-isa?",
+          "taglish": "Aling shape ang HINDI nakaka-tessellate mag-isa?"
+        },
+        "answer": "Regular pentagon",
+        "type": "mcq",
+        "options": [
+          "Regular pentagon",
+          "Square",
+          "Equilateral triangle",
+          "Regular hexagon"
+        ],
+        "solution": {
+          "en": "108° does not divide 360° evenly → **regular pentagon**.",
+          "fil": "Ang 108° ay hindi humahati nang pantay → **pentagon**.",
+          "taglish": "108° hindi divisible sa 360° → **pentagon**."
+        }
+      },
+      {
+        "q": "An equilateral triangle's interior angle = ___°",
+        "answer": "60",
+        "type": "numeric",
+        "solution": {
+          "en": "Each angle is **60°** (360 ÷ 60 = 6 meet).",
+          "fil": "Bawat anggulo ay **60°** (360 ÷ 60 = 6).",
+          "taglish": "Each angle **60°** (360 ÷ 60 = 6)."
+        }
+      }
+    ],
+    "grade": 6,
+    "difficulty": "mahirap"
+  },
+  {
+    "ref": "6NA-IIa-1",
+    "domain": "Number and Algebra",
+    "content_standard": "Ratio and proportion.",
+    "competency": "Express and simplify ratios and find a missing term in a proportion.",
+    "performance_standard": "Use ratio and proportion to solve real-life comparison problems.",
+    "explanation": {
+      "en": "A ratio compares two quantities (2:5 or 2/5) and is simplified like a fraction. A proportion states that two ratios are equal; find a missing term by cross-multiplication.",
+      "fil": "Ang ratio ay paghahambing ng dalawang dami (2:5 o 2/5) at sini-simplify parang praksyon. Ang proporsyon ay pagkakapantay ng dalawang ratio; hanapin ang nawawala sa pamamagitan ng cross-multiplication.",
+      "taglish": "Ratio = comparison ng dalawang dami (2:5 o 2/5), sini-simplify parang fraction. Proportion = pag-equal ng dalawang ratio; hanapin yung missing via cross-multiplication."
+    },
+    "worked_example": {
+      "en": "2/5 = n/15 → cross-multiply: 5n = 30 → n = 6.",
+      "fil": "2/5 = n/15 → cross-multiply: 5n = 30 → n = 6.",
+      "taglish": "2/5 = n/15 → cross-multiply: 5n = 30 → n = 6."
+    },
+    "items": [
+      {
+        "q": "Simplify 10 : 15.",
+        "answer": "2:3",
+        "type": "mcq",
+        "options": [
+          "2:3",
+          "3:2",
+          "5:7",
+          "10:15"
+        ],
+        "solution": {
+          "en": "Divide both by GCF 5 → **2:3**.",
+          "fil": "Hatiin sa GCF 5 → **2:3**.",
+          "taglish": "Divide both sa GCF 5 → **2:3**."
+        }
+      },
+      {
+        "q": "Simplify 24 : 36.",
+        "answer": "2:3",
+        "type": "mcq",
+        "options": [
+          "2:3",
+          "3:4",
+          "4:6",
+          "6:9"
+        ],
+        "solution": {
+          "en": "Divide both by 12 → **2:3**.",
+          "fil": "Hatiin sa 12 → **2:3**.",
+          "taglish": "Divide sa 12 → **2:3**."
+        }
+      },
+      {
+        "q": "4/5 = n/25. n = ?",
+        "answer": "20",
+        "type": "numeric",
+        "solution": {
+          "en": "5n = 100 → n = **20**.",
+          "fil": "5n = 100 → n = **20**.",
+          "taglish": "5n = 100 → n = **20**."
+        }
+      },
+      {
+        "q": "3/8 = 9/n. n = ?",
+        "answer": "24",
+        "type": "numeric",
+        "solution": {
+          "en": "3n = 72 → n = **24**.",
+          "fil": "3n = 72 → n = **24**.",
+          "taglish": "3n = 72 → n = **24**."
+        }
+      },
+      {
+        "q": {
+          "en": "4 mangoes cost ₱60. How much do 10 mangoes cost? (number only)",
+          "fil": "4 mangga ay ₱60. Magkano ang 10 mangga? (bilang lang)",
+          "taglish": "4 mangga ay ₱60. Magkano ang 10 mangga? (number lang)"
+        },
+        "answer": "150",
+        "type": "numeric",
+        "solution": {
+          "en": "60 ÷ 4 = 15 each; ×10 = **₱150**.",
+          "fil": "60 ÷ 4 = 15 bawat isa; ×10 = **₱150**.",
+          "taglish": "60 ÷ 4 = 15 each; ×10 = **₱150**."
+        }
+      }
+    ],
+    "grade": 6,
+    "difficulty": "mahirap"
+  },
+  {
+    "ref": "6NA-IIb-2",
+    "domain": "Number and Algebra",
+    "content_standard": "Direct and partitive proportion.",
+    "competency": "Solve problems involving direct and partitive proportion.",
+    "performance_standard": "Decide between direct and partitive proportion and solve fairly in real life.",
+    "explanation": {
+      "en": "In direct proportion, as one quantity increases the other increases at the same rate (more kg, more cost). In partitive proportion, a whole is divided into parts following a ratio: add the ratio parts, divide the whole, then multiply per share.",
+      "fil": "Sa direct proportion, kapag tumaas ang isa, tumataas din ang isa sa parehong rate (mas maraming kg, mas mahal). Sa partitive, hinahati ang buo ayon sa ratio: idagdag ang bahagi ng ratio, hatiin ang buo, tapos i-multiply kada bahagi.",
+      "taglish": "Sa direct proportion, pag tumaas yung isa, tumaas din yung isa (more kg, more cost). Sa partitive, hinahati yung buo ayon sa ratio: add yung parts, divide yung buo, multiply per share."
+    },
+    "worked_example": {
+      "en": "Share ₱600 in the ratio 1:2:3. Parts = 6; ₱600 ÷ 6 = ₱100 per part → ₱100, ₱200, ₱300.",
+      "fil": "Hatiin ang ₱600 sa ratio 1:2:3. Bahagi = 6; ₱600 ÷ 6 = ₱100 → ₱100, ₱200, ₱300.",
+      "taglish": "Hatiin ang ₱600 sa ratio 1:2:3. Parts = 6; 600 ÷ 6 = 100 → ₱100, ₱200, ₱300."
+    },
+    "items": [
+      {
+        "q": {
+          "en": "6 kg of sugar costs ₱300. How much do 10 kg cost? (number only)",
+          "fil": "6 kg asukal ay ₱300. Magkano ang 10 kg? (bilang lang)",
+          "taglish": "6 kg sugar ay ₱300. Magkano ang 10 kg? (number lang)"
+        },
+        "answer": "500",
+        "type": "numeric",
+        "solution": {
+          "en": "300 ÷ 6 = 50/kg; ×10 = **₱500**.",
+          "fil": "300 ÷ 6 = 50/kg; ×10 = **₱500**.",
+          "taglish": "300 ÷ 6 = 50/kg; ×10 = **₱500**."
+        }
+      },
+      {
+        "q": {
+          "en": "A car uses 8 L for 96 km. How many litres for 60 km?",
+          "fil": "Gumagamit ang sasakyan ng 8 L sa 96 km. Ilang litro sa 60 km?",
+          "taglish": "Gumagamit ang kotse ng 8 L sa 96 km. Ilang litro sa 60 km?"
+        },
+        "answer": "5",
+        "type": "numeric",
+        "solution": {
+          "en": "96 ÷ 8 = 12 km/L; 60 ÷ 12 = **5 L**.",
+          "fil": "96 ÷ 8 = 12 km/L; 60 ÷ 12 = **5 L**.",
+          "taglish": "96 ÷ 8 = 12 km/L; 60 ÷ 12 = **5 L**."
+        }
+      },
+      {
+        "q": {
+          "en": "Divide 24 candies in the ratio 1:2:3. What are the shares?",
+          "fil": "Hatiin ang 24 kendi sa ratio 1:2:3. Ano ang bahagi?",
+          "taglish": "Hatiin ang 24 candies sa ratio 1:2:3. Ano ang shares?"
+        },
+        "answer": "4, 8, 12",
+        "type": "mcq",
+        "options": [
+          "4, 8, 12",
+          "6, 8, 10",
+          "3, 6, 9",
+          "2, 4, 6"
+        ],
+        "solution": {
+          "en": "Parts 6; 24 ÷ 6 = 4 → **4, 8, 12**.",
+          "fil": "Bahagi 6; 24 ÷ 6 = 4 → **4, 8, 12**.",
+          "taglish": "Parts 6; 24 ÷ 6 = 4 → **4, 8, 12**."
+        }
+      },
+      {
+        "q": {
+          "en": "3 workers earn ₱1,200 in all. How much do 5 workers earn at the same rate? (number only)",
+          "fil": "3 manggagawa ay kumita ng ₱1,200 lahat. Magkano ang 5 manggagawa sa parehong rate? (bilang lang)",
+          "taglish": "3 workers ay kumita ng ₱1,200 lahat. Magkano ang 5 workers sa same rate? (number lang)"
+        },
+        "answer": "2000",
+        "type": "numeric",
+        "solution": {
+          "en": "1200 ÷ 3 = 400 each; ×5 = **₱2,000**.",
+          "fil": "1200 ÷ 3 = 400 each; ×5 = **₱2,000**.",
+          "taglish": "1200 ÷ 3 = 400 each; ×5 = **₱2,000**."
+        }
+      },
+      {
+        "q": {
+          "en": "Divide ₱1,000 between two partners in the ratio 2:3. What are the shares?",
+          "fil": "Hatiin ang ₱1,000 sa dalawang partner sa ratio 2:3. Ano ang bahagi?",
+          "taglish": "Hatiin ang ₱1,000 sa dalawang partner sa ratio 2:3. Ano ang shares?"
+        },
+        "answer": "400 and 600",
+        "type": "mcq",
+        "options": [
+          "400 and 600",
+          "500 and 500",
+          "300 and 700",
+          "450 and 550"
+        ],
+        "solution": {
+          "en": "Parts 5; 1000 ÷ 5 = 200 → 2×200 and 3×200 = **400 and 600**.",
+          "fil": "Bahagi 5; 1000 ÷ 5 = 200 → **400 at 600**.",
+          "taglish": "Parts 5; 1000 ÷ 5 = 200 → **400 and 600**."
+        }
+      }
+    ],
+    "grade": 6,
+    "difficulty": "mahirap"
+  },
+  {
+    "ref": "6NA-IIc-3",
+    "domain": "Number and Algebra",
+    "content_standard": "Percentage and its relationship with fractions and decimals.",
+    "competency": "Relate percent to fractions and decimals and find the percentage, rate, and base.",
+    "performance_standard": "Convert flexibly among percent, fraction, and decimal and find any missing part.",
+    "explanation": {
+      "en": "Percent means 'per hundred'. Percentage = Rate × Base, where the Rate is the percent, the Base is the whole, and the Percentage is the part. To find a missing part, rearrange the formula.",
+      "fil": "Ang porsyento ay 'bawat sandaan'. Percentage = Rate × Base, kung saan ang Rate ay porsyento, ang Base ay buo, at ang Percentage ay bahagi. Para hanapin ang nawawala, baguhin ang ayos ng formula.",
+      "taglish": "Percent = 'per hundred'. Percentage = Rate × Base — yung Rate ay percent, Base ay buo, Percentage ay part. Para hanapin yung missing, i-rearrange yung formula."
+    },
+    "worked_example": {
+      "en": "15% of 200 = 0.15 × 200 = 30. To find the rate: 30 ÷ 200 = 0.15 = 15%.",
+      "fil": "15% ng 200 = 0.15 × 200 = 30. Para sa rate: 30 ÷ 200 = 0.15 = 15%.",
+      "taglish": "15% of 200 = 0.15 × 200 = 30. Para sa rate: 30 ÷ 200 = 15%."
+    },
+    "items": [
+      {
+        "q": "Write 40% as a fraction in lowest terms.",
+        "answer": "2/5",
+        "type": "mcq",
+        "options": [
+          "2/5",
+          "4/10",
+          "40/100",
+          "1/4"
+        ],
+        "solution": {
+          "en": "40/100 = **2/5**.",
+          "fil": "40/100 = **2/5**.",
+          "taglish": "40/100 = **2/5**."
+        }
+      },
+      {
+        "q": "Write 0.65 as a percent. (number only)",
+        "answer": "65",
+        "type": "numeric",
+        "solution": {
+          "en": "0.65 × 100 = **65%**.",
+          "fil": "0.65 × 100 = **65%**.",
+          "taglish": "0.65 × 100 = **65%**."
+        }
+      },
+      {
+        "q": "30% of 90 = ?",
+        "answer": "27",
+        "type": "numeric",
+        "solution": {
+          "en": "0.30 × 90 = **27**.",
+          "fil": "0.30 × 90 = **27**.",
+          "taglish": "0.30 × 90 = **27**."
+        }
+      },
+      {
+        "q": "What percent of 50 is 35? (number only)",
+        "answer": "70",
+        "type": "numeric",
+        "solution": {
+          "en": "35 ÷ 50 = 0.70 = **70%**.",
+          "fil": "35 ÷ 50 = 0.70 = **70%**.",
+          "taglish": "35 ÷ 50 = **70%**."
+        }
+      },
+      {
+        "q": {
+          "en": "18 is 25% of what number?",
+          "fil": "Ang 18 ay 25% ng anong bilang?",
+          "taglish": "Ang 18 ay 25% ng anong number?"
+        },
+        "answer": "72",
+        "type": "numeric",
+        "solution": {
+          "en": "18 ÷ 0.25 = **72**.",
+          "fil": "18 ÷ 0.25 = **72**.",
+          "taglish": "18 ÷ 0.25 = **72**."
+        }
+      }
+    ],
+    "grade": 6,
+    "difficulty": "katamtaman",
+    "visual": "<svg viewBox=\"0 0 320 150\" role=\"img\" aria-label=\"One hundred square percent grid\"><defs><pattern id=\"g\" width=\"12\" height=\"12\" patternUnits=\"userSpaceOnUse\"><rect width=\"12\" height=\"12\" fill=\"white\" stroke=\"#1C1410\" stroke-width=\"1\"/></pattern></defs><rect x=\"100\" y=\"10\" width=\"120\" height=\"120\" fill=\"url(#g)\" stroke=\"#1C1410\" stroke-width=\"3\"/><rect x=\"100\" y=\"70\" width=\"120\" height=\"60\" fill=\"#F7D26A\" opacity=\".8\"/><text x=\"160\" y=\"147\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"800\">50 out of 100 = 50%</text></svg>"
+  },
+  {
+    "ref": "6NA-IId-4",
+    "domain": "Number and Algebra",
+    "content_standard": "Percent in daily life: discount, commission, sales tax, simple interest.",
+    "competency": "Solve percent problems on discount, commission, sales tax, and simple interest.",
+    "performance_standard": "Make smart-consumer decisions using percent in real transactions.",
+    "explanation": {
+      "en": "Discount = rate × original (sale price = original − discount). Commission = rate × sales. Sales tax = rate × price (added). Simple interest I = P × R × T.",
+      "fil": "Diskwento = rate × orihinal (sale price = orihinal − diskwento). Komisyon = rate × benta. Buwis = rate × presyo (idinadagdag). Simpleng interes I = P × R × T.",
+      "taglish": "Discount = rate × original (sale price = original − discount). Commission = rate × sales. Sales tax = rate × price (added). Simple interest I = P × R × T."
+    },
+    "worked_example": {
+      "en": "A ₱1,500 bag is 20% off: discount = 0.20 × 1500 = ₱300, so sale price = ₱1,200.",
+      "fil": "Ang ₱1,500 na bag ay 20% off: diskwento = 0.20 × 1500 = ₱300, kaya sale price = ₱1,200.",
+      "taglish": "₱1,500 na bag, 20% off: discount = 0.20 × 1500 = ₱300, so sale price = ₱1,200."
+    },
+    "items": [
+      {
+        "q": {
+          "en": "Discount on a ₱600 item at 15% off. (number only)",
+          "fil": "Diskwento sa ₱600 na item na 15% off. (bilang lang)",
+          "taglish": "Discount sa ₱600 na item na 15% off. (number lang)"
+        },
+        "answer": "90",
+        "type": "numeric",
+        "solution": {
+          "en": "0.15 × 600 = **₱90**.",
+          "fil": "0.15 × 600 = **₱90**.",
+          "taglish": "0.15 × 600 = **₱90**."
+        }
+      },
+      {
+        "q": {
+          "en": "Sale price of a ₱600 item at 15% off. (number only)",
+          "fil": "Sale price ng ₱600 na item na 15% off. (bilang lang)",
+          "taglish": "Sale price ng ₱600 na item na 15% off. (number lang)"
+        },
+        "answer": "510",
+        "type": "numeric",
+        "solution": {
+          "en": "Discount 90; 600 − 90 = **₱510**.",
+          "fil": "Diskwento 90; 600 − 90 = **₱510**.",
+          "taglish": "Discount 90; 600 − 90 = **₱510**."
+        }
+      },
+      {
+        "q": {
+          "en": "Commission: 8% of ₱5,000 in sales. (number only)",
+          "fil": "Komisyon: 8% ng ₱5,000 na benta. (bilang lang)",
+          "taglish": "Commission: 8% ng ₱5,000 na sales. (number lang)"
+        },
+        "answer": "400",
+        "type": "numeric",
+        "solution": {
+          "en": "0.08 × 5000 = **₱400**.",
+          "fil": "0.08 × 5000 = **₱400**.",
+          "taglish": "0.08 × 5000 = **₱400**."
+        }
+      },
+      {
+        "q": {
+          "en": "Sales tax: 12% on a ₱250 meal. (number only)",
+          "fil": "Buwis: 12% sa ₱250 na pagkain. (bilang lang)",
+          "taglish": "Sales tax: 12% sa ₱250 na meal. (number lang)"
+        },
+        "answer": "30",
+        "type": "numeric",
+        "solution": {
+          "en": "0.12 × 250 = **₱30**.",
+          "fil": "0.12 × 250 = **₱30**.",
+          "taglish": "0.12 × 250 = **₱30**."
+        }
+      },
+      {
+        "q": {
+          "en": "Simple interest on ₱3,000 at 5% per year for 2 years. (number only)",
+          "fil": "Simpleng interes sa ₱3,000 sa 5% kada taon sa 2 taon. (bilang lang)",
+          "taglish": "Simple interest sa ₱3,000 at 5% per year for 2 years. (number lang)"
+        },
+        "answer": "300",
+        "type": "numeric",
+        "solution": {
+          "en": "I = 3000 × 0.05 × 2 = **₱300**.",
+          "fil": "I = 3000 × 0.05 × 2 = **₱300**.",
+          "taglish": "I = 3000 × 0.05 × 2 = **₱300**."
+        }
+      }
+    ],
+    "grade": 6,
+    "difficulty": "mahirap"
+  },
+  {
+    "ref": "6MG-IIe-5",
+    "domain": "Measurement and Geometry",
+    "content_standard": "Classifying and measuring angles.",
+    "competency": "Classify and measure right, acute, and obtuse angles.",
+    "performance_standard": "Measure angles with a protractor and classify angles seen in real objects.",
+    "explanation": {
+      "en": "An acute angle is less than 90°, a right angle is exactly 90°, an obtuse angle is between 90° and 180°, and a straight angle is 180°. Use a protractor to measure exactly.",
+      "fil": "Ang matulis (acute) na anggulo ay mas maliit sa 90°, ang right ay eksaktong 90°, ang obtuse ay nasa pagitan ng 90° at 180°, at ang straight ay 180°. Gumamit ng protractor para sa eksaktong sukat.",
+      "taglish": "Acute angle = less than 90°, right = exactly 90°, obtuse = between 90° at 180°, straight = 180°. Gumamit ng protractor para exact."
+    },
+    "worked_example": {
+      "en": "A 120° angle is more than 90° but less than 180°, so it is obtuse.",
+      "fil": "Ang 120° na anggulo ay higit sa 90° pero mas mababa sa 180°, kaya obtuse.",
+      "taglish": "120° na angle, more than 90° pero less than 180°, so obtuse."
+    },
+    "items": [
+      {
+        "q": "An angle of 30° is ___.",
+        "answer": "acute",
+        "type": "mcq",
+        "options": [
+          "acute",
+          "right",
+          "obtuse",
+          "straight"
+        ],
+        "solution": {
+          "en": "Less than 90° → **acute**.",
+          "fil": "Mas maliit sa 90° → **acute**.",
+          "taglish": "Less than 90° → **acute**."
+        }
+      },
+      {
+        "q": "An angle of 90° is ___.",
+        "answer": "right",
+        "type": "mcq",
+        "options": [
+          "right",
+          "acute",
+          "obtuse",
+          "straight"
+        ],
+        "solution": {
+          "en": "Exactly 90° → **right**.",
+          "fil": "Eksaktong 90° → **right**.",
+          "taglish": "Exactly 90° → **right**."
+        }
+      },
+      {
+        "q": "An angle of 110° is ___.",
+        "answer": "obtuse",
+        "type": "mcq",
+        "options": [
+          "obtuse",
+          "acute",
+          "right",
+          "straight"
+        ],
+        "solution": {
+          "en": "Between 90° and 180° → **obtuse**.",
+          "fil": "Pagitan ng 90° at 180° → **obtuse**.",
+          "taglish": "Between 90°-180° → **obtuse**."
+        }
+      },
+      {
+        "q": "An angle of 89° is ___.",
+        "answer": "acute",
+        "type": "mcq",
+        "options": [
+          "acute",
+          "right",
+          "obtuse",
+          "straight"
+        ],
+        "solution": {
+          "en": "Just under 90° → **acute**.",
+          "fil": "Bahagyang kulang sa 90° → **acute**.",
+          "taglish": "Konting kulang sa 90° → **acute**."
+        }
+      },
+      {
+        "q": {
+          "en": "Clock hands at 3:00 form a ___ angle.",
+          "fil": "Ang kamay ng orasan sa 3:00 ay bumubuo ng ___ na anggulo.",
+          "taglish": "Ang clock hands sa 3:00 ay gumagawa ng ___ na angle."
+        },
+        "answer": "right",
+        "type": "mcq",
+        "options": [
+          "right",
+          "acute",
+          "obtuse",
+          "straight"
+        ],
+        "solution": {
+          "en": "They make a 90° → **right** angle.",
+          "fil": "Bumubuo ng 90° → **right**.",
+          "taglish": "Gumagawa ng 90° → **right**."
+        }
+      }
+    ],
+    "grade": 6,
+    "difficulty": "madali",
+    "visual": "<svg viewBox=\"0 0 320 140\" role=\"img\" aria-label=\"Labeled acute angle\"><path d=\"M55 112h220M55 112l155-88\" stroke=\"#1C1410\" stroke-width=\"6\" stroke-linecap=\"round\"/><path d=\"M110 112a55 55 0 0 0-8-28\" fill=\"none\" stroke=\"#F4A87C\" stroke-width=\"8\"/><text x=\"118\" y=\"82\" font-size=\"20\" font-weight=\"800\">30° acute</text></svg>"
+  },
+  {
+    "ref": "6MG-IIf-6",
+    "domain": "Measurement and Geometry",
+    "content_standard": "Transformations: translation, reflection, rotation.",
+    "competency": "Describe figures after translation, reflection, and rotation.",
+    "performance_standard": "Identify slides, flips, and turns and explain that size and shape are preserved.",
+    "explanation": {
+      "en": "A translation is a slide, a reflection is a flip (mirror image), and a rotation is a turn about a point. In every transformation the figure keeps the same size and shape — only its position or direction changes.",
+      "fil": "Ang translation ay slide, ang reflection ay flip (mirror image), at ang rotation ay turn sa isang punto. Sa lahat ng ito, hindi nagbabago ang sukat at hugis — ang posisyon o direksyon lang ang nagbabago.",
+      "taglish": "Translation = slide, reflection = flip (mirror image), rotation = turn sa point. Sa lahat, same pa rin yung size at shape — position o direction lang ang nagbabago."
+    },
+    "worked_example": {
+      "en": "Sliding a cut-out shape to a new spot is a translation; its size and shape do not change.",
+      "fil": "Ang pag-slide ng hugis sa bagong lugar ay translation; hindi nagbabago ang sukat at hugis.",
+      "taglish": "Pag-slide ng shape sa bagong spot = translation; hindi nagbabago size at shape."
+    },
+    "items": [
+      {
+        "q": "A flip across a line is a ___.",
+        "answer": "reflection",
+        "type": "mcq",
+        "options": [
+          "reflection",
+          "translation",
+          "rotation",
+          "tessellation"
+        ],
+        "solution": {
+          "en": "A mirror flip → **reflection**.",
+          "fil": "Mirror flip → **reflection**.",
+          "taglish": "Mirror flip → **reflection**."
+        }
+      },
+      {
+        "q": "A slide is a ___.",
+        "answer": "translation",
+        "type": "mcq",
+        "options": [
+          "translation",
+          "reflection",
+          "rotation",
+          "scaling"
+        ],
+        "solution": {
+          "en": "A slide → **translation**.",
+          "fil": "Slide → **translation**.",
+          "taglish": "Slide → **translation**."
+        }
+      },
+      {
+        "q": "A turn about a point is a ___.",
+        "answer": "rotation",
+        "type": "mcq",
+        "options": [
+          "rotation",
+          "translation",
+          "reflection",
+          "tessellation"
+        ],
+        "solution": {
+          "en": "A turn → **rotation**.",
+          "fil": "Turn → **rotation**.",
+          "taglish": "Turn → **rotation**."
+        }
+      },
+      {
+        "q": {
+          "en": "After a translation, does the figure's size change?",
+          "fil": "Pagkatapos ng translation, nagbabago ba ang sukat ng hugis?",
+          "taglish": "Pagkatapos ng translation, nagbabago ba yung size ng shape?"
+        },
+        "answer": "No",
+        "type": "mcq",
+        "options": [
+          "No",
+          "Yes",
+          "Only width",
+          "Only height"
+        ],
+        "solution": {
+          "en": "Size and shape stay the same → **No**.",
+          "fil": "Hindi nagbabago ang sukat → **No**.",
+          "taglish": "Same lang ang size → **No**."
+        }
+      },
+      {
+        "q": {
+          "en": "A mirror image of a figure is a ___.",
+          "fil": "Ang mirror image ng isang hugis ay isang ___.",
+          "taglish": "Ang mirror image ng shape ay isang ___."
+        },
+        "answer": "reflection",
+        "type": "mcq",
+        "options": [
+          "reflection",
+          "rotation",
+          "translation",
+          "tessellation"
+        ],
+        "solution": {
+          "en": "Mirror image → **reflection**.",
+          "fil": "Mirror image → **reflection**.",
+          "taglish": "Mirror image → **reflection**."
+        }
+      }
+    ],
+    "grade": 6,
+    "difficulty": "katamtaman"
+  },
+  {
+    "ref": "6MG-IIg-7",
+    "domain": "Measurement and Geometry",
+    "content_standard": "Volume and capacity; volume of cubes and rectangular prisms.",
+    "competency": "Convert units of volume/capacity and find the volume of cubes and rectangular prisms.",
+    "performance_standard": "Compute volume and convert mL, L, and cm³ in packing and measuring tasks.",
+    "explanation": {
+      "en": "The volume of a rectangular prism is V = length × width × height, and a cube is V = side³. For capacity, 1 L = 1000 mL = 1000 cm³.",
+      "fil": "Ang volume ng rectangular prism ay V = haba × lapad × taas, at ang kubo ay V = gilid³. Sa capacity, 1 L = 1000 mL = 1000 cm³.",
+      "taglish": "Volume ng rectangular prism = V = length × width × height; cube = V = side³. Sa capacity, 1 L = 1000 mL = 1000 cm³."
+    },
+    "worked_example": {
+      "en": "A box 8 cm × 5 cm × 4 cm has V = 8 × 5 × 4 = 160 cm³.",
+      "fil": "Ang kahon na 8 cm × 5 cm × 4 cm ay may V = 8 × 5 × 4 = 160 cm³.",
+      "taglish": "Box na 8 cm × 5 cm × 4 cm: V = 8 × 5 × 4 = 160 cm³."
+    },
+    "items": [
+      {
+        "q": {
+          "en": "Volume of a 7 cm × 3 cm × 2 cm prism. (number only)",
+          "fil": "Volume ng 7 cm × 3 cm × 2 cm na prisma. (bilang lang)",
+          "taglish": "Volume ng 7 cm × 3 cm × 2 cm na prism. (number lang)"
+        },
+        "answer": "42",
+        "type": "numeric",
+        "solution": {
+          "en": "7 × 3 × 2 = **42 cm³**.",
+          "fil": "7 × 3 × 2 = **42 cm³**.",
+          "taglish": "7 × 3 × 2 = **42 cm³**."
+        }
+      },
+      {
+        "q": {
+          "en": "Volume of a cube with edge 5 cm. (number only)",
+          "fil": "Volume ng kubo na may gilid na 5 cm. (bilang lang)",
+          "taglish": "Volume ng cube na may edge 5 cm. (number lang)"
+        },
+        "answer": "125",
+        "type": "numeric",
+        "solution": {
+          "en": "5³ = **125 cm³**.",
+          "fil": "5³ = **125 cm³**.",
+          "taglish": "5³ = **125 cm³**."
+        }
+      },
+      {
+        "q": {
+          "en": "A tank holds 3 L. How many mL is that?",
+          "fil": "Ang tangke ay may 3 L. Ilang mL iyon?",
+          "taglish": "Ang tank ay may 3 L. Ilang mL yun?"
+        },
+        "answer": "3000",
+        "type": "numeric",
+        "solution": {
+          "en": "3 × 1000 = **3,000 mL**.",
+          "fil": "3 × 1000 = **3,000 mL**.",
+          "taglish": "3 × 1000 = **3,000 mL**."
+        }
+      },
+      {
+        "q": {
+          "en": "Volume of a box 8 cm × 5 cm × 4 cm. (number only)",
+          "fil": "Volume ng kahon na 8 cm × 5 cm × 4 cm. (bilang lang)",
+          "taglish": "Volume ng box na 8 cm × 5 cm × 4 cm. (number lang)"
+        },
+        "answer": "160",
+        "type": "numeric",
+        "solution": {
+          "en": "8 × 5 × 4 = **160 cm³**.",
+          "fil": "8 × 5 × 4 = **160 cm³**.",
+          "taglish": "8 × 5 × 4 = **160 cm³**."
+        }
+      },
+      {
+        "q": {
+          "en": "Volume of a cube with edge 3 cm. (number only)",
+          "fil": "Volume ng kubo na may gilid na 3 cm. (bilang lang)",
+          "taglish": "Volume ng cube na may edge 3 cm. (number lang)"
+        },
+        "answer": "27",
+        "type": "numeric",
+        "solution": {
+          "en": "3³ = **27 cm³**.",
+          "fil": "3³ = **27 cm³**.",
+          "taglish": "3³ = **27 cm³**."
+        }
+      }
+    ],
+    "grade": 6,
+    "difficulty": "mahirap"
+  },
+  {
+    "ref": "6MG-IIIa-1",
+    "domain": "Measurement and Geometry",
+    "content_standard": "Properties of triangles and quadrilaterals.",
+    "competency": "Describe and classify triangles and quadrilaterals by their properties.",
+    "performance_standard": "Name and sort plane figures by sides and angles.",
+    "explanation": {
+      "en": "Triangles are named by sides (equilateral, isosceles, scalene) or by angles (acute, right, obtuse), and their three angles add up to 180°. Quadrilaterals (parallelogram, rectangle, square, rhombus, trapezoid) are described by parallel sides, equal sides, and right angles; their angles sum to 360°.",
+      "fil": "Pinapangalanan ang tatsulok ayon sa gilid (equilateral, isosceles, scalene) o anggulo (acute, right, obtuse), at ang tatlong anggulo ay 180°. Ang quadrilateral (parallelogram, rectangle, square, rhombus, trapezoid) ay inilalarawan ayon sa magkaparehong gilid at right angle; 360° ang kabuuan.",
+      "taglish": "Tinatawag ang triangles ayon sa sides (equilateral, isosceles, scalene) o angles (acute, right, obtuse); 180° ang tatlong angles. Quadrilaterals (parallelogram, rectangle, square, rhombus, trapezoid) base sa parallel/equal sides at right angles; 360° ang sum."
+    },
+    "worked_example": {
+      "en": "If two angles of a triangle are 50° and 60°, the third is 180 − 110 = 70°, so it is an acute triangle.",
+      "fil": "Kung ang dalawang anggulo ay 50° at 60°, ang pangatlo ay 180 − 110 = 70°, kaya acute na tatsulok.",
+      "taglish": "Kung 50° at 60° ang dalawang angles, third = 180 − 110 = 70°, so acute triangle."
+    },
+    "items": [
+      {
+        "q": "A triangle with all sides equal is ___.",
+        "answer": "equilateral",
+        "type": "mcq",
+        "options": [
+          "equilateral",
+          "isosceles",
+          "scalene",
+          "right"
+        ],
+        "solution": {
+          "en": "All sides equal → **equilateral**.",
+          "fil": "Magkakapareho ang gilid → **equilateral**.",
+          "taglish": "All sides equal → **equilateral**."
+        }
+      },
+      {
+        "q": "A triangle with a 90° angle is a ___ triangle.",
+        "answer": "right",
+        "type": "mcq",
+        "options": [
+          "right",
+          "acute",
+          "obtuse",
+          "equilateral"
+        ],
+        "solution": {
+          "en": "A 90° angle → **right** triangle.",
+          "fil": "May 90° → **right**.",
+          "taglish": "May 90° → **right** triangle."
+        }
+      },
+      {
+        "q": "The angle sum of any triangle is ___°.",
+        "answer": "180",
+        "type": "numeric",
+        "solution": {
+          "en": "Always **180°**.",
+          "fil": "Laging **180°**.",
+          "taglish": "Laging **180°**."
+        }
+      },
+      {
+        "q": "A quadrilateral with exactly one pair of parallel sides is a ___.",
+        "answer": "trapezoid",
+        "type": "mcq",
+        "options": [
+          "trapezoid",
+          "parallelogram",
+          "rectangle",
+          "rhombus"
+        ],
+        "solution": {
+          "en": "One parallel pair → **trapezoid**.",
+          "fil": "Isang parallel na pares → **trapezoid**.",
+          "taglish": "Isang parallel pair → **trapezoid**."
+        }
+      },
+      {
+        "q": {
+          "en": "Two angles of a triangle are 70° and 55°. Find the third angle. (number only)",
+          "fil": "Dalawang anggulo ng tatsulok ay 70° at 55°. Hanapin ang pangatlo. (bilang lang)",
+          "taglish": "Dalawang angles ng triangle ay 70° at 55°. Hanapin yung pangatlo. (number lang)"
+        },
+        "answer": "55",
+        "type": "numeric",
+        "solution": {
+          "en": "180 − (70 + 55) = **55°**.",
+          "fil": "180 − (70 + 55) = **55°**.",
+          "taglish": "180 − (70 + 55) = **55°**."
+        }
+      }
+    ],
+    "grade": 6,
+    "difficulty": "madali"
+  },
+  {
+    "ref": "6MG-IIIb-2",
+    "domain": "Measurement and Geometry",
+    "content_standard": "Perimeter and area of triangles, parallelograms, and trapezoids.",
+    "competency": "Find the perimeter and area of triangles, parallelograms, and trapezoids.",
+    "performance_standard": "Measure and compute perimeter and area in real measurement tasks.",
+    "explanation": {
+      "en": "Perimeter is the sum of all sides. Area of a triangle = ½ × base × height; a parallelogram = base × height; a trapezoid = ½ × (base₁ + base₂) × height.",
+      "fil": "Ang perimetro ay kabuuan ng lahat ng gilid. Sukat ng tatsulok = ½ × base × taas; parallelogram = base × taas; trapezoid = ½ × (base₁ + base₂) × taas.",
+      "taglish": "Perimeter = sum ng lahat ng sides. Area ng triangle = ½ × base × height; parallelogram = base × height; trapezoid = ½ × (base₁ + base₂) × height."
+    },
+    "worked_example": {
+      "en": "A triangular sail with base 6 m and height 4 m has area = ½ × 6 × 4 = 12 m².",
+      "fil": "Ang tatsulok na layag na base 6 m at taas 4 m ay may sukat = ½ × 6 × 4 = 12 m².",
+      "taglish": "Triangular sail, base 6 m at height 4 m: area = ½ × 6 × 4 = 12 m²."
+    },
+    "items": [
+      {
+        "q": {
+          "en": "Area of a triangle with base 8 cm and height 5 cm. (number only)",
+          "fil": "Sukat ng tatsulok na base 8 cm at taas 5 cm. (bilang lang)",
+          "taglish": "Area ng triangle na base 8 cm at height 5 cm. (number lang)"
+        },
+        "answer": "20",
+        "type": "numeric",
+        "solution": {
+          "en": "½ × 8 × 5 = **20 cm²**.",
+          "fil": "½ × 8 × 5 = **20 cm²**.",
+          "taglish": "½ × 8 × 5 = **20 cm²**."
+        }
+      },
+      {
+        "q": {
+          "en": "Area of a parallelogram with base 9 cm and height 4 cm. (number only)",
+          "fil": "Sukat ng parallelogram na base 9 cm at taas 4 cm. (bilang lang)",
+          "taglish": "Area ng parallelogram na base 9 cm at height 4 cm. (number lang)"
+        },
+        "answer": "36",
+        "type": "numeric",
+        "solution": {
+          "en": "9 × 4 = **36 cm²**.",
+          "fil": "9 × 4 = **36 cm²**.",
+          "taglish": "9 × 4 = **36 cm²**."
+        }
+      },
+      {
+        "q": {
+          "en": "Area of a trapezoid with bases 6 and 10 cm and height 4 cm. (number only)",
+          "fil": "Sukat ng trapezoid na base 6 at 10 cm at taas 4 cm. (bilang lang)",
+          "taglish": "Area ng trapezoid na bases 6 at 10 cm at height 4 cm. (number lang)"
+        },
+        "answer": "32",
+        "type": "numeric",
+        "solution": {
+          "en": "½ × (6 + 10) × 4 = **32 cm²**.",
+          "fil": "½ × (6 + 10) × 4 = **32 cm²**.",
+          "taglish": "½ × (6 + 10) × 4 = **32 cm²**."
+        }
+      },
+      {
+        "q": {
+          "en": "Perimeter of a triangle with sides 8 cm, 6 cm, 10 cm. (number only)",
+          "fil": "Perimetro ng tatsulok na may gilid 8 cm, 6 cm, 10 cm. (bilang lang)",
+          "taglish": "Perimeter ng triangle na sides 8 cm, 6 cm, 10 cm. (number lang)"
+        },
+        "answer": "24",
+        "type": "numeric",
+        "solution": {
+          "en": "8 + 6 + 10 = **24 cm**.",
+          "fil": "8 + 6 + 10 = **24 cm**.",
+          "taglish": "8 + 6 + 10 = **24 cm**."
+        }
+      },
+      {
+        "q": {
+          "en": "A triangular garden has base 12 m and height 9 m. Find its area. (number only)",
+          "fil": "Ang tatsulok na hardin ay may base 12 m at taas 9 m. Hanapin ang sukat. (bilang lang)",
+          "taglish": "Ang triangular garden ay base 12 m at height 9 m. Hanapin ang area. (number lang)"
+        },
+        "answer": "54",
+        "type": "numeric",
+        "solution": {
+          "en": "½ × 12 × 9 = **54 m²**.",
+          "fil": "½ × 12 × 9 = **54 m²**.",
+          "taglish": "½ × 12 × 9 = **54 m²**."
+        }
+      }
+    ],
+    "grade": 6,
+    "difficulty": "katamtaman",
+    "visual": "<svg viewBox=\"0 0 320 160\" role=\"img\" aria-label=\"Rectangle labeled length and width\"><rect x=\"50\" y=\"35\" width=\"220\" height=\"90\" rx=\"8\" fill=\"#A9D8F0\" stroke=\"#1C1410\" stroke-width=\"5\"/><text x=\"160\" y=\"25\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"800\">length = 8 cm</text><text x=\"282\" y=\"85\" font-size=\"17\" font-weight=\"800\">4 cm</text><text x=\"160\" y=\"153\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"800\">Area = length × width</text></svg>"
+  },
+  {
+    "ref": "6MG-IIIc-3",
+    "domain": "Measurement and Geometry",
+    "content_standard": "Parts of a circle and circumference.",
+    "competency": "Identify the parts of a circle and find its circumference.",
+    "performance_standard": "Measure round objects and compute circumference using π ≈ 3.14.",
+    "explanation": {
+      "en": "A circle's parts include the center, radius (center to edge), diameter (across, d = 2r), chord, and arc. The circumference is the distance around: C = πd = 2πr, with π ≈ 3.14.",
+      "fil": "Kasama sa bahagi ng bilog ang sentro, radius (sentro hanggang gilid), diyametro (d = 2r), chord, at arc. Ang circumference ay ang palibot: C = πd = 2πr, π ≈ 3.14.",
+      "taglish": "Parts ng circle: center, radius (center to edge), diameter (d = 2r), chord, arc. Circumference = palibot: C = πd = 2πr, π ≈ 3.14."
+    },
+    "worked_example": {
+      "en": "A wheel with diameter 60 cm has circumference C = 3.14 × 60 = 188.4 cm.",
+      "fil": "Ang gulong na may diyametro 60 cm ay may circumference C = 3.14 × 60 = 188.4 cm.",
+      "taglish": "Wheel na diameter 60 cm: C = 3.14 × 60 = 188.4 cm."
+    },
+    "items": [
+      {
+        "q": "A segment from the center to the edge is the ___.",
+        "answer": "radius",
+        "type": "mcq",
+        "options": [
+          "radius",
+          "diameter",
+          "chord",
+          "arc"
+        ],
+        "solution": {
+          "en": "Center to edge → **radius**.",
+          "fil": "Sentro hanggang gilid → **radius**.",
+          "taglish": "Center to edge → **radius**."
+        }
+      },
+      {
+        "q": {
+          "en": "If the radius is 6 cm, the diameter is ___ cm.",
+          "fil": "Kung ang radius ay 6 cm, ang diyametro ay ___ cm.",
+          "taglish": "Kung radius ay 6 cm, ang diameter ay ___ cm."
+        },
+        "answer": "12",
+        "type": "numeric",
+        "solution": {
+          "en": "d = 2r = 2 × 6 = **12 cm**.",
+          "fil": "d = 2r = 2 × 6 = **12 cm**.",
+          "taglish": "d = 2r = **12 cm**."
+        }
+      },
+      {
+        "q": {
+          "en": "Circumference if d = 20 cm. Use π = 3.14. (number only)",
+          "fil": "Circumference kung d = 20 cm. Gamitin ang π = 3.14. (bilang lang)",
+          "taglish": "Circumference kung d = 20 cm. π = 3.14. (number lang)"
+        },
+        "answer": "62.8",
+        "type": "numeric",
+        "solution": {
+          "en": "C = 3.14 × 20 = **62.8 cm**.",
+          "fil": "C = 3.14 × 20 = **62.8 cm**.",
+          "taglish": "C = 3.14 × 20 = **62.8 cm**."
+        }
+      },
+      {
+        "q": {
+          "en": "Circumference if r = 5 cm. Use π = 3.14. (number only)",
+          "fil": "Circumference kung r = 5 cm. Gamitin ang π = 3.14. (bilang lang)",
+          "taglish": "Circumference kung r = 5 cm. π = 3.14. (number lang)"
+        },
+        "answer": "31.4",
+        "type": "numeric",
+        "solution": {
+          "en": "C = 2 × 3.14 × 5 = **31.4 cm**.",
+          "fil": "C = 2 × 3.14 × 5 = **31.4 cm**.",
+          "taglish": "C = 2 × 3.14 × 5 = **31.4 cm**."
+        }
+      },
+      {
+        "q": {
+          "en": "A wheel has diameter 50 cm. Find its circumference. Use π = 3.14. (number only)",
+          "fil": "Ang gulong ay may diyametro 50 cm. Hanapin ang circumference. π = 3.14. (bilang lang)",
+          "taglish": "Ang wheel ay diameter 50 cm. Hanapin ang circumference. π = 3.14. (number lang)"
+        },
+        "answer": "157",
+        "type": "numeric",
+        "solution": {
+          "en": "C = 3.14 × 50 = **157 cm**.",
+          "fil": "C = 3.14 × 50 = **157 cm**.",
+          "taglish": "C = 3.14 × 50 = **157 cm**."
+        }
+      }
+    ],
+    "grade": 6,
+    "difficulty": "mahirap"
+  },
+  {
+    "ref": "6MG-IIId-4",
+    "domain": "Measurement and Geometry",
+    "content_standard": "Area of a circle and of composite figures.",
+    "competency": "Find the area of a circle and of composite figures.",
+    "performance_standard": "Split composite figures into basic shapes and compute total area.",
+    "explanation": {
+      "en": "The area of a circle is A = πr². For a composite figure, split it into basic shapes, find each area, then add them (or subtract for a hole). Use π ≈ 3.14.",
+      "fil": "Ang sukat ng bilog ay A = πr². Para sa composite figure, hatiin sa pangunahing hugis, hanapin bawat sukat, tapos idagdag (o ibawas kung may butas). π ≈ 3.14.",
+      "taglish": "Area ng circle = A = πr². Sa composite figure, hatiin sa basic shapes, hanapin bawat area, tapos add (o subtract kung may butas). π ≈ 3.14."
+    },
+    "worked_example": {
+      "en": "A circle with radius 7 cm has area A = 3.14 × 7 × 7 = 153.86 cm².",
+      "fil": "Ang bilog na may radius 7 cm ay may sukat A = 3.14 × 7 × 7 = 153.86 cm².",
+      "taglish": "Circle na radius 7 cm: A = 3.14 × 7 × 7 = 153.86 cm²."
+    },
+    "items": [
+      {
+        "q": {
+          "en": "Area of a circle with r = 4 cm. Use π = 3.14. (number only)",
+          "fil": "Sukat ng bilog na r = 4 cm. Gamitin ang π = 3.14. (bilang lang)",
+          "taglish": "Area ng circle na r = 4 cm. π = 3.14. (number lang)"
+        },
+        "answer": "50.24",
+        "type": "numeric",
+        "solution": {
+          "en": "3.14 × 4² = 3.14 × 16 = **50.24 cm²**.",
+          "fil": "3.14 × 16 = **50.24 cm²**.",
+          "taglish": "3.14 × 16 = **50.24 cm²**."
+        }
+      },
+      {
+        "q": {
+          "en": "Area of a circle with r = 10 cm. Use π = 3.14. (number only)",
+          "fil": "Sukat ng bilog na r = 10 cm. π = 3.14. (bilang lang)",
+          "taglish": "Area ng circle na r = 10 cm. π = 3.14. (number lang)"
+        },
+        "answer": "314",
+        "type": "numeric",
+        "solution": {
+          "en": "3.14 × 100 = **314 cm²**.",
+          "fil": "3.14 × 100 = **314 cm²**.",
+          "taglish": "3.14 × 100 = **314 cm²**."
+        }
+      },
+      {
+        "q": {
+          "en": "Area of a circle with d = 6 cm. Use π = 3.14. (number only)",
+          "fil": "Sukat ng bilog na d = 6 cm. π = 3.14. (bilang lang)",
+          "taglish": "Area ng circle na d = 6 cm. π = 3.14. (number lang)"
+        },
+        "answer": "28.26",
+        "type": "numeric",
+        "solution": {
+          "en": "r = 3; 3.14 × 9 = **28.26 cm²**.",
+          "fil": "r = 3; 3.14 × 9 = **28.26 cm²**.",
+          "taglish": "r = 3; 3.14 × 9 = **28.26 cm²**."
+        }
+      },
+      {
+        "q": {
+          "en": "Area of a square with side 8 cm. (number only)",
+          "fil": "Sukat ng parisukat na gilid 8 cm. (bilang lang)",
+          "taglish": "Area ng square na side 8 cm. (number lang)"
+        },
+        "answer": "64",
+        "type": "numeric",
+        "solution": {
+          "en": "8 × 8 = **64 cm²**.",
+          "fil": "8 × 8 = **64 cm²**.",
+          "taglish": "8 × 8 = **64 cm²**."
+        }
+      },
+      {
+        "q": {
+          "en": "Find the area of a circle with radius 7 cm. Use π = 3.14. (number only)",
+          "fil": "Hanapin ang sukat ng bilog na radius 7 cm. π = 3.14. (bilang lang)",
+          "taglish": "Hanapin ang area ng circle na radius 7 cm. π = 3.14. (number lang)"
+        },
+        "answer": "153.86",
+        "type": "numeric",
+        "solution": {
+          "en": "3.14 × 49 = **153.86 cm²**.",
+          "fil": "3.14 × 49 = **153.86 cm²**.",
+          "taglish": "3.14 × 49 = **153.86 cm²**."
+        }
+      }
+    ],
+    "grade": 6,
+    "difficulty": "mahirap"
+  },
+  {
+    "ref": "6DP-IIIe-5",
+    "domain": "Data and Probability",
+    "content_standard": "Pie graphs and data displays.",
+    "competency": "Construct and interpret pie graphs and other data displays.",
+    "performance_standard": "Read and build pie graphs from survey data.",
+    "explanation": {
+      "en": "A pie graph shows parts of a whole. Each category's angle = (its part ÷ total) × 360°. The whole circle is 360°, and half is 180°.",
+      "fil": "Ipinapakita ng pie graph ang bahagi ng kabuuan. Anggulo ng bawat kategorya = (bahagi ÷ kabuuan) × 360°. Ang buong bilog ay 360°, at kalahati ay 180°.",
+      "taglish": "Ang pie graph ay nagpapakita ng parts of a whole. Angle ng bawat category = (part ÷ total) × 360°. Buong circle = 360°, half = 180°."
+    },
+    "worked_example": {
+      "en": "In a survey of 40 pupils, a group of 10 takes (10 ÷ 40) × 360 = 90° of the pie.",
+      "fil": "Sa survey ng 40 mag-aaral, ang grupong 10 ay kumukuha ng (10 ÷ 40) × 360 = 90°.",
+      "taglish": "Sa survey ng 40 pupils, ang group na 10 ay (10 ÷ 40) × 360 = 90°."
+    },
+    "items": [
+      {
+        "q": {
+          "en": "In a pie graph of 40 pupils, what angle represents 10 pupils? (number only)",
+          "fil": "Sa pie graph ng 40 mag-aaral, anong anggulo ang kumakatawan sa 10? (bilang lang)",
+          "taglish": "Sa pie graph ng 40 pupils, anong angle ang 10 pupils? (number lang)"
+        },
+        "answer": "90",
+        "type": "numeric",
+        "solution": {
+          "en": "(10 ÷ 40) × 360 = **90°**.",
+          "fil": "(10 ÷ 40) × 360 = **90°**.",
+          "taglish": "(10 ÷ 40) × 360 = **90°**."
+        }
+      },
+      {
+        "q": {
+          "en": "In a pie graph of 40 pupils, what angle represents 20 pupils? (number only)",
+          "fil": "Sa pie graph ng 40 mag-aaral, anong anggulo ang 20? (bilang lang)",
+          "taglish": "Sa pie graph ng 40 pupils, anong angle ang 20? (number lang)"
+        },
+        "answer": "180",
+        "type": "numeric",
+        "solution": {
+          "en": "(20 ÷ 40) × 360 = **180°**.",
+          "fil": "(20 ÷ 40) × 360 = **180°**.",
+          "taglish": "(20 ÷ 40) × 360 = **180°**."
+        }
+      },
+      {
+        "q": {
+          "en": "A pie graph is best for showing ___.",
+          "fil": "Ang pie graph ay pinakamabuti sa pagpapakita ng ___.",
+          "taglish": "Ang pie graph ay best para ipakita ang ___."
+        },
+        "answer": "parts of a whole",
+        "type": "mcq",
+        "options": [
+          "parts of a whole",
+          "change over time",
+          "exact totals",
+          "a single value"
+        ],
+        "solution": {
+          "en": "It shows **parts of a whole**.",
+          "fil": "Ipinapakita nito ang **parts of a whole**.",
+          "taglish": "Nagpapakita ng **parts of a whole**."
+        }
+      },
+      {
+        "q": {
+          "en": "Angle for 5 of 20 pupils in a pie graph. (number only)",
+          "fil": "Anggulo para sa 5 sa 20 sa pie graph. (bilang lang)",
+          "taglish": "Angle para sa 5 of 20 sa pie graph. (number lang)"
+        },
+        "answer": "90",
+        "type": "numeric",
+        "solution": {
+          "en": "(5 ÷ 20) × 360 = **90°**.",
+          "fil": "(5 ÷ 20) × 360 = **90°**.",
+          "taglish": "(5 ÷ 20) × 360 = **90°**."
+        }
+      },
+      {
+        "q": {
+          "en": "Half of a pie graph is ___°.",
+          "fil": "Ang kalahati ng pie graph ay ___°.",
+          "taglish": "Ang half ng pie graph ay ___°."
+        },
+        "answer": "180",
+        "type": "numeric",
+        "solution": {
+          "en": "Half of 360 = **180°**.",
+          "fil": "Kalahati ng 360 = **180°**.",
+          "taglish": "Half ng 360 = **180°**."
+        }
+      }
+    ],
+    "grade": 6,
+    "difficulty": "madali"
+  },
+  {
+    "ref": "6DP-IIIf-6",
+    "domain": "Data and Probability",
+    "content_standard": "Measures of central tendency: mean, median, mode.",
+    "competency": "Calculate and interpret the mean, median, and mode of a data set.",
+    "performance_standard": "Choose and compute the measure that best describes a data set.",
+    "explanation": {
+      "en": "The mean is the sum divided by the count. The median is the middle value when the data is ordered. The mode is the value that appears most often.",
+      "fil": "Ang mean ay kabuuan na hinati sa bilang. Ang median ay gitnang halaga kapag nakaayos ang datos. Ang mode ay pinakamadalas na halaga.",
+      "taglish": "Mean = sum ÷ count. Median = gitnang value kapag naka-order. Mode = pinakamadalas na value."
+    },
+    "worked_example": {
+      "en": "For 7, 8, 8, 9, 10: mean = 42 ÷ 5 = 8.4, median = 8, mode = 8.",
+      "fil": "Para sa 7, 8, 8, 9, 10: mean = 42 ÷ 5 = 8.4, median = 8, mode = 8.",
+      "taglish": "Para sa 7, 8, 8, 9, 10: mean = 42 ÷ 5 = 8.4, median = 8, mode = 8."
+    },
+    "items": [
+      {
+        "q": {
+          "en": "Data: 5, 7, 7, 8, 13. Find the mean. (number only)",
+          "fil": "Datos: 5, 7, 7, 8, 13. Hanapin ang mean. (bilang lang)",
+          "taglish": "Data: 5, 7, 7, 8, 13. Hanapin ang mean. (number lang)"
+        },
+        "answer": "8",
+        "type": "numeric",
+        "solution": {
+          "en": "Sum 40 ÷ 5 = **8**.",
+          "fil": "Kabuuan 40 ÷ 5 = **8**.",
+          "taglish": "Sum 40 ÷ 5 = **8**."
+        }
+      },
+      {
+        "q": {
+          "en": "Data: 5, 7, 7, 8, 13. Find the median. (number only)",
+          "fil": "Datos: 5, 7, 7, 8, 13. Hanapin ang median. (bilang lang)",
+          "taglish": "Data: 5, 7, 7, 8, 13. Hanapin ang median. (number lang)"
+        },
+        "answer": "7",
+        "type": "numeric",
+        "solution": {
+          "en": "Middle value = **7**.",
+          "fil": "Gitnang halaga = **7**.",
+          "taglish": "Middle value = **7**."
+        }
+      },
+      {
+        "q": {
+          "en": "Data: 5, 7, 7, 8, 13. Find the mode. (number only)",
+          "fil": "Datos: 5, 7, 7, 8, 13. Hanapin ang mode. (bilang lang)",
+          "taglish": "Data: 5, 7, 7, 8, 13. Hanapin ang mode. (number lang)"
+        },
+        "answer": "7",
+        "type": "numeric",
+        "solution": {
+          "en": "Most frequent = **7**.",
+          "fil": "Pinakamadalas = **7**.",
+          "taglish": "Pinakamadalas = **7**."
+        }
+      },
+      {
+        "q": {
+          "en": "Find the mean of 12, 15, 18, 15. (number only)",
+          "fil": "Hanapin ang mean ng 12, 15, 18, 15. (bilang lang)",
+          "taglish": "Hanapin ang mean ng 12, 15, 18, 15. (number lang)"
+        },
+        "answer": "15",
+        "type": "numeric",
+        "solution": {
+          "en": "Sum 60 ÷ 4 = **15**.",
+          "fil": "Kabuuan 60 ÷ 4 = **15**.",
+          "taglish": "Sum 60 ÷ 4 = **15**."
+        }
+      },
+      {
+        "q": {
+          "en": "Find the mean of 7, 8, 8, 9, 10. (number only)",
+          "fil": "Hanapin ang mean ng 7, 8, 8, 9, 10. (bilang lang)",
+          "taglish": "Hanapin ang mean ng 7, 8, 8, 9, 10. (number lang)"
+        },
+        "answer": "8.4",
+        "type": "numeric",
+        "solution": {
+          "en": "Sum 42 ÷ 5 = **8.4**.",
+          "fil": "Kabuuan 42 ÷ 5 = **8.4**.",
+          "taglish": "Sum 42 ÷ 5 = **8.4**."
+        }
+      }
+    ],
+    "grade": 6,
+    "difficulty": "katamtaman"
+  },
+  {
+    "ref": "6DP-IIIg-7",
+    "domain": "Data and Probability",
+    "content_standard": "Simple experimental probability.",
+    "competency": "Describe and compute the probability of simple events.",
+    "performance_standard": "Use probability language and compute chances of simple events.",
+    "explanation": {
+      "en": "Probability measures how likely an event is: P(event) = favorable outcomes ÷ total outcomes, a value from 0 (impossible) to 1 (certain). We also describe events as certain, likely, unlikely, or impossible.",
+      "fil": "Sinusukat ng probability kung gaano kalamang ang pangyayari: P(event) = paboran ÷ kabuuan, halaga mula 0 (imposible) hanggang 1 (tiyak). Inilalarawan din ang pangyayari bilang tiyak, malamang, di-malamang, o imposible.",
+      "taglish": "Sinusukat ng probability kung gaano ka-likely ang event: P(event) = favorable ÷ total, value mula 0 (impossible) hanggang 1 (certain). Tinatawag din na certain, likely, unlikely, o impossible."
+    },
+    "worked_example": {
+      "en": "Rolling an even number on a die: favorable {2,4,6} = 3 of 6, so P = 3/6 = 1/2.",
+      "fil": "Pag-roll ng even sa dice: paboran {2,4,6} = 3 sa 6, kaya P = 3/6 = 1/2.",
+      "taglish": "Pag-roll ng even sa die: favorable {2,4,6} = 3 of 6, so P = 3/6 = 1/2."
+    },
+    "items": [
+      {
+        "q": {
+          "en": "P(rolling a 3 on a die) = ?",
+          "fil": "P(makakuha ng 3 sa dice) = ?",
+          "taglish": "P(rolling a 3 sa die) = ?"
+        },
+        "answer": "1/6",
+        "type": "mcq",
+        "options": [
+          "1/6",
+          "1/3",
+          "1/2",
+          "3/6"
+        ],
+        "solution": {
+          "en": "1 favorable of 6 → **1/6**.",
+          "fil": "1 paboran sa 6 → **1/6**.",
+          "taglish": "1 favorable of 6 → **1/6**."
+        }
+      },
+      {
+        "q": {
+          "en": "P(tails on a coin) = ?",
+          "fil": "P(buntot sa barya) = ?",
+          "taglish": "P(tails sa coin) = ?"
+        },
+        "answer": "1/2",
+        "type": "mcq",
+        "options": [
+          "1/2",
+          "1/4",
+          "1/6",
+          "1/3"
+        ],
+        "solution": {
+          "en": "1 of 2 → **1/2**.",
+          "fil": "1 sa 2 → **1/2**.",
+          "taglish": "1 of 2 → **1/2**."
+        }
+      },
+      {
+        "q": {
+          "en": "P(even number on a die) = ?",
+          "fil": "P(even na bilang sa dice) = ?",
+          "taglish": "P(even number sa die) = ?"
+        },
+        "answer": "1/2",
+        "type": "mcq",
+        "options": [
+          "1/2",
+          "1/3",
+          "2/6",
+          "1/6"
+        ],
+        "solution": {
+          "en": "{2,4,6} = 3 of 6 = **1/2**.",
+          "fil": "{2,4,6} = 3 sa 6 = **1/2**.",
+          "taglish": "{2,4,6} = 3 of 6 = **1/2**."
+        }
+      },
+      {
+        "q": {
+          "en": "P(red from 2 red and 3 green marbles) = ?",
+          "fil": "P(pula mula sa 2 pula at 3 berdeng holen) = ?",
+          "taglish": "P(red mula sa 2 red at 3 green marbles) = ?"
+        },
+        "answer": "2/5",
+        "type": "mcq",
+        "options": [
+          "2/5",
+          "3/5",
+          "2/3",
+          "1/2"
+        ],
+        "solution": {
+          "en": "2 red of 5 total → **2/5**.",
+          "fil": "2 pula sa 5 → **2/5**.",
+          "taglish": "2 red of 5 → **2/5**."
+        }
+      },
+      {
+        "q": {
+          "en": "A bag has 5 yellow and 5 blue marbles. P(yellow) = ?",
+          "fil": "May 5 dilaw at 5 asul na holen. P(dilaw) = ?",
+          "taglish": "May 5 yellow at 5 blue na marbles. P(yellow) = ?"
+        },
+        "answer": "1/2",
+        "type": "mcq",
+        "options": [
+          "1/2",
+          "1/5",
+          "5/5",
+          "1/10"
+        ],
+        "solution": {
+          "en": "5 of 10 → **1/2** (even chance).",
+          "fil": "5 sa 10 → **1/2** (patas).",
+          "taglish": "5 of 10 → **1/2** (even chance)."
+        }
+      }
+    ],
+    "grade": 6,
+    "difficulty": "mahirap"
+  }
+]
