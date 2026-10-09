@@ -5,17 +5,17 @@ Goal: reach **100%** before the AppBuildersPH Hackathon submission deadline, **1
 ## Progress
 
 <!-- progress:start -->
-**Overall: 38% complete** (38 of 100 points done; 0 points in progress, not counted).
+**Overall: 48% complete** (48 of 100 points done; 0 points in progress, not counted).
 
-`########............` 38%
+`##########..........` 48%
 
 | Workstream | Done | In progress | To do | |
 |---|---|---|---|---|
 | A. Foundation and baseline | 10 / 10 | 0 | 0 | `####################` |
 | B. Local AI core: the on-device tutor | 17 / 30 | 0 | 13 | `###########.........` |
 | C. Learning modes: Kalma, Pakinig, Hakbang | 11 / 20 | 0 | 9 | `###########.........` |
-| D. Quality and evidence | 0 / 10 | 0 | 10 | `....................` |
-| E. Submission | 0 / 30 | 0 | 30 | `....................` |
+| D. Quality and evidence | 4 / 10 | 0 | 6 | `########............` |
+| E. Submission | 6 / 30 | 0 | 24 | `####................` |
 <!-- progress:end -->
 
 How this number works:
@@ -52,13 +52,13 @@ Legend: `[ ]` to do, `[~]` in progress, `[x]` done. Owners are placeholders unti
 
 ## D. Quality and evidence (10 pts)
 
-- [ ] **D1** · 4 pts · owner: TBD · New tests added for provider selection and mode post-processing; `npm test` green
+- [x] **D1** · 4 pts · owner: builder-agent, model-research · New tests for provider selection, the edge client and backend, mode post-processing, mode preference, onboarding flow, thinking indicator, voice routing and the voice endpoint; `npm test` 133 of 133 pass (`9e333ea`, `c6900f9`, `be2ba8d`, `58621d7`)
 - [ ] **D2** · 3 pts · owner: TBD · Measured results table on the demo device (model, load time, tokens per second, download size, crashes) with raw logs; real numbers only
 - [ ] **D3** · 3 pts · owner: TBD · A Filipino-reading person reviews a sample of Taglish replies and the spoken forms of math symbols
 
 ## E. Submission (30 pts)
 
-- [ ] **E1** · 6 pts · owner: TBD · `README.md` so judges can recreate the project from a clean clone: what it is, why local AI, install, model setup, offline test, requirements, limitations
+- [x] **E1** · 6 pts · owner: model-research · Root `README.md` (174 lines): what runs locally and what does not, modes, architecture, quick start for one machine without accounts, requirements, env var names, measured numbers, limits, existing-code disclosure. Commit `58621d7`. Judges' recreate steps not yet followed from a clean clone by someone else
 - [ ] **E2** · 5 pts · owner: TBD · Disclosures final in `docs/SUBMISSION.md`: what runs locally, what needs internet, models, frameworks, APIs, existing code and assets (pre-existing base stated plainly), AI tools used
 - [ ] **E3** · 2 pts · owner: TBD · Project name decided and used consistently in the submission
 - [ ] **E4** · 5 pts · owner: TBD · Demo video of about 1 minute recorded on the demo device, network visibly off
@@ -112,6 +112,7 @@ Newest first. Write times in Philippine time and put the evidence next to the cl
 
 | Time | Update | Evidence |
 |---|---|---|
+| Oct 10 02:30 | Voice routing through the hub and the root README committed and pushed (`58621d7`); README claims about the phone path updated to what was actually run (iPhone 13 through a Cloudflare quick tunnel; ngrok and Vercel not run). 133 of 133 tests pass | `git log`, `npm test` |
 | Oct 10 02:15 | Product notes from the user handled. Onboarding mode step with descriptions and use cases and the Ask Teacher thinking indicator built by builder-agent (`be2ba8d`, 133 tests). ElevenLabs voice verified end to end: through the hub `POST /api/tts` returns audio/mpeg in 0.45 s, through the public tunnel in 0.59 s (a tunnel call without an Origin is refused with 403); the first attempt returned 502 because the hub adapter lacked `res.send`, fixed in `160e011`. Voice in use: ElevenLabs premade Jessica (`eleven_flash_v2_5`); Sarah and Alice samples also generated; the voice is a placeholder until the team picks by ear. Real phone test through a Cloudflare quick tunnel worked (questions answered by Gemma on the Mac). Pending: README and hub routing of the app's voice (model-research), ngrok domain and Vercel (need the owner's accounts) | Hub log, curl runs, `git log` |
 | Oct 10 02:10 | Edge pipeline verified end to end on the Mac. Server side by `model-research` (edge backend, mode validation, CORS header; 13 new tests), client by `builder-agent` (edge client, provider, mode picker; 91 tests), gateway by modes-88. `npm test` 104 of 104. Through the hub to Gemma 4 via LM Studio: Kalma 0.67 s, Hakbang 0.55 s, Pakinig 1.15 s, long no-mode reply 4.5 s; the builder's real `edgeAvailable`/`edgeTutor` against the live hub: true/false for live/dead, all three modes valid in 0.66 to 0.94 s; foreign origin 403, bad mode 400. Not yet tested: ngrok tunnel, deployed PWA, a phone, the UI in a browser. All work uncommitted | Terminal runs in this session |
 | Oct 10 01:20 | **Pivot to edge AI (D-018).** iPhone in-browser tests: Gemma 4 E2B page killed during download; Gemma 3 1B loaded then the page crashed. Decision: Gemma 4 E2B runs in LM Studio on this Mac (127.0.0.1:1234), phones use it over the local network. Measured on the Mac with the app's prompt and mode engine: 45 to 51 tok/s; Kalma and Hakbang replies 0.65 to 1.5 s; `reasoning_effort: "none"` is required. Found: Pakinig replies came back in English and long; one Hakbang reply kept a "Check question:" label | Terminal runs in this session; user screenshots |
