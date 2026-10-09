@@ -5,6 +5,7 @@ import OnlineBadge from '../ui/OnlineBadge.jsx'
 import { hasAnswered, loadStreak } from '../lib/mastery.js'
 import { loadHistory } from '../lib/history.js'
 import { LANGS } from '../lib/lang.js'
+import { MODES, MODE_IDS } from '../lib/tutor-modes.js'
 import { makeT } from '../lib/i18n.js'
 import './Progress.css'
 import { isLessonCompleted, isLessonInProgress } from '../lib/progress.js'
@@ -26,7 +27,7 @@ const ACHIEVEMENT_DEFS = [
   { key: 'master', icon: 'trophy', tone: 'gold' },
 ]
 
-export default function Progress({ competencies, mastery, studentName = '', grade = 6, online = true, lang = 'taglish', onChangeGrade, onLang }) {
+export default function Progress({ competencies, mastery, studentName = '', grade = 6, online = true, lang = 'taglish', onChangeGrade, onLang, mode = 'none', onMode }) {
   const tt = makeT(lang)
   const [answered, setAnswered] = useState(new Set())
   const [streak, setStreak] = useState(0)
@@ -215,6 +216,19 @@ export default function Progress({ competencies, mastery, studentName = '', grad
             ))}
           </div>
         )}
+        <button type="button" className="profile-preference-row" onClick={() => togglePreference('mode')} aria-expanded={expandedPreference === 'mode'}>
+          <span className="profile-preference-icon is-yellow" aria-hidden="true"><ModeIcon /></span>
+          <strong>{tt('profile.mode')}</strong><span className="profile-preference-value">{MODES[mode]?.label[lang] ?? MODES.none.label[lang]}</span><ChevronIcon expanded={expandedPreference === 'mode'} />
+        </button>
+        {expandedPreference === 'mode' && (
+          <div className="profile-option-grid is-mode" aria-label={tt('profile.chooseMode')}>
+            {MODE_IDS.map((id) => (
+              <button key={id} type="button" onClick={() => onMode?.(id)} aria-pressed={mode === id} className={mode === id ? 'is-active' : ''}>
+                <span>{MODES[id].label[lang]}<small>{MODES[id].gloss[lang]}</small></span>{mode === id && <CheckIcon />}
+              </button>
+            ))}
+          </div>
+        )}
       </section>
       {pendingGrade !== null && (
         <div className="profile-confirm-backdrop" role="presentation">
@@ -247,6 +261,10 @@ function BookIcon() {
 
 function CapIcon() {
   return <svg viewBox="0 0 48 38" width="34" height="28" aria-hidden="true"><path d="m3 13 21-10 21 10-21 10L3 13Z" fill="var(--gb-outline)" stroke="var(--gb-outline)" strokeWidth="2" strokeLinejoin="round" /><path d="M12 18v9c7 6 17 6 24 0v-9" fill="var(--gb-outline)" stroke="var(--gb-outline)" strokeWidth="2" strokeLinejoin="round" /><path d="M44 14v12" stroke="var(--gb-outline)" strokeWidth="2.5" strokeLinecap="round" /><circle cx="44" cy="28" r="2.5" fill="var(--gb-primary)" stroke="var(--gb-outline)" strokeWidth="1.5" /></svg>
+}
+
+function ModeIcon() {
+  return <svg viewBox="0 0 24 24" width="27" height="27" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3l2.2 5.6L20 11l-5.8 2.4L12 19l-2.2-5.6L4 11l5.8-2.4Z" /></svg>
 }
 
 function GlobeIcon() {

@@ -1808,6 +1808,9 @@
 .profile-option-grid button.is-active { border-width: 3px; box-shadow: 0.12rem 0.16rem 0 var(--profile-outline); }
 .profile-option-grid.is-grade button.is-active { background: var(--gb-secondary-soft); }
 .profile-option-grid.is-language button.is-active { background: var(--gb-primary); }
+.profile-option-grid.is-mode { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.profile-option-grid.is-mode button.is-active { background: var(--gb-primary); }
+.profile-option-grid.is-mode small { display: block; font-weight: 500; opacity: 0.75; }
 .profile-option-grid button svg { width: 1.05rem; height: 1.05rem; flex: 0 0 auto; }
 .profile-option-grid button span { min-width: 0; }
 .profile-dashboard button:focus-visible { outline: 3px solid var(--gb-info); outline-offset: 3px; }

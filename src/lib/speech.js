@@ -1,7 +1,7 @@
 // Voice-OUT: Teacher Gabay reads aloud. Best-available-first chain:
 //   1. online -> POST /api/tts (Google Cloud TTS, voice follows language)
 //   2. floor  -> on-device speechSynthesis (works fully OFFLINE, robotic)
-// Audio is cached in IndexedDB (tts:{lang}:{hash}) so repeats cost nothing and
+// Audio is cached in IndexedDB (tts:v2:{lang}:{hash}) so repeats cost nothing and
 // replay works offline once heard.
 //
 // Playback controls: stopSpeaking(), pauseSpeaking(), resumeSpeaking().
@@ -118,7 +118,9 @@ function playBlob(blob) {
 }
 
 async function speakCloud(text, lang, gen) {
-  const key = `tts:${lang}:${hash(text)}`
+  // v2: the server may now speak with ElevenLabs, so audio cached under the old
+  // key (Google voice) is not replayed. Bump again if the voice changes.
+  const key = `tts:v2:${lang}:${hash(text)}`
 
   try {
     const cached = await get(key)

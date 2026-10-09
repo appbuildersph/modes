@@ -3,14 +3,16 @@ import { getContentByRef } from './content.js'
 import { DEFAULT_LANG } from './lang.js'
 import { buildTutorPrompt } from './tutor-prompt.js'
 import { DEFAULT_MODE, normalizeMode } from './tutor-modes.js'
+import { edgeAvailable, edgeTutor } from './edge-llm.js'
 import { runTutorChain } from './tutor-chain.js'
 import { apiUrl } from './api-base.js'
 
 // Teacher Gabay tutor — best-available-first fallback chain (build plan §8):
 //   1. on-device Gemini Nano (works OFFLINE on capable laptops)
 //   2. on-device open model via transformers.js (SOURCE.LOCAL; added with local-llm.js)
-//   3. online -> POST /api/tutor (Vertex/Gemini proxy)
-//   4. fully offline, no Nano -> cached Taglish explanation (the floor)
+//   3. edge hub: Gemma on the Mac over the LAN (SOURCE.EDGE, D-018)
+//   4. online -> POST /api/tutor (Vertex/Gemini proxy)
+//   5. fully offline, no Nano -> cached Taglish explanation (the floor)
 // Every reply is cached in IndexedDB (tutor:{ref}:{hash}) for offline re-reading.
 // No language detection — trilingual behavior is the system prompt.
 
@@ -30,7 +32,7 @@ export function gabayPrompt(competency, lang = DEFAULT_LANG, options) {
 }
 
 // Source of the answer, for UI labelling.
-export const SOURCE = { NANO: 'nano', LOCAL: 'local', ONLINE: 'online', CACHED: 'cached' }
+export const SOURCE = { NANO: 'nano', LOCAL: 'local', EDGE: 'edge', ONLINE: 'online', CACHED: 'cached' }
 
 async function nanoAvailable() {
   try {
@@ -64,6 +66,12 @@ export async function askTeacherGabay(question, ref, lang = DEFAULT_LANG, mode =
           session.destroy?.()
         }
       },
+    },
+    {
+      // Teacher Gabay AI server: Gemma on the team's Mac, reached over the network (D-018).
+      source: SOURCE.EDGE,
+      available: () => edgeAvailable(),
+      run: () => edgeTutor({ question, ref, lang, mode: normalizeMode(mode) }),
     },
     {
       source: SOURCE.ONLINE,

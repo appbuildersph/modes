@@ -28,6 +28,7 @@ import {
 const SOURCE_KEY = {
   [SOURCE.NANO]: 'class.source.nano',
   [SOURCE.LOCAL]: 'class.source.local',
+  [SOURCE.EDGE]: 'class.source.edge',
   [SOURCE.ONLINE]: 'class.source.online',
   [SOURCE.CACHED]: 'class.source.cached',
 }
@@ -57,7 +58,7 @@ function LockIcon() {
   )
 }
 
-export default function Classroom({ competency, questions, questionSource = 'bundled', score, answered = false, online, lang = 'taglish', onLang, onAnswered, onExit }) {
+export default function Classroom({ competency, questions, questionSource = 'bundled', score, answered = false, online, lang = 'taglish', mode, onLang, onAnswered, onExit }) {
   const c = useMemo(() => ({ ...competency, items: questions?.length ? questions : competency.items }), [competency, questions])
   const teaching = useMemo(() => lessonTeaching(c), [c])
   const tt = makeT(lang)
@@ -304,7 +305,7 @@ export default function Classroom({ competency, questions, questionSource = 'bun
     setReply(null)
     stopSpeaking()
     try {
-      const r = await askTeacherGabay(text, c.ref, lang)
+      const r = await askTeacherGabay(text, c.ref, lang, mode)
       setReply(r)
       speak(plain(r.text), { lang })
     } catch {

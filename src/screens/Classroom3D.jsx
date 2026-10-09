@@ -21,6 +21,7 @@ import { ChoiceVisual, QuestionVisual } from '../ui/LearningVisual.jsx'
 const SOURCE_KEY = {
   [SOURCE.NANO]: 'class.source.nano',
   [SOURCE.LOCAL]: 'class.source.local',
+  [SOURCE.EDGE]: 'class.source.edge',
   [SOURCE.ONLINE]: 'class.source.online',
   [SOURCE.CACHED]: 'class.source.cached',
 }
@@ -39,7 +40,7 @@ function plain(s) {
 // React owns the DOM shell + lesson modal + content/mastery/voice bridge.
 // Three.js owns the canvas. The whole scene lives in three/scene.js -> buildClassroom(),
 // so codex's richer geometry can replace that one function without touching this file.
-export default function Classroom3D({ competency, questions, questionSource = 'bundled', score, online, lang = 'taglish', onAnswered, onExit, onFallback2D }) {
+export default function Classroom3D({ competency, questions, questionSource = 'bundled', score, online, lang = 'taglish', mode, onAnswered, onExit, onFallback2D }) {
   const c = { ...competency, items: questions?.length ? questions : competency.items }
   const tt = makeT(lang)
   const mountRef = useRef(null)
@@ -176,7 +177,7 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
     setReply(null)
     stopSpeaking()
     try {
-      const r = await askTeacherGabay(text, c.ref, lang)
+      const r = await askTeacherGabay(text, c.ref, lang, mode)
       setReply(r)
       speak(plain(r.text), { lang })
     } catch {

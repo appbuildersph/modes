@@ -36,18 +36,19 @@ export function normalizeMode(modeId) {
 }
 
 const PROMPT = {
-  none: '',
-  kalma:
+  none: () => '',
+  kalma: () =>
     ' Use exactly two short sentences, one idea, a calm neutral tone, and at most one gentle question.',
-  pakinig:
-    ' Write for listening: use words, not symbols (say "three fourths", not "3/4"; say "times", "equals", "percent"). Use short sentences. No emoji.',
-  hakbang:
-    ' Give only the next single step, in simple words, with a concrete Filipino example, then ask one check question.',
+  // Gemma 4 answered Pakinig in English and ran long unless told otherwise.
+  pakinig: (replyIn) =>
+    ` Write for listening: use words, not symbols (say "three fourths", not "3/4"; say "times", "equals", "percent"). Use at most four short sentences. No emoji. Keep replying in ${replyIn}.`,
+  hakbang: () =>
+    ' Give only the next single step, in simple words, with a concrete Filipino example, then ask one check question. Do not write labels like "Step" or "Check question".',
 }
 
 // Appended to the shared tutor prompt. Same wording on client and server.
-export function modePrompt(modeId) {
-  return PROMPT[normalizeMode(modeId)]
+export function modePrompt(modeId, replyIn = 'English') {
+  return PROMPT[normalizeMode(modeId)](replyIn)
 }
 
 // TODO: Filipino reviewer — templated check questions below.
@@ -83,11 +84,18 @@ function splitSentences(text) {
 }
 
 // Shared by every mode: reasoning blocks, markdown, emoji, stray whitespace.
+const GREETING = /^(hello|hi|hey|kumusta)(\s+(there|po|kaibigan|friend|students?))?\s*[!.,]\s*/i
+// Models sometimes echo the prompt's structure as literal labels.
+const LABEL = /(^|\s)(check question|tanong|next step|step \d+|hakbang \d+)\s*:\s*/gi
+
 function clean(text) {
-  return stripMarkdown(String(text ?? '').replace(/<think>[\s\S]*?(<\/think>|$)/g, ''))
+  const out = stripMarkdown(String(text ?? '').replace(/<think>[\s\S]*?(<\/think>|$)/g, ''))
     .replace(EMOJI, '')
+    .replace(LABEL, '$1')
     .replace(/\s+/g, ' ')
     .trim()
+  const rest = out.replace(GREETING, '')
+  return rest || out
 }
 
 function spokenFraction(n, d, lang) {
@@ -124,7 +132,7 @@ export function applyMode(modeId, lang, text) {
       .replace(/\.{2,}/g, '.')
   }
 
-  if (mode === 'pakinig') return spoken(out, lang)
+  if (mode === 'pakinig') return spoken(splitSentences(out).slice(0, 4).join(' '), lang)
 
   if (mode === 'hakbang') {
     const sentences = splitSentences(out)

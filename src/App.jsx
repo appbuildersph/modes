@@ -11,6 +11,8 @@ import {
 } from './lib/mastery.js'
 import { initVoices } from './lib/speech.js'
 import { loadLang, saveLang, DEFAULT_LANG } from './lib/lang.js'
+import { loadMode, saveMode } from './lib/mode-pref.js'
+import { DEFAULT_MODE } from './lib/tutor-modes.js'
 import { t } from './lib/i18n.js'
 import Splash from './screens/Splash.jsx'
 import Onboarding from './screens/Onboarding.jsx'
@@ -41,6 +43,7 @@ export default function App() {
   const [topicMode, setTopicMode] = useState('browse')
   const [online, setOnline] = useState(navigator.onLine)
   const [lang, setLangState] = useState(DEFAULT_LANG)
+  const [mode, setModeState] = useState(DEFAULT_MODE)
   const [questionSession, setQuestionSession] = useState(null)
   const [content, setContent] = useState([])
   const classroomStartRef = useRef(false)
@@ -59,8 +62,9 @@ export default function App() {
     initVoices()
     ;(async () => {
       await migrateMastery()
-      const [savedLang, savedGrade, savedName] = await Promise.all([
+      const [savedLang, savedMode, savedGrade, savedName] = await Promise.all([
         loadLang(),
+        loadMode(),
         get('gabay:selectedGrade'),
         get('gabay:studentName'),
       ])
@@ -70,6 +74,7 @@ export default function App() {
       const initialGrade = isSupportedGrade(storedGrade) ? storedGrade : DEFAULT_GRADE
       if (storedGrade !== initialGrade) await set('gabay:selectedGrade', initialGrade)
       setLangState(savedLang)
+      setModeState(savedMode)
       setGrade(initialGrade)
       setStudentName(savedName ?? '')
       setContent(await loadContentByGrade(initialGrade))
@@ -113,6 +118,11 @@ export default function App() {
   function changeLang(nextLang) {
     setLangState(nextLang)
     saveLang(nextLang)
+  }
+
+  function changeMode(nextMode) {
+    setModeState(nextMode)
+    saveMode(nextMode)
   }
 
   function navTo(key) {
@@ -268,6 +278,7 @@ export default function App() {
           answered={Object.prototype.hasOwnProperty.call(mastery, active.ref)}
           online={online}
           lang={lang}
+          mode={mode}
           onLang={changeLang}
           onAnswered={handleAnswered}
           onExit={() => setScreen('progress')}
@@ -284,6 +295,7 @@ export default function App() {
             score={mastery[active.ref] ?? 0}
             online={online}
             lang={lang}
+            mode={mode}
             onAnswered={handleAnswered}
             onExit={() => setScreen('progress')}
             onFallback2D={() => setScreen('classroom')}
@@ -305,6 +317,8 @@ export default function App() {
           studentName={studentName}
           onChangeGrade={handleProfileGradeChanged}
           onLang={changeLang}
+          mode={mode}
+          onMode={changeMode}
         />
       ))
 

@@ -26,5 +26,5 @@ export function buildTutorPrompt(competency, lang = DEFAULT_LANG, { mode, short 
   const base = short
     ? `You are Teacher Gabay, a friendly math tutor for Filipino learners. Reply in ${replyIn}. Topic: "${competency}". Guide step by step, never just give the answer. Keep it short. Plain text only, no markdown.${DATA_CLAUSE}`
     : `You are Teacher Gabay, a friendly math tutor for Filipino learners. Reply in ${replyIn}, regardless of the language the student writes in. Teach using this DepEd MATATAG competency: "${competency}". Use Filipino real-life examples (palengke, jeepney fare, sari-sari store). Never just give the final answer — guide step by step. Keep it short and warm. Do not use markdown formatting — no asterisks, no bold, no bullet symbols, plain text only.${DATA_CLAUSE}`
-  return base + modePrompt(mode)
+  return base + modePrompt(mode, replyIn)
 }
