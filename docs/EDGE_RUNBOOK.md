@@ -19,7 +19,7 @@ Mac browser at http://localhost:8787 -> the same hub, no internet needed
 
 ## 2. Start order (every session)
 
-**One button (2026-10-10):** run `scripts/make-launcher-app.sh` once. It builds `Edge AI Launcher.app` on the Desktop. Double-clicking it opens a local page (http://127.0.0.1:8700) with a big START button that runs every step below in order, skips what is already running, and then asks Gemma a test question. The button turns green (READY) only after Gemma has really answered. "Stop everything" stops the hub, ngrok, keep-awake and the LM Studio server. Logs: `~/Library/Logs/edge-launcher/`. Verified with the stack already running (every step reported "already running" and Gemma answered in 1.0 s). A cold start from nothing has not been run yet.
+**One button (2026-10-10):** run `scripts/make-launcher-app.sh` once (needs `swiftc` from the Xcode command line tools). It builds the native macOS app `Edge AI Launcher.app` on the Desktop (source: `native/edge-launcher/EdgeLauncher.swift`). The app shows a big START button that runs every step below in order, skips what is already running, and then asks Gemma a test question. The button turns green (READY) only after Gemma has really answered. "Stop everything" stops the hub, ngrok, keep-awake and the LM Studio server. The window is native; behind it the app runs `scripts/launcher.mjs` (the same steps, on 127.0.0.1:8700) and stops it on quit, while Gemma, the hub and the tunnel keep running. Logs: `~/Library/Logs/edge-launcher/`. Verified with the stack already running (every step reported "already running" and Gemma answered in about 1 s). A cold start from nothing has not been run yet.
 
 Manual steps: run each in its own terminal, in this order. Keep the Mac plugged in and awake.
 

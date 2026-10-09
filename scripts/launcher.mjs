@@ -12,7 +12,7 @@ import http from 'node:http'
 import { spawn, execFile } from 'node:child_process'
 import { existsSync, mkdirSync, openSync, readFileSync } from 'node:fs'
 import { homedir } from 'node:os'
-import { join, resolve } from 'node:path'
+import { dirname, join, resolve } from 'node:path'
 import { promisify } from 'node:util'
 
 const run = promisify(execFile)
@@ -31,6 +31,9 @@ const findTool = (name, extra = []) =>
 const LMS = findTool('lms', [join(homedir(), '.lmstudio/bin/lms')])
 const NGROK = findTool('ngrok')
 const NODE = process.execPath
+const NPM = findTool('npm', [join(dirname(NODE), 'npm')])
+// npm's shebang runs `node` from PATH, which a .app does not have.
+const BUILD_ENV = { ...process.env, PATH: `${dirname(NODE)}:${process.env.PATH ?? '/usr/bin:/bin'}` }
 
 let busy = false
 let steps = []
@@ -158,7 +161,7 @@ async function startAll() {
     s = step('Start the edge hub')
     if (await hubUp()) s.ok('already running')
     else {
-      if (!existsSync(join(ROOT, 'dist/index.html'))) await run('npm', ['run', 'build'], { cwd: ROOT, timeout: 240_000 }).catch(() => {})
+      if (!existsSync(join(ROOT, 'dist/index.html'))) await run(NPM, ['run', 'build'], { cwd: ROOT, env: BUILD_ENV, timeout: 240_000 }).catch(() => {})
       detach(NODE, ['--env-file=.env', 'scripts/edge-hub.mjs'], 'hub.log', { EDGE_SERVE_APP: '1', QUESTION_CORS_ORIGINS: ORIGINS })
       ;(await waitFor(hubUp, 15_000)) ? s.ok(voiceLine()) : s.fail('see ~/Library/Logs/edge-launcher/hub.log')
     }
