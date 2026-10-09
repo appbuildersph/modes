@@ -1,8 +1,6 @@
-# Gabay (working name): an offline-first AI math companion for Filipino learners
+# An offline-first AI math companion for Filipino learners
 
-> **Name status:** "Gabay" is the existing app's name in code, UI and storage keys. The team has not chosen the final submission name. The tutor character is "Teacher Gabay".
-
-Gabay is a Progressive Web App (PWA) that helps Filipino **Grade 4 to 6** learners practise Mathematics (DepEd MATATAG curriculum). Teacher Gabay, a friendly tutor, answers a learner's question step by step in English, Tagalog or Taglish, and can read the answer aloud. The answers come from an open-source model, **Gemma 4 E2B, running on the team's own laptop** (an "edge" setup), not from a cloud AI API.
+This project is a Progressive Web App (PWA) that helps Filipino **Grade 4 to 6** learners practise Mathematics (DepEd MATATAG curriculum). Teacher Gabay, a friendly tutor, answers a learner's question step by step in English, Tagalog or Taglish, and can read the answer aloud. The answers come from an open-source model, **Gemma 4 E2B, running on the team's own laptop** (an "edge" setup), not from a cloud AI API.
 
 This repository was built for the AppBuildersPH Hackathon 2026 (theme: Local AI). Read [Existing code and assets](#existing-code-and-assets-disclosure) for what predates the hackathon.
 
