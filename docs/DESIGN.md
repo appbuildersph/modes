@@ -2,6 +2,8 @@
 
 Status: 2026-10-10. Written by reading the code in this repo (`tailwind.config.js`, `src/index.css`, `src/ui/*`, `src/screens/*.css`, `index.html`) and the Hiyang mockup (`mockups/hiyang/`). Contrast ratios were calculated with the WCAG formula from the hex values in the code; they were not measured on a device. Anything a person has not looked at on the real iPhone 13 is marked **unverified**. Section 8 is the specification for the three learning modes; the rest describes what exists today.
 
+**Two design files; the mockup notes take precedence.** `mockups/hiyang/DESIGN.md` (added by `rieCodes`, commits `a3e1cca` and `2f16a11`, pushed after this file) is the team's newest design direction. Wherever it differs from this file, follow it: the layout of each mockup screen, the sample copy for each mode, the Hakbang step sequence, the build map, and the open decisions (project name candidates, Pakinig voice engine, where the mode is chosen). It also has the live mockup (https://hiyang-mockup.vercel.app, deep links `#setup`, `#kalma`, `#pakinig`, `#hakbang`, `#default`). The mockup notes themselves hand exact sizes, colors and contrast ratios to this file, so the tokens, components, accessibility audit, and per-mode values stay here. If the mockup notes change, update the matching lines here instead of keeping two versions, and link rather than copy values.
+
 Target device (D-017): an iPhone 13 (390 x 844 pt screen) running the app as an installed Home Screen PWA, portrait.
 
 ## 1. Principles (as practised in the code)
@@ -116,13 +118,14 @@ Interaction targets seen in code: nav tabs `min-h-[56px]`, several controls `min
 
 ## 8. Learning modes: design specification
 
-Confirmed definitions: `docs/TUTOR_MODES.md` section 1. Visual reference: the static **Hiyang mockup** (`mockups/hiyang/index.html`, a mockup of the Gabay practice screen with sample content; no live AI; `gabay-classroom.css` appears to be a copy of the app's `Classroom.css` (both are 1,695 lines; not diffed), and `modes.css` adds the three modes). The mockup is not integrated into the app. Hiyang is the mockup's wordmark; the project name is undecided.
+Confirmed definitions: `docs/TUTOR_MODES.md` section 1. Visual reference: the static **Hiyang mockup** (`mockups/hiyang/index.html`, a mockup of the Gabay practice screen with sample content; no live AI). `gabay-classroom.css` is a byte-for-byte copy of the app's `src/screens/Classroom.css` (checked with `diff`), `gabay-base.css` is adapted from `src/index.css`, and `modes.css` adds the three modes. Screen-by-screen layout, sample copy and the Hakbang step table are in `mockups/hiyang/DESIGN.md`, which takes precedence over this section where they differ. The mockup is not integrated into the app. Hiyang is the mockup's wordmark; the project name is undecided.
 
 ### 8.1 Mechanism
 
 - Store the mode as a preference (proposed key `pref:mode`, values `none | kalma | pakinig | hakbang`, default `none`).
 - Apply it as a class on the screen root (the mockup uses `mode-kalma`, `mode-pakinig`, `mode-hakbang` on `.classroom-page`) or a `data-mode` attribute on `#root`. Prefer overriding CSS variables over `!important`; the mockup uses `!important` heavily because it patches a copy of the app CSS, which should not be carried into the app.
 - The mode setup screen (the mockup's Profile tab "Mode setup": a vertical list of mode cards with an icon tile, name, gloss, one line of description and a radio, plus a dashed "No mode" card) is the proposed place to choose a mode.
+- **Who picks the mode (mockup proposal, not confirmed for the app):** the mockup's setup screen shows a learner card ("Ana, Grade 4, set up by her teacher") and the note "A teacher or parent picks the mode. Ana only sees the mode's name." Whether the mode is chosen by an adult, by the learner, or both, and whether it can change mid-lesson, is still open (`docs/TUTOR_MODES.md` section 9). Any learner may use any mode.
 - Describe each mode as designed to support certain learners. Never label the learner or ask for a diagnosis.
 
 ### 8.2 Kalma (calm / focus)
@@ -141,10 +144,12 @@ Confirmed definitions: `docs/TUTOR_MODES.md` section 1. Visual reference: the st
 |---|---|---|
 | Type | Large readable font, high contrast, wide spacing | Atkinson Hyperlegible 700, question 1.85 rem, line-height 1.7, letter-spacing 0.03 em, word-spacing 0.22 em; title 2.5 rem; replies 1.3 rem |
 | Contrast | High | Panel `#111`, text `#fff7cc` (17.5 : 1); highlight `--gb-primary` with outline-color text (12.4 : 1) |
-| Read-aloud | Auto read aloud with word highlighting | `.w` / `.w.on` spans highlight the current word; pause/play and speed controls |
+| Read-aloud | Auto read aloud with word highlighting | `.w` / `.w.on` spans highlight the current word; reads on screen open; Listen again, pause/play, and speed `0.8x`, `0.65x`, `1x` (today's `speech.js` rate is `0.95`, so Pakinig needs a slower default of about `0.8`) |
 | Answers | Voice answers | A 96 px round mic button (`p-mic`) with a pulsing active state, a large label, and a typing fallback; voice answers are simulated in the mockup |
 | Controls | Large | Answer input 1.45 rem, min height 4 rem; primary button 1.4 rem, min height 4.2 rem; icon buttons 3 rem |
 | Reply | No symbols or markdown; "3/4" is "three fourths"; slower TTS; avoids visual-only items | See `docs/TUTOR_MODES.md` |
+
+Voice engine for Pakinig is an open decision recorded in the mockup notes: Kokoro (Apache-2.0) gives better English voices offline but has no Tagalog; Tagalog options are Meta's MMS-TTS Tagalog model (non-commercial licence, which matters for a submission) or the phone's own Filipino voice (availability on the iPhone 13 unverified). Any engine chosen must be disclosed in `docs/SUBMISSION.md`.
 
 Implementation notes: word highlighting needs word boundary events. `speechSynthesis` provides them on some browsers; the Google Cloud TTS audio (`/api/tts`) returns MP3 with no word timings, so highlighting there needs SSML marks or a timing estimate. **Uncertain until prototyped on the iPhone.** The Atkinson Hyperlegible font must be self-hosted to work offline (finding 3).
 
@@ -154,14 +159,28 @@ Implementation notes: word highlighting needs word boundary events. `speechSynth
 |---|---|---|
 | Scaffold | Bigger StepScaffold | `h-scaffold`: padding 1.2 rem, prompt 1.6 rem / weight 800, input 1.6 rem, answer button 1.3 rem and min height 4 rem, help button with Nova 3.6 rem |
 | Visuals | Concrete visuals first (blocks, number lines) | 4-column grid of block tiles (`h-tile`, yellow, 2.5 px outline); "eaten" tiles are dashed with a rose strike line; an SVG number line with jump arcs and a dot; question text 1.45 rem |
-| Content | Unlocks Grade 1 to 3 content | Not in the mockup; see `docs/TUTOR_MODES.md` section 6 |
+| Content | Unlocks Grade 1 to 3 content | Shown as "Grade 2 / Madali" and "Grades 1-3 unlocked" chips on a lower-grade sample item; the real unlock is not built (`docs/TUTOR_MODES.md` section 6). The three-step sample (count 8, ate 2, left 6) with the visuals changing per step is in `mockups/hiyang/DESIGN.md` |
 | Reply | One step, then a check question; simple words; concrete Filipino examples | See `docs/TUTOR_MODES.md` |
 
 Contrast note from the mockup: the dashed "eaten" tile text (cream at 60% on `#245d54`) is 3.6 : 1; raise it for text, or rely on the strike line plus a label.
 
-### 8.5 What is mockup only (not yet in the app)
+### 8.5 Mockup versus app: what exists and where it lands
 
-Mode selection and storage; the setup screen; the `mode-*` styles; word-highlighted read-aloud; the voice-answer mic; block tiles and number-line visuals; the Kalma question counter; Grade 1-3 unlock. The existing app pieces to build on: `StepScaffold`, `Classroom.jsx` (practice flow and Ask panel), `speech.js`, `voicein.js`, `visual-assets.js`, `LearningVisual.jsx`, `SoundToggle.jsx`.
+Not in the app yet: mode selection and storage (`pref:mode`); the setup screen; the `mode-*` styles; word-highlighted read-aloud; the voice-answer mic; block tiles and number-line visuals; the Kalma question counter; the Grade 1-3 unlock.
+
+Existing app pieces to build on, with the touch points verified in the code:
+
+| Mode behaviour | Where it lands today |
+|---|---|
+| Kalma hides the 3D classroom entry | `LessonBrief.jsx` renders the 3D button (`onEnter3D`, line 60) |
+| Kalma hides coins | `Games.jsx` keeps a `coins` count and plays the `coin` sound; a coins chip shows during play |
+| Kalma has no celebration flash or shake | `Classroom.jsx` (`showCorrectOverlay`) and the `answer-shake` class on `StepScaffold` |
+| Kalma has no music and no sound control | `App.jsx` (`startBgm`) and `SoundToggle` |
+| Pakinig slower speech and word highlighting | `speech.js` (`u.rate = 0.95`; no word-boundary callback yet) |
+| Pakinig voice answers | `voicein.js` and the answer input in `Classroom.jsx` |
+| Hakbang bigger step card and visuals | `StepScaffold.jsx`, `LearningVisual.jsx`, `visual-assets.js` |
+
+The full file-by-file build map is in `mockups/hiyang/DESIGN.md` ("Build map"); it matches this table and `docs/TUTOR_MODES.md` sections 4 to 7.
 
 ## 9. Rules for AI sessions changing the UI
 
@@ -181,8 +200,9 @@ Mode selection and storage; the setup screen; the `mode-*` styles; word-highligh
 2. Does Kalma hide the Games tab, or simplify the games?
 3. Are the Atkinson Hyperlegible font and the other fonts allowed to be bundled (license: they are open fonts, but the files must be added and their licenses listed in the submission)?
 4. What are the origins and licenses of the illustrations, textures, and sound effects?
-5. Does the team want the Hiyang wordmark and look as the new project identity, or keep Gabay's? (The name is undecided.)
-6. Is dark mode wanted? None exists (`color-scheme: light`); Pakinig's dark panel is mode-specific.
+5. Project name: the mockup notes list Hiyang, Akma ("fitting"), Sari ("variety"), or another. The name is undecided; do not rename the app or storage keys until the team decides. Does the Hiyang wordmark and look become the project identity, or does Gabay's stay?
+6. Voice engine for Pakinig (Kokoro for English, which Tagalog option) and its license.
+7. Is dark mode wanted? None exists (`color-scheme: light`); Pakinig's dark panel is mode-specific.
 
 ## 11. Source map
 
@@ -193,5 +213,5 @@ Mode selection and storage; the setup screen; the `mode-*` styles; word-highligh
 | Screens and their styles | `src/screens/*.jsx`, `*.css` |
 | Fonts and meta | `index.html` |
 | 3D classroom theme | `src/lib/theme.js` (`pref:theme3d`, default `classic`), `src/three/scene.js` (`THEMES`, `THEME_LIST`) |
-| Mode mockup | `mockups/hiyang/` (`index.html`, `app.js`, `modes.css`, `gabay-classroom.css`, `gabay-base.css`) |
+| Mode mockup | `mockups/hiyang/` (`index.html`, `app.js`, `modes.css`, `gabay-classroom.css`, `gabay-base.css`) and its notes `mockups/hiyang/DESIGN.md` |
 | Mode definitions | `docs/TUTOR_MODES.md` |
