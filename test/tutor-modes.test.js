@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { MODES, MODE_IDS, modePrompt, applyMode, isValidReply, normalizeMode } from '../src/lib/tutor-modes.js'
+import { MODES, MODE_IDS, OFF_TOPIC, modePrompt, applyMode, isValidReply, normalizeMode } from '../src/lib/tutor-modes.js'
 import { buildTutorPrompt } from '../src/lib/tutor-prompt.js'
 
 test('every mode has labels in all three languages', () => {
@@ -101,4 +101,35 @@ test('mode cards describe support, never diagnose or make clinical claims', () =
       if (id !== 'none') assert.match(useCase[lang], framing[lang], `${id} ${lang} framing`)
     }
   }
+})
+
+// Off-topic questions: a kind refusal first, then the lesson, in every mode.
+test('the prompt asks for the exact off-topic sentence in the reply language', () => {
+  for (const lang of ['en', 'fil', 'taglish']) {
+    for (const short of [false, true]) {
+      assert.ok(buildTutorPrompt('Add fractions.', lang, { short }).includes(OFF_TOPIC[lang]))
+    }
+  }
+})
+
+test('an off-topic refusal stays first and the lesson follows it in every mode', () => {
+  const reply = "Sorry, I can't help with that question. A fraction has a top number. The bottom number shows the parts. Can you name one?"
+  for (const mode of MODE_IDS) {
+    const out = applyMode(mode, 'en', reply)
+    assert.ok(out.startsWith(OFF_TOPIC.en), `${mode}: ${out}`)
+    assert.match(out, /top number/, `${mode} kept the lesson`)
+    assert.ok(!out.includes('Sorry'), `${mode} uses the fixed wording`)
+  }
+  // Kalma: the refusal plus one teaching sentence.
+  assert.equal(applyMode('kalma', 'en', reply), `${OFF_TOPIC.en} A fraction has a top number.`)
+})
+
+test('a Tagalog refusal is recognised and replaced with the fixed Tagalog sentence', () => {
+  const out = applyMode('hakbang', 'fil', 'Hindi ko matutulungan iyan. Tingnan natin ang 3/4. Proper fraction ba ito?')
+  assert.equal(out, `${OFF_TOPIC.fil} Tingnan natin ang 3/4. Proper fraction ba ito?`)
+})
+
+test('an on-topic reply is not given the refusal', () => {
+  const out = applyMode('none', 'en', 'An improper fraction has a top number at least as big as the bottom one.')
+  assert.ok(!out.includes(OFF_TOPIC.en))
 })

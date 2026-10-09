@@ -103,6 +103,17 @@ const CHECK_QUESTION = {
   taglish: 'Gets mo ba hanggang dito?',
 }
 
+// Said first when the learner asks about something other than math or the lesson;
+// the reply then carries on teaching. The prompt asks for it word for word, and
+// applyMode() puts it back if a model paraphrases it.
+// TODO: Filipino reviewer — fil and taglish wording.
+export const OFF_TOPIC = {
+  en: "I can't help with that, but let's get back to our math lesson.",
+  fil: 'Hindi kita matutulungan diyan, pero balikan natin ang aralin natin sa math.',
+  taglish: 'Hindi kita matutulungan diyan, pero balik tayo sa math lesson natin.',
+}
+const DECLINE = /\b(can'?t|cannot|can not|unable to) help\b|hindi (kita|ko) (ka )?matutulungan|hindi ako makakatulong/i
+
 // TODO: Filipino reviewer — spoken forms of symbols for Tagalog and Taglish.
 const SPOKEN = {
   en: { times: 'times', divided: 'divided by', plus: 'plus', minus: 'minus', equals: 'equals', percent: 'percent', over: 'over' },
@@ -165,8 +176,22 @@ function spoken(text, lang) {
 
 // Pure and deterministic: the same input always gives the same output.
 export function applyMode(modeId, lang, text) {
-  const mode = normalizeMode(modeId)
   const out = clean(text)
+  if (!out) return ''
+  // An off-topic opener stays whole and first; the mode shapes the teaching after it
+  // (Hakbang would otherwise keep the refusal as its one step and drop the lesson).
+  const [first, ...rest] = splitSentences(out)
+  if (DECLINE.test(first)) {
+    const opener = OFF_TOPIC[lang] ?? OFF_TOPIC.en
+    const body = shapeForMode(modeId, lang, rest.join(' '))
+    if (!body) return opener
+    return `${opener} ${normalizeMode(modeId) === 'kalma' ? splitSentences(body)[0] : body}`
+  }
+  return shapeForMode(modeId, lang, out)
+}
+
+function shapeForMode(modeId, lang, out) {
+  const mode = normalizeMode(modeId)
   if (!out) return ''
 
   if (mode === 'kalma') {
