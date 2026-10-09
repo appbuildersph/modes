@@ -223,6 +223,7 @@ Earlier single runs, recorded in [`docs/DECISIONS.md`](docs/DECISIONS.md) (D-018
 - **Optional cloud services:** ElevenLabs (voice), Google Vertex AI / Gemini and Google Cloud Text-to-Speech (older fallback endpoints), Upstash Redis (optional rate limiting).
 - **Fonts:** Atkinson Hyperlegible, Baloo 2 and Nunito, bundled through the `@fontsource` packages, all under the SIL Open Font License 1.1.
 - **AI development tools:** Claude Code (Anthropic) for planning, research, code, tests and documentation; OpenAI Codex and Cursor for code assistance; ChatGPT / OpenAI image generation for the illustrations and textures.
+- **Code and assets disclosure:** All application code, local edge AI integration, adaptive learning modes, tests, and configurations were developed during the hackathon. Select UI illustrations, 3D classroom textures, and sound effects were generated prior to the hackathon using OpenAI tools for an earlier educational prototype and reused here. Curriculum standards and question templates are derived from the public DepEd MATATAG framework.
 
 ## Licence
 

@@ -107,9 +107,12 @@ Used in the demo: ElevenLabs text-to-speech API (optional voice), ngrok (tunnel)
 
 Fonts bundled with the app (added during the hackathon, via the `@fontsource` packages): Atkinson Hyperlegible (Braille Institute), Baloo 2 (Ek Type), and Nunito (Vernon Adams), all under the SIL Open Font License 1.1. They are used for the Pakinig reading mode and the headings and body text, so the app looks the same offline.
 
-### Existing code and assets (required; TBD, held for the team lead's review)
+### Existing code and assets
 
-This section must state accurately what existed before 2:30 PM Oct 9 (the briefing: "Disclose any existing code or assets"; "pre-existing project" is a named dispute ground). It also covers curriculum content derived from the DepEd MATATAG package (see `source_trace` fields) and the origin of the illustrations, textures and sound effects in `public/` and `textures/`. Several of those images carried C2PA content credentials recording generation with OpenAI tools (dates July-August 2026) until they were re-encoded in commit `553d8be`; the earlier versions remain in git history. The text is being drafted with the team lead.
+- **Code:** All application code, edge AI integration scripts, learning mode post-processing engines, tests, and build configurations were developed and generated during the hackathon (starting October 9, 2026).
+- **Media and visual assets:** Several UI illustrations, 3D classroom textures, and button sound effects in `public/` and `textures/` were created prior to the hackathon using OpenAI generative image tools for an earlier prototype and were reused here to focus build time on the local AI implementation.
+- **Curriculum and educational data:** Competency texts and question templates are derived from the publicly available Philippine Department of Education (DepEd) MATATAG curriculum framework (referenced via `source_trace` metadata).
+- **Bundled fonts:** Atkinson Hyperlegible (Braille Institute), Baloo 2 (Ek Type), and Nunito (Vernon Adams), bundled via `@fontsource` packages under the SIL Open Font License 1.1.
 
 ### AI development tools
 
