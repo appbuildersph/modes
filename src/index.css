@@ -678,6 +678,13 @@ textarea:focus-visible {
   50% { opacity: 1; }
 }
 .gb-thinking-nova { animation: gb-think-bob 1.2s ease-in-out infinite; }
+/* The calm clip ships with a black background, so it sits in a round badge. */
+.gb-mascot-video {
+  border-radius: 9999px;
+  border: 2.5px solid var(--gb-outline, #2b2b2b);
+  background: #000;
+  object-fit: cover;
+}
 .gb-thinking-dots { display: inline-flex; gap: 0.3rem; }
 .gb-thinking-dots i {
   width: 0.6rem;

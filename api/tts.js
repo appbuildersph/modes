@@ -18,11 +18,18 @@
 //   ELEVENLABS_VOICE_ID    required; pick by ear (no default on purpose)
 //   ELEVENLABS_MODEL       default eleven_flash_v2_5 (lists Filipino, low latency)
 //   ELEVENLABS_TIMEOUT_MS  default 15000
+//   ELEVENLABS_VOICE_ID_KALMA / _PAKINIG / _HAKBANG  optional: a different voice per
+//                          learning mode; each falls back to ELEVENLABS_VOICE_ID
+// The request may carry a learning `mode` (none | kalma | pakinig | hakbang). On
+// ElevenLabs it picks the voice and the delivery settings (MODE_VOICE below); the
+// Google provider ignores it. Speaking SPEED is not set here: the client applies the
+// mode's read rate at playback, so the two never stack.
 // Either provider unconfigured -> 501; a failed ElevenLabs call -> 502. Both make the
 // client fall back to speechSynthesis.
 
 import textToSpeech from '@google-cloud/text-to-speech'
 import { guard, parseBody } from './_shared.js'
+import { MODE_IDS } from '../src/lib/tutor-modes.js'
 
 const RATE_LIMIT = Number(process.env.TTS_RATE_LIMIT || 30)
 const MAX_BODY_BYTES = 4_000
@@ -40,14 +47,29 @@ function voiceFor(lang) {
 
 const useElevenLabs = () => process.env.TTS_PROVIDER === 'elevenlabs'
 
+// How each learning mode should sound. ElevenLabs voice_settings: lower stability =
+// more expressive, higher = steadier and more even; style adds expressiveness
+// (and latency) when above 0. 'none' sends no override, so the voice keeps the
+// settings it was saved with. These values are a starting point chosen to be
+// audibly different; they have not been tuned by ear, so adjust them after listening.
+export const MODE_VOICE = {
+  none: null,
+  kalma: { stability: 0.85, similarity_boost: 0.75, style: 0 }, // steady, even, unhurried
+  pakinig: { stability: 0.7, similarity_boost: 0.85, style: 0 }, // clear and consistent for listening
+  hakbang: { stability: 0.4, similarity_boost: 0.75, style: 0.3 }, // warmer, more encouraging
+}
+
 // Null when the key or voice is missing, so the handler answers 501 like Google does.
-function elevenLabsConfig() {
+// A per-mode voice id (ELEVENLABS_VOICE_ID_<MODE>) wins over the shared one.
+function elevenLabsConfig(mode = 'none') {
   const apiKey = process.env.ELEVENLABS_API_KEY
-  const voiceId = process.env.ELEVENLABS_VOICE_ID
+  const voiceId =
+    (mode !== 'none' && process.env[`ELEVENLABS_VOICE_ID_${mode.toUpperCase()}`]) || process.env.ELEVENLABS_VOICE_ID
   if (!apiKey || !voiceId) return null
   return {
     apiKey,
     voiceId,
+    voiceSettings: MODE_VOICE[mode] ?? null,
     model: process.env.ELEVENLABS_MODEL || 'eleven_flash_v2_5',
     timeoutMs: Number(process.env.ELEVENLABS_TIMEOUT_MS) || 15_000,
   }
@@ -66,7 +88,11 @@ async function elevenLabsSynthesize(config, text) {
         'Content-Type': 'application/json',
         Accept: 'audio/mpeg',
       },
-      body: JSON.stringify({ text, model_id: config.model }),
+      body: JSON.stringify({
+        text,
+        model_id: config.model,
+        ...(config.voiceSettings ? { voice_settings: config.voiceSettings } : {}),
+      }),
       signal: AbortSignal.timeout(config.timeoutMs),
     },
   )
@@ -103,13 +129,15 @@ export default async function handler(req, res) {
   // origin + rate-limit floor as the rest. It previously had none.
   if (await guard(req, res, { bucket: 'tts', limit: RATE_LIMIT, maxBytes: MAX_BODY_BYTES })) return
 
-  const elevenLabs = useElevenLabs() ? elevenLabsConfig() : null
-  const client = useElevenLabs() ? null : ttsClient()
-  // Not configured — signal client to fall back to speechSynthesis.
-  if (!elevenLabs && !client) return res.status(501).json({ error: 'tts_unconfigured' })
-
   const { body, error: parseError } = parseBody(req, MAX_BODY_BYTES)
   if (parseError) return res.status(parseError === 'invalid_json' ? 400 : 413).json({ error: parseError })
+
+  // Unconfigured is checked first so a client without a voice gets 501 and falls back.
+  const mode = body?.mode === undefined ? 'none' : MODE_IDS.includes(body.mode) ? body.mode : null
+  const elevenLabs = useElevenLabs() ? elevenLabsConfig(mode ?? 'none') : null
+  const client = useElevenLabs() ? null : ttsClient()
+  if (!elevenLabs && !client) return res.status(501).json({ error: 'tts_unconfigured' })
+  if (mode === null) return res.status(400).json({ error: 'invalid_mode' })
 
   const text = (body?.text || '').toString().trim()
   if (!text) return res.status(400).json({ error: 'no_text' })

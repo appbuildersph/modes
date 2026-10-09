@@ -106,3 +106,19 @@ test('a stalled hub is aborted by the timeout and resolves null', async () => {
   assert.equal(result, null)
   assert.ok(Date.now() - started < 5_000)
 })
+
+test('the learning mode is sent in the request body so the server can pick the voice', async () => {
+  for (const mode of ['kalma', 'pakinig', 'hakbang']) {
+    const { fetchImpl, calls } = fakeFetch(() => audio())
+    await fetchCloudAudio('Sige.', 'fil', { fetchImpl, resolveBase: async () => HUB, mode })
+    assert.deepEqual(calls[0].body, { text: 'Sige.', lang: 'fil', mode })
+  }
+})
+
+test('no mode, or "none", keeps the original {text, lang} body', async () => {
+  for (const mode of [undefined, 'none']) {
+    const { fetchImpl, calls } = fakeFetch(() => audio())
+    await fetchCloudAudio('Sige.', 'fil', { fetchImpl, resolveBase: async () => HUB, mode })
+    assert.deepEqual(calls[0].body, { text: 'Sige.', lang: 'fil' })
+  }
+})

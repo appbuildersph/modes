@@ -1,0 +1,119 @@
+/* Learning-mode looks (docs/DESIGN.md section 8, values from mockups/hiyang).
+   App.jsx sets <html data-mode="none|kalma|pakinig|hakbang">. Selectors start
+   with :root[data-mode] plus `body` so they outrank the screen stylesheets,
+   which load later; `!important` is used only where the base rule already has it. */
+
+/* ---------- Kalma: calm / focus ---------- */
+:root[data-mode='kalma'] .gb-doodles { display: none; }
+
+/* index.css paints the drifting doodle tile with !important, so this must match it. */
+:root[data-mode='kalma'] body .gb-shell { background-image: none !important; animation: none; }
+
+:root[data-mode='kalma'] body .classroom-page .classroom-heading::after,
+:root[data-mode='kalma'] body .classroom-page .classroom-panel:not(.classroom-results-panel)::before,
+:root[data-mode='kalma'] body .classroom-page .classroom-panel:not(.classroom-results-panel)::after {
+  content: none;
+}
+
+:root[data-mode='kalma'] body .classroom-page .classroom-panel:not(.classroom-results-panel) {
+  background: var(--gb-secondary-dark);
+  box-shadow: 3px 3px 0 var(--gb-outline);
+}
+
+:root[data-mode='kalma'] body .classroom-page .classroom-tabs button.is-active {
+  background: var(--gb-primary-soft);
+  box-shadow: none;
+}
+
+:root[data-mode='kalma'] body .classroom-page .classroom-mascot-sparkle { display: none; }
+:root[data-mode='kalma'] body .classroom-page .classroom-floating-mascot,
+:root[data-mode='kalma'] body .classroom-page .classroom-teacher-dropdown { animation: none; }
+:root[data-mode='kalma'] .lesson-brief-3d,
+:root[data-mode='kalma'] .lesson-brief-page-sound,
+:root[data-mode='kalma'] .app-sound-toggle { display: none; }
+
+/* ---------- Pakinig: listen ---------- */
+:root[data-mode='pakinig'] body .classroom-page .classroom-panel:not(.classroom-results-panel) {
+  background: #111;
+  color: #fff7cc;
+}
+
+:root[data-mode='pakinig'] body .classroom-page .classroom-heading::after,
+:root[data-mode='pakinig'] body .classroom-page .classroom-panel:not(.classroom-results-panel)::before,
+:root[data-mode='pakinig'] body .classroom-page .classroom-panel:not(.classroom-results-panel)::after {
+  content: none;
+}
+
+:root[data-mode='pakinig'] body .classroom-page .classroom-question-text {
+  font-family: 'Atkinson Hyperlegible', 'Nunito', system-ui, sans-serif;
+  font-size: 1.85rem;
+  font-weight: 700;
+  line-height: 1.7;
+  letter-spacing: 0.03em;
+  word-spacing: 0.22em;
+  color: #fff7cc;
+}
+
+:root[data-mode='pakinig'] body .classroom-page .classroom-answer-input {
+  min-height: 4rem;
+  font-family: 'Atkinson Hyperlegible', 'Nunito', system-ui, sans-serif;
+  font-size: 1.45rem;
+  letter-spacing: 0.03em;
+}
+
+:root[data-mode='pakinig'] body .classroom-page .classroom-practice-primary {
+  min-height: 4.2rem;
+  font-size: 1.4rem;
+}
+
+:root[data-mode='pakinig'] body .classroom-page .classroom-guidance-card p,
+:root[data-mode='pakinig'] body .classroom-page .classroom-reply-text {
+  font-family: 'Atkinson Hyperlegible', 'Nunito', system-ui, sans-serif;
+  font-size: 1.3rem;
+  line-height: 1.7;
+  letter-spacing: 0.03em;
+  word-spacing: 0.18em;
+}
+
+/* Word-by-word read-aloud (ReadAloudText.jsx) */
+.read-aloud .w { border-radius: 6px; transition: background-color 0.08s, color 0.08s; }
+.read-aloud .w.on {
+  background: var(--gb-primary);
+  color: var(--gb-outline);
+  box-shadow: 0 0 0 3px var(--gb-primary);
+}
+
+.read-aloud-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+.read-aloud-bar button {
+  min-height: 44px;
+  padding: 0.35rem 0.9rem;
+  border: 2.5px solid var(--gb-outline);
+  border-radius: 999px;
+  background: #fff7cc;
+  color: var(--gb-outline);
+  font-family: 'Baloo 2', system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  box-shadow: 0 3px 0 var(--gb-outline);
+}
+.read-aloud-bar button[aria-pressed='true'] { background: var(--gb-primary); }
+.read-aloud-bar .read-aloud-speeds { display: flex; gap: 0.4rem; }
+
+/* ---------- Hakbang: step ---------- */
+:root[data-mode='hakbang'] body .classroom-page .classroom-question-text { font-size: 1.45rem; }
+
+.step-scaffold.is-large { padding: 1.2rem; }
+.step-scaffold.is-large .step-scaffold-counter { font-size: 0.9rem; }
+.step-scaffold.is-large .step-scaffold-prompt { font-size: 1.6rem; line-height: 1.25; }
+.step-scaffold.is-large .step-scaffold-input { padding: 0.8rem 1.1rem; font-size: 1.6rem; font-weight: 800; }
+.step-scaffold.is-large .step-scaffold-submit { min-height: 4rem; padding-inline: 1.3rem; font-size: 1.3rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .read-aloud .w { transition: none; }
+}

@@ -1,6 +1,6 @@
 import test, { beforeEach, afterEach } from 'node:test'
 import assert from 'node:assert/strict'
-import handler from '../api/tts.js'
+import handler, { MODE_VOICE } from '../api/tts.js'
 
 // A fake key: these tests never touch the real ElevenLabs account or .env.
 const FAKE_KEY = 'test-key-not-a-real-secret'
@@ -9,6 +9,7 @@ const MP3 = Buffer.from([0x49, 0x44, 0x33, 1, 2, 3, 4])
 const ENV_KEYS = [
   'TTS_PROVIDER', 'ELEVENLABS_API_KEY', 'ELEVENLABS_VOICE_ID', 'ELEVENLABS_MODEL',
   'ELEVENLABS_TIMEOUT_MS', 'GCP_SA_KEY',
+  'ELEVENLABS_VOICE_ID_KALMA', 'ELEVENLABS_VOICE_ID_PAKINIG', 'ELEVENLABS_VOICE_ID_HAKBANG',
 ]
 
 const realFetch = globalThis.fetch
@@ -232,6 +233,88 @@ test('the google provider path never calls ElevenLabs', async () => {
   const res = mockResponse()
   await handler(mockRequest({ text: 'Kumusta', lang: 'fil' }), res)
 
+  assert.equal(res.statusCode, 501) // no GCP credentials in the test environment
+  assert.equal(calls.length, 0)
+})
+
+test('each learning mode sends its own voice settings to ElevenLabs, and they differ', async () => {
+  useElevenLabs()
+  const sent = {}
+  for (const mode of ['kalma', 'pakinig', 'hakbang']) {
+    calls.length = 0
+    stubFetch(() => audioResponse())
+    const res = mockResponse()
+    await handler(mockRequest({ text: 'Subukan natin.', lang: 'taglish', mode }), res)
+    assert.equal(res.statusCode, 200, mode)
+    assert.deepEqual(calls[0].body.voice_settings, MODE_VOICE[mode], mode)
+    sent[mode] = calls[0].body.voice_settings
+  }
+  // Kalma is the steadiest and Hakbang the most expressive; Pakinig sits between.
+  assert.ok(sent.kalma.stability > sent.pakinig.stability)
+  assert.ok(sent.pakinig.stability > sent.hakbang.stability)
+  assert.ok(sent.hakbang.style > sent.kalma.style)
+  // Speed is deliberately left to the client's read rate, so the two never stack.
+  for (const settings of Object.values(sent)) assert.equal('speed' in settings, false)
+})
+
+test('no mode, "none" and an absent mode all leave the voice at its saved settings', async () => {
+  useElevenLabs()
+  for (const body of [{ text: 'Sige.' }, { text: 'Sige.', mode: 'none' }]) {
+    calls.length = 0
+    stubFetch(() => audioResponse())
+    await handler(mockRequest({ ...body, lang: 'en' }), mockResponse())
+    assert.equal('voice_settings' in calls[0].body, false)
+  }
+})
+
+test('an unknown mode is a 400 invalid_mode and nothing is sent upstream', async () => {
+  useElevenLabs()
+  stubFetch(() => audioResponse())
+  for (const mode of ['zen', 'KALMA', null, 3]) {
+    const res = mockResponse()
+    await handler(mockRequest({ text: 'Sige.', lang: 'en', mode }), res)
+    assert.equal(res.statusCode, 400, String(mode))
+    assert.deepEqual(res.body, { error: 'invalid_mode' })
+  }
+  assert.equal(calls.length, 0)
+})
+
+test('a per-mode voice id overrides the shared voice, other modes keep the shared one', async () => {
+  useElevenLabs()
+  process.env.ELEVENLABS_VOICE_ID_HAKBANG = 'WarmVoice9'
+  stubFetch(() => audioResponse())
+
+  await handler(mockRequest({ text: 'Una.', lang: 'fil', mode: 'hakbang' }), mockResponse())
+  await handler(mockRequest({ text: 'Una.', lang: 'fil', mode: 'kalma' }), mockResponse())
+  await handler(mockRequest({ text: 'Una.', lang: 'fil' }), mockResponse())
+
+  assert.match(calls[0].url, /\/text-to-speech\/WarmVoice9\?/)
+  assert.match(calls[1].url, new RegExp(`/text-to-speech/${VOICE}\\?`))
+  assert.match(calls[2].url, new RegExp(`/text-to-speech/${VOICE}\\?`))
+})
+
+test('a per-mode voice alone is enough to be configured for that mode only', async () => {
+  process.env.TTS_PROVIDER = 'elevenlabs'
+  process.env.ELEVENLABS_API_KEY = FAKE_KEY
+  process.env.ELEVENLABS_VOICE_ID_KALMA = 'CalmVoice1' // no shared voice id at all
+  stubFetch(() => audioResponse())
+
+  let res = mockResponse()
+  await handler(mockRequest({ text: 'Dahan-dahan.', lang: 'fil', mode: 'kalma' }), res)
+  assert.equal(res.statusCode, 200)
+
+  res = mockResponse()
+  await handler(mockRequest({ text: 'Dahan-dahan.', lang: 'fil', mode: 'hakbang' }), res)
+  assert.equal(res.statusCode, 501) // nothing configured for that mode
+})
+
+test('the google provider accepts a mode but does not use it, and still validates it', async () => {
+  process.env.TTS_PROVIDER = 'google'
+  stubFetch(() => {
+    throw new Error('no network call expected')
+  })
+  const res = mockResponse()
+  await handler(mockRequest({ text: 'Sige.', lang: 'fil', mode: 'kalma' }), res)
   assert.equal(res.statusCode, 501) // no GCP credentials in the test environment
   assert.equal(calls.length, 0)
 })

@@ -134,7 +134,7 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
 
   // Teacher greeting on entry (voice-out, offline-safe).
   useEffect(() => {
-    if (ready) speak(tt('class.welcome3d'), { lang })
+    if (ready) speak(tt('class.welcome3d'), { lang, mode })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready])
 
@@ -180,7 +180,7 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
     try {
       const r = await askTeacherGabay(text, c.ref, lang, mode)
       setReply(r)
-      speak(plain(r.text), { lang })
+      speak(plain(r.text), { lang, mode })
     } catch {
       setReply({ text: tt('class.askError'), source: SOURCE.CACHED })
     } finally {
@@ -210,7 +210,7 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
   function toggleMic() {
     if (listening) {
       setTranscribing(true)
-      speak(tt('class.listeningShort'), { lang })
+      speak(tt('class.listeningShort'), { lang, mode })
       recRef.current?.stop()
       return
     }
@@ -245,7 +245,7 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
     primeAudio() // tapping the board is a user gesture — unlock audio here too
     sceneRef.current?.setControls(false) // release pointer lock while answering
     setModal(true)
-    speak(localize(itemRef.current.q, lang), { lang })
+    speak(localize(itemRef.current.q, lang), { lang, mode })
   }
 
   function submit() {
@@ -270,7 +270,7 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
     setAnswers((a) => [...a, { q: locItem.q, your: input.trim(), answer: item.answer, correct: ok, solution: locItem.solution }])
     recordAttempt({ ref: item.ref ?? c.ref, q: locItem.q, your: input.trim(), answer: item.answer, correct: ok, feedback: ok ? f.headline : f.body, source: item.source ?? questionSource })
     onAnswered(c.ref, ok)
-    speak(ok ? f.headline : `${f.headline} ${plain(f.body)}`, { lang })
+    speak(ok ? f.headline : `${f.headline} ${plain(f.body)}`, { lang, mode })
     sceneRef.current?.markBoard(ok)
   }
 
@@ -279,7 +279,7 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
       setDone(true)
       setModal(false)
       sfx('finish')
-      speak(tt('class.bubble.done', { correct: correctCount, total: c.items.length }), { lang })
+      speak(tt('class.bubble.done', { correct: correctCount, total: c.items.length }), { lang, mode })
       return
     }
     const n = idx + 1
@@ -289,7 +289,7 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
     setFb(null)
     setNudge(null)
     sceneRef.current?.setBoardText(localize(c.items[n].q, lang))
-    speak(localize(c.items[n].q, lang), { lang })
+    speak(localize(c.items[n].q, lang), { lang, mode })
   }
 
   function closeModal() {
@@ -659,7 +659,7 @@ function AskPanel({ tt, lang, online, question, setQuestion, askGabay, toggleMic
             <button
               type="button"
               className="mt-2 flex h-11 w-11 items-center justify-center rounded-full border-[2.5px] border-outline bg-white shadow-hard-sm"
-              onClick={() => speak(plain(reply.text), { lang })}
+              onClick={() => speak(plain(reply.text), { lang, mode })}
               aria-label={tt('class.listenAgain')}
               title={tt('class.listenAgain')}
             >

@@ -57,7 +57,7 @@ export default function LessonBrief({ competency: c, score = 0, answered = false
       <section className={`lesson-brief-entry ${unlocked ? 'is-unlocked' : 'is-locked'}`} aria-live="polite">
       <div className="lesson-brief-mode-grid">
         <Button color="mint" className="lesson-brief-mode-button" onClick={onEnter} disabled={!unlocked}>{!unlocked && <span className="lesson-brief-lock" aria-hidden="true" />}{tt('brief.enter2d')}</Button>
-        <Button color="sky" className="lesson-brief-mode-button" onClick={onEnter3D} disabled={!unlocked}>{!unlocked && <span className="lesson-brief-lock" aria-hidden="true" />}{tt('brief.enter3d')}</Button>
+        <Button color="sky" className="lesson-brief-mode-button lesson-brief-3d" onClick={onEnter3D} disabled={!unlocked}>{!unlocked && <span className="lesson-brief-lock" aria-hidden="true" />}{tt('brief.enter3d')}</Button>
       </div>
     </section>
       <SoundToggle className="lesson-brief-page-sound" lang={lang} />

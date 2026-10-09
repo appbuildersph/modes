@@ -33,7 +33,7 @@ export default function ModeIcon({ mode, size = 48 }) {
       style={{ width: size, height: size }}
     >
       {id === 'none' ? (
-        <Mascot size={Math.round(size * 0.78)} alt="" />
+        <Mascot size={Math.round(size * 0.78)} alt="" pose="none" />
       ) : (
         <svg viewBox="0 0 24 24" width={Math.round(size * 0.58)} height={Math.round(size * 0.58)}>{ICONS[id]}</svg>
       )}

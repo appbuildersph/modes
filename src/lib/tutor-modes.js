@@ -10,7 +10,8 @@ export const DEFAULT_MODE = 'none'
 
 // Wording rule (docs/TUTOR_MODES.md section 2): modes are "designed to support"
 // learners and never diagnose or make clinical claims. `description` states only
-// what changes today (the tutor's replies); update it when the screen changes ship.
+// what changes today (screen look and the tutor's replies); keep it in step with
+// src/lib/mode-ui.js and src/styles/modes.css.
 // TODO: Filipino reviewer — fil and taglish descriptions and use cases.
 export const MODES = {
   none: {
@@ -33,9 +34,9 @@ export const MODES = {
     label: { en: 'Kalma', fil: 'Kalma', taglish: 'Kalma' },
     gloss: { en: 'Calm / Focus', fil: 'Kalmado / Nakatutok', taglish: 'Calm / Focus' },
     description: {
-      en: 'Short, calm replies. One idea at a time.',
-      fil: 'Maikli at kalmadong sagot. Isang ideya bawat sagot.',
-      taglish: 'Maikli at calm na replies. One idea at a time.',
+      en: 'A calm, quiet screen and short replies. One idea at a time.',
+      fil: 'Tahimik at payak na screen, maikling sagot. Isang ideya bawat sagot.',
+      taglish: 'Calm at tahimik na screen, maikling replies. One idea at a time.',
     },
     useCase: {
       en: 'Designed to support learners who find busy screens or lots of text overwhelming, for example learners with ADHD, autism, or sensory sensitivity.',
@@ -48,9 +49,9 @@ export const MODES = {
     label: { en: 'Pakinig', fil: 'Pakinig', taglish: 'Pakinig' },
     gloss: { en: 'Listen', fil: 'Makinig', taglish: 'Listen' },
     description: {
-      en: 'Replies made for listening. Numbers are said as words.',
-      fil: 'Sagot na para pakinggan. Binibigkas ang mga numero.',
-      taglish: 'Replies na para pakinggan. Sinasabi ang numbers as words.',
+      en: 'Big text, read aloud word by word. Numbers said as words.',
+      fil: 'Malaking teksto, binabasa nang malakas bawat salita. Binibigkas ang mga numero.',
+      taglish: 'Big text, binabasa nang malakas word by word. Sinasabi ang numbers as words.',
     },
     useCase: {
       en: 'Designed to support learners who find reading hard, for example learners with dyslexia or low vision, and learners still building reading skills.',
@@ -63,9 +64,9 @@ export const MODES = {
     label: { en: 'Hakbang', fil: 'Hakbang', taglish: 'Hakbang' },
     gloss: { en: 'Step', fil: 'Isang hakbang', taglish: 'Step' },
     description: {
-      en: 'One step at a time, then a quick check.',
-      fil: 'Isang hakbang bawat sagot, tapos may maikling tanong.',
-      taglish: 'One step at a time, tapos may quick check.',
+      en: 'A bigger step-by-step card, then a quick check.',
+      fil: 'Mas malaking card ng bawat hakbang, tapos may maikling tanong.',
+      taglish: 'Mas malaking step-by-step card, tapos may quick check.',
     },
     useCase: {
       en: 'Designed to support learners who do better with small steps and concrete examples, for example learners with dyscalculia or an intellectual disability.',

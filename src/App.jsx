@@ -14,6 +14,7 @@ import { loadLang, saveLang, DEFAULT_LANG } from './lib/lang.js'
 import { loadMode, saveMode } from './lib/mode-pref.js'
 import { DEFAULT_MODE } from './lib/tutor-modes.js'
 import { screenAfterSplash } from './lib/onboarding-flow.js'
+import { modeUi } from './lib/mode-ui.js'
 import { t } from './lib/i18n.js'
 import Splash from './screens/Splash.jsx'
 import Onboarding from './screens/Onboarding.jsx'
@@ -26,7 +27,7 @@ import Games from './screens/Games.jsx'
 import Generating from './screens/Generating.jsx'
 import BottomNav from './ui/BottomNav.jsx'
 import SoundToggle from './ui/SoundToggle.jsx'
-import { loadSoundPrefs, pauseBgm, primeAudio, resumeBgm, startBgm } from './lib/sound.js'
+import { loadSoundPrefs, pauseBgm, primeAudio, resumeBgm, startBgm, stopBgm } from './lib/sound.js'
 import { prepareQuestionSession } from './lib/question-session.js'
 import { DEFAULT_GRADE, isSupportedGrade } from './lib/grades.js'
 import { apiUrl } from './lib/api-base.js'
@@ -124,6 +125,10 @@ export default function App() {
   function changeMode(nextMode) {
     setModeState(nextMode)
     saveMode(nextMode)
+    // Kalma is music-free; switching in or out takes effect right away.
+    if (screen === 'splash') return
+    if (modeUi(nextMode).music) startBgm()
+    else stopBgm()
   }
 
   function navTo(key) {
@@ -135,11 +140,16 @@ export default function App() {
     else if (key === 'profile') setScreen('progress')
   }
 
+  // One hook for every screen: src/styles/modes.css keys off <html data-mode>.
+  useEffect(() => {
+    document.documentElement.dataset.mode = mode
+  }, [mode])
+
   function withNav(activeKey, node, showSound = true) {
     return (
       <>
         {node}
-        {showSound && <SoundToggle lang={lang} />}
+        {showSound && modeUi(mode).music && <SoundToggle lang={lang} />}
         <BottomNav active={activeKey} onNav={navTo} lang={lang} />
       </>
     )
@@ -203,7 +213,7 @@ export default function App() {
           lang={lang}
           onStart={async () => {
             primeAudio()
-            startBgm()
+            if (modeUi(mode).music) startBgm()
             const name = await get('gabay:studentName')
             setScreen(screenAfterSplash(name))
           }}

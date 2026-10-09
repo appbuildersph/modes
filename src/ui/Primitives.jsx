@@ -151,7 +151,7 @@ export function Plant({ size = 28, className = '' }) {
 // Light background doodles (sparkles, clouds).
 export function Doodles() {
   return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+    <div className="gb-doodles pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
       <Sparkle className="absolute left-4 top-6 opacity-70" size={22} />
       <Cloud className="absolute right-5 top-14 opacity-70" size={40} />
       <Sparkle className="absolute right-8 bottom-44 opacity-60" size={16} />

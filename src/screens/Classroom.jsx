@@ -19,6 +19,8 @@ import { sfx } from '../lib/sound.js'
 import { stripMarkdown } from '../lib/strip-markdown.js'
 import './Classroom.css'
 import ThinkingIndicator from '../ui/ThinkingIndicator.jsx'
+import { modeUi } from '../lib/mode-ui.js'
+import ReadAloudText from '../ui/ReadAloudText.jsx'
 import {
   createRecognizer,
   isRecognitionSupported,
@@ -94,6 +96,7 @@ export default function Classroom({ competency, questions, questionSource = 'bun
   const [question, setQuestion] = useState('')
   const [reply, setReply] = useState(null)
   const [thinking, setThinking] = useState(false)
+  const ui = modeUi(mode)
   const [listening, setListening] = useState(false)
   const [transcribing, setTranscribing] = useState(false)
   const recRef = useRef(null)
@@ -179,7 +182,9 @@ export default function Classroom({ competency, questions, questionSource = 'bun
   // Auto read aloud whenever Gabay's line changes (voice-out, works offline).
   useEffect(() => {
     setPaused(false)
-    speak(bubble, { lang })
+    // Pakinig reads the new question itself (ReadAloudText); don't talk over it.
+    if (ui.autoRead && tab === 'practice' && result === null) return undefined
+    speak(bubble, { lang, rate: ui.readRate, mode })
     return () => stopSpeaking()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bubble])
@@ -236,11 +241,11 @@ export default function Classroom({ competency, questions, questionSource = 'bun
     const f = feedbackFor(locItem, ok, lang, idx)
     setResult(ok)
     setFb(f)
-    sfx(ok ? 'correct' : 'wrong')
+    if (ui.sfx) sfx(ok ? 'correct' : 'wrong')
     if (ok) vibrateCorrect()
     else vibrateWrong()
     setAvatarState(ok ? 'nova-correct' : 'nova-wrong')
-    setShowCorrectOverlay(ok)
+    setShowCorrectOverlay(ok && ui.celebrate)
     setFeedbackReady(false)
     window.setTimeout(() => setAvatarState('nova-idle'), ok ? 1500 : 500)
     window.setTimeout(() => setShowCorrectOverlay(false), 1500)
@@ -308,7 +313,7 @@ export default function Classroom({ competency, questions, questionSource = 'bun
     try {
       const r = await askTeacherGabay(text, c.ref, lang, mode)
       setReply(r)
-      speak(plain(r.text), { lang })
+      speak(plain(r.text), { lang, rate: ui.readRate, mode })
     } catch {
       setReply({ text: tt('class.askError'), source: SOURCE.CACHED })
     } finally {
@@ -339,7 +344,7 @@ export default function Classroom({ competency, questions, questionSource = 'bun
     if (listening) {
       // Voice cue so the learner isn't left in silence while we transcribe.
       setTranscribing(true)
-      speak(tt('class.listeningShort'), { lang })
+      speak(tt('class.listeningShort'), { lang, mode })
       recRef.current?.stop()
       return
     }
@@ -429,7 +434,7 @@ export default function Classroom({ competency, questions, questionSource = 'bun
 
       <main
         ref={panelRef}
-        className={`classroom-panel ${done ? 'classroom-results-panel' : ''} ${result === false ? 'answer-shake' : ''}`}
+        className={`classroom-panel ${done ? 'classroom-results-panel' : ''} ${result === false && ui.shake ? 'answer-shake' : ''}`}
         role="tabpanel"
         aria-label={tt(TABS.find((entry) => entry.key === tab)?.tkey)}
       >
@@ -485,7 +490,9 @@ export default function Classroom({ competency, questions, questionSource = 'bun
             <section className="classroom-practice">
 
               <div className="classroom-question-meta">
-                <span className="classroom-quick-challenge">{tt('class.quickChallenge')}</span>
+                <span className="classroom-quick-challenge">
+                  {ui.questionCounter ? tt('class.questionCount', { n: idx + 1, total: c.items.length }) : tt('class.quickChallenge')}
+                </span>
                 <span
                   className="classroom-question-progress"
                   role="progressbar"
@@ -500,7 +507,18 @@ export default function Classroom({ competency, questions, questionSource = 'bun
                 </span>
               </div>
 
-              <p className="classroom-question-text font-display">{localize(item.q, lang)}</p>
+              {ui.highlight ? (
+                <ReadAloudText
+                  text={localize(item.q, lang)}
+                  lang={lang}
+                  tt={tt}
+                  autoRead={ui.autoRead}
+                  defaultRate={ui.readRate}
+                  className="classroom-question-text font-display"
+                />
+              ) : (
+                <p className="classroom-question-text font-display">{localize(item.q, lang)}</p>
+              )}
               <QuestionVisual question={localize(item.q, lang)} dark />
               {result !== null && fb && (
                 <div className={`classroom-practice-feedback rounded-card border-2 p-3 ${fb.ok ? 'border-mint bg-mint/20' : 'border-yellow bg-yellow/20'}`}>
@@ -604,7 +622,7 @@ export default function Classroom({ competency, questions, questionSource = 'bun
               <Button color="mint" className="flex-1 text-lg" onClick={onExit}>{tt('common.done')}</Button>
             </div>
           ) : !stepsDone && !itemOptions ? (
-            <StepScaffold item={item} lang={lang} tt={tt} onComplete={() => setStepsDone(true)} />
+            <StepScaffold item={item} lang={lang} tt={tt} calm={!ui.shake} size={ui.bigSteps ? 'large' : 'normal'} onComplete={() => setStepsDone(true)} />
           ) : (
             <div className="classroom-practice-action-row">
               {result === null ? (
@@ -672,7 +690,7 @@ export default function Classroom({ competency, questions, questionSource = 'bun
                 disabled={!isSpeechSupported()}
                 onClick={() => {
                   setPaused(false)
-                  speak(teacherDialogue, { lang })
+                  speak(teacherDialogue, { lang, rate: ui.readRate, mode })
                 }}
                 aria-label={tt('class.listenAgain')}
                 title={tt('class.listenAgain')}
@@ -739,12 +757,12 @@ export default function Classroom({ competency, questions, questionSource = 'bun
                     <p className="mb-1 text-xs font-bold text-ink/60">
                       {(reply.source && tt(SOURCE_KEY[reply.source])) || ''} {reply.fromCache ? ' - cached' : ''}
                     </p>
-                    <p className="text-base leading-snug">{plain(reply.text)}</p>
+                    <p className="classroom-reply-text text-base leading-snug">{plain(reply.text)}</p>
                     {isSpeechSupported() && (
                       <button
                         type="button"
                         className="mt-2 flex h-10 w-10 items-center justify-center rounded-full border-[2.5px] border-outline bg-white shadow-hard-sm"
-                        onClick={() => speak(plain(reply.text), { lang })}
+                        onClick={() => speak(plain(reply.text), { lang, rate: ui.readRate, mode })}
                         aria-label={tt('class.listenAgain')}
                         title={tt('class.listenAgain')}
                       >
