@@ -83,7 +83,7 @@ export default function TopicPicker({
         <button className="gb-chip topic-picker-back bg-white" onClick={onBack}>{tt('common.back')}</button>
         <div className="topic-picker-brand flex items-center gap-2">
           <OnlineBadge online={online} />
-          <Mascot size={36} />
+          <Mascot size={36} pose="head" />
           <span className="font-display text-xl font-extrabold">SIBOL</span>
         </div>
       </div>
@@ -122,7 +122,7 @@ export default function TopicPicker({
 
       {noPracticeDue ? (
         <Card color="cream" className="topic-picker-empty gb-pop p-6 text-center">
-          <div className="topic-picker-empty-art"><Mascot size={120} float className="topic-picker-empty-mascot mx-auto" /></div>
+          <div className="topic-picker-empty-art"><Mascot size={120} float scene="study" className="topic-picker-empty-mascot mx-auto" /></div>
           <p className="topic-picker-empty-message mt-3 font-display text-xl font-extrabold">{tt('topics.nothingDue')}</p>
           <Button color="mint" className="topic-picker-empty-cta mt-4 w-full" onClick={onBrowse}>{tt('topics.browseNew')}</Button>
         </Card>

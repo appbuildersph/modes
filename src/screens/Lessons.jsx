@@ -107,7 +107,7 @@ export default function Lessons({ competencies, mastery, next, studentName = '',
     <main className="lessons-page profile-page gb-shell">
       <header className="home-header">
         <div className="home-brand">
-          <span className="home-brand-mark" aria-hidden="true"><Mascot size={42} /></span>
+          <span className="home-brand-mark" aria-hidden="true"><Mascot size={42} pose="head" /></span>
           <span>SIBOL</span>
         </div>
         <OnlineBadge online={online} className="home-online-badge" />

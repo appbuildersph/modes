@@ -117,7 +117,7 @@ export default function Onboarding({ lang = 'taglish', onDone }) {
 
         {step === 4 && (
           <>
-            <Mascot size={150} float className="mx-auto" />
+            <Mascot size={150} float scene="wink" className="mx-auto" />
             <h1 className="mt-3 font-display text-2xl font-extrabold leading-tight">
               {tt('onboarding.greeting', { name: name.trim() })}
             </h1>

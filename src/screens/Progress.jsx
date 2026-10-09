@@ -111,7 +111,7 @@ export default function Progress({ competencies, mastery, studentName = '', grad
         <div className="profile-dashboard-top">
           <div className="profile-dashboard-identity">
             <div className="profile-dashboard-avatar">
-              <Mascot size={76} alt="Gabo" />
+              <Mascot size={76} alt="Gabo" scene="wink" />
             </div>
             <div className="profile-dashboard-name">
               <p>{tt('profile.myProfile')}</p>

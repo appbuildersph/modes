@@ -254,7 +254,7 @@ export default function Games({ online = true, grade = 6, competencies = [], mas
     const progress = 12 + 83 * (1 - Math.exp(-generatingElapsedMs / 9000))
     return (
       <div className={`game-generating-page game-generating-${game?.key ?? 'default'} gb-shell relative flex min-h-screen flex-col items-center justify-center px-6 pb-28 text-center`}>
-        <div className="relative z-10 nova-idle"><Mascot size={132} /></div>
+        <div className="relative z-10 nova-idle"><Mascot size={132} scene="play" /></div>
         <h1 className="relative z-10 mt-4 font-display text-3xl font-extrabold">{tt('questions.generating')}</h1>
         <p className="relative z-10 mt-2 font-bold text-ink/65">{tt(subKey)}</p>
         <div className="relative z-10 mt-5 h-3 w-48 overflow-hidden rounded-full border-2 border-outline bg-white">
@@ -506,7 +506,7 @@ function Header({ online = true, tt }) {
   return (
     <div className="games-header relative z-10 flex items-center justify-between gap-2">
       <div className="games-header-brand flex min-w-0 items-center gap-2">
-        <Mascot size={32} />
+        <Mascot size={32} scene="play" />
         <span className="font-display text-xl font-extrabold">{tt('games.title')}</span>
       </div>
       <OnlineBadge online={online} className="shrink-0" />
