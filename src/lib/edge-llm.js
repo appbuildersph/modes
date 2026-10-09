@@ -59,7 +59,7 @@ async function probeSameOriginHub(fetchImpl, timeoutMs) {
   return sameOriginHub
 }
 
-// Order: stored override, build-time VITE_EDGE_BASE, same origin on localhost,
+// Order: stored override, same origin on localhost, build-time VITE_EDGE_BASE,
 // same origin when it identifies itself as the hub.
 // Returns null when there is nowhere to ask, so the chain skips the provider.
 export async function resolveEdgeBase({
@@ -77,9 +77,12 @@ export async function resolveEdgeBase({
   }
   const override = stored ? cleanBase(stored) : null
   if (override) return override
+  // Localhost before the build-time base: a build made for Vercel bakes in the
+  // ngrok URL, and the hub serving that same build on localhost must still answer
+  // itself, or the Mac's own browser loses the tutor when the internet is off.
+  if (hostname === 'localhost' || hostname === '127.0.0.1') return ''
   const built = env?.VITE_EDGE_BASE ? cleanBase(env.VITE_EDGE_BASE) : null
   if (built) return built
-  if (hostname === 'localhost' || hostname === '127.0.0.1') return ''
   // No window (Node tests, workers without a location) means no same origin to probe.
   if (hostname && (await probeSameOriginHub(fetchImpl, probeTimeoutMs))) return ''
   return null

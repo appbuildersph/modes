@@ -55,11 +55,14 @@ test('?edge=<url> is remembered once and ignored when it is not http(s)', async 
   assert.equal(other.m.size, 0)
 })
 
-test('base resolves from stored override, then env, then localhost, else null', async () => {
+test('base resolves from stored override, then localhost, then env, else null', async () => {
   const stored = memoryStore({ [EDGE_BASE_KEY]: 'https://stored.example' })
   assert.equal(await resolveEdgeBase({ store: stored, env: { VITE_EDGE_BASE: 'https://env.example' }, hostname: 'localhost' }), 'https://stored.example')
   assert.equal(await resolveEdgeBase({ store: memoryStore(), env: { VITE_EDGE_BASE: 'https://env.example/' }, hostname: 'x.com' }), 'https://env.example')
   assert.equal(await resolveEdgeBase({ store: memoryStore(), env: {}, hostname: 'localhost' }), '')
+  // A Vercel build (ngrok base baked in) served by the hub on localhost must use the hub itself.
+  assert.equal(await resolveEdgeBase({ store: memoryStore(), env: { VITE_EDGE_BASE: 'https://env.example' }, hostname: 'localhost' }), '')
+  assert.equal(await resolveEdgeBase({ store: memoryStore(), env: { VITE_EDGE_BASE: 'https://env.example' }, hostname: '127.0.0.1' }), '')
   assert.equal(await resolveEdgeBase({ store: memoryStore(), env: {}, hostname: '127.0.0.1' }), '')
   assert.equal(await resolveEdgeBase({ store: memoryStore(), env: {}, hostname: 'app.example.com', fetchImpl: async () => ({ ok: false }) }), null)
 })
