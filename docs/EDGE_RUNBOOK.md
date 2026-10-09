@@ -14,8 +14,8 @@ Mac browser at http://localhost:8787 -> the same hub, no internet needed
 | LM Studio with `google/gemma-4-e2b` downloaded | already installed (4.37 GB, MLX 4-bit) | verified |
 | Node 24 and `npm install` | repo root | verified |
 | `.env` in the repo root (gitignored) | holds secrets such as `ELEVENLABS_API_KEY`; never commit it | verified |
-| ngrok account, authtoken, free static domain | ngrok.com dashboard; the owner runs `ngrok config add-authtoken <token>` themselves | not yet run |
-| Vercel project for the PWA | see section 5; owner: the team lead | not yet run |
+| ngrok account, authtoken, free static domain | ngrok.com dashboard; the owner runs `ngrok config add-authtoken <token>` themselves | done: signed in on the Mac, static domain `tweed-thinner-quickly.ngrok-free.dev` (2026-10-10) |
+| Vercel project for the PWA | see section 5 | done: project `math-companion-edge` (team xanders-projects-da0d6d9f), production at `https://math-companion-edge.vercel.app`, deployed from the CLI (no Git connection, because the repo is private) with `VITE_EDGE_BASE=https://tweed-thinner-quickly.ngrok-free.dev` (public value only; no API keys on Vercel) |
 
 ## 2. Start order (every session)
 
@@ -57,6 +57,12 @@ Open that URL on the phone. The hub marks its API replies with `X-Edge-Hub: 1`, 
 ### Voice (ElevenLabs)
 
 Put these in `.env` (never commit it): `ELEVENLABS_API_KEY`, `TTS_PROVIDER=elevenlabs`, `ELEVENLABS_VOICE_ID`, optionally `ELEVENLABS_MODEL` (default `eleven_flash_v2_5`, lists Filipino). Restart the hub after changing `.env`. Check: `curl -X POST http://127.0.0.1:8787/api/tts -H 'Content-Type: application/json' -d '{"text":"Kumusta!","lang":"taglish"}' -o hello.mp3` returns audio. If the voice is unset the endpoint answers 501 and the app uses the phone's built-in voice. The Starter plan allows about 39,749 characters per month.
+
+### Current live setup (2026-10-10)
+
+- **Hub:** `EDGE_SERVE_APP=1 QUESTION_CORS_ORIGINS=https://math-companion-edge.vercel.app node --env-file=.env scripts/edge-hub.mjs`. Keep `QUESTION_CORS_ORIGINS` when restarting, or the Vercel app's requests are refused.
+- **Tunnel:** `ngrok http --url=tweed-thinner-quickly.ngrok-free.dev 8787`. Stop it with `pkill ngrok`.
+- **Verified from this Mac only:** the app and its manifest and service worker, the tunnel host baked into the bundle, the origin check, tutor replies in all three modes, and the voice endpoint. **Not yet verified:** a phone on mobile data, installing the PWA, and the ngrok browser warning page for direct HTML visits.
 
 ## 3. Verify (copy and paste)
 
