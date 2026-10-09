@@ -123,7 +123,7 @@ Names only; real values go in a local `.env` (gitignored, never committed). The 
 npm test
 ```
 
-Uses `node --test` over `test/*.test.js`. It covers the curriculum data, the tutor prompt and mode rules, the provider chain, the edge backend, the voice endpoint and the speech routing, all with fake networks and no model. At the time of writing, 133 tests passed on the team's Mac (the count changes as tests are added). The tests do not prove the model's reply quality.
+Uses `node --test` over `test/*.test.js`. It covers the curriculum data, the tutor prompt and mode rules, the provider chain, the edge backend, the voice endpoint and the speech routing, all with fake networks and no model. At the time of writing, 187 tests passed on the team's Mac (the count changes as tests are added). The tests do not prove the model's reply quality.
 
 ## Proof of local inference
 
@@ -145,7 +145,22 @@ Uses `node --test` over `test/*.test.js`. It covers the curriculum data, the tut
 
 ## Measured so far
 
-All on one Apple Silicon Mac, one run each, recorded in [`docs/DECISIONS.md`](docs/DECISIONS.md) (D-018) and [`docs/ROADMAP.md`](docs/ROADMAP.md). The phone test above is the only phone result; no on-phone model numbers exist, because the model does not run on the phone.
+All on the edge server (MacBook Air, Apple M5, 16 GB). The phone test above is the only phone result; no on-phone model numbers exist, because the model does not run on the phone.
+
+**Benchmark, 2026-10-10 04:26 PHT** (`node scripts/bench-edge.mjs --runs 3`; every run is in [`docs/benchmarks/edge-2026-10-10.json`](docs/benchmarks/edge-2026-10-10.json)). Gemma 4 E2B in LM Studio with the exact prompt and settings the app sends; one Grade 4 fractions question in English and Tagalog, 3 runs per mode, after one untimed warm-up. Token counts come from LM Studio's `usage` field.
+
+| Mode | Reply length (median) | First token (median) | Full reply, median (range) | Decode speed (median) |
+|---|---|---|---|---|
+| No mode | 246 tokens | 0.20 s | 5.13 s (2.32-5.88 s) | 51.0 tok/s |
+| Kalma | 30 tokens | 0.17 s | 0.77 s (0.59-1.01 s) | 56.4 tok/s |
+| Pakinig | 53 tokens | 0.19 s | 1.14 s (0.85-1.23 s) | 56.0 tok/s |
+| Hakbang | 23 tokens | 0.22 s | 0.56 s (0.35-1.22 s) | 73.6 tok/s |
+
+- Steady decode speed is about **48 to 53 tokens per second** (the 6 replies of 100+ tokens). Short replies give higher, noisier figures (up to 115 tok/s) because they are timed over a few tenths of a second; that is not the model's real speed.
+- Through the hub's `/api/tutor` (the app's real path, on the Mac): 8 of 8 requests answered by the edge model, median 0.82 s; mode replies 0.41 to 1.36 s, no-mode replies about 5 s.
+- Not measured: network time from a phone, memory, cold model load, answer quality. One question, one machine, 3 runs: indicative, not a formal benchmark.
+
+Earlier single runs, recorded in [`docs/DECISIONS.md`](docs/DECISIONS.md) (D-018) and [`docs/ROADMAP.md`](docs/ROADMAP.md), agree:
 
 - Short Kalma and Hakbang replies through the hub took roughly 0.6 to 1.3 s; longer no-mode replies about 4.5 s. Model speed was about 45 to 51 tokens per second.
 - One captured phone question (Hakbang mode, [screenshot above](#proof-of-local-inference)): 51.8 tokens per second, 0.523 s to the first token, 0.869 s total, on the MacBook Air M5.
