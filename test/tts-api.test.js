@@ -1,6 +1,6 @@
 import test, { beforeEach, afterEach } from 'node:test'
 import assert from 'node:assert/strict'
-import handler, { MODE_VOICE } from '../api/tts.js'
+import handler, { MODE_VOICE, ttsProvider } from '../api/tts.js'
 
 // A fake key: these tests never touch the real ElevenLabs account or .env.
 const FAKE_KEY = 'test-key-not-a-real-secret'
@@ -341,4 +341,59 @@ test('the google provider accepts a mode but does not use it, and still validate
   await handler(mockRequest({ text: 'Sige.', lang: 'fil', mode: 'kalma' }), res)
   assert.equal(res.statusCode, 501) // no GCP credentials in the test environment
   assert.equal(calls.length, 0)
+})
+
+// Hardening: a hub restarted with a blank or oddly cased TTS_PROVIDER must not
+// silently drop to Google (or the built-in voice) while an ElevenLabs key is set.
+test('ttsProvider: ElevenLabs whenever its key is set, Google only when asked for', () => {
+  const key = { ELEVENLABS_API_KEY: FAKE_KEY }
+  assert.equal(ttsProvider({ ...key }), 'elevenlabs')
+  assert.equal(ttsProvider({ ...key, TTS_PROVIDER: '' }), 'elevenlabs')
+  assert.equal(ttsProvider({ ...key, TTS_PROVIDER: ' ElevenLabs ' }), 'elevenlabs')
+  assert.equal(ttsProvider({ ...key, TTS_PROVIDER: 'google' }), 'google')
+  assert.equal(ttsProvider({ ...key, TTS_PROVIDER: 'Google' }), 'google')
+  assert.equal(ttsProvider({}), 'google')
+  assert.equal(ttsProvider({ TTS_PROVIDER: 'elevenlabs' }), 'elevenlabs')
+})
+
+test('a blank TTS_PROVIDER with an ElevenLabs key still speaks with ElevenLabs', async () => {
+  process.env.TTS_PROVIDER = ''
+  process.env.ELEVENLABS_API_KEY = FAKE_KEY
+  process.env.ELEVENLABS_VOICE_ID = VOICE
+  stubFetch(() => audioResponse())
+  const res = mockResponse()
+  await handler(mockRequest({ text: 'Kumusta', lang: 'fil' }), res)
+
+  assert.equal(res.statusCode, 200)
+  assert.equal(res.headers['X-TTS-Provider'], 'elevenlabs')
+  assert.match(calls[0].url, /api\.elevenlabs\.io/)
+})
+
+test('a transient ElevenLabs failure (503, 429, dropped connection) is retried once', async () => {
+  for (const fail of [
+    () => ({ ok: false, status: 503, headers: new Headers() }),
+    () => ({ ok: false, status: 429, headers: new Headers() }),
+    () => {
+      throw new TypeError('fetch failed')
+    },
+  ]) {
+    useElevenLabs()
+    calls = []
+    let n = 0
+    stubFetch(() => (n++ === 0 ? fail() : audioResponse()))
+    const res = mockResponse()
+    await handler(mockRequest({ text: 'Kumusta', lang: 'fil' }), res)
+    assert.equal(res.statusCode, 200)
+    assert.equal(calls.length, 2)
+  }
+})
+
+test('a bad key or exhausted quota (401) is not retried', async () => {
+  useElevenLabs()
+  stubFetch(() => ({ ok: false, status: 401, headers: new Headers() }))
+  const res = mockResponse()
+  await handler(mockRequest({ text: 'Kumusta', lang: 'fil' }), res)
+
+  assert.equal(res.statusCode, 502)
+  assert.equal(calls.length, 1)
 })

@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { fetchCloudAudio } from '../src/lib/speech.js'
+import { fetchCloudAudio, lastVoiceIssue } from '../src/lib/speech.js'
 
 const HUB = 'https://gabay-hub.example.ngrok-free.app'
 const AUDIO = new Uint8Array([0x49, 0x44, 0x33, 1, 2, 3])
@@ -164,4 +164,33 @@ test('wordIndexAtTime picks the last word whose start has passed', () => {
   assert.equal(wordIndexAtTime(starts, 99), 2)
   assert.equal(wordIndexAtTime(starts, -1), 0)
   assert.equal(wordIndexAtTime([], 1), -1)
+})
+
+// Hardening: one retry for a briefly busy hub, none for answers a retry cannot change.
+const quiet = { resolveBase: async () => HUB, retryDelayMs: 0 }
+
+test('a 503 or a dropped connection is retried once, then the ElevenLabs audio plays', async () => {
+  for (const fail of [() => Response.json({}, { status: 503 }), () => { throw new TypeError('fetch failed') }]) {
+    let n = 0
+    const { fetchImpl, calls } = fakeFetch(() => (n++ === 0 ? fail() : audio()))
+    const blob = await fetchCloudAudio('Sige.', 'fil', { fetchImpl, ...quiet })
+    assert.ok(blob)
+    assert.equal(calls.length, 2)
+    assert.equal(lastVoiceIssue(), null)
+  }
+})
+
+test('a 501 or 403 is not retried, and the reason is kept for diagnosis', async () => {
+  for (const status of [501, 403]) {
+    const { fetchImpl, calls } = fakeFetch(() => Response.json({}, { status }))
+    assert.equal(await fetchCloudAudio('Sige.', 'fil', { fetchImpl, ...quiet }), null)
+    assert.equal(calls.length, 1)
+    assert.match(lastVoiceIssue(), new RegExp(String(status)))
+  }
+})
+
+test('two failures in a row give up after the second try', async () => {
+  const { fetchImpl, calls } = fakeFetch(() => Response.json({}, { status: 502 }))
+  assert.equal(await fetchCloudAudio('Sige.', 'fil', { fetchImpl, ...quiet }), null)
+  assert.equal(calls.length, 2)
 })

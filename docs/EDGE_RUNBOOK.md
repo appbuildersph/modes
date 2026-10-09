@@ -58,6 +58,13 @@ Open that URL on the phone. The hub marks its API replies with `X-Edge-Hub: 1`, 
 
 Put these in `.env` (never commit it): `ELEVENLABS_API_KEY`, `TTS_PROVIDER=elevenlabs`, `ELEVENLABS_VOICE_ID`, optionally `ELEVENLABS_MODEL` (default `eleven_flash_v2_5`, lists Filipino). Restart the hub after changing `.env`. Check: `curl -X POST http://127.0.0.1:8787/api/tts -H 'Content-Type: application/json' -d '{"text":"Kumusta!","lang":"taglish"}' -o hello.mp3` returns audio. If the voice is unset the endpoint answers 501 and the app uses the phone's built-in voice. The Starter plan allows about 39,749 characters per month.
 
+Guards against the built-in voice taking over by accident (2026-10-10):
+- **Provider.** ElevenLabs is used whenever `ELEVENLABS_API_KEY` is set. A blank, missing or differently cased `TTS_PROVIDER` no longer switches to Google; only `TTS_PROVIDER=google` does. Successful responses carry `X-TTS-Provider: elevenlabs` (or `google`).
+- **Startup check.** The hub prints `Voice: ElevenLabs, N of M characters left this period`. If the key or voice is missing, or the quota is nearly used up, it prints a `!!!` warning instead. Read this line after every restart.
+- **Retries.** The server retries ElevenLabs once on 429, 5xx or a dropped connection. The app retries the hub once on 429, 5xx or a network error. Neither retries a timeout or a 401/403/501, because another try can't fix those.
+- **iOS playback.** The first tap unlocks one audio element, which every later line reuses. iOS refused audio started after a network wait, and that sent the phone to the built-in voice.
+- **Diagnosis.** Whenever the built-in voice is used, the app logs `[voice] built-in voice used: <reason>`. Reasons include `voice server answered 502`, `device is offline` and `the browser refused to play the audio`. On the iPhone, see it in Safari Web Inspector (Mac Safari, Develop menu, the phone).
+
 ### Current live setup (2026-10-10)
 
 - **Hub:** `EDGE_SERVE_APP=1 QUESTION_CORS_ORIGINS=https://math-companion-edge.vercel.app node --env-file=.env scripts/edge-hub.mjs`. Keep `QUESTION_CORS_ORIGINS` when restarting, or the Vercel app's requests are refused.

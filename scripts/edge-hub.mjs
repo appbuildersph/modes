@@ -33,7 +33,7 @@ const MAX_BODY_BYTES = 64_000
 
 const { default: tutorHandler } = await import('../api/tutor.js')
 const { default: pingHandler } = await import('../api/ping.js')
-const { default: ttsHandler } = await import('../api/tts.js')
+const { default: ttsHandler, ttsProvider } = await import('../api/tts.js')
 const { cors } = await import('../api/_shared.js')
 
 const MIME = {
@@ -123,7 +123,7 @@ const server = http.createServer(async (req, res) => {
   if (pathname.startsWith('/api/')) {
     // Lets the PWA recognise a hub at its own origin (and across origins) without ?edge=.
     res.setHeader('X-Edge-Hub', '1')
-    res.setHeader('Access-Control-Expose-Headers', 'X-Edge-Hub')
+    res.setHeader('Access-Control-Expose-Headers', 'X-Edge-Hub, X-TTS-Provider')
     const started = Date.now()
     res.on('finish', () => {
       console.log(`${new Date().toLocaleTimeString('en-GB')} ${req.method} ${pathname} ${res.statusCode} ${Date.now() - started}ms host=${host} origin=${req.headers.origin || '-'} edgeClient=${req.headers['ngrok-skip-browser-warning'] ? 'yes' : 'no'}`)
@@ -178,4 +178,30 @@ server.listen(PORT, HOST, () => {
   console.log(`Edge hub on http://${HOST}:${PORT}  (TUTOR_BACKEND=${process.env.TUTOR_BACKEND})`)
   console.log(`LM Studio expected at ${process.env.EDGE_LLM_URL || 'http://127.0.0.1:1234'}`)
   console.log(`Allowed cross-origin PWA: ${process.env.QUESTION_CORS_ORIGINS || '(none; same-origin only)'}`)
+  checkVoice()
 })
+
+// A hub started without the ElevenLabs settings silently left every phone on the
+// built-in voice, so say it loudly at startup and report the remaining quota.
+async function checkVoice() {
+  const provider = ttsProvider()
+  const key = process.env.ELEVENLABS_API_KEY
+  if (provider !== 'elevenlabs' || !key || !process.env.ELEVENLABS_VOICE_ID) {
+    console.warn(`\n!!! Voice: ${provider}${provider === 'elevenlabs' ? ' (key or ELEVENLABS_VOICE_ID missing)' : ''}.`)
+    console.warn('!!! Phones will NOT hear ElevenLabs. Start the hub with --env-file=.env and set ELEVENLABS_API_KEY and ELEVENLABS_VOICE_ID.\n')
+    return
+  }
+  try {
+    const res = await fetch('https://api.elevenlabs.io/v1/user/subscription', {
+      headers: { 'xi-api-key': key },
+      signal: AbortSignal.timeout(5_000),
+    })
+    if (!res.ok) return console.warn(`!!! Voice: ElevenLabs answered ${res.status} to the key check; phones may fall back to the built-in voice.`)
+    const { character_count: used, character_limit: limit } = await res.json()
+    const left = limit - used
+    console.log(`Voice: ElevenLabs, ${left.toLocaleString('en-US')} of ${limit.toLocaleString('en-US')} characters left this period`)
+    if (left < 2_000) console.warn('!!! ElevenLabs quota nearly used up; when it runs out phones fall back to the built-in voice.')
+  } catch {
+    console.log('Voice: ElevenLabs (quota not checked: no internet)')
+  }
+}

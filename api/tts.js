@@ -13,7 +13,9 @@
 //
 // Unset creds -> 501 so the client uses speechSynthesis.
 //
-// Provider switch (read per request): TTS_PROVIDER = google (default) | elevenlabs
+// Provider switch (read per request, ttsProvider()): ElevenLabs whenever ELEVENLABS_API_KEY
+//   is set, unless TTS_PROVIDER=google asks for Google explicitly. TTS_PROVIDER=elevenlabs
+//   also forces it (and answers 501 when its key or voice is missing).
 //   ELEVENLABS_API_KEY     server-only secret, sent as the xi-api-key header
 //   ELEVENLABS_VOICE_ID    required; pick by ear (no default on purpose)
 //   ELEVENLABS_MODEL       default eleven_flash_v2_5 (lists Filipino, low latency)
@@ -45,7 +47,21 @@ function voiceFor(lang) {
   return { name: VOICE, languageCode: LANG }
 }
 
-const useElevenLabs = () => process.env.TTS_PROVIDER === 'elevenlabs'
+// ElevenLabs is the app's voice. A blank, missing, or differently cased TTS_PROVIDER
+// (a hub restarted with a partial env) used to switch silently to Google, so only
+// an explicit `google` selects Google once an ElevenLabs key is present.
+export function ttsProvider(env = process.env) {
+  const chosen = String(env.TTS_PROVIDER ?? '').trim().toLowerCase()
+  if (chosen === 'google') return 'google'
+  if (chosen === 'elevenlabs' || env.ELEVENLABS_API_KEY) return 'elevenlabs'
+  return 'google'
+}
+const useElevenLabs = () => ttsProvider() === 'elevenlabs'
+
+// One retry for a transient ElevenLabs failure (network error, 429 concurrency, 5xx).
+// Not for a timeout (the client's own 20 s budget would run out) or another 4xx
+// (bad key, quota exhausted), which a retry cannot fix.
+const ELEVENLABS_RETRY_DELAY_MS = 300
 
 // How each learning mode should sound. ElevenLabs voice_settings: lower stability =
 // more expressive, higher = steadier and more even; style adds expressiveness (and
@@ -87,6 +103,16 @@ function elevenLabsConfig(mode = 'none') {
 // Filipino has no such code, and multilingual_v2 rejects the field anyway. The
 // model detects the language from the text.
 async function elevenLabsSynthesize(config, text) {
+  try {
+    return await elevenLabsOnce(config, text)
+  } catch (error) {
+    if (!error?.retryable) throw error
+    await new Promise((resolve) => setTimeout(resolve, ELEVENLABS_RETRY_DELAY_MS))
+    return await elevenLabsOnce(config, text)
+  }
+}
+
+async function elevenLabsOnce(config, text) {
   const response = await fetch(
     `https://api.elevenlabs.io/v1/text-to-speech/${encodeURIComponent(config.voiceId)}?output_format=mp3_44100_64`,
     {
@@ -103,8 +129,16 @@ async function elevenLabsSynthesize(config, text) {
       }),
       signal: AbortSignal.timeout(config.timeoutMs),
     },
-  )
-  if (!response.ok) throw new Error('elevenlabs upstream error')
+  ).catch((error) => {
+    // A dropped connection is worth one retry; a timeout is not.
+    if (error?.name !== 'TimeoutError') error.retryable = true
+    throw error
+  })
+  if (!response.ok) {
+    const error = new Error('elevenlabs upstream error')
+    error.retryable = response.status === 429 || response.status >= 500
+    throw error
+  }
   if (!(response.headers.get('content-type') || '').includes('audio')) throw new Error('not audio')
   const buf = Buffer.from(await response.arrayBuffer())
   if (!buf.length) throw new Error('empty audio')
@@ -159,6 +193,7 @@ export default async function handler(req, res) {
     try {
       const buf = await elevenLabsSynthesize(elevenLabs, clipped)
       res.setHeader('Content-Type', 'audio/mpeg')
+      res.setHeader('X-TTS-Provider', 'elevenlabs')
       res.setHeader('Cache-Control', 'public, max-age=86400')
       return res.status(200).send(buf)
     } catch {
@@ -177,6 +212,7 @@ export default async function handler(req, res) {
     })
     const buf = Buffer.from(response.audioContent)
     res.setHeader('Content-Type', 'audio/mpeg')
+    res.setHeader('X-TTS-Provider', 'google')
     res.setHeader('Cache-Control', 'public, max-age=86400')
     return res.status(200).send(buf)
   } catch {

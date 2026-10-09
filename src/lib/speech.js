@@ -164,6 +164,7 @@ function playBlob(blob, rate = CLOUD_RATE, { onAudio } = {}) {
       () => {
         URL.revokeObjectURL(url)
         if (currentAudio === audio) currentAudio = null
+        noteVoiceIssue('the browser refused to play the audio')
         resolve(false) // autoplay blocked / decode error
       },
     )
@@ -189,6 +190,21 @@ async function resolveEdgeBaseCached() {
 // where ElevenLabs is configured; otherwise from this host's own /api/tts. A hub
 // base of '' means same origin. Resolves a Blob, or null on ANY failure so the
 // caller falls back to speechSynthesis. Injectable so Node tests can fake the network.
+// Why the last line fell back to the built-in voice (null after a cloud line plays).
+// Logged with console.warn so a phone's Web Inspector shows the cause.
+let voiceIssue = null
+export const lastVoiceIssue = () => voiceIssue
+
+function noteVoiceIssue(reason) {
+  voiceIssue = reason
+  if (reason) console.warn(`[voice] built-in voice used: ${reason}`)
+}
+
+// Statuses worth one more try: the hub or ElevenLabs was briefly busy or down.
+// 501 (no voice configured) and other 4xx answers will not change on a retry.
+const RETRY_STATUS = new Set([429, 500, 502, 503, 504])
+export const TTS_RETRY_DELAY_MS = 400
+
 export async function fetchCloudAudio(
   text,
   lang,
@@ -196,18 +212,19 @@ export async function fetchCloudAudio(
     fetchImpl = globalThis.fetch,
     resolveBase = resolveEdgeBaseCached,
     timeoutMs = TTS_TIMEOUT_MS,
+    retryDelayMs = TTS_RETRY_DELAY_MS,
     mode,
   } = {},
 ) {
+  let base = null
   try {
-    let base = null
-    try {
-      base = await resolveBase()
-    } catch {
-      /* no hub: use this host's own endpoint */
-    }
-    const viaHub = typeof base === 'string'
-    const res = await fetchImpl(viaHub ? `${base}/api/tts` : apiUrl('/api/tts'), {
+    base = await resolveBase()
+  } catch {
+    /* no hub: use this host's own endpoint */
+  }
+  const viaHub = typeof base === 'string'
+  const request = () =>
+    fetchImpl(viaHub ? `${base}/api/tts` : apiUrl('/api/tts'), {
       method: 'POST',
       // ngrok interposes a warning page for browser requests without this header.
       headers: { 'Content-Type': 'application/json', ...(viaHub ? { 'ngrok-skip-browser-warning': '1' } : {}) },
@@ -215,13 +232,33 @@ export async function fetchCloudAudio(
       body: JSON.stringify(mode && mode !== 'none' ? { text, lang, mode } : { text, lang }),
       signal: AbortSignal.timeout(timeoutMs),
     })
-    if (!res.ok) return null
-    if (!(res.headers.get('content-type') || '').includes('audio')) return null
-    const blob = await res.blob()
-    return blob.size ? blob : null
-  } catch {
-    return null
+
+  for (let attempt = 0; attempt < 2; attempt++) {
+    if (attempt) await new Promise((resolve) => setTimeout(resolve, retryDelayMs))
+    let retry = false
+    try {
+      const res = await request()
+      if (!res.ok) {
+        noteVoiceIssue(`voice server answered ${res.status}`)
+        retry = RETRY_STATUS.has(res.status)
+      } else if (!(res.headers.get('content-type') || '').includes('audio')) {
+        noteVoiceIssue('voice server sent a page, not audio (tunnel warning?)')
+      } else {
+        const blob = await res.blob()
+        if (blob.size) {
+          voiceIssue = null
+          return blob
+        }
+        noteVoiceIssue('voice server sent empty audio')
+      }
+    } catch (error) {
+      const timedOut = error?.name === 'TimeoutError' || error?.name === 'AbortError'
+      noteVoiceIssue(timedOut ? `no voice within ${timeoutMs} ms` : 'voice server unreachable')
+      retry = !timedOut // a timeout already spent the whole budget
+    }
+    if (!retry) return null
   }
+  return null
 }
 
 // The cloud voice for a line: the tts:v5 cache first (works offline for lines heard
@@ -239,7 +276,10 @@ async function getCloudBlob(text, lang, voiceMode) {
     /* fall through */
   }
 
-  if (typeof navigator !== 'undefined' && navigator.onLine === false) return null
+  if (typeof navigator !== 'undefined' && navigator.onLine === false) {
+    noteVoiceIssue('device is offline')
+    return null
+  }
 
   try {
     const blob = await fetchCloudAudio(text, lang, { mode: voiceMode })
