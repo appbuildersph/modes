@@ -77,9 +77,34 @@ curl -s http://127.0.0.1:8787/api/tutor -X POST -H 'Content-Type: application/js
 
 Through the tunnel (**not yet run**): the same `/api/ping` and `/api/tutor` calls against `https://<your-name>.ngrok-free.app`, adding `-H 'Origin: https://<your-vercel-domain>' -H 'ngrok-skip-browser-warning: 1'`. A request from any other origin must return 403.
 
-Hybrid, no internet (**not yet run**): turn the Mac's Wi-Fi off, open `http://localhost:8787`, Profile, pick a mode, open a lesson, ask the tutor. The reply must be labelled as coming from the edge AI server.
+Every mode, live (**verified 2026-10-10, 8 of 8 pass**): `node scripts/edge-mode-check.mjs` sends one question per mode in English and Tagalog. It runs each reply through `applyMode()` the same way the app does, and checks the mode rules: Kalma at most two sentences with no `!`, Pakinig with no math symbols, Hakbang ending in a check question. It exits non-zero on any failure.
 
-Failure path (**not yet run**): stop LM Studio (`lms server stop`); the app must still answer from the cloud or the bundled explanation without an error screen.
+Zero connectivity (**not yet run with Wi-Fi off**): turn the Mac's Wi-Fi off, then run `node scripts/edge-mode-check.mjs`. Next, open `http://localhost:8787`, ask the tutor, and check that the reply is labelled "Teacher Gabay AI server". Every request stays on 127.0.0.1 (hub to LM Studio), so nothing in the path needs the internet, but no one has watched it run with Wi-Fi off yet.
+
+Phone over local Wi-Fi or hotspot, no internet (**verified from the Mac's LAN address only, not yet from a phone**):
+
+```
+EDGE_HUB_HOST=0.0.0.0 EDGE_SERVE_APP=1 node --env-file=.env scripts/edge-hub.mjs
+ipconfig getifaddr en0            # e.g. 192.168.254.150 -> open http://<that>:8787 on the phone
+```
+
+The phone and the Mac must be on the same network; a hotspot from the phone itself, with mobile data off, also works. If macOS asks whether node may accept incoming connections, allow it. Plain `http://` on a LAN address is not a secure context, so no service worker or PWA install happens there. The app still loads from the hub and the tutor still answers. `EDGE_HUB_HOST=0.0.0.0` exposes the hub to everyone on that network, so use it only on a network you trust.
+
+Failure paths (**verified 2026-10-10 in Chrome, no page errors**):
+- Model down (hub up, LM Studio unreachable): `/api/tutor` returns 502 `edge_failed`, and the app shows the lesson's explanation labelled "Cached explanation".
+- Hub down (every `/api/*` request fails): the app shows its offline note and the same cached explanation.
+
+The cached explanation is the one the lesson screen teaches (`lessonTeaching()`), passed through the mode rules. It is not the curriculum `explanation` field, which equals the competency title in 152 of 155 lessons.
+
+Screenshots (390 px wide, Chrome, 2026-10-10), in `docs/images/verification/`:
+
+| File | What it shows |
+|---|---|
+| `lan-kalma.png` | Kalma, app and tutor loaded from the hub's LAN address, reply from Gemma |
+| `edge-pakinig.png` | Pakinig, a Tagalog question, reply with "ninety degrees" written as words |
+| `edge-hakbang.png` | Hakbang, one step plus a check question |
+| `fallback-model-down.png` | LM Studio unreachable: cached explanation, no error screen |
+| `fallback-hub-down.png` | Hub unreachable: offline note and cached explanation |
 
 ## 3b. Demo Day settings
 

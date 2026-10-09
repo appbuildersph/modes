@@ -2,7 +2,8 @@ import { get, set } from 'idb-keyval'
 import { getContentByRef } from './content.js'
 import { DEFAULT_LANG } from './lang.js'
 import { buildTutorPrompt } from './tutor-prompt.js'
-import { DEFAULT_MODE, normalizeMode } from './tutor-modes.js'
+import { DEFAULT_MODE, applyMode, normalizeMode } from './tutor-modes.js'
+import { lessonTeaching } from './lesson-teaching.js'
 import { edgeAvailable, edgeTutor } from './edge-llm.js'
 import { runTutorChain } from './tutor-chain.js'
 import { apiUrl } from './api-base.js'
@@ -97,11 +98,11 @@ export async function askTeacherGabay(question, ref, lang = DEFAULT_LANG, mode =
     fil: 'Pasensya, offline tayo at wala pang on-device AI. Basahin muna ang paliwanag sa pisara. 💛',
     taglish: 'Pasensya, offline tayo at wala pang on-device AI. Basahin muna ang paliwanag sa pisara. 💛',
   }
+  // The curriculum's own explanation is just the competency title in 152 of 155
+  // lessons, so the floor uses the same explanation the lesson screen teaches.
+  const taught = competency ? lessonTeaching(competency).explanation : null
   const floor = () => ({
-    text:
-      competency?.explanation?.[lang] ??
-      competency?.explanation?.taglish ??
-      (offline[lang] ?? offline.taglish),
+    text: applyMode(mode, lang, taught?.[lang] ?? taught?.taglish ?? (offline[lang] ?? offline.taglish)),
     source: SOURCE.CACHED,
     fromCache: false,
   })

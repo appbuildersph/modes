@@ -160,7 +160,7 @@ All on the edge server (MacBook Air, Apple M5, 16 GB). The phone test above is t
 - Through the hub's `/api/tutor` (the app's real path, on the Mac): 8 of 8 requests answered by the edge model, median 0.82 s; mode replies 0.41 to 1.36 s, no-mode replies about 5 s.
 - Not measured: network time from a phone, memory, cold model load, answer quality. One question, one machine, 3 runs: indicative, not a formal benchmark.
 
-Earlier single runs, recorded in [`docs/DECISIONS.md`](docs/DECISIONS.md) (D-018) and [`docs/ROADMAP.md`](docs/ROADMAP.md), agree:
+Earlier single runs, recorded in [`docs/DECISIONS.md`](docs/DECISIONS.md) (D-018) and [`docs/ROADMAP.md`](docs/ROADMAP.md):
 
 - Short Kalma and Hakbang replies through the hub took roughly 0.6 to 1.3 s; longer no-mode replies about 4.5 s. Model speed was about 45 to 51 tokens per second.
 - One captured phone question (Hakbang mode, [screenshot above](#proof-of-local-inference)): 51.8 tokens per second, 0.523 s to the first token, 0.869 s total, on the MacBook Air M5.
