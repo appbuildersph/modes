@@ -27,6 +27,7 @@ import {
 
 const SOURCE_KEY = {
   [SOURCE.NANO]: 'class.source.nano',
+  [SOURCE.LOCAL]: 'class.source.local',
   [SOURCE.ONLINE]: 'class.source.online',
   [SOURCE.CACHED]: 'class.source.cached',
 }
@@ -305,7 +306,7 @@ export default function Classroom({ competency, questions, questionSource = 'bun
     try {
       const r = await askTeacherGabay(text, c.ref, lang)
       setReply(r)
-      speak(r.text, { lang })
+      speak(plain(r.text), { lang })
     } catch {
       setReply({ text: tt('class.askError'), source: SOURCE.CACHED })
     } finally {

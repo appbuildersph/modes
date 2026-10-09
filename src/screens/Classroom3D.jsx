@@ -20,6 +20,7 @@ import { ChoiceVisual, QuestionVisual } from '../ui/LearningVisual.jsx'
 
 const SOURCE_KEY = {
   [SOURCE.NANO]: 'class.source.nano',
+  [SOURCE.LOCAL]: 'class.source.local',
   [SOURCE.ONLINE]: 'class.source.online',
   [SOURCE.CACHED]: 'class.source.cached',
 }

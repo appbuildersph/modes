@@ -266,6 +266,7 @@ export const STRINGS = {
   'class.pickAnswer': { en: 'Tap your answer', fil: 'Pumili ng sagot', taglish: 'Pumili ng sagot' },
   'class.repeat': { en: 'Repeat', fil: 'Ulitin', taglish: 'Ulitin' },
   'class.source.nano': { en: 'On-device (offline)', fil: 'On-device (offline)', taglish: 'On-device (offline)' },
+  'class.source.local': { en: 'On-device AI (offline)', fil: 'On-device AI (offline)', taglish: 'On-device AI (offline)' },
   'class.source.online': { en: 'Teacher Gabay (online)', fil: 'Teacher Gabay (online)', taglish: 'Teacher Gabay (online)' },
   'class.source.cached': { en: 'Cached explanation', fil: 'Naka-cache na paliwanag', taglish: 'Naka-cache na paliwanag' },
   'class.reviewMissed': { en: "Let's review what we missed:", fil: 'Balikan natin ang mga namali:', taglish: 'Balikan natin ang mga namali:' },

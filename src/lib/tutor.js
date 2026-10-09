@@ -1,12 +1,16 @@
 import { get, set } from 'idb-keyval'
 import { getContentByRef } from './content.js'
-import { LANG_NAME, DEFAULT_LANG } from './lang.js'
+import { DEFAULT_LANG } from './lang.js'
+import { buildTutorPrompt } from './tutor-prompt.js'
+import { DEFAULT_MODE, normalizeMode } from './tutor-modes.js'
+import { runTutorChain } from './tutor-chain.js'
 import { apiUrl } from './api-base.js'
 
 // Teacher Gabay tutor — best-available-first fallback chain (build plan §8):
 //   1. on-device Gemini Nano (works OFFLINE on capable laptops)
-//   2. online -> POST /api/tutor (Vertex/Gemini proxy)
-//   3. fully offline, no Nano -> cached Taglish explanation (the floor)
+//   2. on-device open model via transformers.js (SOURCE.LOCAL; added with local-llm.js)
+//   3. online -> POST /api/tutor (Vertex/Gemini proxy)
+//   4. fully offline, no Nano -> cached Taglish explanation (the floor)
 // Every reply is cached in IndexedDB (tutor:{ref}:{hash}) for offline re-reading.
 // No language detection — trilingual behavior is the system prompt.
 
@@ -20,15 +24,13 @@ function findCompetency(ref) {
   return getContentByRef(ref)
 }
 
-// The system prompt. Inject the active competency (stay on-curriculum) and the
-// student's chosen reply language.
-export function gabayPrompt(competency, lang = DEFAULT_LANG) {
-  const replyIn = LANG_NAME[lang] ?? LANG_NAME[DEFAULT_LANG]
-  return `You are Teacher Gabay, a friendly math tutor for Filipino learners. Reply in ${replyIn}, regardless of the language the student writes in. Teach using this DepEd MATATAG competency: "${competency}". Use Filipino real-life examples (palengke, jeepney fare, sari-sari store). Never just give the final answer — guide step by step. Keep it short and warm. Do not use markdown formatting — no asterisks, no bold, no bullet symbols, plain text only.`
+// Thin wrapper over the prompt shared with api/tutor.js (src/lib/tutor-prompt.js).
+export function gabayPrompt(competency, lang = DEFAULT_LANG, options) {
+  return buildTutorPrompt(competency, lang, options)
 }
 
 // Source of the answer, for UI labelling.
-export const SOURCE = { NANO: 'nano', ONLINE: 'online', CACHED: 'cached' }
+export const SOURCE = { NANO: 'nano', LOCAL: 'local', ONLINE: 'online', CACHED: 'cached' }
 
 async function nanoAvailable() {
   try {
@@ -42,61 +44,59 @@ async function nanoAvailable() {
   }
 }
 
-export async function askTeacherGabay(question, ref, lang = DEFAULT_LANG) {
+export async function askTeacherGabay(question, ref, lang = DEFAULT_LANG, mode = DEFAULT_MODE) {
   const competency = findCompetency(ref)
-  const sysPrompt = gabayPrompt(competency?.competency ?? '', lang)
-  // Cache per language — same question in EN vs Taglish are different answers.
-  const cacheKey = `tutor:${ref}:${lang}:${hash(question)}`
+  const sysPrompt = gabayPrompt(competency?.competency ?? '', lang, { mode })
+  // Cache per language and mode — the same question gives different answers.
+  const cacheKey = `tutor:${ref}:${lang}:${normalizeMode(mode)}:${hash(question)}`
 
-  const cached = await get(cacheKey)
-  if (cached) return { text: cached.text, source: cached.source, fromCache: true }
+  const providers = [
+    {
+      source: SOURCE.NANO,
+      available: nanoAvailable,
+      async run() {
+        const session = await self.LanguageModel.create({
+          initialPrompts: [{ role: 'system', content: sysPrompt }],
+        })
+        try {
+          return await session.prompt(question)
+        } finally {
+          session.destroy?.()
+        }
+      },
+    },
+    {
+      source: SOURCE.ONLINE,
+      available: async () => navigator.onLine,
+      async run() {
+        const res = await fetch(apiUrl('/api/tutor'), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          // Only ref + lang + mode go over the wire. The server builds the
+          // system prompt itself from the bundled curriculum — a client-supplied
+          // systemInstruction would make /api/tutor an open Gemini proxy.
+          body: JSON.stringify({ question, ref, lang, mode: normalizeMode(mode) }),
+        })
+        if (!res.ok) throw new Error('tutor_http')
+        return (await res.json()).text
+      },
+    },
+  ]
 
-  // 1. On-device Nano — offline-capable
-  if (await nanoAvailable()) {
-    try {
-      const session = await self.LanguageModel.create({
-        initialPrompts: [{ role: 'system', content: sysPrompt }],
-      })
-      const text = await session.prompt(question)
-      session.destroy?.()
-      await set(cacheKey, { text, source: SOURCE.NANO })
-      return { text, source: SOURCE.NANO, fromCache: false }
-    } catch {
-      /* fall through */
-    }
-  }
-
-  // 2. Online — Vertex/Gemini via proxy
-  if (navigator.onLine) {
-    try {
-      const res = await fetch(apiUrl('/api/tutor'), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        // Only ref + lang go over the wire. The server builds the system
-        // prompt itself from the bundled curriculum — a client-supplied
-        // systemInstruction would make /api/tutor an open Gemini proxy.
-        body: JSON.stringify({ question, ref, lang }),
-      })
-      if (res.ok) {
-        const data = await res.json()
-        const text = data.text
-        await set(cacheKey, { text, source: SOURCE.ONLINE })
-        return { text, source: SOURCE.ONLINE, fromCache: false }
-      }
-    } catch {
-      /* fall through */
-    }
-  }
-
-  // 3. Floor — cached pre-generated explanation in the chosen language
+  // Floor — cached pre-generated explanation in the chosen language
   const offline = {
     en: "Sorry, we're offline and on-device AI isn't ready yet. Read the explanation on the board first. 💛",
     fil: 'Pasensya, offline tayo at wala pang on-device AI. Basahin muna ang paliwanag sa pisara. 💛',
     taglish: 'Pasensya, offline tayo at wala pang on-device AI. Basahin muna ang paliwanag sa pisara. 💛',
   }
-  const text =
-    competency?.explanation?.[lang] ??
-    competency?.explanation?.taglish ??
-    (offline[lang] ?? offline.taglish)
-  return { text, source: SOURCE.CACHED, fromCache: false }
+  const floor = () => ({
+    text:
+      competency?.explanation?.[lang] ??
+      competency?.explanation?.taglish ??
+      (offline[lang] ?? offline.taglish),
+    source: SOURCE.CACHED,
+    fromCache: false,
+  })
+
+  return runTutorChain({ providers, store: { get, set }, cacheKey, mode, lang, floor })
 }
