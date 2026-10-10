@@ -354,6 +354,26 @@
     .phone { max-width: 280px; }
   }
 
+
+  /* who each mode is for */
+  .for3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-bottom: 56px; }
+  .forcard { all: unset; cursor: pointer; display: block; background: var(--white); border: 3px solid var(--outline); border-radius: var(--radius); box-shadow: var(--shadow); padding: 26px; transition: transform .3s var(--spring), box-shadow .2s; position: relative; overflow: hidden; }
+  .forcard::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 12px; background: var(--c); border-bottom: 3px solid var(--outline); }
+  .forcard:hover { transform: translate(-3px, -4px) rotate(-.6deg); box-shadow: var(--shadow-lg); }
+  .forcard:focus-visible { outline: 3px solid var(--sky-dark); outline-offset: 4px; }
+  .forcard .fc-top { display: flex; align-items: center; gap: 14px; margin: 8px 0 14px; }
+  .forcard img { width: 72px; height: 72px; object-fit: contain; border-radius: 18px; border: 3px solid var(--outline); background: var(--c); }
+  .forcard h3 { font-size: 38px; }
+  .forcard .en { color: var(--muted); font-weight: 800; font-size: 18px; }
+  .forcard .lbl2 { font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: 1.4px; color: var(--muted); margin-bottom: 8px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { background: var(--c); border: 2.5px solid var(--outline); border-radius: 999px; padding: 4px 14px; font-weight: 900; font-size: 17px; }
+  .forcard .how { margin: 16px 0 0; font-size: 18px; font-weight: 700; color: var(--ink); }
+  .forcard .go { margin-top: 14px; font-weight: 900; font-size: 16px; color: var(--outline); }
+  .forwho { margin: 0 0 20px; }
+  .forwho .lbl2 { font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: 1.4px; color: var(--muted); margin-bottom: 8px; }
+  @media (max-width: 900px) { .for3 { grid-template-columns: 1fr; } }
+
   /* stats */
   .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
   .stat { border: 3px solid var(--outline); border-radius: var(--radius); padding: 28px 24px; box-shadow: var(--shadow); position: relative; overflow: hidden; }
@@ -554,10 +574,35 @@
     <div class="sec-head">
       <span class="eyebrow reveal">Three learning modes</span>
       <h2 class="reveal" style="--dl:.08s">One tutor. Three ways to learn.</h2>
-      <p class="reveal" style="--dl:.16s">Every child learns differently. Each mode changes how the app looks and how the AI talks.</p>
+      <p class="reveal" style="--dl:.16s">Every child learns differently. Three modes, designed with learners with disabilities and learning differences in mind. Each one changes how the app looks <b>and</b> how the AI talks.</p>
     </div>
 
-    <div class="tabs reveal" role="tablist" aria-label="Learning modes">
+
+    <div class="for3">
+      <button class="forcard reveal" data-tab="t-kalma" style="--c:var(--mint); --dl:0s">
+        <div class="fc-top"><img src="/landing/gabo-calm.webp" alt=""><div><h3>Kalma</h3><div class="en">Calm and focused</div></div></div>
+        <div class="lbl2">Designed with these learners in mind</div>
+        <div class="tags"><span class="tag">ADHD</span><span class="tag">Autism</span><span class="tag">Sensory sensitivity</span></div>
+        <p class="how">Fewer distractions, one question at a time, and replies of two short sentences.</p>
+        <div class="go">See Kalma ↓</div>
+      </button>
+      <button class="forcard reveal" data-tab="t-pakinig" style="--c:var(--sky); --dl:.12s">
+        <div class="fc-top"><img src="/landing/gabo-listen.webp" alt=""><div><h3>Pakinig</h3><div class="en">Listen and hear it</div></div></div>
+        <div class="lbl2">Designed with these learners in mind</div>
+        <div class="tags"><span class="tag">Dyslexia</span><span class="tag">Low vision</span><span class="tag">Struggling readers</span></div>
+        <p class="how">Big high-contrast text, read-aloud with word highlighting, and answers by voice.</p>
+        <div class="go">See Pakinig ↓</div>
+      </button>
+      <button class="forcard reveal" data-tab="t-hakbang" style="--c:var(--peach); --dl:.24s">
+        <div class="fc-top"><img src="/landing/gabo-hakbang.webp" alt=""><div><h3>Hakbang</h3><div class="en">One step at a time</div></div></div>
+        <div class="lbl2">Designed with these learners in mind</div>
+        <div class="tags"><span class="tag">Dyscalculia</span><span class="tag">Intellectual disability</span></div>
+        <p class="how">One step per reply, pictures before numbers, and review from Grades 1 to 3.</p>
+        <div class="go">See Hakbang ↓</div>
+      </button>
+    </div>
+
+    <div class="tabs reveal" id="tabs" role="tablist" aria-label="Learning modes">
       <button class="tab" role="tab" id="t-kalma" aria-controls="p-kalma" aria-selected="true" data-bg="var(--mint-soft)" data-word="Kalma" style="--c:var(--mint)">🌿 Kalma <small>Calm</small></button>
       <button class="tab" role="tab" id="t-pakinig" aria-controls="p-pakinig" aria-selected="false" tabindex="-1" data-bg="var(--sky-soft)" data-word="Pakinig" style="--c:var(--sky)">🎧 Pakinig <small>Listen</small></button>
       <button class="tab" role="tab" id="t-hakbang" aria-controls="p-hakbang" aria-selected="false" tabindex="-1" data-bg="var(--peach-soft)" data-word="Hakbang" style="--c:var(--peach)">👣 Hakbang <small>Step by step</small></button>
@@ -566,6 +611,7 @@
     <div class="mode-panel reveal" role="tabpanel" id="p-kalma" aria-labelledby="t-kalma" style="--c:var(--mint)">
       <div class="mode-copy">
         <div class="tagline"><img src="/landing/gabo-calm.webp" alt=""><div><h3>Kalma</h3><div class="gloss">Calm and focused</div></div></div>
+        <div class="forwho"><div class="lbl2">Designed with these learners in mind</div><div class="tags"><span class="tag">ADHD</span><span class="tag">Autism</span><span class="tag">Sensory sensitivity</span></div></div>
         <p>A quiet space with fewer distractions, for learners who do best when things stay simple and predictable.</p>
         <div class="cols2">
           <div class="mini"><h4>The screen</h4><ul><li>Plain background, no music</li><li>One question at a time</li><li>Same layout every time</li></ul></div>
@@ -578,6 +624,7 @@
     <div class="mode-panel" role="tabpanel" id="p-pakinig" aria-labelledby="t-pakinig" style="--c:var(--sky)" hidden>
       <div class="mode-copy">
         <div class="tagline"><img src="/landing/gabo-listen.webp" alt=""><div><h3>Pakinig</h3><div class="gloss">Listen and hear it</div></div></div>
+        <div class="forwho"><div class="lbl2">Designed with these learners in mind</div><div class="tags"><span class="tag">Dyslexia</span><span class="tag">Low vision</span><span class="tag">Struggling readers</span></div></div>
         <p>For learners who find reading hard. Everything gets bigger, clearer and spoken out loud.</p>
         <div class="cols2">
           <div class="mini"><h4>The screen</h4><ul><li>Large font, high contrast</li><li>Read-aloud, word by word</li><li>Answer with your voice</li></ul></div>
@@ -591,6 +638,7 @@
     <div class="mode-panel" role="tabpanel" id="p-hakbang" aria-labelledby="t-hakbang" style="--c:var(--peach)" hidden>
       <div class="mode-copy">
         <div class="tagline"><img src="/landing/gabo-hakbang.webp" alt=""><div><h3>Hakbang</h3><div class="gloss">One step at a time</div></div></div>
+        <div class="forwho"><div class="lbl2">Designed with these learners in mind</div><div class="tags"><span class="tag">Dyscalculia</span><span class="tag">Intellectual disability</span></div></div>
         <p>Big problems become small steps, with everyday Filipino examples and a quick check after each one.</p>
         <div class="cols2">
           <div class="mini"><h4>The screen</h4><ul><li>Bigger step-by-step guide</li><li>Pictures before numbers</li><li>Review from earlier grades</li></ul></div>
@@ -600,7 +648,7 @@
       <div class="phone"><img src="/landing/classroom-hakbang.jpg" alt="SIBOL lesson screen in Hakbang mode with a large step-by-step guide" loading="lazy"></div>
     </div>
 
-    <p class="note">Each mode's rules are enforced in code, so a small model can't wander off. SIBOL supports different learning needs. It does not diagnose.</p>
+    <p class="note">Each mode's rules are enforced in code, so a small model can't wander off. Any learner can pick any mode. SIBOL supports different learning needs; it does not diagnose or treat any condition.</p>
   </div>
 </section>
 
@@ -780,7 +828,7 @@
     document.getElementById(id).innerHTML = html + html
   }
   fill('marq1', ['Walang signal? Walang problema', 'Grade 4 to 6 Math', 'English · Tagalog · Taglish', 'Gemma 4 E2B on a laptop', 'No accounts'])
-  fill('marq2', ['Kalma', 'Pakinig', 'Hakbang', 'Read aloud', 'Step by step', 'Offline first', 'Kaya mo ’yan!'])
+  fill('marq2', ['Kalma for focus', 'Pakinig for listening', 'Hakbang for small steps', 'Read aloud', 'Step by step', 'Offline first', 'Kaya mo ’yan!'])
 
   // Scroll progress + nav border
   const bar = document.getElementById('progress'), nav = document.getElementById('nav')
@@ -849,6 +897,13 @@
       select(next); next.focus()
     })
   })
+
+  // Overview cards jump to their mode tab
+  document.querySelectorAll('.forcard').forEach(c => c.addEventListener('click', () => {
+    const t = document.getElementById(c.dataset.tab)
+    select(t); burst(...center(c), 14)
+    document.getElementById('tabs').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
+  }))
 
   // Celebrate the final call to action
   const startBtn = document.getElementById('startBtn')
