@@ -3,6 +3,7 @@ import { Button, RefBadge, MasteryBar, RichText } from '../ui/Primitives.jsx'
 import { Mascot, SpeechBubble } from '../ui/Mascot.jsx'
 import OnlineBadge from '../ui/OnlineBadge.jsx'
 import MicMeter from '../ui/MicMeter.jsx'
+import { revealSoon } from '../lib/scroll.js'
 import { checkAnswer, choiceOptions } from '../lib/check.js'
 import { speak, stopSpeaking, pauseSpeaking, resumeSpeaking, isSpeechSupported } from '../lib/speech.js'
 import { askTeacherGabay, SOURCE } from '../lib/tutor.js'
@@ -89,6 +90,10 @@ export default function Classroom({ competency, questions, questionSource = 'bun
   const inputRef = useRef(null)
   const actionRef = useRef(null)
   const panelRef = useRef(null)
+  // Tapping Teacher Gabo or Ask Teacher scrolls the opened panel into view (it
+  // opens below the fold on phones).
+  const teacherRef = useRef(null)
+  const askRef = useRef(null)
   const contentEndRef = useRef(null)
   const teacherZoneRef = useRef(null)
 
@@ -218,6 +223,14 @@ export default function Classroom({ competency, questions, questionSource = 'bun
       })
     }, 0)
   }
+
+  useEffect(() => {
+    if (teacherOpen) revealSoon(teacherRef, 'start')
+  }, [teacherOpen])
+
+  useEffect(() => {
+    if (askOpen) revealSoon(askRef)
+  }, [askOpen])
 
   function toggleTeacher() {
     setMascotPressed(true)
@@ -683,7 +696,7 @@ export default function Classroom({ competency, questions, questionSource = 'bun
         )}
 
         {teacherOpen && (
-          <div className="classroom-teacher-dropdown" role="dialog" aria-label={tt('class.teacherPanel')}>
+          <div ref={teacherRef} className="classroom-teacher-dropdown" role="dialog" aria-label={tt('class.teacherPanel')}>
             <button
               type="button"
               className="classroom-teacher-close"
@@ -744,7 +757,7 @@ export default function Classroom({ competency, questions, questionSource = 'bun
             </div>
 
             {askOpen && (
-              <div className="classroom-ask-panel">
+              <div ref={askRef} className="classroom-ask-panel">
                 <div className="classroom-ask-row flex items-center gap-2">
                   <input
                     value={question}

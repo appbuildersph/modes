@@ -4,6 +4,7 @@ import { buildClassroom, THEME_LIST } from '../three/scene.js'
 import { Button, RefBadge, RichText } from '../ui/Primitives.jsx'
 import OnlineBadge from '../ui/OnlineBadge.jsx'
 import MicMeter from '../ui/MicMeter.jsx'
+import { revealSoon } from '../lib/scroll.js'
 import { Mascot } from '../ui/Mascot.jsx'
 import { checkAnswer, choiceOptions } from '../lib/check.js'
 import { speak, stopSpeaking, isSpeechSupported } from '../lib/speech.js'
@@ -65,6 +66,11 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
   const [coachStep, setCoachStep] = useState(null)
   // Teacher Gabo — the mascot is the way in, same tutor as the 2D classroom.
   const [askOpen, setAskOpen] = useState(false)
+  // The inline Teacher Gabo panel opens under the question, often off screen.
+  const askRef = useRef(null)
+  useEffect(() => {
+    if (askOpen) revealSoon(askRef)
+  }, [askOpen])
   const [question, setQuestion] = useState('')
   const [reply, setReply] = useState(null)
   const [thinking, setThinking] = useState(false)
@@ -599,7 +605,7 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
 
             {/* Teacher Gabo, inline under the question — the question stays usable */}
             {askOpen && (
-              <div className="gb-pop mt-4 rounded-card border-[2.5px] border-outline bg-cream p-3">
+              <div ref={askRef} className="gb-pop mt-4 rounded-card border-[2.5px] border-outline bg-cream p-3">
                 <AskPanel
                   tt={tt}
                   lang={lang}
