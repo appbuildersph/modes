@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 360" width="1400" height="360">
+  <!-- Horizontal lockup: variant A mark plus wordmark. Uses the app's display font
+       (Baloo 2); falls back to a rounded system font where it is not installed. -->
+  <g transform="translate(40 40) scale(0.2734)">
+    <rect width="1024" height="1024" rx="230" fill="#F7D26A"/>
+    <circle cx="530" cy="548" r="340" fill="#1C1410"/>
+    <circle cx="512" cy="530" r="340" fill="#FBF1DA" stroke="#1C1410" stroke-width="22"/>
+    <path d="M512 730 C512 650 500 600 512 520" fill="none" stroke="#1C1410" stroke-width="66" stroke-linecap="round"/>
+    <path d="M512 730 C512 650 500 600 512 520" fill="none" stroke="#245D54" stroke-width="28" stroke-linecap="round"/>
+    <path d="M516 600 C410 624 270 570 240 410 C390 384 500 466 516 600 Z" fill="#8FD9B6" stroke="#1C1410" stroke-width="22" stroke-linejoin="round"/>
+    <path d="M508 540 C614 564 754 510 784 350 C634 324 524 406 508 540 Z" fill="#8FD9B6" stroke="#1C1410" stroke-width="22" stroke-linejoin="round"/>
+    <path d="M496 586 L300 452" fill="none" stroke="#245D54" stroke-width="14" stroke-linecap="round"/>
+    <path d="M528 526 L724 392" fill="none" stroke="#245D54" stroke-width="14" stroke-linecap="round"/>
+    <path d="M340 770 Q512 650 684 770 Z" fill="#F4A87C" stroke="#1C1410" stroke-width="20" stroke-linejoin="round"/>
+    <path d="M330 262 L346 300 L384 316 L346 332 L330 370 L314 332 L276 316 L314 300 Z" fill="#F7D26A" stroke="#1C1410" stroke-width="14" stroke-linejoin="round"/>
+  </g>
+  <text x="360" y="210" font-family="'Baloo 2', 'Fredoka', 'Arial Rounded MT Bold', system-ui, sans-serif" font-weight="800" font-size="190" fill="#3A2E2A" letter-spacing="4">SIBOL</text>
+  <text x="366" y="282" font-family="'Nunito', system-ui, sans-serif" font-weight="700" font-size="40" fill="#62564E">Student-centered Inclusive Bilingual Offline Learning</text>
+</svg>
