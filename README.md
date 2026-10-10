@@ -32,9 +32,19 @@ An offline-first Local AI math companion for Filipino **Grade 4 to 6** learners 
 
 This repository was built for the AppBuildersPH Hackathon 2026 (theme: Local AI).
 
+## The problem
+
+Many Filipino Grade 4 to 6 learners study in homes and classrooms with weak or no internet. A cloud-only AI tutor fails exactly when they need it, charges for every question, and sends a child's questions to a third-party server. SIBOL keeps teaching with the network off, and its AI tutor runs on a machine the class controls.
+
+## Why does this product benefit from running AI locally?
+
+> Our learners are Filipino Grade 4-6 children, many in homes and classrooms with weak or no internet. A cloud-only tutor fails exactly when they need it, charges per question, and sends a child's questions to a third-party server. So the tutor's language model, Gemma 4 E2B, runs on a machine the class controls: a laptop acting as an edge AI server, through LM Studio, with no cloud AI API in the answer path. On that laptop the app and the tutor work with the network switched off. Phones on the same hub get the same tutor; if they cannot reach it, the app still teaches from bundled explanations. Local inference also means no per-question cost and replies in about a second (measured median 0.6-1.2 s for the learning modes on an Apple M5 MacBook Air). Cloud services are optional extras only, not the tutor's brain.
+
+The evidence is below: [Proof of local inference](#proof-of-local-inference), [Offline proof](#offline-proof-the-mac-with-wi-fi-off) and [Measured so far](#measured-so-far).
+
 ## App showcase
 
-Screens from the app at phone width (390 px, Chrome). The same practice question is shown in each learning mode so the differences are easy to compare. These were captured before the English mode labels changed to Calm, Listen and Step by Step; Tagalog and Taglish still show Kalma, Pakinig and Hakbang.
+Screens from the app at phone width (390 px, Chrome). The same practice question is shown in each learning mode so the differences are easy to compare. These were captured before two renames: the tutor was then called "Teacher Gabay" (now Teacher Gabo), and the English mode labels were Kalma, Pakinig and Hakbang (now Calm, Listen and Step by Step; Tagalog and Taglish still use Kalma, Pakinig and Hakbang).
 
 **Meet Gabo, the tutor mascot.** Gabo changes pose with the learning mode (`src/ui/Mascot.jsx`).
 
@@ -208,10 +218,12 @@ Requires an ngrok account with a static domain, and a deployed copy of the PWA (
 
 | Item | Used by the team | Notes |
 |---|---|---|
-| Computer | Apple Silicon Mac, 16 GB RAM | Other hardware is untested |
+| Computer | MacBook Air, Apple M5, 16 GB RAM | Other hardware is untested |
+| Operating system | macOS 26.6.2 | Other versions untested |
+| Browser on the laptop | Google Chrome, at `http://localhost:8787` | Used for every laptop test, including Wi-Fi off. Other browsers untested |
 | Node.js | 24 | Other versions untested |
 | LM Studio | with `google/gemma-4-e2b` (MLX 4-bit, 4.37 GB, context 8192) | An MLX build needs Apple Silicon |
-| Phone (optional) | iPhone 13, Safari, installed PWA | Used as a client only; the model does not run on the phone |
+| Phone (optional) | iPhone 13, Safari 27.0.1, installed PWA | Used as a client only; the model does not run on the phone |
 | Tunnel (phones only) | ngrok free static domain | Account required |
 
 ## Environment variables
@@ -260,7 +272,7 @@ Uses `node --test` over `test/*.test.js`. It covers the curriculum data, the tut
 
 <img src="docs/images/verification/wifi-off-app.png" alt="The app at localhost:8787 with Wi-Fi off, showing the reply labelled Teacher Gabay AI server" width="260">
 
-*Recorded 2026-10-10 at 5:07-5:08 AM PHT on the edge server (MacBook Air, Apple M5) with its Wi-Fi switched off. Full, unedited log: [`docs/images/verification/wifi-off-log.txt`](docs/images/verification/wifi-off-log.txt).*
+*Recorded 2026-10-10 at 5:07-5:08 AM PHT on the edge server (MacBook Air, Apple M5) with its Wi-Fi switched off. "Teacher Gabay" was the tutor's name at the time; the app now says Teacher Gabo. Full, unedited log: [`docs/images/verification/wifi-off-log.txt`](docs/images/verification/wifi-off-log.txt).*
 
 - **The Mac was really offline.** Before any test, the script logged Wi-Fi power off, no default route, `ping 1.1.1.1` unreachable and `https://www.google.com` unreachable. It checked again after the app run, and the Mac was still offline.
 - **Gemma answered in every mode.** `node scripts/edge-mode-check.mjs` passed 8 of 8 (4 modes x English and Tagalog), with mode replies taking 0.41 to 1.16 s.
