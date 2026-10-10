@@ -2,9 +2,9 @@
   <img src="public/pwa-512x512.png" alt="SIBOL logo: Gabo, a cream-coloured cat wearing blue headphones, above the word SIBOL on a blue background" width="180">
 </p>
 
-# SIBOL: Student-centered Inclusive Bilingual Offline Learning
-
 <div align="center">
+
+# SIBOL: Student-centered Inclusive Bilingual Offline Learning
 
 [![Live app](https://img.shields.io/badge/Live_app-sibol--tutor.vercel.app-2ea44f?logo=vercel&logoColor=white)](https://sibol-tutor.vercel.app)
 <!-- Demo video badge: replace VIDEO_URL and uncomment once the video is up.
