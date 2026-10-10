@@ -38,6 +38,39 @@ struct TunnelInfo: Decodable, Equatable {
   let openConns: Int
 }
 
+// One feature card from scripts/launcher-checks.mjs. state: ok, warn, fail, running, info, idle.
+struct HealthRow: Decodable, Identifiable {
+  let state: String
+  let label: String
+  let detail: String
+  var id: String { label }
+}
+
+struct ChartSeries: Decodable, Identifiable {
+  let label: String
+  let values: [Double]
+  var id: String { label }
+}
+
+struct HealthChart: Decodable {
+  let max: Double
+  let unit: String
+  let series: [ChartSeries]
+}
+
+struct HealthSection: Decodable, Identifiable {
+  let title: String
+  let note: String?
+  let rows: [HealthRow]
+  let chart: HealthChart?
+  var id: String { title }
+}
+
+struct LiveState: Decodable {
+  let running: Bool
+  let at: Double? // ms since 1970 of the last finished live check
+}
+
 struct LauncherStatus: Decodable {
   let busy: Bool
   let action: String? // "start" or "stop" while busy; missing from older engines
@@ -45,6 +78,8 @@ struct LauncherStatus: Decodable {
   let parts: [Part]
   let steps: [Step]
   let test: TestResult?
+  let sections: [HealthSection]? // missing from older engines
+  let live: LiveState?
 }
 
 @MainActor
@@ -130,6 +165,19 @@ extension Color {
   static let okGreen = Color(red: 0.25, green: 0.70, blue: 0.50)
   static let waitYellow = Color(red: 0.97, green: 0.82, blue: 0.42)
   static let offRose = Color(red: 0.96, green: 0.76, blue: 0.82)
+  static let failRed = Color(red: 0.90, green: 0.28, blue: 0.30)
+  static let infoBlue = Color(red: 0.73, green: 0.83, blue: 0.93)
+  static let checkBlue = Color(red: 0.75, green: 0.89, blue: 1.0)
+
+  static func health(_ state: String) -> Color {
+    switch state {
+    case "ok": return .okGreen
+    case "warn", "running": return .waitYellow
+    case "fail": return .failRed
+    case "info": return .infoBlue
+    default: return .clear
+    }
+  }
 }
 
 enum Halo { case none, ripple, spin, glow }
@@ -333,6 +381,55 @@ struct Row: View {
   }
 }
 
+// RAM history as lines, scaled to the Mac's total memory; the dashed line is 90%.
+struct ChartCard: View {
+  let chart: HealthChart
+  private let colors = [Color(red: 0.18, green: 0.44, blue: 0.69), Color(red: 0.88, green: 0.54, blue: 0.07)]
+
+  var body: some View {
+    VStack(alignment: .leading, spacing: 6) {
+      GeometryReader { geo in
+        let w = geo.size.width, h = geo.size.height
+        let n = max(2, chart.series.map(\.values.count).max() ?? 2)
+        let y = { (v: Double) in h - 4 - CGFloat(v / chart.max) * (h - 8) }
+        ZStack(alignment: .topLeading) {
+          ForEach([0.5, 0.9], id: \.self) { f in
+            Path { p in p.move(to: CGPoint(x: 0, y: y(chart.max * f))); p.addLine(to: CGPoint(x: w, y: y(chart.max * f))) }
+              .stroke(Color.ink.opacity(0.25), style: StrokeStyle(lineWidth: 1, dash: f == 0.9 ? [4, 3] : [1, 3]))
+            Text("\(Int((chart.max * f).rounded())) \(chart.unit)").font(.system(size: 9, weight: .semibold, design: .rounded))
+              .foregroundStyle(Color.ink.opacity(0.55)).offset(x: 2, y: y(chart.max * f) - 13)
+          }
+          ForEach(Array(chart.series.enumerated()), id: \.element.id) { i, s in
+            Path { p in
+              for (j, v) in s.values.enumerated() {
+                let pt = CGPoint(x: w * CGFloat(j) / CGFloat(n - 1), y: y(v))
+                j == 0 ? p.move(to: pt) : p.addLine(to: pt)
+              }
+            }
+            .stroke(colors[i % colors.count], style: StrokeStyle(lineWidth: 2.2, lineJoin: .round))
+          }
+        }
+      }
+      .frame(height: 110)
+      HStack(spacing: 14) {
+        ForEach(Array(chart.series.enumerated()), id: \.element.id) { i, s in
+          HStack(spacing: 6) {
+            RoundedRectangle(cornerRadius: 2).fill(colors[i % colors.count]).frame(width: 12, height: 4)
+            Text("\(s.label) \(s.values.last.map { String(format: "%.2f", $0) } ?? "0") \(chart.unit)")
+              .font(.system(size: 12, weight: .semibold, design: .rounded))
+          }
+        }
+      }
+    }
+    .padding(12)
+    .background(RoundedRectangle(cornerRadius: 16).fill(Color.card))
+    .background(RoundedRectangle(cornerRadius: 16).fill(Color.ink).offset(x: 3, y: 3))
+    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.ink, lineWidth: 2.5))
+    .accessibilityElement(children: .combine)
+    .accessibilityLabel("RAM used over the last 10 minutes")
+  }
+}
+
 struct ContentView: View {
   @EnvironmentObject var engine: Engine
   @State private var confirmStop = false
@@ -431,6 +528,21 @@ struct ContentView: View {
           }
         }
 
+        healthHeader
+
+        ForEach(engine.status?.sections ?? []) { sec in
+          section(sec.title, badge: badge(for: sec.rows)) {
+            if let note = sec.note {
+              Text(note).font(.system(size: 12, weight: .semibold, design: .rounded)).foregroundStyle(Color.ink.opacity(0.6))
+            }
+            if let chart = sec.chart { ChartCard(chart: chart) }
+            ForEach(sec.rows) { r in
+              Row(color: .health(r.state), label: r.label, detail: r.detail, pulsing: r.state == "running")
+                .animation(.easeInOut(duration: 0.4), value: r.state)
+            }
+          }
+        }
+
         if let steps = engine.status?.steps, !steps.isEmpty {
           section("Last run") {
             ForEach(steps) { step in
@@ -453,10 +565,60 @@ struct ContentView: View {
     .onAppear { engine.boot() }
   }
 
+  private var checking: Bool { engine.status?.live?.running == true }
+
+  // Title, a one-line count of every row, and the button for the live check.
+  private var healthHeader: some View {
+    let rows = (engine.status?.sections ?? []).flatMap(\.rows)
+    let count = { (s: String) in rows.filter { $0.state == s }.count }
+    var summary = "\(count("ok")) fine, \(count("warn")) to watch, \(count("fail")) broken"
+    if let at = engine.status?.live?.at {
+      summary += ". Live check \(Date(timeIntervalSince1970: at / 1000).formatted(date: .omitted, time: .standard))"
+    } else {
+      summary += ". Live checks not run yet"
+    }
+    return VStack(alignment: .leading, spacing: 6) {
+      HStack {
+        Text("Every part of SIBOL").font(.system(size: 18, weight: .heavy, design: .rounded))
+        Spacer()
+        Button { engine.send("check") } label: {
+          Text(checking ? "CHECKING…" : "CHECK EVERYTHING")
+            .font(.system(size: 13, weight: .black, design: .rounded)).tracking(0.6)
+            .padding(.horizontal, 16).padding(.vertical, 8)
+            .background(Capsule().fill(checking ? Color.waitYellow : Color.checkBlue))
+            .background(Capsule().fill(Color.ink).offset(y: 4))
+            .overlay(Capsule().stroke(Color.ink, lineWidth: 2.5))
+        }
+        .buttonStyle(.plain)
+        .disabled(checking || engine.status == nil)
+        .help("Asks Gemma one question per mode and language, plays a short voice line per mode, and runs the unit tests")
+      }
+      Text(summary).font(.system(size: 13, weight: .semibold, design: .rounded)).foregroundStyle(Color.ink.opacity(0.7))
+    }
+    .padding(.top, 14)
+  }
+
+  private func badge(for rows: [HealthRow]) -> (String, Color)? {
+    let bad = rows.filter { $0.state == "fail" }.count
+    let warn = rows.filter { $0.state == "warn" }.count
+    if bad > 0 { return ("\(bad) broken", .offRose) }
+    if warn > 0 { return ("\(warn) to watch", .waitYellow) }
+    return rows.contains { $0.state == "ok" } ? ("OK", Color(red: 0.75, green: 0.93, blue: 0.84)) : nil
+  }
+
   @ViewBuilder
-  private func section<Content: View>(_ title: String, @ViewBuilder content: () -> Content) -> some View {
+  private func section<Content: View>(_ title: String, badge: (String, Color)? = nil, @ViewBuilder content: () -> Content) -> some View {
     VStack(alignment: .leading, spacing: 8) {
-      Text(title).font(.system(size: 15, weight: .heavy, design: .rounded))
+      HStack {
+        Text(title).font(.system(size: 15, weight: .heavy, design: .rounded))
+        Spacer()
+        if let (text, tint) = badge {
+          Text(text).font(.system(size: 11, weight: .black, design: .rounded))
+            .padding(.horizontal, 9).padding(.vertical, 2)
+            .background(Capsule().fill(tint))
+            .overlay(Capsule().stroke(Color.ink, lineWidth: 2))
+        }
+      }
       content()
     }
     .frame(maxWidth: .infinity, alignment: .leading)

@@ -14,6 +14,7 @@ import { existsSync, mkdirSync, openSync, readFileSync } from 'node:fs'
 import { homedir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
 import { promisify } from 'node:util'
+import { healthMonitor } from './launcher-checks.mjs'
 
 const run = promisify(execFile)
 const ROOT = resolve(import.meta.dirname, '..')
@@ -34,6 +35,18 @@ const NODE = process.execPath
 const NPM = findTool('npm', [join(dirname(NODE), 'npm')])
 // npm's shebang runs `node` from PATH, which a .app does not have.
 const BUILD_ENV = { ...process.env, PATH: `${dirname(NODE)}:${process.env.PATH ?? '/usr/bin:/bin'}` }
+
+// Feature-by-feature health cards below the status list (scripts/launcher-checks.mjs).
+const health = healthMonitor({
+  root: ROOT,
+  logs: LOGS,
+  lms: LMS,
+  model: MODEL,
+  npm: NPM,
+  buildEnv: BUILD_ENV,
+  origins: ORIGINS.split(',').map((o) => o.trim()).filter(Boolean),
+  tunnel: () => tunnelUrl(),
+})
 
 let busy = false
 // 'start' or 'stop' while busy, so each button can show its own spinner.
@@ -156,7 +169,9 @@ function voiceLine() {
 }
 
 async function status() {
-  const [lm, gemma, hub, tunnelInfo, keepAwake] = await Promise.all([lmServerUp(), gemmaLoaded(), hubUp(), tunnelStatus(), awake()])
+  const [lm, gemma, hub, tunnelInfo, keepAwake, sections] = await Promise.all([
+    lmServerUp(), gemmaLoaded(), hubUp(), tunnelStatus(), awake(), health.sections(),
+  ])
   const tunnel = tunnelInfo.url
   return {
     busy,
@@ -164,6 +179,8 @@ async function status() {
     tunnel: tunnelInfo,
     steps,
     test,
+    sections,
+    live: health.liveState(),
     parts: [
       { label: 'LM Studio server', ok: lm, detail: '127.0.0.1:1234' },
       { label: 'Gemma 4 E2B loaded', ok: gemma, detail: MODEL },
@@ -320,6 +337,24 @@ const PAGE = `<!doctype html>
   .tun a { color:inherit; font-weight:800; word-break:break-all }
   .tun dl { display:grid; grid-template-columns:auto 1fr; gap:6px 14px; margin:12px 0 0; font-size:.92rem }
   .tun dt { opacity:.65 } .tun dd { margin:0; font-weight:800 }
+  .dot.warn { background:#f7d26a } .dot.fail { background:var(--red) } .dot.info { background:#b9d4ee } .dot.idle { background:transparent }
+  .checkbar { display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin:30px 0 0; text-align:left }
+  .checkbar h2 { margin:0; flex:1 }
+  #check { font:inherit; font-weight:900; letter-spacing:.05em; color:var(--ink); background:#bfe3ff; border:2.5px solid var(--ink); border-radius:999px;
+           padding:8px 18px; box-shadow:0 4px 0 var(--ink); cursor:pointer; transition:transform .08s, box-shadow .08s }
+  #check:active:not(:disabled) { transform:translateY(3px); box-shadow:0 1px 0 var(--ink) }
+  #check:disabled { cursor:progress; background:#fbe3a0; animation:pulse 1s infinite }
+  .summary { margin:8px 0 0; text-align:left; font-size:.92rem; opacity:.75 }
+  .sec h3 { display:flex; justify-content:space-between; gap:10px; font-size:.95rem; margin:20px 0 0; text-align:left }
+  .sec h3 .count { font-size:.8rem; border:2px solid var(--ink); border-radius:999px; padding:0 9px; background:#bfeed6 }
+  .sec h3 .count.warn { background:#fbe3a0 } .sec h3 .count.fail { background:var(--rose) }
+  .sec p { margin:4px 0 0; text-align:left; font-size:.85rem; opacity:.65 }
+  /* values here change every few seconds, so no entry animation on every repaint */
+  .sec li { animation:none }
+  .chart { margin-top:10px; background:var(--card); border:2.5px solid var(--ink); border-radius:16px; padding:10px 12px 8px; box-shadow:3px 3px 0 var(--ink) }
+  .chart svg { display:block; width:100%; height:110px }
+  .legend { display:flex; gap:14px; flex-wrap:wrap; font-size:.8rem; text-align:left }
+  .legend i { display:inline-block; width:12px; height:4px; border-radius:2px; margin-right:6px; vertical-align:middle }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation:none !important; transition:none !important } }
 </style></head>
 <body><main>
@@ -336,6 +371,9 @@ const PAGE = `<!doctype html>
   </div>
   <h2>Status</h2><ul id="parts"></ul>
   <h2 id="stepsTitle" hidden>Last run</h2><ul id="steps"></ul>
+  <div class="checkbar"><h2>Every part of SIBOL</h2><button id="check">CHECK EVERYTHING</button></div>
+  <p class="summary" id="summary"></p>
+  <div id="sections"></div>
 </main>
 <script>
   const $ = (id) => document.getElementById(id)
@@ -381,7 +419,40 @@ const PAGE = `<!doctype html>
     put($('steps'), s.steps.map((x) => row(x.state, x.label, x.detail)).join(''))
     $('reply').style.display = s.test ? 'block' : 'none'
     if (s.test) put($('reply'), '<b>' + (s.test.ok ? 'Gemma answered' : 'No answer') + '</b><br>' + esc(s.test.text))
+    renderSections(s)
   }
+  // One card list per feature; the badge counts problems so a glance down the page is enough.
+  function renderSections(s) {
+    const live = s.live || {}
+    $('check').disabled = !!live.running
+    $('check').textContent = live.running ? 'CHECKING…' : 'CHECK EVERYTHING'
+    const rows = (s.sections || []).flatMap((x) => x.rows)
+    const n = (st) => rows.filter((r) => r.state === st).length
+    $('summary').textContent = n('ok') + ' fine, ' + n('warn') + ' to watch, ' + n('fail') + ' broken'
+      + (live.at ? '. Live check ' + new Date(live.at).toLocaleTimeString('en-GB') : '. Live checks not run yet')
+    put($('sections'), (s.sections || []).map((sec) => {
+      const bad = sec.rows.filter((r) => r.state === 'fail').length, warn = sec.rows.filter((r) => r.state === 'warn').length
+      const badge = bad ? '<span class="count fail">' + bad + ' broken</span>' : warn ? '<span class="count warn">' + warn + ' to watch</span>'
+        : sec.rows.some((r) => r.state === 'ok') ? '<span class="count">OK</span>' : ''
+      return '<section class="sec"><h3><span>' + esc(sec.title) + '</span>' + badge + '</h3>' + (sec.note ? '<p>' + esc(sec.note) + '</p>' : '')
+        + (sec.chart ? chart(sec.chart) : '') + '<ul>' + sec.rows.map((r) => row(r.state, r.label, r.detail)).join('') + '</ul></section>'
+    }).join(''))
+  }
+  const COLORS = ['#2f6fb0', '#e08a12']
+  // Line chart of the RAM history, scaled to the Mac's total memory, with the 90% line dashed.
+  function chart(c) {
+    const W = 300, H = 100, n = Math.max(2, ...c.series.map((x) => x.values.length))
+    const y = (v) => (H - 4 - (v / c.max) * (H - 8)).toFixed(1)
+    const line = (vals, i) => '<polyline fill="none" stroke="' + COLORS[i] + '" stroke-width="2.2" stroke-linejoin="round" points="'
+      + vals.map((v, j) => ((j / (n - 1)) * W).toFixed(1) + ',' + y(v)).join(' ') + '"/>'
+    const grid = [0.5, 0.9].map((f) => '<line x1="0" x2="' + W + '" y1="' + y(c.max * f) + '" y2="' + y(c.max * f) + '" stroke="#3a2e2a" stroke-opacity=".25" stroke-dasharray="' + (f === 0.9 ? '4 3' : '1 3') + '"/>'
+      + '<text x="2" y="' + (y(c.max * f) - 2) + '" font-size="8" fill="#3a2e2a" fill-opacity=".55">' + Math.round(c.max * f) + ' ' + c.unit + '</text>').join('')
+    return '<div class="chart"><svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" role="img" aria-label="RAM used over the last 10 minutes">'
+      + grid + c.series.map((x, i) => line(x.values, i)).join('') + '</svg><div class="legend">'
+      + c.series.map((x, i) => '<span><i style="background:' + COLORS[i] + '"></i>' + esc(x.label) + ' ' + (x.values.at(-1) ?? 0) + ' ' + c.unit + '</span>').join('')
+      + '</div></div>'
+  }
+  $('check').onclick = () => fetch('/check', { method: 'POST' }).then(refresh)
   $('go').onclick = () => fetch('/start', { method: 'POST' }).then(refresh)
   $('stop').onclick = () => confirm('Stop Gemma, the hub and the tunnel? Phones will lose the AI.') && fetch('/stop', { method: 'POST' }).then(refresh)
   refresh(); setInterval(refresh, 1500)
@@ -399,6 +470,10 @@ const server = http.createServer(async (req, res) => {
   }
   if (req.method === 'POST' && req.url === '/start') {
     startAll().catch(() => {})
+    return res.writeHead(202).end()
+  }
+  if (req.method === 'POST' && req.url === '/check') {
+    health.runLive().catch(() => {})
     return res.writeHead(202).end()
   }
   if (req.method === 'POST' && req.url === '/stop') {
