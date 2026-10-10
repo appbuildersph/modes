@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="public/pwa-512x512.png" alt="SIBOL logo: Gabo, a cream-coloured cat wearing blue headphones, above the word SIBOL on a blue background" width="180">
+</p>
+
 # SIBOL: Student-centered Inclusive Bilingual Offline Learning
 
 [![Live app](https://img.shields.io/badge/Live_app-sibol--tutor.vercel.app-2ea44f?logo=vercel&logoColor=white)](https://sibol-tutor.vercel.app)
@@ -27,6 +31,17 @@ This repository was built for the AppBuildersPH Hackathon 2026 (theme: Local AI)
 ## App showcase
 
 Screens from the app at phone width (390 px, Chrome). The same practice question is shown in each learning mode so the differences are easy to compare. These were captured before the English mode labels changed to Calm, Listen and Step by Step; Tagalog and Taglish still show Kalma, Pakinig and Hakbang.
+
+**Meet Gabo, the tutor mascot.** Gabo changes pose with the learning mode (`src/ui/Mascot.jsx`).
+
+<table>
+  <tr>
+    <td align="center" valign="top" width="25%"><img src="src/assets/gabo/gabo-star-pose.webp" alt="Gabo holding up a star and smiling" width="140"><br><sub><b>Standard</b></sub></td>
+    <td align="center" valign="top" width="25%"><img src="src/assets/gabo/gabo-calm.webp" alt="Gabo sitting calmly with eyes closed" width="140"><br><sub><b>Kalma</b></sub></td>
+    <td align="center" valign="top" width="25%"><img src="src/assets/gabo/gabo-listen.webp" alt="Gabo holding a headphone to listen" width="140"><br><sub><b>Pakinig</b></sub></td>
+    <td align="center" valign="top" width="25%"><img src="src/assets/gabo/gabo-hakbang.webp" alt="Gabo walking along a number line" width="140"><br><sub><b>Hakbang</b></sub></td>
+  </tr>
+</table>
 
 **Choosing a learning mode**
 
