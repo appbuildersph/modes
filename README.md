@@ -161,19 +161,62 @@ Some features are hidden, locked or replaced on purpose, depending on the learni
 | Step-by-step card for a question | Only questions that have steps | The question is shown on its own |
 | Achievements | Locked until earned | Shown with a lock |
 
+## Edge AI Launcher: starting the model with one button
+
+We built a small native macOS app, **Edge AI Launcher**, so anyone on the team can bring the edge AI server up or down without a terminal. **START** runs every step in order and skips what is already running: start the LM Studio server, load Gemma 4 E2B, start the edge hub, keep the Mac awake, open the tunnel for phones. Then it asks Gemma a test question. The button turns green (**READY**) only after Gemma has really answered. **STOP** shuts everything down after a confirmation.
+
+<p align="center">
+  <img src="docs/images/edge-launcher.png" alt="Edge AI Launcher window: a green READY button and a red STOP button; a Tunnel for phones card showing ACTIVE, ngrok running, hub answered in 202 ms, 712 requests; status rows for the LM Studio server on 127.0.0.1:1234 and Gemma 4 E2B loaded" width="720">
+</p>
+
+*Captured 2026-10-10 on the edge server with the stack running. The "Tunnel for phones" card pings the hub through the public tunnel every 10 seconds, so ACTIVE means a phone can really reach it.*
+
+- **Build it:** `scripts/make-launcher-app.sh` (needs `swiftc` from the Xcode command line tools) creates `Edge AI Launcher.app` on the Desktop with the SIBOL icon.
+- **How it works:** the window is SwiftUI (`native/edge-launcher/EdgeLauncher.swift`). Behind it runs `scripts/launcher.mjs` on `127.0.0.1:8700`, which does the actual steps. The same buttons are available in a browser at that address, without the native app.
+- **Tested:** with the stack already running (every step reported "already running" and Gemma answered in about 1 s). A cold start from nothing has not been run yet. Details: [`docs/EDGE_RUNBOOK.md`](docs/EDGE_RUNBOOK.md).
+
 ## Architecture
 
-```
-Phone (installed PWA)
-   |  HTTPS
-   v
-ngrok static domain  ---->  Edge hub  (scripts/edge-hub.mjs, 127.0.0.1:8787)
-                                |  imports api/tutor.js (TUTOR_BACKEND=edge)
-                                v
-                         LM Studio (127.0.0.1:1234)  ->  Gemma 4 E2B
+```mermaid
+flowchart TB
+  subgraph MAC["Edge AI server: MacBook Air M5 (works with Wi-Fi off)"]
+    LAUNCH["Edge AI Launcher<br/>SwiftUI app + scripts/launcher.mjs :8700<br/>START / STOP"]
+    LMS["LM Studio :1234<br/>Gemma 4 E2B, MLX 4-bit"]
+    HUB["Edge hub :8787<br/>scripts/edge-hub.mjs<br/>/api/tutor, /api/tts, /api/ping<br/>builds the prompt on the server"]
+    AWAKE["caffeinate<br/>keeps the Mac awake"]
+    LOCAL["Mac browser<br/>http://localhost:8787"]
+    NGROK["ngrok tunnel<br/>static HTTPS domain"]
+    LAUNCH -- starts / stops --> LMS
+    LAUNCH -- starts / stops --> HUB
+    LAUNCH -- starts / stops --> AWAKE
+    LAUNCH -- starts / stops --> NGROK
+    HUB -- "OpenAI-compatible API, 127.0.0.1 only" --> LMS
+    LOCAL -- "no internet needed" --> HUB
+  end
 
-Laptop browser at http://localhost:8787  ->  the same hub, no internet needed
+  VERCEL["Vercel<br/>static PWA files only, no keys"]
+
+  subgraph PHONE["Learner's phone: installed PWA"]
+    UI["React 19 app<br/>3 learning modes: Kalma, Pakinig, Hakbang"]
+    CHAIN["Tutor provider chain<br/>cached reply, Gemini Nano, edge hub,<br/>cloud if configured, bundled explanation"]
+    RULES["Mode rules enforced in code<br/>src/lib/tutor-modes.js"]
+    IDB[("IndexedDB<br/>progress, mastery,<br/>cached replies")]
+    SW["Service worker<br/>offline app shell"]
+    BUNDLE["Bundled MATATAG curriculum<br/>Grades 4-6, questions, explanations"]
+    VOICE["Voice out: hub TTS,<br/>else device speechSynthesis"]
+    UI --> CHAIN --> RULES --> UI
+    UI --> IDB
+    UI --> BUNDLE
+    UI --> VOICE
+    SW -.-> UI
+  end
+
+  VERCEL -- "first load, install" --> SW
+  CHAIN -- HTTPS --> NGROK -- "/api/* only" --> HUB
+  HUB -. "optional voice" .-> ELEVEN["ElevenLabs TTS<br/>cloud, optional"]
 ```
+
+The same app also runs on the Mac itself at `http://localhost:8787`, where the hub serves the built files and every request stays on the machine.
 
 - **The hub only exposes** `/api/tutor`, `/api/ping` and `/api/tts` through the tunnel. LM Studio is never exposed, because a public tunnel to its raw API would be an open model proxy. The app files are served only to `localhost`, unless the hub is started with `EDGE_SERVE_APP=1` (then a tunnel URL can serve the app and the API from one address, which is how the phone test below was run).
 - **The server builds the prompt** from the request's `ref`, `lang` and `mode` against the bundled curriculum. It never accepts a client-supplied system prompt. Origin allow-listing, size caps and per-IP rate limits come from `api/_shared.js`.
