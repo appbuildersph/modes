@@ -171,7 +171,10 @@ We built a small native macOS app, **Edge AI Launcher**, so anyone on the team c
 
 *Captured 2026-10-10 on the edge server with the stack running. The "Tunnel for phones" card pings the hub through the public tunnel every 10 seconds, so ACTIVE means a phone can really reach it.*
 
-- **Build it:** `scripts/make-launcher-app.sh` (needs `swiftc` from the Xcode command line tools) creates `Edge AI Launcher.app` on the Desktop with the SIBOL icon.
+- **Download it (easiest):** get `Edge-AI-Launcher-macOS.zip` from the [latest release](https://github.com/appbuildersph/modes/releases/latest) and unzip it. It needs an Apple Silicon Mac, Node.js, LM Studio with Gemma 4 E2B downloaded, and a clone of this repo with `npm install` done (Quick start A, first block). The app finds the clone in your home folder, Desktop, Downloads, Documents or next to the app; otherwise it asks you to pick the folder once.
+- **First open:** the app is not notarized by Apple, so macOS blocks a double-click the first time. Right-click the app, choose **Open**, then **Open** again. Or run `xattr -dr com.apple.quarantine "Edge AI Launcher.app"` once.
+- **Or build it yourself:** `scripts/make-launcher-app.sh` (needs `swiftc` from the Xcode command line tools) creates `Edge AI Launcher.app` on the Desktop with the SIBOL icon.
+- **Phones need the team's tunnel.** The tunnel step uses the team's ngrok domain, so on another Mac it reports the tunnel as not running. Everything else still works, and the app is ready at `http://localhost:8787`.
 - **How it works:** the window is SwiftUI (`native/edge-launcher/EdgeLauncher.swift`). Behind it runs `scripts/launcher.mjs` on `127.0.0.1:8700`, which does the actual steps. The same buttons are available in a browser at that address, without the native app.
 - **Tested:** with the stack already running (every step reported "already running" and Gemma answered in about 1 s). A cold start from nothing has not been run yet. Details: [`docs/EDGE_RUNBOOK.md`](docs/EDGE_RUNBOOK.md).
 
@@ -259,6 +262,8 @@ curl -s http://127.0.0.1:8787/api/tutor -X POST -H 'Content-Type: application/js
   -d '{"question":"Paano ko idadagdag ang 3/4 at 1/2?","ref":"4NA-IIe-1","lang":"taglish","mode":"kalma"}'
 # {"text":"...","source":"edge"}
 ```
+
+**One-button alternative to steps 2 and 3:** download the [Edge AI Launcher](#edge-ai-launcher-starting-the-model-with-one-button) and press START. It starts LM Studio's server, loads Gemma, starts the hub and asks Gemma a test question.
 
 For UI development only: `npm run dev` serves the app on http://localhost:5173 without the hub.
 

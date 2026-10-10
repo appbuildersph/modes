@@ -74,6 +74,8 @@ async function get(url, init = {}, timeoutMs = 2500) {
 function detach(cmd, args, logName, env = {}) {
   const log = openSync(join(LOGS, logName), 'a')
   const child = spawn(cmd, args, { cwd: ROOT, detached: true, stdio: ['ignore', log, log], env: { ...process.env, ...env } })
+  // A missing tool (ngrok on a judge's Mac) emits 'error'; unhandled, it kills the engine.
+  child.on('error', () => {})
   child.unref()
 }
 
@@ -232,7 +234,8 @@ async function startAll() {
     if (await hubUp()) s.ok('already running')
     else {
       if (!existsSync(join(ROOT, 'dist/index.html'))) await run(NPM, ['run', 'build'], { cwd: ROOT, env: BUILD_ENV, timeout: 240_000 }).catch(() => {})
-      detach(NODE, ['--env-file=.env', 'scripts/edge-hub.mjs'], 'hub.log', { EDGE_SERVE_APP: '1', QUESTION_CORS_ORIGINS: ORIGINS })
+      // A fresh clone (a judge's Mac) has no .env; --env-file would make Node exit.
+      detach(NODE, ['--env-file-if-exists=.env', 'scripts/edge-hub.mjs'], 'hub.log', { EDGE_SERVE_APP: '1', QUESTION_CORS_ORIGINS: ORIGINS })
       ;(await waitFor(hubUp, 15_000)) ? s.ok(voiceLine()) : s.fail('see ~/Library/Logs/edge-launcher/hub.log')
     }
 

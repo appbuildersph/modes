@@ -100,10 +100,66 @@ final class Engine: ObservableObject {
     }
   }
 
+  private static func isRepo(_ path: String) -> Bool {
+    FileManager.default.fileExists(atPath: (path as NSString).appendingPathComponent("scripts/launcher.mjs"))
+  }
+
+  // The downloadable build (GitHub Release) was made on another Mac, so the paths
+  // baked into Info.plist may not exist here. Look for the clone, then ask once.
+  private func findRepo(baked: String?) -> String? {
+    if let baked, Self.isRepo(baked) { return baked }
+    if let saved = UserDefaults.standard.string(forKey: "EdgeRepo"), Self.isRepo(saved) { return saved }
+    // A downloaded app may run from a translocated copy, so walking up from the
+    // bundle only helps when the app was moved next to or into the clone.
+    var dir = Bundle.main.bundleURL.deletingLastPathComponent()
+    for _ in 0..<4 {
+      for candidate in [dir.path, dir.appendingPathComponent("modes").path] where Self.isRepo(candidate) {
+        return candidate
+      }
+      dir = dir.deletingLastPathComponent()
+    }
+    let home = FileManager.default.homeDirectoryForCurrentUser
+    for sub in ["modes", "Desktop/modes", "Downloads/modes", "Documents/modes", "Developer/modes", "Projects/modes", "GitHub/modes"] {
+      let candidate = home.appendingPathComponent(sub).path
+      if Self.isRepo(candidate) { return candidate }
+    }
+    let panel = NSOpenPanel()
+    panel.canChooseDirectories = true
+    panel.canChooseFiles = false
+    panel.message = "Choose your clone of github.com/appbuildersph/modes (the SIBOL repository)"
+    panel.prompt = "Use this folder"
+    guard panel.runModal() == .OK, let url = panel.url, Self.isRepo(url.path) else { return nil }
+    UserDefaults.standard.set(url.path, forKey: "EdgeRepo")
+    return url.path
+  }
+
+  private func findNode(baked: String?) -> String? {
+    let fm = FileManager.default
+    for candidate in [baked, "/opt/homebrew/bin/node", "/usr/local/bin/node"].compactMap({ $0 }) where fm.isExecutableFile(atPath: candidate) {
+      return candidate
+    }
+    // nvm and similar installs only show up on the login shell's PATH.
+    let shell = Process()
+    let pipe = Pipe()
+    shell.executableURL = URL(fileURLWithPath: "/bin/zsh")
+    shell.arguments = ["-lic", "command -v node"]
+    shell.standardOutput = pipe
+    shell.standardError = FileHandle.nullDevice
+    guard (try? shell.run()) != nil else { return nil }
+    shell.waitUntilExit()
+    let out = String(data: pipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
+    let path = out.split(separator: "\n").last.map { String($0).trimmingCharacters(in: .whitespaces) } ?? ""
+    return fm.isExecutableFile(atPath: path) ? path : nil
+  }
+
   private func startEngine() {
     let info = Bundle.main.infoDictionary ?? [:]
-    guard let repo = info["EdgeRepo"] as? String, let node = info["EdgeNode"] as? String else {
-      problem = "This app was built without the repo path. Run scripts/make-launcher-app.sh again."
+    guard let repo = findRepo(baked: info["EdgeRepo"] as? String) else {
+      problem = "Could not find the SIBOL repository. Clone github.com/appbuildersph/modes, run npm install, then open this app again."
+      return
+    }
+    guard let node = findNode(baked: info["EdgeNode"] as? String) else {
+      problem = "Node.js was not found. Install Node 24 from nodejs.org, then open this app again."
       return
     }
     let process = Process()
