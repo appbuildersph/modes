@@ -4,6 +4,8 @@
 
 # SIBOL: Student-centered Inclusive Bilingual Offline Learning
 
+<div align="center">
+
 [![Live app](https://img.shields.io/badge/Live_app-sibol--tutor.vercel.app-2ea44f?logo=vercel&logoColor=white)](https://sibol-tutor.vercel.app)
 <!-- Demo video badge: replace VIDEO_URL and uncomment once the video is up.
 [![Demo video](https://img.shields.io/badge/Demo_video-Watch-red?logo=youtube&logoColor=white)](VIDEO_URL)
@@ -23,6 +25,8 @@
 ![Grades 4-6](https://img.shields.io/badge/Grades-4--6_·_DepEd_MATATAG-yellow)
 ![Languages](https://img.shields.io/badge/Languages-English_·_Tagalog_·_Taglish-blue)
 [![Learning modes](https://img.shields.io/badge/Modes-Kalma_·_Pakinig_·_Hakbang-ff69b4)](docs/TUTOR_MODES.md)
+
+</div>
 
 An offline-first Local AI math companion for Filipino **Grade 4 to 6** learners (DepEd MATATAG curriculum). A friendly AI tutor answers a learner's question step by step in English, Tagalog or Taglish, and can read the answer aloud. The answers come from an open-source model, **Gemma 4 E2B, running on the team's own laptop** (an "edge" setup), not from a cloud AI API.
 
