@@ -7,7 +7,9 @@
 # SIBOL: Student-centered Inclusive Bilingual Offline Learning
 
 [![Live app](https://img.shields.io/badge/Live_app-sibol--tutor.vercel.app-2ea44f?logo=vercel&logoColor=white)](https://sibol-tutor.vercel.app)
-[![Demo video](https://img.shields.io/badge/Demo_video-Watch_on_X-black?logo=x&logoColor=white)](https://x.com/eirmonpaculan/status/2108728926076010535)
+[![Demo video](https://img.shields.io/badge/Demo_video-YouTube-red?logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=TskCOFxtuWo)
+[![Post on X](https://img.shields.io/badge/Post-X-black?logo=x&logoColor=white)](https://x.com/eirmonpaculan/status/2108728926076010535)
+[![Post on LinkedIn](https://img.shields.io/badge/Post-LinkedIn-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/posts/eirmonpaculan_appbuildersph-ugcPost-7514496661063221248-_qyx/)
 [![AppBuildersPH Hackathon 2026](https://img.shields.io/badge/AppBuildersPH_Hackathon_2026-Local_AI-orange)](docs/HACKATHON.md)
 
 [![Model: Gemma 4 E2B](https://img.shields.io/badge/Model-Gemma_4_E2B_(Apache_2.0)-4285F4?logo=google&logoColor=white)](docs/SUBMISSION.md)
@@ -28,7 +30,7 @@
 
 An offline-first Local AI math companion for Filipino **Grade 4 to 6** learners (DepEd MATATAG curriculum). A friendly AI tutor answers a learner's question step by step in English, Tagalog or Taglish, and can read the answer aloud. The answers come from an open-source model, **Gemma 4 E2B, running on the team's own laptop** (an "edge" setup), not from a cloud AI API.
 
-This repository was built for the AppBuildersPH Hackathon 2026 (theme: Local AI). Demo video: [our post on X](https://x.com/eirmonpaculan/status/2108728926076010535).
+This repository was built for the AppBuildersPH Hackathon 2026 (theme: Local AI). Demo video: [YouTube](https://www.youtube.com/watch?v=TskCOFxtuWo). Posts: [X](https://x.com/eirmonpaculan/status/2108728926076010535), [LinkedIn](https://www.linkedin.com/posts/eirmonpaculan_appbuildersph-ugcPost-7514496661063221248-_qyx/).
 
 `#AppBuildersPH` `#LocalAI` `#EdgeAI` `#Gemma` `#DepEd` `#MATATAG` `#EdTech` `#Philippines`
 

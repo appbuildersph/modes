@@ -11,8 +11,8 @@ Status: DRAFT, updated 2026-10-10 ~05:00 PHT for the edge AI hub design (D-018).
 | Short description        | Offline Local AI math companion for Filipino Grade 4–6 learners, featuring adaptive tutoring modes (Kalma, Pakinig, Hakbang) powered by an on-device edge model without cloud AI APIs.                                                                                                   |
 | Team name and members    | Team **OHMAKINIGKA!**: Nyzel Cayat (@chi4ki1), Paul Dacalan (@polsalarm), Lord Xander Dacillo (@TadeyRuk), Eirmon John Paculan (@riecodes). Names must match the official list on appbuildersph.com/hackathon exactly                                                                          |
 | Public GitHub repository | `https://github.com/appbuildersph/modes` (origin of this checkout; confirm it is the repository to submit and that it is **public** before 10:00 AM)                                                                                                                                      |
-| Demo video               | https://x.com/eirmonpaculan/status/2108728926076010535 (video attached to the X post)                                                                                                                                                                                                     |
-| X / LinkedIn post URL    | https://x.com/eirmonpaculan/status/2108728926076010535 |
+| Demo video               | https://www.youtube.com/watch?v=TskCOFxtuWo (also attached to the X and LinkedIn posts)                                                                                                                                                                                                     |
+| X / LinkedIn post URL    | X: https://x.com/eirmonpaculan/status/2108728926076010535 · LinkedIn: https://www.linkedin.com/posts/eirmonpaculan_appbuildersph-ugcPost-7514496661063221248-_qyx/ |
 
 
 ## 2. Why does this product benefit from running AI locally? (required answer)
