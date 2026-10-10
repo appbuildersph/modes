@@ -3,6 +3,8 @@ import { get, set } from 'idb-keyval'
 import { buildClassroom, THEME_LIST } from '../three/scene.js'
 import { Button, RefBadge, RichText } from '../ui/Primitives.jsx'
 import OnlineBadge from '../ui/OnlineBadge.jsx'
+import MicMeter from '../ui/MicMeter.jsx'
+import { revealSoon } from '../lib/scroll.js'
 import { Mascot } from '../ui/Mascot.jsx'
 import { checkAnswer, choiceOptions } from '../lib/check.js'
 import { speak, stopSpeaking, isSpeechSupported } from '../lib/speech.js'
@@ -64,11 +66,17 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
   const [coachStep, setCoachStep] = useState(null)
   // Teacher Gabo — the mascot is the way in, same tutor as the 2D classroom.
   const [askOpen, setAskOpen] = useState(false)
+  // The inline Teacher Gabo panel opens under the question, often off screen.
+  const askRef = useRef(null)
+  useEffect(() => {
+    if (askOpen) revealSoon(askRef)
+  }, [askOpen])
   const [question, setQuestion] = useState('')
   const [reply, setReply] = useState(null)
   const [thinking, setThinking] = useState(false)
   const [listening, setListening] = useState(false)
   const [transcribing, setTranscribing] = useState(false)
+  const [micError, setMicError] = useState(false)
   const recRef = useRef(null)
 
   const item = c.items[idx]
@@ -189,17 +197,26 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
   }
 
   function startWebSpeech() {
+    let heard = false
+    const done = () => {
+      setListening(false)
+      setTranscribing(false)
+      if (!heard) setMicError(true)
+    }
     const rec = createRecognizer({
       lang: speechLang(lang),
       onResult: (text) => {
+        heard = Boolean(text.trim())
+        setTranscribing(false)
+        if (!heard) return
         setQuestion(text)
         askGabay(text)
       },
-      onError: () => setListening(false),
-      onEnd: () => setListening(false),
+      onError: done,
+      onEnd: done,
     })
     if (!rec) {
-      setListening(false)
+      done()
       return
     }
     recRef.current = rec
@@ -214,6 +231,15 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
       recRef.current?.stop()
       return
     }
+    setMicError(false)
+    // Browser speech recognition first, started inside the tap: iOS refuses one
+    // started after an await. Gemini used to go first, but no deployment has a
+    // working /api/transcribe (the hub has no such route, Vercel no credentials),
+    // and starting Web Speech after the failed upload lost what the learner said.
+    if (isRecognitionSupported()) {
+      startWebSpeech()
+      return
+    }
     if (online && isMediaRecorderSupported()) {
       const rec = createGeminiRecorder({
         onStart: () => setListening(true),
@@ -222,9 +248,9 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
           setQuestion(text)
           askGabay(text)
         },
-        onError: (err) => {
+        onError: () => {
           setTranscribing(false)
-          if (err === 'stt-unconfigured' || err === 'stt-failed') startWebSpeech()
+          setMicError(true)
         },
         onEnd: () => {
           setListening(false)
@@ -234,10 +260,8 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
       if (rec) {
         recRef.current = rec
         rec.start()
-        return
       }
     }
-    startWebSpeech()
   }
 
   function openBoard() {
@@ -474,6 +498,7 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
               toggleMic={toggleMic}
               listening={listening}
               transcribing={transcribing}
+              micError={micError}
               thinking={thinking}
               mode={mode}
               reply={reply}
@@ -580,7 +605,7 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
 
             {/* Teacher Gabo, inline under the question — the question stays usable */}
             {askOpen && (
-              <div className="gb-pop mt-4 rounded-card border-[2.5px] border-outline bg-cream p-3">
+              <div ref={askRef} className="gb-pop mt-4 rounded-card border-[2.5px] border-outline bg-cream p-3">
                 <AskPanel
                   tt={tt}
                   lang={lang}
@@ -591,6 +616,7 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
                   toggleMic={toggleMic}
                   listening={listening}
                   transcribing={transcribing}
+                  micError={micError}
                   thinking={thinking}
                   mode={mode}
                   reply={reply}
@@ -609,7 +635,7 @@ export default function Classroom3D({ competency, questions, questionSource = 'b
 
 // Teacher Gabo ask form. Rendered inline under an open question, or inside the
 // bottom sheet the mascot opens while the learner is walking around.
-function AskPanel({ tt, lang, online, question, setQuestion, askGabay, toggleMic, listening, transcribing, thinking, mode, reply, onClose, replyClass = 'bg-cream' }) {
+function AskPanel({ tt, lang, online, question, setQuestion, askGabay, toggleMic, listening, transcribing, micError, thinking, mode, reply, onClose, replyClass = 'bg-cream' }) {
   return (
     <>
       <div className="mb-2 flex items-center justify-between gap-2">
@@ -645,7 +671,9 @@ function AskPanel({ tt, lang, online, question, setQuestion, askGabay, toggleMic
         </Button>
       </div>
 
+      <MicMeter active={listening} label={tt('class.micListening')} />
       {transcribing && <p className="mt-2 text-sm font-bold text-ink/60">{tt('class.listening')}</p>}
+      {micError && !listening && <p className="mt-2 text-sm font-bold text-ink/60">{tt('class.micError')}</p>}
       {!online && <p className="mt-2 text-sm font-bold text-ink/60">{tt('class.offlineNote')}</p>}
       {thinking && <ThinkingIndicator text={tt('class.thinking')} mode={mode} />}
 

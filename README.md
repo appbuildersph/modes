@@ -7,9 +7,9 @@
 # SIBOL: Student-centered Inclusive Bilingual Offline Learning
 
 [![Live app](https://img.shields.io/badge/Live_app-sibol--tutor.vercel.app-2ea44f?logo=vercel&logoColor=white)](https://sibol-tutor.vercel.app)
-<!-- Demo video badge: replace VIDEO_URL and uncomment once the video is up.
-[![Demo video](https://img.shields.io/badge/Demo_video-Watch-red?logo=youtube&logoColor=white)](VIDEO_URL)
--->
+[![Demo video](https://img.shields.io/badge/Demo_video-YouTube-red?logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=TskCOFxtuWo)
+[![Post on X](https://img.shields.io/badge/Post-X-black?logo=x&logoColor=white)](https://x.com/eirmonpaculan/status/2108728926076010535)
+[![Post on LinkedIn](https://img.shields.io/badge/Post-LinkedIn-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/posts/eirmonpaculan_appbuildersph-ugcPost-7514496661063221248-_qyx/)
 [![AppBuildersPH Hackathon 2026](https://img.shields.io/badge/AppBuildersPH_Hackathon_2026-Local_AI-orange)](docs/HACKATHON.md)
 
 [![Model: Gemma 4 E2B](https://img.shields.io/badge/Model-Gemma_4_E2B_(Apache_2.0)-4285F4?logo=google&logoColor=white)](docs/SUBMISSION.md)
@@ -30,7 +30,9 @@
 
 An offline-first Local AI math companion for Filipino **Grade 4 to 6** learners (DepEd MATATAG curriculum). A friendly AI tutor answers a learner's question step by step in English, Tagalog or Taglish, and can read the answer aloud. The answers come from an open-source model, **Gemma 4 E2B, running on the team's own laptop** (an "edge" setup), not from a cloud AI API.
 
-This repository was built for the AppBuildersPH Hackathon 2026 (theme: Local AI).
+This repository was built for the AppBuildersPH Hackathon 2026 (theme: Local AI). Demo video: [YouTube](https://www.youtube.com/watch?v=TskCOFxtuWo). Posts: [X](https://x.com/eirmonpaculan/status/2108728926076010535), [LinkedIn](https://www.linkedin.com/posts/eirmonpaculan_appbuildersph-ugcPost-7514496661063221248-_qyx/).
+
+`#AppBuildersPH` `#LocalAI` `#EdgeAI` `#Gemma` `#DepEd` `#MATATAG` `#EdTech` `#Philippines`
 
 ## Team OHMAKINIGKA!
 
@@ -40,6 +42,54 @@ This repository was built for the AppBuildersPH Hackathon 2026 (theme: Local AI)
 | Paul Dacalan | [@polsalarm](https://github.com/polsalarm) |
 | Lord Xander Dacillo | [@TadeyRuk](https://github.com/TadeyRuk) |
 | Eirmon John Paculan | [@riecodes](https://github.com/riecodes) |
+
+## For judges: set up SIBOL step by step
+
+About 15 minutes, most of it the one-time model download. You need internet only for the setup. After that, SIBOL runs with Wi-Fi off.
+
+**What you need:** a Mac with Apple Silicon (M1 or newer), about 6 GB of free disk space, and Google Chrome.
+
+**Step 1. Install LM Studio.** Download it from [lmstudio.ai](https://lmstudio.ai), install it, and **open it once**. Opening it installs the `lms` command the setup uses. You can close it again.
+
+**Step 2. Install Node.js 24.** Download the macOS installer from [nodejs.org](https://nodejs.org) and run it.
+
+**Step 3. Download SIBOL.** Open the Terminal app and run:
+
+```bash
+git clone https://github.com/appbuildersph/modes.git
+cd modes
+```
+
+**Step 4. Run the setup.** In the same Terminal window:
+
+```bash
+sh scripts/setup.sh
+```
+
+It checks your Mac, installs and builds the app, downloads Gemma 4 E2B in LM Studio (about 4.4 GB), and installs the **SIBOL** app in your Applications folder. When it finishes, SIBOL opens by itself. Later you can open it like any app: press Cmd+Space and type **SIBOL**. If a step fails, the script says what to install and stops; fix that and run it again (finished steps are skipped).
+
+**Step 5. Start the AI.** In the SIBOL app, press **START**. Wait until the button turns green and says **READY**. That means Gemma has answered a test question on your Mac.
+
+**Step 6. Open SIBOL.** In Chrome, go to **http://localhost:8787**.
+1. Go through the short welcome steps. Step 3 asks how Teacher Gabo should help: pick **Calm**, **Listen** or **Step by Step**, or Standard.
+2. Open a lesson.
+3. Tap **Ask Teacher**, type a math question (for example "How do I know if an angle is acute?") and tap **Ask**.
+4. The answer is labelled **Teacher Gabo AI server**. That label means Gemma on your Mac wrote it.
+
+**Step 7. Try it offline.** Turn off Wi-Fi and ask another question. Gemma still answers, because everything runs on your Mac.
+
+**Step 8. Stop.** Press **STOP** in the launcher when you are done. It stops Gemma, the hub and the keep-awake.
+
+**Optional: SIBOL on a phone.** On an iPhone, open [sibol-tutor.vercel.app](https://sibol-tutor.vercel.app) in Safari, tap **Share**, then **Add to Home Screen**. Lessons and practice work offline on the phone. AI answers on the phone come from the team's own Mac through its tunnel, so they work only while the team's server is running; otherwise the phone shows the bundled explanations.
+
+**If something goes wrong**
+
+| Problem | Fix |
+|---|---|
+| The setup says LM Studio was not found | Open LM Studio once, then run `sh scripts/setup.sh` again |
+| The launcher shows "Tunnel for phones" as failed | Expected on your Mac: the tunnel uses the team's account. Everything on your Mac still works |
+| The answer is not labelled "AI server" | The launcher is not READY yet. Press START and wait for green, then ask again |
+| You prefer not to use the launcher | Follow [Quick start A](#a-run-it-on-one-machine-no-accounts-needed) to start LM Studio and the hub by hand |
 
 ## The problem
 
@@ -116,13 +166,15 @@ Three modes change both the interface and how the tutor replies. They are design
 
 | Mode | Designed to support | Tutor behaviour |
 |---|---|---|
-| **Kalma** (Calm / Focus) | learners who benefit from a calm, predictable screen | two short sentences, one idea, calm tone |
-| **Pakinig** (Listen) | learners who benefit from listening | written for speech: no symbols or markdown, "3/4" spoken as "three fourths" |
-| **Hakbang** (Step) | learners who benefit from small steps | one step per reply, simple words, then a check question |
+| **Kalma** (English label: Calm) | learners who benefit from a calm, predictable screen | two short sentences, one idea, calm tone |
+| **Pakinig** (English label: Listen) | learners who benefit from listening | written for speech: no symbols or markdown, "3/4" spoken as "three fourths" |
+| **Hakbang** (English label: Step by Step) | learners who benefit from small steps | one step per reply, simple words, then a check question |
 
 Small models follow format instructions unreliably, so the mode rules are also enforced **in code after the model replies** (`src/lib/tutor-modes.js`); a reply that fails validation falls through to the next provider.
 
-**Status:** implemented and tested: the mode preference (onboarding step and Profile screen), the mode-aware tutor prompt, the post-processing rules, per-mode screens (a calmer Kalma screen, large type with read-aloud word highlighting in Pakinig, a step card in Hakbang) and per-mode voice settings. Not built: the Grade 1 to 3 unlock for Hakbang. The modes are a design for different learners, not a tested intervention.
+In English the app shows the modes as Calm, Listen and Step by Step; in Tagalog and Taglish it keeps Kalma, Pakinig and Hakbang.
+
+**Status:** implemented and tested: the mode preference (onboarding step with an animated preview of each mode, and the Profile screen), the mode-aware tutor prompt, the post-processing rules, per-mode screens (a calmer Kalma screen, large type with read-aloud word highlighting in Pakinig, a step card in Hakbang) and per-mode voice settings. Gabo also changes pose with the mode. Not built: the Grade 1 to 3 unlock for Hakbang. The modes are a design for different learners, not a tested intervention.
 
 ## What you may not see (and why)
 
@@ -145,7 +197,7 @@ Some features are hidden, locked or replaced on purpose, depending on the learni
 
 | Feature | When offline | What happens instead |
 |---|---|---|
-| Mic button (voice questions) | Shown but disabled ("needs internet"). Hidden completely if the browser supports neither speech recognition nor audio recording. | The learner types the question |
+| Mic button (voice questions) | Shown but disabled ("needs internet"). Hidden completely if the browser supports neither speech recognition nor audio recording. Online, the mic uses the browser's own speech recognition first; recording for Gemini transcription is only used where that is missing. If nothing was heard, Gabo says "I didn't catch that". | The learner types the question |
 | ElevenLabs voice | Not reachable | The device's built-in voice (`speechSynthesis`) reads aloud |
 | AI tutor and AI questions | The edge hub cannot be reached | Bundled explanations and the bundled question rotation |
 | Offline banner | Pops up for 5 seconds when the connection drops | None needed online |
@@ -161,18 +213,27 @@ Some features are hidden, locked or replaced on purpose, depending on the learni
 | Step-by-step card for a question | Only questions that have steps | The question is shown on its own |
 | Achievements | Locked until earned | Shown with a lock |
 
-## Edge AI Launcher: starting the model with one button
+## The SIBOL app: starting the model with one button
 
-We built a small native macOS app, **Edge AI Launcher**, so anyone on the team can bring the edge AI server up or down without a terminal. **START** runs every step in order and skips what is already running: start the LM Studio server, load Gemma 4 E2B, start the edge hub, keep the Mac awake, open the tunnel for phones. Then it asks Gemma a test question. The button turns green (**READY**) only after Gemma has really answered. **STOP** shuts everything down after a confirmation.
+We built a small native macOS app, **SIBOL** (find it with Spotlight: Cmd+Space, type SIBOL), so anyone on the team can bring the edge AI server up or down without a terminal. **START** runs every step in order and skips what is already running: start the LM Studio server, load Gemma 4 E2B, start the edge hub, keep the Mac awake, open the tunnel for phones. Then it asks Gemma a test question. The button turns green (**READY**) only after Gemma has really answered. **STOP** shuts everything down after a confirmation.
 
 <p align="center">
-  <img src="docs/images/edge-launcher.png" alt="Edge AI Launcher window: a green READY button and a red STOP button; a Tunnel for phones card showing ACTIVE, ngrok running, hub answered in 202 ms, 712 requests; status rows for the LM Studio server on 127.0.0.1:1234 and Gemma 4 E2B loaded" width="720">
+  <img src="docs/images/edge-launcher.png" alt="SIBOL app window: a green READY button and a red STOP button; a Tunnel for phones card showing ACTIVE, ngrok running, hub answered in 210 ms, 1010 requests; status rows for the LM Studio server on 127.0.0.1:1234 and Gemma 4 E2B loaded" width="720">
 </p>
 
 *Captured 2026-10-10 on the edge server with the stack running. The "Tunnel for phones" card pings the hub through the public tunnel every 10 seconds, so ACTIVE means a phone can really reach it.*
 
-- **Build it:** `scripts/make-launcher-app.sh` (needs `swiftc` from the Xcode command line tools) creates `Edge AI Launcher.app` on the Desktop with the SIBOL icon.
+- **Download it (easiest):** `sh scripts/setup.sh` installs it for you (see [For judges](#for-judges-set-up-sibol-step-by-step)). By hand: get `SIBOL-macOS.zip` from the [latest release](https://github.com/appbuildersph/modes/releases/latest), unzip it, and drag `SIBOL.app` into Applications. It needs an Apple Silicon Mac, Node.js, LM Studio with Gemma 4 E2B downloaded, and a clone of this repo with `npm install` done (Quick start A, first block). The app finds the clone in your home folder, Desktop, Downloads, Documents or next to the app; otherwise it asks you to pick the folder once.
+- **First open:** the app is not notarized by Apple, so macOS blocks a double-click the first time. Right-click the app, choose **Open**, then **Open** again. Or run `xattr -dr com.apple.quarantine /Applications/SIBOL.app` once. (Not needed when `setup.sh` installed it.)
+- **Or build it yourself:** `scripts/make-launcher-app.sh` (needs `swiftc` from the Xcode command line tools) creates `SIBOL.app` in `/Applications` with the SIBOL icon.
+- **Phones need the team's tunnel.** The tunnel step uses the team's ngrok domain, so on another Mac it reports the tunnel as not running. Everything else still works, and the app is ready at `http://localhost:8787`.
 - **How it works:** the window is SwiftUI (`native/edge-launcher/EdgeLauncher.swift`). Behind it runs `scripts/launcher.mjs` on `127.0.0.1:8700`, which does the actual steps. The same buttons are available in a browser at that address, without the native app.
+- **Every part of SIBOL:** below the buttons, one health card per part of the system: Gemma in memory, RAM (sampled every 3 s, with peaks and a 10-minute chart), tutor traffic, voice and the ElevenLabs quota, the built app and offline cache, bundled content, the deployed PWAs and the tunnel, the Mac, and the code. **CHECK EVERYTHING** asks Gemma once per mode and language, plays one voice line per mode and runs `npm test`.
+
+<p align="center">
+  <img src="docs/images/edge-launcher-health.png" alt="SIBOL app scrolled down: status rows for the edge hub, keep-awake and tunnel, then Every part of SIBOL with a CHECK EVERYTHING button, 31 fine, 2 to watch, 0 broken; Gemma on this Mac OK with Gemma in memory 4.37 GB and model state idle, context 8192; Memory (RAM) chart" width="720">
+</p>
+
 - **Tested:** with the stack already running (every step reported "already running" and Gemma answered in about 1 s). A cold start from nothing has not been run yet. Details: [`docs/EDGE_RUNBOOK.md`](docs/EDGE_RUNBOOK.md).
 
 ## Architecture
@@ -180,7 +241,7 @@ We built a small native macOS app, **Edge AI Launcher**, so anyone on the team c
 ```mermaid
 flowchart TB
   subgraph MAC["Edge AI server: MacBook Air M5 (works with Wi-Fi off)"]
-    LAUNCH["Edge AI Launcher<br/>SwiftUI app + scripts/launcher.mjs :8700<br/>START / STOP"]
+    LAUNCH["SIBOL app<br/>SwiftUI app + scripts/launcher.mjs :8700<br/>START / STOP"]
     LMS["LM Studio :1234<br/>Gemma 4 E2B, MLX 4-bit"]
     HUB["Edge hub :8787<br/>scripts/edge-hub.mjs<br/>/api/tutor, /api/tts, /api/ping<br/>builds the prompt on the server"]
     AWAKE["caffeinate<br/>keeps the Mac awake"]
@@ -222,6 +283,7 @@ The same app also runs on the Mac itself at `http://localhost:8787`, where the h
 - **The server builds the prompt** from the request's `ref`, `lang` and `mode` against the bundled curriculum. It never accepts a client-supplied system prompt. Origin allow-listing, size caps and per-IP rate limits come from `api/_shared.js`.
 - **Tutor provider order** (`src/lib/tutor.js`): Chrome's built-in Gemini Nano if present, then the edge hub, then the cloud endpoint if configured, then a bundled explanation. Replies are cached in IndexedDB for offline re-reading.
 - **Voice-out** (`src/lib/speech.js`): `/api/tts` on the edge hub when the app has one (ElevenLabs if configured), else the host's own endpoint, else the device's `speechSynthesis`.
+- **Voice-in:** the browser's own speech recognition (Web Speech) first, started inside the learner's tap so iOS allows it; recording for Gemini transcription only where Web Speech is missing; otherwise the learner types.
 
 More detail: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), decisions in [`docs/DECISIONS.md`](docs/DECISIONS.md) (D-016 to D-018).
 
@@ -259,6 +321,8 @@ curl -s http://127.0.0.1:8787/api/tutor -X POST -H 'Content-Type: application/js
   -d '{"question":"Paano ko idadagdag ang 3/4 at 1/2?","ref":"4NA-IIe-1","lang":"taglish","mode":"kalma"}'
 # {"text":"...","source":"edge"}
 ```
+
+**One-button alternative to steps 2 and 3:** open the [SIBOL app](#the-sibol-app-starting-the-model-with-one-button) and press START. It starts LM Studio's server, loads Gemma, starts the hub and asks Gemma a test question.
 
 For UI development only: `npm run dev` serves the app on http://localhost:5173 without the hub.
 
@@ -298,7 +362,7 @@ Names only; real values go in a local `.env` (gitignored, never committed). The 
 npm test
 ```
 
-Uses `node --test` over `test/*.test.js`. It covers the curriculum data, the tutor prompt and mode rules, the provider chain, the edge backend, the voice endpoint and the speech routing, all with fake networks and no model. On 2026-10-10 all tests passed on the team's Mac (198 at the last count) and in a fresh clone (the count changes as tests are added). The tests do not prove the model's reply quality.
+Uses `node --test` over `test/*.test.js`. It covers the curriculum data, the tutor prompt and mode rules, the provider chain, the edge backend, the voice endpoint and the speech routing, all with fake networks and no model. On 2026-10-10 all tests passed on the team's Mac (203 at the last count) and in a fresh clone (the count changes as tests are added). The tests do not prove the model's reply quality.
 
 ## Proof of local inference
 
@@ -374,7 +438,7 @@ Earlier single runs, recorded in [`docs/DECISIONS.md`](docs/DECISIONS.md) (D-018
 - **The model does not run on the phone.** In-browser attempts on an iPhone 13 failed (Safari 27.0.1): Gemma 4 E2B's page was killed during the roughly 3 GB download, and Gemma 3 1B loaded and then crashed; the browser reported a 683 MB maximum GPU buffer. That is why the model runs on a laptop instead. See D-018.
 - **Filipino quality is unverified.** Gemma 4 E2B's model card does not list Filipino among its languages. No Filipino benchmark exists for models this small, and no Filipino reader has reviewed the replies. Treat Tagalog and Taglish quality as unproven.
 - **Small-model output needs guard rails.** In earlier tests, small models broke the mode rules (markdown, long replies, loops), which is why the rules are enforced in code.
-- **The phone-to-laptop path** was run once on an iPhone 13 (Safari, installed from a Cloudflare quick tunnel, app and hub on one address): questions reached the hub and Gemma answered them (hub log `POST /api/tutor 200`, 0.65 to 1.0 s). The ngrok static domain and the Vercel deployment (`hiyang.vercel.app`, also `math-companion-edge.vercel.app`, redeployed 2026-10-10 around 05:15) are set up and were checked from the Mac. The team lead reported the app installed as a PWA on the iPhone 13 from `hiyang.vercel.app` working (05:32); no phone screenshot of that is in the repo yet. Offline operation is only valid on the laptop itself.
+- **The phone-to-laptop path** was run once on an iPhone 13 (Safari, installed from a Cloudflare quick tunnel, app and hub on one address): questions reached the hub and Gemma answered them (hub log `POST /api/tutor 200`, 0.65 to 1.0 s). The ngrok static domain and the Vercel deployment (`hiyang.vercel.app`, also `math-companion-edge.vercel.app`, redeployed 2026-10-10 around 05:15) are set up and were checked from the Mac. Since 2026-10-10 about 08:55, every push to `main` deploys the PWA to Vercel automatically (`sibol-tutor`, `hiyang` and `math-companion-edge` `.vercel.app`). The team lead reported the app installed as a PWA on the iPhone 13 from `hiyang.vercel.app` working (05:32); no phone screenshot of that is in the repo yet. Offline operation is only valid on the laptop itself.
 - **A tunnel URL is public.** Origin allow-listing and rate limits protect it, but non-browser clients can forge an origin. Stop the tunnel when not demoing.
 - **The ElevenLabs voice** has not been judged for Filipino naturalness, and the voice is chosen by ear.
 - **Grades 1 to 3:** curriculum data exists but is not bundled; the Hakbang unlock is not claimed.

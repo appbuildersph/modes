@@ -2,6 +2,8 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Button, RefBadge, MasteryBar, RichText } from '../ui/Primitives.jsx'
 import { Mascot, SpeechBubble } from '../ui/Mascot.jsx'
 import OnlineBadge from '../ui/OnlineBadge.jsx'
+import MicMeter from '../ui/MicMeter.jsx'
+import { revealSoon } from '../lib/scroll.js'
 import { checkAnswer, choiceOptions } from '../lib/check.js'
 import { speak, stopSpeaking, pauseSpeaking, resumeSpeaking, isSpeechSupported } from '../lib/speech.js'
 import { askTeacherGabay, SOURCE } from '../lib/tutor.js'
@@ -88,6 +90,10 @@ export default function Classroom({ competency, questions, questionSource = 'bun
   const inputRef = useRef(null)
   const actionRef = useRef(null)
   const panelRef = useRef(null)
+  // Tapping Teacher Gabo or Ask Teacher scrolls the opened panel into view (it
+  // opens below the fold on phones).
+  const teacherRef = useRef(null)
+  const askRef = useRef(null)
   const contentEndRef = useRef(null)
   const teacherZoneRef = useRef(null)
 
@@ -99,6 +105,7 @@ export default function Classroom({ competency, questions, questionSource = 'bun
   const ui = modeUi(mode)
   const [listening, setListening] = useState(false)
   const [transcribing, setTranscribing] = useState(false)
+  const [micError, setMicError] = useState(false)
   const recRef = useRef(null)
 
   const item = c.items[idx]
@@ -217,6 +224,14 @@ export default function Classroom({ competency, questions, questionSource = 'bun
     }, 0)
   }
 
+  useEffect(() => {
+    if (teacherOpen) revealSoon(teacherRef, 'start')
+  }, [teacherOpen])
+
+  useEffect(() => {
+    if (askOpen) revealSoon(askRef)
+  }, [askOpen])
+
   function toggleTeacher() {
     setMascotPressed(true)
     window.setTimeout(() => setMascotPressed(false), 360)
@@ -322,17 +337,26 @@ export default function Classroom({ competency, questions, questionSource = 'bun
   }
 
   function startWebSpeech() {
+    let heard = false
+    const done = () => {
+      setListening(false)
+      setTranscribing(false)
+      if (!heard) setMicError(true)
+    }
     const rec = createRecognizer({
       lang: speechLang(lang),
       onResult: (text) => {
+        heard = Boolean(text.trim())
+        setTranscribing(false)
+        if (!heard) return
         setQuestion(text)
         askGabay(text)
       },
-      onError: () => setListening(false),
-      onEnd: () => setListening(false),
+      onError: done,
+      onEnd: done,
     })
     if (!rec) {
-      setListening(false)
+      done()
       return
     }
     recRef.current = rec
@@ -349,6 +373,15 @@ export default function Classroom({ competency, questions, questionSource = 'bun
       return
     }
 
+    setMicError(false)
+    // Browser speech recognition first, started inside the tap: iOS refuses one
+    // started after an await. Gemini used to go first, but no deployment has a
+    // working /api/transcribe (the hub has no such route, Vercel no credentials),
+    // and starting Web Speech after the failed upload lost what the learner said.
+    if (isRecognitionSupported()) {
+      startWebSpeech()
+      return
+    }
     if (online && isMediaRecorderSupported()) {
       const rec = createGeminiRecorder({
         onStart: () => setListening(true),
@@ -357,9 +390,9 @@ export default function Classroom({ competency, questions, questionSource = 'bun
           setQuestion(text)
           askGabay(text)
         },
-        onError: (err) => {
+        onError: () => {
           setTranscribing(false)
-          if (err === 'stt-unconfigured' || err === 'stt-failed') startWebSpeech()
+          setMicError(true)
         },
         onEnd: () => {
           setListening(false)
@@ -369,10 +402,8 @@ export default function Classroom({ competency, questions, questionSource = 'bun
       if (rec) {
         recRef.current = rec
         rec.start()
-        return
       }
     }
-    startWebSpeech()
   }
 
   useEffect(() => () => recRef.current?.stop(), [])
@@ -665,7 +696,7 @@ export default function Classroom({ competency, questions, questionSource = 'bun
         )}
 
         {teacherOpen && (
-          <div className="classroom-teacher-dropdown" role="dialog" aria-label={tt('class.teacherPanel')}>
+          <div ref={teacherRef} className="classroom-teacher-dropdown" role="dialog" aria-label={tt('class.teacherPanel')}>
             <button
               type="button"
               className="classroom-teacher-close"
@@ -726,7 +757,7 @@ export default function Classroom({ competency, questions, questionSource = 'bun
             </div>
 
             {askOpen && (
-              <div className="classroom-ask-panel">
+              <div ref={askRef} className="classroom-ask-panel">
                 <div className="classroom-ask-row flex items-center gap-2">
                   <input
                     value={question}
@@ -750,7 +781,9 @@ export default function Classroom({ competency, questions, questionSource = 'bun
                     {thinking ? '...' : tt('class.ask')}
                   </Button>
                 </div>
+                <MicMeter active={listening} label={tt('class.micListening')} />
                 {transcribing && <p className="mt-2 text-sm font-bold text-ink/60">{tt('class.listening')}</p>}
+                {micError && !listening && <p className="mt-2 text-sm font-bold text-ink/60">{tt('class.micError')}</p>}
                 {!online && <p className="mt-2 text-sm text-ink/60">{tt('class.offlineNote')}</p>}
                 {thinking && <ThinkingIndicator text={tt('class.thinking')} mode={mode} />}
                 {reply && (

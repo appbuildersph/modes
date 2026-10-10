@@ -11,31 +11,13 @@
 // The hub rate-limits /api/tutor to 10 requests a minute per client; this sends 8.
 
 import { applyMode, isValidReply } from '../src/lib/tutor-modes.js'
+import { RULES } from './mode-rules.mjs'
 
 const HUB = (process.argv[2] || 'http://127.0.0.1:8787').replace(/\/$/, '')
 const REF = '4NA-IIe-1' // Grade 4: proper fractions, improper fractions, mixed numbers
 const QUESTION = {
   en: 'What is 3/4 + 1/4? And is 5/4 an improper fraction?',
   fil: 'Ano ang 3/4 + 1/4? At ang 5/4 ba ay improper fraction?',
-}
-
-const sentences = (text) => text.split(/(?<=[.!?])\s+/).filter(Boolean)
-
-const RULES = {
-  none: () => [],
-  kalma: (text) => [
-    sentences(text).length <= 2 || 'more than two sentences',
-    !text.includes('!') || 'has an exclamation mark',
-  ],
-  pakinig: (text) => [
-    !/\d\s*\/\s*\d/.test(text) || 'fraction written as a symbol',
-    !/[=+×÷%]/.test(text) || 'math symbol left in',
-    sentences(text).length <= 4 || 'more than four sentences',
-  ],
-  hakbang: (text) => [
-    text.trim().endsWith('?') || 'does not end with a check question',
-    !/\bstep\s*\d|check question\s*:/i.test(text) || 'echoes a label',
-  ],
 }
 
 async function ask(mode, lang) {

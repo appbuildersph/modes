@@ -11,8 +11,8 @@ Status: DRAFT, updated 2026-10-10 ~05:00 PHT for the edge AI hub design (D-018).
 | Short description        | Offline Local AI math companion for Filipino Grade 4–6 learners, featuring adaptive tutoring modes (Kalma, Pakinig, Hakbang) powered by an on-device edge model without cloud AI APIs.                                                                                                   |
 | Team name and members    | Team **OHMAKINIGKA!**: Nyzel Cayat (@chi4ki1), Paul Dacalan (@polsalarm), Lord Xander Dacillo (@TadeyRuk), Eirmon John Paculan (@riecodes). Names must match the official list on appbuildersph.com/hackathon exactly                                                                          |
 | Public GitHub repository | `https://github.com/appbuildersph/modes` (origin of this checkout; confirm it is the repository to submit and that it is **public** before 10:00 AM)                                                                                                                                      |
-| Demo video               | TBD (ideally about 1 minute)                                                                                                                                                                                                                                                              |
-| X / LinkedIn post URL    | TBD (tag Devin / Cognition, include `#AppBuildersPH`)                                                                                                                                                                                                                                     |
+| Demo video               | https://www.youtube.com/watch?v=TskCOFxtuWo (also attached to the X and LinkedIn posts)                                                                                                                                                                                                     |
+| X / LinkedIn post URL    | X: https://x.com/eirmonpaculan/status/2108728926076010535 · LinkedIn: https://www.linkedin.com/posts/eirmonpaculan_appbuildersph-ugcPost-7514496661063221248-_qyx/ |
 
 
 ## 2. Why does this product benefit from running AI locally? (required answer)
@@ -94,7 +94,7 @@ Measured 2026-10-10 07:38 PHT with `node scripts/bench-edge.mjs --runs 3`, on th
 | ElevenLabs API (`eleven_flash_v2_5`, premade voice)           | Cloud text-to-speech for the tutor's spoken replies; **a cloud API, not local AI**; optional, with the phone's built-in voice as the offline fallback |
 | ngrok (free static domain)                                    | Lets phones reach the hub on the team's Mac over the internet (the demo path)                                                                            |
 | Cloudflare quick tunnel (`cloudflared`)                       | Used for the first iPhone test (README "Proof of local inference"); not the demo path                                                                    |
-| Vercel (project `math-companion-edge`, CLI deploys)           | Hosts the PWA's static files; no API keys are stored there                                                                                                |
+| Vercel (project `math-companion-edge`; deploys every push to `main` from GitHub since 2026-10-10 ~08:56, earlier by CLI) | Hosts the PWA's static files; no API keys are configured there (one earlier CLI deploy, blocked before going live, uploaded the local `.env`) |
 | Claude Code (Anthropic)                                       | AI development tool used by the team for planning, code and documentation                                                                                 |
 
 

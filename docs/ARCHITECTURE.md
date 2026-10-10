@@ -84,7 +84,7 @@ The client never holds credentials. Every `/api/*` call goes through `apiUrl()` 
 | `mode-pref.js` | Persisted learning mode (`pref:mode`) |
 | `strip-markdown.js` | Removes markdown from tutor text before display and TTS |
 | `speech.js` | Voice out: cloud TTS then `speechSynthesis`; audio cache; stop/pause/resume |
-| `voicein.js` | Voice in: MediaRecorder -> `/api/transcribe`, else Web Speech, else typing |
+| `voicein.js` | Voice in: Web Speech (started inside the tap), else MediaRecorder -> `/api/transcribe`, else typing |
 | `sound.js` | Procedural SFX, background music, mute/music prefs |
 | `i18n.js` | `t(key, lang, vars)` with `{ en, fil, taglish }` string table (about 620 lines) |
 | `lang.js` | `LANGS`, `LANG_NAME` (tutor reply language), `SPEECH_LANG`, load/save pref |
@@ -120,7 +120,7 @@ Note: `api/_shared.js` `guard()` is POST-only and returns 405 for other methods,
 | Tutor reply | On-device Gemini Nano (`self.LanguageModel`, if `availability() === 'available'`) | `POST /api/tutor` (Vertex/Gemini) | none | Bundled `competency.explanation[lang]`, else fixed offline message |
 | Questions | `POST /api/questions` (generate then independently verify) | none | none | Bundled rotation from `competency.items` |
 | Voice out | `POST /api/tts`: ElevenLabs when `TTS_PROVIDER=elevenlabs` (needs `ELEVENLABS_API_KEY` and `ELEVENLABS_VOICE_ID`, default model `eleven_flash_v2_5`), otherwise Google Cloud TTS | none | none | `window.speechSynthesis` |
-| Voice in | MediaRecorder -> `POST /api/transcribe` | Web Speech API | none | Typing |
+| Voice in | Web Speech API (browser; needs internet on iOS and Chrome) | MediaRecorder -> `POST /api/transcribe` (no deployment has it working: the hub has no route, Vercel no Gemini credentials) | none | Typing |
 
 The tutor chain is now `cache -> Nano -> edge hub -> /api/tutor (cloud) -> bundled explanation`, built by `runTutorChain` in `src/lib/tutor-chain.js`; every provider's text goes through `applyMode` and falls through to the next provider if `isValidReply` rejects it. The in-browser model (transformers.js) is deferred (D-018).
 
