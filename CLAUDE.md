@@ -88,7 +88,7 @@ The offline learning loop and the edge hub need no `.env`. Optional features (El
 
 ## Known gaps (as of 2026-10-10)
 
-- **Submission blockers:** the repo must be public by the deadline; a demo video and social post are required; the team list in `docs/SUBMISSION.md` is still TBD.
+- **Submission blockers:** a demo video and social post are required, and their links are still TBD in `docs/SUBMISSION.md`. Done: GitHub reports the repo public (checked 08:26), and the team list was filled in commit `2326bca`.
 - Provenance: base foundation code cleaned up for hackathon build.
 - `npm test` passes in this checkout and in a clean clone (count in `docs/SUBMISSION.md` section 4).
 - Bundled Filipino and Taglish question text is not translated: in all 1,571 bundled items, `q.fil` equals `q.en`, and in all 155 competencies the data-file `explanation.fil` equals `explanation.en`. Localized lesson text comes from `src/lib/lesson-teaching.js` rules and `src/lib/i18n.js`. Do not use the curriculum JSON as a source of Taglish examples for a model.

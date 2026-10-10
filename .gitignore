@@ -34,3 +34,6 @@ memory/
 # Local hosting config (machine-specific)
 .openai/
 !.env.example
+
+# Claude Code session data and worktrees
+.claude/
