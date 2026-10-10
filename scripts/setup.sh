@@ -1,15 +1,16 @@
 #!/bin/sh
 # One-command setup for judges, run from a fresh clone:  sh scripts/setup.sh
 # Checks the Mac, installs and builds the app, downloads Gemma 4 E2B through
-# LM Studio, and installs the Edge AI Launcher. Safe to re-run: every step
+# LM Studio, and installs the SIBOL launcher app (Spotlight: "SIBOL"). Safe to re-run: every step
 # skips what is already done.
 set -e
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO"
 MODEL="google/gemma-4-e2b"
-LAUNCHER_URL="https://github.com/appbuildersph/modes/releases/latest/download/Edge-AI-Launcher-macOS.zip"
-APP_DIR="$HOME/Applications"
-APP="$APP_DIR/Edge AI Launcher.app"
+LAUNCHER_URL="https://github.com/appbuildersph/modes/releases/latest/download/SIBOL-macOS.zip"
+# /Applications is writable for admin users without sudo; otherwise use ~/Applications.
+if [ -w /Applications ]; then APP_DIR=/Applications; else APP_DIR="$HOME/Applications"; fi
+APP="$APP_DIR/SIBOL.app"
 
 say() { printf '\n\033[1m%s\033[0m\n' "$1"; }
 fail() { printf '\n\033[31mStopped: %s\033[0m\n' "$1" >&2; exit 1; }
@@ -38,16 +39,17 @@ else
   "$LMS" get "$MODEL" --mlx --yes
 fi
 
-say "5/5  Installing the Edge AI Launcher"
+say "5/5  Installing the SIBOL app"
 mkdir -p "$APP_DIR"
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 if curl -fsSL -o "$TMP/launcher.zip" "$LAUNCHER_URL"; then
-  rm -rf "$APP"
+  rm -rf "$APP" "$APP_DIR/Edge AI Launcher.app"
   ditto -x -k "$TMP/launcher.zip" "$APP_DIR"
   # Remember this clone so the app does not have to search for it.
   defaults write local.edge-ai-launcher EdgeRepo "$REPO"
-  echo "Installed: $APP"
+  mdimport "$APP" 2>/dev/null || true
+  echo "Installed: $APP (find it in Spotlight as SIBOL)"
 else
   echo "Could not download the launcher; you can still start SIBOL by hand (see below)."
   APP=""
@@ -55,7 +57,7 @@ fi
 
 say "Done."
 if [ -n "$APP" ]; then
-  echo "Opening the Edge AI Launcher. Press START, wait for the green READY, then open http://localhost:8787"
+  echo "Opening SIBOL. Press START, wait for the green READY, then open http://localhost:8787"
   open "$APP"
 else
   echo "Start SIBOL with:  node scripts/edge-hub.mjs   then open http://localhost:8787"

@@ -1,7 +1,7 @@
 // One-button start for the edge AI stack (docs/EDGE_RUNBOOK.md section 2).
 //
 //   node scripts/launcher.mjs        then open http://127.0.0.1:8700
-//   scripts/make-launcher-app.sh     builds a double-clickable "Edge AI Launcher.app"
+//   scripts/make-launcher-app.sh     builds a double-clickable "SIBOL.app"
 //
 // The big red button runs the runbook's start order, skipping anything already up:
 // LM Studio server, load Gemma 4 E2B, the hub, keep-awake, the ngrok tunnel. Then it
@@ -285,7 +285,7 @@ async function stopAll() {
 // --- page ---------------------------------------------------------------------
 const PAGE = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Edge AI Launcher</title>
+<title>SIBOL</title>
 <style>
   :root { --ink:#3a2e2a; --cream:#fbf1da; --card:#fffaf0; --red:#e5484d; --amber:#f0a12c; --mint:#8ed8b4; --rose:#f4c3d0 }
   * { box-sizing: border-box }

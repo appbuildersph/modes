@@ -517,7 +517,7 @@ struct ContentView: View {
     ScrollView {
       VStack(spacing: 16) {
         VStack(spacing: 4) {
-          Text("Edge AI").font(.system(size: 30, weight: .heavy, design: .rounded))
+          Text("SIBOL").font(.system(size: 30, weight: .heavy, design: .rounded))
           Text("Gemma 4 E2B on this Mac, for the app and the phones")
             .font(.system(size: 14, weight: .semibold, design: .rounded)).foregroundStyle(Color.ink.opacity(0.7))
         }
@@ -695,7 +695,7 @@ struct EdgeLauncherApp: App {
   @StateObject private var engine = Engine()
 
   var body: some Scene {
-    Window("Edge AI Launcher", id: "main") {
+    Window("SIBOL", id: "main") {
       ContentView()
         .environmentObject(engine)
         .preferredColorScheme(.light) // the cream design; keeps the title readable in dark mode

@@ -1,12 +1,14 @@
 #!/bin/sh
-# Builds the native "Edge AI Launcher.app" (native/edge-launcher/EdgeLauncher.swift)
-# on the Desktop, or at the path given as the first argument. Needs the Xcode
+# Builds the native "SIBOL.app" launcher (native/edge-launcher/EdgeLauncher.swift)
+# in /Applications (or ~/Applications if that is not writable), or at the path
+# given as the first argument. Spotlight finds it there as "SIBOL". Needs the Xcode
 # command line tools (swiftc). The repo path and the Node path are baked into the
 # app's Info.plist, so re-run this after moving the repo or reinstalling Node.
 set -e
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
 NODE="$(command -v node)"
-APP="${1:-$HOME/Desktop/Edge AI Launcher.app}"
+if [ -w /Applications ]; then DEFAULT_DIR=/Applications; else DEFAULT_DIR="$HOME/Applications"; mkdir -p "$DEFAULT_DIR"; fi
+APP="${1:-$DEFAULT_DIR/SIBOL.app}"
 [ -n "$NODE" ] || { echo "node not found on PATH" >&2; exit 1; }
 command -v swiftc >/dev/null || { echo "swiftc not found: run xcode-select --install" >&2; exit 1; }
 
@@ -34,8 +36,9 @@ cat > "$APP/Contents/Info.plist" <<PLIST
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <key>CFBundleName</key><string>Edge AI Launcher</string>
-  <key>CFBundleDisplayName</key><string>Edge AI Launcher</string>
+  <key>CFBundleName</key><string>SIBOL</string>
+  <key>CFBundleDisplayName</key><string>SIBOL</string>
+  <key>LSApplicationCategoryType</key><string>public.app-category.education</string>
   <key>CFBundleIdentifier</key><string>local.edge-ai-launcher</string>
   <key>CFBundleExecutable</key><string>EdgeLauncher</string>
   <key>CFBundleIconFile</key><string>AppIcon</string>
@@ -53,4 +56,5 @@ cat > "$APP/Contents/Info.plist" <<PLIST
 PLIST
 
 codesign --force --sign - "$APP" >/dev/null 2>&1 || true
+mdimport "$APP" 2>/dev/null || true
 echo "Built: $APP"

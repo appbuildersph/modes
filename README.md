@@ -64,9 +64,9 @@ cd modes
 sh scripts/setup.sh
 ```
 
-It checks your Mac, installs and builds the app, downloads Gemma 4 E2B in LM Studio (about 4.4 GB), and installs the **Edge AI Launcher** in your Applications folder. When it finishes, the launcher opens by itself. If a step fails, the script says what to install and stops; fix that and run it again (finished steps are skipped).
+It checks your Mac, installs and builds the app, downloads Gemma 4 E2B in LM Studio (about 4.4 GB), and installs the **SIBOL** app in your Applications folder. When it finishes, SIBOL opens by itself. Later you can open it like any app: press Cmd+Space and type **SIBOL**. If a step fails, the script says what to install and stops; fix that and run it again (finished steps are skipped).
 
-**Step 5. Start the AI.** In the Edge AI Launcher, press **START**. Wait until the button turns green and says **READY**. That means Gemma has answered a test question on your Mac.
+**Step 5. Start the AI.** In the SIBOL app, press **START**. Wait until the button turns green and says **READY**. That means Gemma has answered a test question on your Mac.
 
 **Step 6. Open SIBOL.** In Chrome, go to **http://localhost:8787**.
 1. Go through the short welcome steps. Step 3 asks how Teacher Gabo should help: pick **Calm**, **Listen** or **Step by Step**, or Standard.
@@ -211,25 +211,25 @@ Some features are hidden, locked or replaced on purpose, depending on the learni
 | Step-by-step card for a question | Only questions that have steps | The question is shown on its own |
 | Achievements | Locked until earned | Shown with a lock |
 
-## Edge AI Launcher: starting the model with one button
+## The SIBOL app: starting the model with one button
 
-We built a small native macOS app, **Edge AI Launcher**, so anyone on the team can bring the edge AI server up or down without a terminal. **START** runs every step in order and skips what is already running: start the LM Studio server, load Gemma 4 E2B, start the edge hub, keep the Mac awake, open the tunnel for phones. Then it asks Gemma a test question. The button turns green (**READY**) only after Gemma has really answered. **STOP** shuts everything down after a confirmation.
+We built a small native macOS app, **SIBOL** (find it with Spotlight: Cmd+Space, type SIBOL), so anyone on the team can bring the edge AI server up or down without a terminal. **START** runs every step in order and skips what is already running: start the LM Studio server, load Gemma 4 E2B, start the edge hub, keep the Mac awake, open the tunnel for phones. Then it asks Gemma a test question. The button turns green (**READY**) only after Gemma has really answered. **STOP** shuts everything down after a confirmation.
 
 <p align="center">
-  <img src="docs/images/edge-launcher.png" alt="Edge AI Launcher window: a green READY button and a red STOP button; a Tunnel for phones card showing ACTIVE, ngrok running, hub answered in 202 ms, 712 requests; status rows for the LM Studio server on 127.0.0.1:1234 and Gemma 4 E2B loaded" width="720">
+  <img src="docs/images/edge-launcher.png" alt="SIBOL app window: a green READY button and a red STOP button; a Tunnel for phones card showing ACTIVE, ngrok running, hub answered in 210 ms, 1010 requests; status rows for the LM Studio server on 127.0.0.1:1234 and Gemma 4 E2B loaded" width="720">
 </p>
 
 *Captured 2026-10-10 on the edge server with the stack running. The "Tunnel for phones" card pings the hub through the public tunnel every 10 seconds, so ACTIVE means a phone can really reach it.*
 
-- **Download it (easiest):** get `Edge-AI-Launcher-macOS.zip` from the [latest release](https://github.com/appbuildersph/modes/releases/latest) and unzip it. It needs an Apple Silicon Mac, Node.js, LM Studio with Gemma 4 E2B downloaded, and a clone of this repo with `npm install` done (Quick start A, first block). The app finds the clone in your home folder, Desktop, Downloads, Documents or next to the app; otherwise it asks you to pick the folder once.
-- **First open:** the app is not notarized by Apple, so macOS blocks a double-click the first time. Right-click the app, choose **Open**, then **Open** again. Or run `xattr -dr com.apple.quarantine "Edge AI Launcher.app"` once.
-- **Or build it yourself:** `scripts/make-launcher-app.sh` (needs `swiftc` from the Xcode command line tools) creates `Edge AI Launcher.app` on the Desktop with the SIBOL icon.
+- **Download it (easiest):** `sh scripts/setup.sh` installs it for you (see [For judges](#for-judges-set-up-sibol-step-by-step)). By hand: get `SIBOL-macOS.zip` from the [latest release](https://github.com/appbuildersph/modes/releases/latest), unzip it, and drag `SIBOL.app` into Applications. It needs an Apple Silicon Mac, Node.js, LM Studio with Gemma 4 E2B downloaded, and a clone of this repo with `npm install` done (Quick start A, first block). The app finds the clone in your home folder, Desktop, Downloads, Documents or next to the app; otherwise it asks you to pick the folder once.
+- **First open:** the app is not notarized by Apple, so macOS blocks a double-click the first time. Right-click the app, choose **Open**, then **Open** again. Or run `xattr -dr com.apple.quarantine /Applications/SIBOL.app` once. (Not needed when `setup.sh` installed it.)
+- **Or build it yourself:** `scripts/make-launcher-app.sh` (needs `swiftc` from the Xcode command line tools) creates `SIBOL.app` in `/Applications` with the SIBOL icon.
 - **Phones need the team's tunnel.** The tunnel step uses the team's ngrok domain, so on another Mac it reports the tunnel as not running. Everything else still works, and the app is ready at `http://localhost:8787`.
 - **How it works:** the window is SwiftUI (`native/edge-launcher/EdgeLauncher.swift`). Behind it runs `scripts/launcher.mjs` on `127.0.0.1:8700`, which does the actual steps. The same buttons are available in a browser at that address, without the native app.
 - **Every part of SIBOL:** below the buttons, one health card per part of the system: Gemma in memory, RAM (sampled every 3 s, with peaks and a 10-minute chart), tutor traffic, voice and the ElevenLabs quota, the built app and offline cache, bundled content, the deployed PWAs and the tunnel, the Mac, and the code. **CHECK EVERYTHING** asks Gemma once per mode and language, plays one voice line per mode and runs `npm test`.
 
 <p align="center">
-  <img src="docs/images/edge-launcher-health.png" alt="Edge AI Launcher scrolled down: status rows for the edge hub, keep-awake and tunnel, then Every part of SIBOL with a CHECK EVERYTHING button, 31 fine, 2 to watch, 0 broken; Gemma on this Mac OK with Gemma in memory 4.37 GB and model state idle, context 8192; Memory (RAM) chart" width="720">
+  <img src="docs/images/edge-launcher-health.png" alt="SIBOL app scrolled down: status rows for the edge hub, keep-awake and tunnel, then Every part of SIBOL with a CHECK EVERYTHING button, 31 fine, 2 to watch, 0 broken; Gemma on this Mac OK with Gemma in memory 4.37 GB and model state idle, context 8192; Memory (RAM) chart" width="720">
 </p>
 
 - **Tested:** with the stack already running (every step reported "already running" and Gemma answered in about 1 s). A cold start from nothing has not been run yet. Details: [`docs/EDGE_RUNBOOK.md`](docs/EDGE_RUNBOOK.md).
@@ -239,7 +239,7 @@ We built a small native macOS app, **Edge AI Launcher**, so anyone on the team c
 ```mermaid
 flowchart TB
   subgraph MAC["Edge AI server: MacBook Air M5 (works with Wi-Fi off)"]
-    LAUNCH["Edge AI Launcher<br/>SwiftUI app + scripts/launcher.mjs :8700<br/>START / STOP"]
+    LAUNCH["SIBOL app<br/>SwiftUI app + scripts/launcher.mjs :8700<br/>START / STOP"]
     LMS["LM Studio :1234<br/>Gemma 4 E2B, MLX 4-bit"]
     HUB["Edge hub :8787<br/>scripts/edge-hub.mjs<br/>/api/tutor, /api/tts, /api/ping<br/>builds the prompt on the server"]
     AWAKE["caffeinate<br/>keeps the Mac awake"]
@@ -320,7 +320,7 @@ curl -s http://127.0.0.1:8787/api/tutor -X POST -H 'Content-Type: application/js
 # {"text":"...","source":"edge"}
 ```
 
-**One-button alternative to steps 2 and 3:** download the [Edge AI Launcher](#edge-ai-launcher-starting-the-model-with-one-button) and press START. It starts LM Studio's server, loads Gemma, starts the hub and asks Gemma a test question.
+**One-button alternative to steps 2 and 3:** open the [SIBOL app](#the-sibol-app-starting-the-model-with-one-button) and press START. It starts LM Studio's server, loads Gemma, starts the hub and asks Gemma a test question.
 
 For UI development only: `npm run dev` serves the app on http://localhost:5173 without the hub.
 
