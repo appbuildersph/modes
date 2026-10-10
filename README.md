@@ -76,7 +76,7 @@ Some features are hidden, locked or replaced on purpose, depending on the learni
 | Mic button (voice questions) | Shown but disabled ("needs internet"). Hidden completely if the browser supports neither speech recognition nor audio recording. | The learner types the question |
 | ElevenLabs voice | Not reachable | The device's built-in voice (`speechSynthesis`) reads aloud |
 | AI tutor and AI questions | The edge hub cannot be reached | Bundled explanations and the bundled question rotation |
-| Offline banner | Only appears when the connection drops | None needed online |
+| Offline banner | Pops up for 5 seconds when the connection drops | None needed online |
 
 **By progress or device**
 
