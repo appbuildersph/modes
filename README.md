@@ -1,3 +1,9 @@
+<p align="center">
+  <img src="public/pwa-512x512.png" alt="SIBOL logo: Gabo, a cream-coloured cat wearing blue headphones, above the word SIBOL on a blue background" width="180">
+</p>
+
+<div align="center">
+
 # SIBOL: Student-centered Inclusive Bilingual Offline Learning
 
 [![Live app](https://img.shields.io/badge/Live_app-sibol--tutor.vercel.app-2ea44f?logo=vercel&logoColor=white)](https://sibol-tutor.vercel.app)
@@ -20,9 +26,56 @@
 ![Languages](https://img.shields.io/badge/Languages-English_·_Tagalog_·_Taglish-blue)
 [![Learning modes](https://img.shields.io/badge/Modes-Kalma_·_Pakinig_·_Hakbang-ff69b4)](docs/TUTOR_MODES.md)
 
+</div>
+
 An offline-first Local AI math companion for Filipino **Grade 4 to 6** learners (DepEd MATATAG curriculum). A friendly AI tutor answers a learner's question step by step in English, Tagalog or Taglish, and can read the answer aloud. The answers come from an open-source model, **Gemma 4 E2B, running on the team's own laptop** (an "edge" setup), not from a cloud AI API.
 
 This repository was built for the AppBuildersPH Hackathon 2026 (theme: Local AI).
+
+## App showcase
+
+Screens from the app at phone width (390 px, Chrome). The same practice question is shown in each learning mode so the differences are easy to compare. These were captured before the English mode labels changed to Calm, Listen and Step by Step; Tagalog and Taglish still show Kalma, Pakinig and Hakbang.
+
+**Meet Gabo, the tutor mascot.** Gabo changes pose with the learning mode (`src/ui/Mascot.jsx`).
+
+<table>
+  <tr>
+    <td align="center" valign="top" width="25%"><img src="src/assets/gabo/gabo-star-pose.webp" alt="Gabo holding up a star and smiling" width="140"><br><sub><b>Standard</b></sub></td>
+    <td align="center" valign="top" width="25%"><img src="src/assets/gabo/gabo-calm.webp" alt="Gabo sitting calmly with eyes closed" width="140"><br><sub><b>Kalma</b></sub></td>
+    <td align="center" valign="top" width="25%"><img src="src/assets/gabo/gabo-listen.webp" alt="Gabo holding a headphone to listen" width="140"><br><sub><b>Pakinig</b></sub></td>
+    <td align="center" valign="top" width="25%"><img src="src/assets/gabo/gabo-hakbang.webp" alt="Gabo walking along a number line" width="140"><br><sub><b>Hakbang</b></sub></td>
+  </tr>
+</table>
+
+**Choosing a learning mode**
+
+<table>
+  <tr>
+    <td align="center" valign="top" width="33%"><img src="docs/images/modes/onboarding-mode-step.png" alt="Onboarding step 3 of 5, How should Teacher Gabay help?, with Standard, Kalma, Pakinig and Hakbang cards and Kalma selected" width="220"><br><sub><b>Onboarding.</b> The learner (or an adult) picks a mode in step 3.</sub></td>
+    <td align="center" valign="top" width="33%"><img src="docs/images/modes/profile-mode-picker.png" alt="Profile screen Preferences card with Grade level, Language and an expanded Learning mode picker" width="220"><br><sub><b>Profile.</b> Grade, language and mode can be changed any time.</sub></td>
+    <td align="center" valign="top" width="33%"><img src="docs/images/modes/mode-switch-cover.png" alt="Full-screen Switching mode card for Pakinig with an ear icon and a progress bar" width="220"><br><sub><b>Mode switch.</b> A short cover screen while the new mode is applied.</sub></td>
+  </tr>
+</table>
+
+**One question, four modes**
+
+<table>
+  <tr>
+    <td align="center" valign="top" width="25%"><img src="docs/images/modes/classroom-standard.png" alt="Standard practice screen with a Quick Challenge label, background doodles and the mascot" width="180"><br><sub><b>Standard.</b> Doodles, "Quick Challenge" label, animated mascot.</sub></td>
+    <td align="center" valign="top" width="25%"><img src="docs/images/modes/classroom-kalma.png" alt="Kalma practice screen with a plain background, no decorations, and a Question 1 of 5 counter" width="180"><br><sub><b>Kalma.</b> Plain background, no decorations, a "Question 1 of 5" counter.</sub></td>
+    <td align="center" valign="top" width="25%"><img src="docs/images/modes/classroom-pakinig.png" alt="Pakinig practice screen with large high-contrast question text, the spoken word highlighted, and read-again and speed buttons" width="180"><br><sub><b>Pakinig.</b> Large text, the spoken word highlighted, read-again and speed controls.</sub></td>
+    <td align="center" valign="top" width="25%"><img src="docs/images/modes/classroom-hakbang.png" alt="Hakbang practice screen with the step mascot" width="180"><br><sub><b>Hakbang.</b> The step-by-step mode; questions with steps show a large step card.</sub></td>
+  </tr>
+</table>
+
+**Tutor and offline**
+
+<table>
+  <tr>
+    <td align="center" valign="top" width="50%"><img src="docs/images/verification/edge-hakbang.png" alt="Ask Teacher panel with the question How do I know if an angle is acute and a reply labelled Teacher Gabay AI server" width="220"><br><sub><b>Ask the tutor.</b> Typed or spoken question; the reply comes from Gemma 4 E2B on the edge AI server and can be read aloud.</sub></td>
+    <td align="center" valign="top" width="50%"><img src="docs/images/verification/offline-banner.png" alt="Offline banner reading You're offline, Gabay keeps teaching with saved lessons, above the onboarding screen" width="220"><br><sub><b>Offline.</b> A banner shows for 5 seconds when the connection drops; lessons keep working.</sub></td>
+  </tr>
+</table>
 
 ## Why edge / local AI
 
