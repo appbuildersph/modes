@@ -32,6 +32,15 @@ An offline-first Local AI math companion for Filipino **Grade 4 to 6** learners 
 
 This repository was built for the AppBuildersPH Hackathon 2026 (theme: Local AI).
 
+## Team
+
+| Name | GitHub |
+|---|---|
+| Nyzel Cayat | [@chi4ki1](https://github.com/chi4ki1) |
+| Paul Dacalan | [@polsalarm](https://github.com/polsalarm) |
+| Xander Dacillo | [@TadeyRuk](https://github.com/TadeyRuk) |
+| Eirmon John Paculan | [@riecodes](https://github.com/riecodes) |
+
 ## The problem
 
 Many Filipino Grade 4 to 6 learners study in homes and classrooms with weak or no internet. A cloud-only AI tutor fails exactly when they need it, charges for every question, and sends a child's questions to a third-party server. SIBOL keeps teaching with the network off, and its AI tutor runs on a machine the class controls.
