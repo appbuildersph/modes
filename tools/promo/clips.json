@@ -1,0 +1,44 @@
+{
+  "splash": {
+    "frames": "clips/frames/01",
+    "offset": 3.0,
+    "count": 319
+  },
+  "local": {
+    "frames": "clips/frames/17",
+    "offset": 34.3,
+    "count": 1385
+  },
+  "question": {
+    "frames": "clips/frames/09",
+    "offset": 8.0,
+    "count": 1144
+  },
+  "kalma": {
+    "frames": "clips/frames/09",
+    "offset": 14.0,
+    "count": 1144,
+    "framesB": "clips/frames/13",
+    "offsetB": 28.5,
+    "countB": 1348,
+    "switch": 3.0
+  },
+  "pakinig": {
+    "frames": "clips/frames/09",
+    "offset": 20.0,
+    "count": 1144,
+    "framesB": "clips/frames/14",
+    "offsetB": 33.0,
+    "countB": 1471,
+    "switch": 3.0
+  },
+  "hakbang": {
+    "frames": "clips/frames/09",
+    "offset": 26.1,
+    "count": 1144,
+    "framesB": "clips/frames/15",
+    "offsetB": 30.8,
+    "countB": 1261,
+    "switch": 2.5
+  }
+}

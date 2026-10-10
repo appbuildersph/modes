@@ -1,0 +1,187 @@
+{
+  "beats": [
+    {
+      "id": "wifi",
+      "start": 0,
+      "end": 4,
+      "en": "",
+      "tl": "",
+      "titleEn": [
+        "Wi-Fi: off"
+      ],
+      "titleTl": [
+        "Wi-Fi: patay"
+      ]
+    },
+    {
+      "id": "problem",
+      "start": 4,
+      "end": 11.9,
+      "en": "In many Filipino classrooms, the internet is the first thing to fail. So we built a math tutor that does not need it.",
+      "tl": "Sa maraming paaralan sa Pilipinas, ang internet ang unang nawawala. Kaya gumawa kami ng math tutor na hindi ito kailangan.",
+      "titleEn": [
+        "In many classrooms",
+        "the internet",
+        "fails first."
+      ],
+      "titleTl": [
+        "Sa maraming paaralan",
+        "unang nawawala",
+        "ang internet."
+      ]
+    },
+    {
+      "id": "splash",
+      "start": 11.9,
+      "end": 19.3,
+      "en": "SIBOL. An offline-first math companion for Grades 4 to 6, in English, Tagalog, and Taglish.",
+      "tl": "SIBOL. Offline-first na math companion para sa Grade 4 hanggang 6, sa English, Tagalog, at Taglish.",
+      "titleEn": [
+        "Offline-first.",
+        "Grades 4 to 6.",
+        "English, Tagalog, Taglish."
+      ],
+      "titleTl": [
+        "Offline-first.",
+        "Grade 4 hanggang 6.",
+        "English, Tagalog, Taglish."
+      ]
+    },
+    {
+      "id": "local",
+      "start": 19.3,
+      "end": 27.7,
+      "en": "The tutor is Gemma 4 E2B, an open model running on a laptop in the room. Not in the cloud.",
+      "tl": "Ang tutor ay Gemma 4 E2B, isang open model na tumatakbo sa laptop sa loob ng silid. Hindi sa cloud.",
+      "titleEn": [
+        "Gemma 4 E2B",
+        "on our laptop.",
+        "No cloud AI."
+      ],
+      "titleTl": [
+        "Gemma 4 E2B",
+        "sa aming laptop.",
+        "Walang cloud AI."
+      ]
+    },
+    {
+      "id": "question",
+      "start": 27.7,
+      "end": 30.7,
+      "en": "Same question. Different children.",
+      "tl": "Iisang tanong. Magkakaibang bata.",
+      "titleEn": [
+        "One question.",
+        "Three learners."
+      ],
+      "titleTl": [
+        "Isang tanong.",
+        "Tatlong mag-aaral."
+      ]
+    },
+    {
+      "id": "kalma",
+      "start": 30.7,
+      "end": 39.3,
+      "en": "Kalma. A calm screen, one idea at a time. The tutor answers in two short sentences.",
+      "tl": "Kalma. Tahimik na screen, isang ideya sa bawat pagkakataon. Dalawang maikling pangungusap ang sagot ng tutor.",
+      "titleEn": [
+        "Kalma",
+        "Calm / Focus"
+      ],
+      "titleTl": [
+        "Kalma",
+        "Kalma / Pokus"
+      ]
+    },
+    {
+      "id": "pakinig",
+      "start": 39.3,
+      "end": 46.8,
+      "en": "Pakinig. Big text, read aloud word by word. Numbers said as words.",
+      "tl": "Pakinig. Malaking teksto, binabasa nang malakas, salita bawat salita. Ang mga numero, binibigkas bilang salita.",
+      "titleEn": [
+        "Pakinig",
+        "Listen"
+      ],
+      "titleTl": [
+        "Pakinig",
+        "Makinig"
+      ]
+    },
+    {
+      "id": "hakbang",
+      "start": 46.8,
+      "end": 52.1,
+      "en": "Hakbang. One step per reply, then a quick check.",
+      "tl": "Hakbang. Isang hakbang sa bawat sagot, tapos maikling pagsusulit.",
+      "titleEn": [
+        "Hakbang",
+        "Step by Step"
+      ],
+      "titleTl": [
+        "Hakbang",
+        "Isa-isang hakbang"
+      ]
+    },
+    {
+      "id": "proof",
+      "start": 52.1,
+      "end": 57.5,
+      "en": "Every reply came from the laptop beside the learner, in about a second.",
+      "tl": "Bawat sagot ay galing sa laptop sa tabi ng bata, sa loob ng halos isang segundo.",
+      "titleEn": [
+        "About a second per reply,",
+        "on our own hardware."
+      ],
+      "titleTl": [
+        "Halos isang segundo bawat sagot,",
+        "sa sarili naming hardware."
+      ]
+    },
+    {
+      "id": "end",
+      "start": 57.5,
+      "end": 62.5,
+      "en": "SIBOL. Learning that stays, even when the signal does not.",
+      "tl": "SIBOL. Pag-aaral na nananatili, kahit mawala ang signal.",
+      "titleEn": [
+        "Student-centered Inclusive Bilingual Offline Learning"
+      ],
+      "titleTl": [
+        "Student-centered Inclusive Bilingual Offline Learning"
+      ]
+    }
+  ],
+  "sfx": [
+    {
+      "id": "hit",
+      "prompt": "single deep soft cinematic hit, warm, short, no reverb tail",
+      "seconds": 1.5
+    },
+    {
+      "id": "tap",
+      "prompt": "soft UI tap click, plastic, very short, friendly",
+      "seconds": 0.5
+    },
+    {
+      "id": "whoosh",
+      "prompt": "gentle short whoosh transition, airy, subtle",
+      "seconds": 1
+    },
+    {
+      "id": "chime",
+      "prompt": "warm bright two-note chime, playful, children's app, short",
+      "seconds": 1.2
+    },
+    {
+      "id": "note",
+      "prompt": "single soft warm piano note with long gentle decay, calm",
+      "seconds": 4
+    }
+  ],
+  "music": {
+    "prompt": "Warm, bright, hopeful instrumental for a children's education app promo. Soft felt piano, light plucked ukulele, gentle hand claps, 96 BPM, clear downbeats, no vocals, uplifting but calm, cinematic build in the last 10 seconds, clean ending.",
+    "seconds": 62
+  }
+}

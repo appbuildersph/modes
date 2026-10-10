@@ -116,7 +116,24 @@ So the video deliberately:
 
 Deck gaps the video can fill: slides 9 ("app intro"), 11 ("mode changes"), 13 ("tts and stt model") and 19 ("cta") are still placeholders. Drop the 0:10-0:22 clip into slide 9, the 0:26-0:54 morph into slide 11, and the end card into slide 19. Slide 13 needs a sentence, not a video: device `speechSynthesis` by default, ElevenLabs optional and disclosed. Also: slide 15 says "Ask Teacher Gabay" and slide 14 says "Gabo School Hub" while the app says "Teacher Gabo". Pick one name before Demo Day; the video uses "Teacher Gabo" because that is what the screen shows.
 
-## 9. `localai` folder audit (done 2026-10-10 08:15)
+## 9. Production log (2026-10-10, 08:45 to 09:40)
+
+The video was built as code, not in an editor, so it can be re-rendered in two minutes when a clip or a line changes. Everything lives in the session scratchpad (`...\scratchpad\video\`, not in the repo; copy it into `tools/promo/` if the team wants to keep it):
+
+- `script.json`: ten beats with start and end seconds, English and Tagalog voiceover lines, and kinetic title lines per language.
+- `comp.html`: the composition (1920x1080, or 1080x1920 with `?v=1`), driven by a fake clock so every frame is deterministic. Scenes use the app's own tokens, fonts (Baloo 2, Nunito, Atkinson Hyperlegible from `node_modules/@fontsource`) and the exact in-app mode wording from `src/lib/tutor-modes.js` (English and Filipino strings).
+- `clips.json`: which recorded app clip each scene shows and at what offset. Clips were recorded headless with Playwright from the live Vercel app at 390x844 and turned into 30 fps frame sequences (headless Chromium does not paint seeked `<video>` frames in screenshots).
+- `render.mjs`: renders 30 frames per second through Chromium screenshots, pipes them to ffmpeg, then mixes voiceover, sound effects and music. `node render.mjs en|tl [vert] [--no-audio]`, run from the repo root so `playwright` resolves.
+- `tts.mjs`: ElevenLabs text to speech (`eleven_multilingual_v2`, a bright young female premade voice, assistant-style delivery), sound effects (`/v1/sound-generation`: hit, tap, whoosh, chime, held note) and a 62 s music bed (`/v1/music`, with a looped pad fallback). Reads `ELEVENLABS_API_KEY` from `.env`.
+- `POST.md`: the X or LinkedIn post text in English and Tagalog.
+
+Outputs (`...\scratchpad\video\out\`): `sibol-promo-en-16x9.mp4`, `sibol-promo-tl-16x9.mp4`, `sibol-promo-en-9x16.mp4`, `sibol-promo-tl-9x16.mp4`, each 61 s, H.264, AAC.
+
+Voice: the default is a voice designed to the brief with ElevenLabs Voice Design (`tools/promo/voice-design.json` holds the prompt: a young woman, bright and a little girly yet composed, the warm, clear, evenly paced delivery of a smartphone voice assistant, American English, no fry, no breathiness). Three previews were generated and measured on a 43-word line; the pick (saved in the account as "SIBOL assistant") had the narrowest pitch spread (104 Hz between the 10th and 90th percentile) and the most assistant-like pace (162 words per minute, against 185 to 190 for the other two), with a 222 Hz median pitch, above both premade candidates. Two premade alternates are mixed onto the same picture for comparison: Jessica (`-voice-jessica`, labels: playful, bright, warm, young, cute) and Sarah (`-voice-sarah`, labels: mature, reassuring, confident, professional). On the splash line: designed voice 262 Hz median (English and Tagalog), Jessica 204 / 193 Hz, Sarah 208 / 190 Hz. These are measurements of pitch and pace, not a listening test, and no Apple recording was used as a reference: Apple's assistant voice is not available for cloning, and matching it by ear is the team's call before posting.
+
+What is real on screen: the Wi-Fi-off capture (`docs/images/verification/`), the LM Studio log (`docs/images/edge-inference-proof.png`), a live tutor reply in the classroom labelled "Teacher Gabo AI server" ("We can use a number line to show addition. Start at 12 on the line.", answered by the edge hub through the Vercel app during recording), the mode-picker morph of "What is 12 + 15?" (6 s per mode), and the practice question in each mode (Kalma green panel with feedback, Pakinig read-aloud highlight after "Read again", Hakbang question and check). All of it was recorded headless from the live Vercel app with the recorders in `tools/promo/`.
+
+## 10. `localai` folder audit (done 2026-10-10 08:15)
 
 `C:\dev\appbuildersph\localai` is not a git repo. Everything in it is already in this repo in a newer form, so nothing needs merging and nothing conflicts:
 
