@@ -16,7 +16,7 @@ The project ships three accessibility-oriented learning modes. Each changes both
 
 - The "For" column describes the learners each mode is designed to support. It is **not** a diagnosis, screening, or clinical claim. The app does not diagnose and must never ask for or store a diagnosis.
 - In the submission, pitch, and UI copy, say "designed to support learners who..." and avoid claims of treatment, therapy, or proven outcomes. Do not state efficacy figures that were not measured.
-- Mode names are Filipino words (Kalma, Pakinig, Hakbang). Show the English gloss (Calm/Focus, Listen, Step) alongside where space allows.
+- Mode names follow the app language: English shows Calm, Listen, Step by Step; Tagalog and Taglish show the Filipino names Kalma, Pakinig, Hakbang. The ids stay `kalma`, `pakinig`, `hakbang` (stored preference, do not rename). A short gloss is shown under the name.
 - Any learner may choose any mode; modes are preferences, not labels attached to the learner.
 
 ## 3. How modes relate to the rest of the app

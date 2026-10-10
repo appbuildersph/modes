@@ -31,8 +31,8 @@ export const MODES = {
   },
   kalma: {
     id: 'kalma',
-    label: { en: 'Kalma', fil: 'Kalma', taglish: 'Kalma' },
-    gloss: { en: 'Calm / Focus', fil: 'Kalmado / Nakatutok', taglish: 'Calm / Focus' },
+    label: { en: 'Calm', fil: 'Kalma', taglish: 'Kalma' },
+    gloss: { en: 'Quiet and focused', fil: 'Kalmado / Nakatutok', taglish: 'Calm / Focus' },
     description: {
       en: 'A calm, quiet screen and short replies. One idea at a time.',
       fil: 'Tahimik at payak na screen, maikling sagot. Isang ideya bawat sagot.',
@@ -46,8 +46,8 @@ export const MODES = {
   },
   pakinig: {
     id: 'pakinig',
-    label: { en: 'Pakinig', fil: 'Pakinig', taglish: 'Pakinig' },
-    gloss: { en: 'Listen', fil: 'Makinig', taglish: 'Listen' },
+    label: { en: 'Listen', fil: 'Pakinig', taglish: 'Pakinig' },
+    gloss: { en: 'Read aloud to me', fil: 'Makinig', taglish: 'Listen' },
     description: {
       en: 'Big text, read aloud word by word. Numbers said as words.',
       fil: 'Malaking teksto, binabasa nang malakas bawat salita. Binibigkas ang mga numero.',
@@ -61,8 +61,8 @@ export const MODES = {
   },
   hakbang: {
     id: 'hakbang',
-    label: { en: 'Hakbang', fil: 'Hakbang', taglish: 'Hakbang' },
-    gloss: { en: 'Step', fil: 'Isang hakbang', taglish: 'Step' },
+    label: { en: 'Step by Step', fil: 'Hakbang', taglish: 'Hakbang' },
+    gloss: { en: 'Small steps', fil: 'Isang hakbang', taglish: 'Step' },
     description: {
       en: 'A bigger step-by-step card, then a quick check.',
       fil: 'Mas malaking card ng bawat hakbang, tapos may maikling tanong.',
