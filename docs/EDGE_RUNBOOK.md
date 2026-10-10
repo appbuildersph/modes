@@ -15,7 +15,7 @@ Mac browser at http://localhost:8787 -> the same hub, no internet needed
 | Node 24 and `npm install` | repo root | verified |
 | `.env` in the repo root (gitignored) | holds secrets such as `ELEVENLABS_API_KEY`; never commit it | verified |
 | ngrok account, authtoken, free static domain | ngrok.com dashboard; the owner runs `ngrok config add-authtoken <token>` themselves | done: signed in on the Mac, static domain `tweed-thinner-quickly.ngrok-free.dev` (2026-10-10) |
-| Vercel project for the PWA | see section 5 | done: project `math-companion-edge` (team xanders-projects-da0d6d9f), production at `https://math-companion-edge.vercel.app`, deployed from the CLI (no Git connection, because the repo is private) with `VITE_EDGE_BASE=https://tweed-thinner-quickly.ngrok-free.dev` (public value only; no API keys on Vercel) |
+| Vercel project for the PWA | see section 5 | done: project `math-companion-edge` (team xanders-projects-da0d6d9f), production at `https://math-companion-edge.vercel.app`, connected to GitHub on 2026-10-10: every push to `main` deploys to production (hiyang, sibol-tutor and math-companion-edge `.vercel.app`) by itself; before that it was deployed from the CLI with `VITE_EDGE_BASE=https://tweed-thinner-quickly.ngrok-free.dev` (public value only; no API keys on Vercel) |
 
 ## 2. Start order (every session)
 
