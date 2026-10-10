@@ -41,6 +41,54 @@ This repository was built for the AppBuildersPH Hackathon 2026 (theme: Local AI)
 | Lord Xander Dacillo | [@TadeyRuk](https://github.com/TadeyRuk) |
 | Eirmon John Paculan | [@riecodes](https://github.com/riecodes) |
 
+## For judges: set up SIBOL step by step
+
+About 15 minutes, most of it the one-time model download. You need internet only for the setup. After that, SIBOL runs with Wi-Fi off.
+
+**What you need:** a Mac with Apple Silicon (M1 or newer), about 6 GB of free disk space, and Google Chrome.
+
+**Step 1. Install LM Studio.** Download it from [lmstudio.ai](https://lmstudio.ai), install it, and **open it once**. Opening it installs the `lms` command the setup uses. You can close it again.
+
+**Step 2. Install Node.js 24.** Download the macOS installer from [nodejs.org](https://nodejs.org) and run it.
+
+**Step 3. Download SIBOL.** Open the Terminal app and run:
+
+```bash
+git clone https://github.com/appbuildersph/modes.git
+cd modes
+```
+
+**Step 4. Run the setup.** In the same Terminal window:
+
+```bash
+sh scripts/setup.sh
+```
+
+It checks your Mac, installs and builds the app, downloads Gemma 4 E2B in LM Studio (about 4.4 GB), and installs the **Edge AI Launcher** in your Applications folder. When it finishes, the launcher opens by itself. If a step fails, the script says what to install and stops; fix that and run it again (finished steps are skipped).
+
+**Step 5. Start the AI.** In the Edge AI Launcher, press **START**. Wait until the button turns green and says **READY**. That means Gemma has answered a test question on your Mac.
+
+**Step 6. Open SIBOL.** In Chrome, go to **http://localhost:8787**.
+1. Go through the short welcome steps. Step 3 asks how Teacher Gabo should help: pick **Calm**, **Listen** or **Step by Step**, or Standard.
+2. Open a lesson.
+3. Tap **Ask Teacher**, type a math question (for example "How do I know if an angle is acute?") and tap **Ask**.
+4. The answer is labelled **Teacher Gabo AI server**. That label means Gemma on your Mac wrote it.
+
+**Step 7. Try it offline.** Turn off Wi-Fi and ask another question. Gemma still answers, because everything runs on your Mac.
+
+**Step 8. Stop.** Press **STOP** in the launcher when you are done. It stops Gemma, the hub and the keep-awake.
+
+**Optional: SIBOL on a phone.** On an iPhone, open [sibol-tutor.vercel.app](https://sibol-tutor.vercel.app) in Safari, tap **Share**, then **Add to Home Screen**. Lessons and practice work offline on the phone. AI answers on the phone come from the team's own Mac through its tunnel, so they work only while the team's server is running; otherwise the phone shows the bundled explanations.
+
+**If something goes wrong**
+
+| Problem | Fix |
+|---|---|
+| The setup says LM Studio was not found | Open LM Studio once, then run `sh scripts/setup.sh` again |
+| The launcher shows "Tunnel for phones" as failed | Expected on your Mac: the tunnel uses the team's account. Everything on your Mac still works |
+| The answer is not labelled "AI server" | The launcher is not READY yet. Press START and wait for green, then ask again |
+| You prefer not to use the launcher | Follow [Quick start A](#a-run-it-on-one-machine-no-accounts-needed) to start LM Studio and the hub by hand |
+
 ## The problem
 
 Many Filipino Grade 4 to 6 learners study in homes and classrooms with weak or no internet. A cloud-only AI tutor fails exactly when they need it, charges for every question, and sends a child's questions to a third-party server. SIBOL keeps teaching with the network off, and its AI tutor runs on a machine the class controls.
