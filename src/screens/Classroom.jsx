@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Button, RefBadge, MasteryBar, RichText } from '../ui/Primitives.jsx'
 import { Mascot, SpeechBubble } from '../ui/Mascot.jsx'
 import OnlineBadge from '../ui/OnlineBadge.jsx'
+import MicMeter from '../ui/MicMeter.jsx'
 import { checkAnswer, choiceOptions } from '../lib/check.js'
 import { speak, stopSpeaking, pauseSpeaking, resumeSpeaking, isSpeechSupported } from '../lib/speech.js'
 import { askTeacherGabay, SOURCE } from '../lib/tutor.js'
@@ -767,6 +768,7 @@ export default function Classroom({ competency, questions, questionSource = 'bun
                     {thinking ? '...' : tt('class.ask')}
                   </Button>
                 </div>
+                <MicMeter active={listening} label={tt('class.micListening')} />
                 {transcribing && <p className="mt-2 text-sm font-bold text-ink/60">{tt('class.listening')}</p>}
                 {micError && !listening && <p className="mt-2 text-sm font-bold text-ink/60">{tt('class.micError')}</p>}
                 {!online && <p className="mt-2 text-sm text-ink/60">{tt('class.offlineNote')}</p>}

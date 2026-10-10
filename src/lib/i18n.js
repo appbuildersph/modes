@@ -270,6 +270,7 @@ export const STRINGS = {
   'class.micStop': { en: 'Stop', fil: 'Itigil', taglish: 'Itigil' },
   'class.ask': { en: 'Ask', fil: 'Tanong', taglish: 'Tanong' },
   'class.listening': { en: 'Listening... one moment.', fil: 'Pinapakinggan kita... sandali lang.', taglish: 'Pinapakinggan kita... sandali lang.' },
+  'class.micListening': { en: 'I am listening. Speak now, then tap Stop.', fil: 'Nakikinig ako. Magsalita ka na, tapos pindutin ang Itigil.', taglish: 'Nakikinig ako. Magsalita ka na, tapos i-tap ang Itigil.' },
   'class.listeningShort': { en: 'One moment, I am listening...', fil: 'Sandali, pinapakinggan kita...', taglish: 'Sandali, pinapakinggan kita...' },
   'class.offlineNote': {
     en: 'Offline: Gabo still answers using on-device AI or cached explanations. Mic needs internet.',

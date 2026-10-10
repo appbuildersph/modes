@@ -1,0 +1,13 @@
+/* Phones: the bars pulse instead of following the voice (see MicMeter.jsx). */
+.mic-meter-idle {
+  animation: mic-meter-pulse 0.9s ease-in-out infinite alternate;
+}
+
+@keyframes mic-meter-pulse {
+  from { transform: scaleY(0.15); }
+  to { transform: scaleY(0.7); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mic-meter-idle { animation: none; transform: scaleY(0.4); }
+}

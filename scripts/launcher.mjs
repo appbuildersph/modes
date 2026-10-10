@@ -235,7 +235,9 @@ async function startAll() {
     s = step('Start the edge hub')
     if (await hubUp()) s.ok('already running')
     else {
-      if (!existsSync(join(ROOT, 'dist/index.html'))) await run(NPM, ['run', 'build'], { cwd: ROOT, env: BUILD_ENV, timeout: 240_000 }).catch(() => {})
+      // Always rebuild (about 1 s): building only when dist/ was missing served a
+      // build from before the mic fix on localhost:8787.
+      await run(NPM, ['run', 'build'], { cwd: ROOT, env: BUILD_ENV, timeout: 240_000 }).catch(() => {})
       // A fresh clone (a judge's Mac) has no .env; --env-file would make Node exit.
       detach(NODE, ['--env-file-if-exists=.env', 'scripts/edge-hub.mjs'], 'hub.log', { EDGE_SERVE_APP: '1', QUESTION_CORS_ORIGINS: ORIGINS })
       ;(await waitFor(hubUp, 15_000)) ? s.ok(voiceLine()) : s.fail('see ~/Library/Logs/edge-launcher/hub.log')

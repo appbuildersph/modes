@@ -3,6 +3,7 @@ import { get, set } from 'idb-keyval'
 import { buildClassroom, THEME_LIST } from '../three/scene.js'
 import { Button, RefBadge, RichText } from '../ui/Primitives.jsx'
 import OnlineBadge from '../ui/OnlineBadge.jsx'
+import MicMeter from '../ui/MicMeter.jsx'
 import { Mascot } from '../ui/Mascot.jsx'
 import { checkAnswer, choiceOptions } from '../lib/check.js'
 import { speak, stopSpeaking, isSpeechSupported } from '../lib/speech.js'
@@ -664,6 +665,7 @@ function AskPanel({ tt, lang, online, question, setQuestion, askGabay, toggleMic
         </Button>
       </div>
 
+      <MicMeter active={listening} label={tt('class.micListening')} />
       {transcribing && <p className="mt-2 text-sm font-bold text-ink/60">{tt('class.listening')}</p>}
       {micError && !listening && <p className="mt-2 text-sm font-bold text-ink/60">{tt('class.micError')}</p>}
       {!online && <p className="mt-2 text-sm font-bold text-ink/60">{tt('class.offlineNote')}</p>}
