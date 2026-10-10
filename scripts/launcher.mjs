@@ -24,7 +24,9 @@ mkdirSync(LOGS, { recursive: true })
 
 const MODEL = process.env.EDGE_MODEL || 'google/gemma-4-e2b'
 const NGROK_URL = process.env.EDGE_NGROK_URL || 'tweed-thinner-quickly.ngrok-free.dev'
-const ORIGINS = process.env.QUESTION_CORS_ORIGINS || 'https://math-companion-edge.vercel.app,https://hiyang.vercel.app'
+// Every Vercel alias of the PWA; a missing one gets 403 from the hub and falls back
+// to the device voice and bundled answers (sibol-tutor was missing until 09:15).
+const ORIGINS = process.env.QUESTION_CORS_ORIGINS || 'https://sibol-tutor.vercel.app,https://hiyang.vercel.app,https://math-companion-edge.vercel.app'
 
 // A .app starts with a bare PATH, so look in the usual install places.
 const findTool = (name, extra = []) =>
