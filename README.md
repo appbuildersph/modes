@@ -32,13 +32,13 @@ An offline-first Local AI math companion for Filipino **Grade 4 to 6** learners 
 
 This repository was built for the AppBuildersPH Hackathon 2026 (theme: Local AI).
 
-## Team
+## Team OHMAKINIGKA!
 
 | Name | GitHub |
 |---|---|
 | Nyzel Cayat | [@chi4ki1](https://github.com/chi4ki1) |
 | Paul Dacalan | [@polsalarm](https://github.com/polsalarm) |
-| Xander Dacillo | [@TadeyRuk](https://github.com/TadeyRuk) |
+| Lord Xander Dacillo | [@TadeyRuk](https://github.com/TadeyRuk) |
 | Eirmon John Paculan | [@riecodes](https://github.com/riecodes) |
 
 ## The problem
@@ -359,7 +359,13 @@ Earlier single runs, recorded in [`docs/DECISIONS.md`](docs/DECISIONS.md) (D-018
 
 ## Licence
 
-No licence file has been added yet; the team has not chosen one. Do not assume a licence until one is published in this repository.
+The team's code is released under the [MIT License](LICENSE). Third-party parts keep their own terms:
+
+- **Gemma 4 E2B** (not included in this repository; downloaded through LM Studio): Apache 2.0, per the official model card.
+- **Fonts** (Atkinson Hyperlegible, Baloo 2, Nunito, bundled through `@fontsource`): SIL Open Font License 1.1.
+- **npm dependencies:** each under its own licence (see `node_modules/*/LICENSE` after `npm install`).
+- **Curriculum content** is derived from the public DepEd MATATAG curriculum framework.
+- **Illustrations, textures and sound effects** reused from the team's earlier prototype were made with OpenAI generative tools; see "Models, services and tools used" above.
 
 ## More documentation
 
