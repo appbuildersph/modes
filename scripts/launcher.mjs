@@ -36,6 +36,8 @@ const NPM = findTool('npm', [join(dirname(NODE), 'npm')])
 const BUILD_ENV = { ...process.env, PATH: `${dirname(NODE)}:${process.env.PATH ?? '/usr/bin:/bin'}` }
 
 let busy = false
+// 'start' or 'stop' while busy, so each button can show its own spinner.
+let action = null
 let steps = []
 let test = null
 
@@ -83,11 +85,58 @@ async function gemmaLoaded() {
   }
 }
 const hubUp = async () => (await get('http://127.0.0.1:8787/api/ping'))?.status === 204
-async function tunnelUrl() {
+async function httpsTunnel() {
   const res = await get('http://127.0.0.1:4040/api/tunnels')
   if (!res?.ok) return null
   const { tunnels = [] } = await res.json().catch(() => ({}))
-  return tunnels.find((t) => t.public_url?.startsWith('https://'))?.public_url ?? null
+  return tunnels.find((t) => t.public_url?.startsWith('https://')) ?? null
+}
+const tunnelUrl = async () => (await httpsTunnel())?.public_url ?? null
+async function ngrokRunning() {
+  try {
+    await run('/usr/bin/pgrep', ['-x', 'ngrok'])
+    return true
+  } catch {
+    return false
+  }
+}
+
+// An open tunnel in ngrok's local API does not prove phones can reach the hub, so
+// ping the hub through the public URL, the way a phone would. Cached because the
+// window polls every 1.5 s and each probe is a round trip through ngrok's servers.
+const PROBE_EVERY_MS = 10_000
+let probe = { url: null, at: 0, ok: false, ms: 0, detail: '' }
+let probing = null
+async function probeTunnel(url) {
+  const started = Date.now()
+  const res = await get(`${url}/api/ping`, { headers: { 'ngrok-skip-browser-warning': '1' } }, 8000)
+  const ok = res?.status === 204 && res.headers.get('x-edge-hub') === '1'
+  const detail = ok ? '' : res ? `answered ${res.status}, not the hub` : 'no answer through the tunnel'
+  probe = { url, at: Date.now(), ok, ms: Date.now() - started, detail }
+}
+function freshProbe(url) {
+  if (url && (probe.url !== url || Date.now() - probe.at > PROBE_EVERY_MS) && !probing) {
+    probing = probeTunnel(url).finally(() => (probing = null))
+  }
+  return probe.url === url ? probe : null
+}
+
+async function tunnelStatus() {
+  const [running, t] = await Promise.all([ngrokRunning(), httpsTunnel()])
+  const url = t?.public_url ?? null
+  // The first probe of a new URL runs inline so the section never shows "checking" for long.
+  if (url && probe.url !== url && !probing) await (probing = probeTunnel(url).finally(() => (probing = null)))
+  const p = freshProbe(url)
+  return {
+    running,
+    url,
+    reachable: url ? (p ? p.ok : null) : false,
+    ms: p?.ms ?? null,
+    checkedAgoS: p ? Math.round((Date.now() - p.at) / 1000) : null,
+    problem: p?.detail ?? '',
+    requests: t?.metrics?.http?.count ?? 0,
+    openConns: t?.metrics?.conns?.gauge ?? 0,
+  }
 }
 async function awake() {
   try {
@@ -107,9 +156,12 @@ function voiceLine() {
 }
 
 async function status() {
-  const [lm, gemma, hub, tunnel, keepAwake] = await Promise.all([lmServerUp(), gemmaLoaded(), hubUp(), tunnelUrl(), awake()])
+  const [lm, gemma, hub, tunnelInfo, keepAwake] = await Promise.all([lmServerUp(), gemmaLoaded(), hubUp(), tunnelStatus(), awake()])
+  const tunnel = tunnelInfo.url
   return {
     busy,
+    action: busy ? action : null,
+    tunnel: tunnelInfo,
     steps,
     test,
     parts: [
@@ -141,6 +193,7 @@ async function askGemma() {
 async function startAll() {
   if (busy) return
   busy = true
+  action = 'start'
   steps = []
   test = null
   try {
@@ -192,6 +245,7 @@ async function startAll() {
 async function stopAll() {
   if (busy) return
   busy = true
+  action = 'stop'
   steps = []
   test = null
   try {
@@ -213,51 +267,120 @@ const PAGE = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Edge AI Launcher</title>
 <style>
-  :root { --ink:#3a2e2a; --cream:#fbf1da; --card:#fffaf0; --red:#e5484d; --mint:#8ed8b4; --rose:#f4c3d0; }
+  :root { --ink:#3a2e2a; --cream:#fbf1da; --card:#fffaf0; --red:#e5484d; --amber:#f0a12c; --mint:#8ed8b4; --rose:#f4c3d0 }
   * { box-sizing: border-box }
   body { margin:0; min-height:100vh; display:grid; place-items:center; background:var(--cream); color:var(--ink);
          font:600 16px/1.4 ui-rounded, 'SF Pro Rounded', system-ui, sans-serif; padding:24px 16px }
   main { width:min(100%, 34rem); text-align:center }
-  h1 { margin:0 0 4px; font-size:1.6rem } p.sub { margin:0 0 24px; opacity:.7 }
-  #go { width:220px; height:220px; border-radius:50%; border:6px solid var(--ink); background:radial-gradient(circle at 35% 30%, #ff8a8d, var(--red) 55%, #b4272c);
-        color:#fff; font-family:inherit; font-size:2rem; font-weight:900; line-height:1.1; letter-spacing:.04em; cursor:pointer; box-shadow:0 12px 0 var(--ink); transition:transform .08s, box-shadow .08s }
-  #go:active:not(:disabled) { transform:translateY(10px); box-shadow:0 2px 0 var(--ink) }
-  #go:disabled { filter:saturate(.4); cursor:progress }
-  #go.ready { background:radial-gradient(circle at 35% 30%, #b9f0d3, #3fb37f 55%, #23784f) }
-  ul { list-style:none; padding:0; margin:28px 0 0; text-align:left; display:grid; gap:8px }
-  li { display:flex; gap:10px; align-items:flex-start; background:var(--card); border:2.5px solid var(--ink); border-radius:16px; padding:10px 14px; box-shadow:3px 3px 0 var(--ink) }
-  .dot { flex:none; width:14px; height:14px; margin-top:4px; border-radius:50%; border:2px solid var(--ink); background:var(--rose) }
+  h1 { margin:0 0 4px; font-size:1.6rem } p.sub { margin:0 0 28px; opacity:.7 }
+  .pair { display:flex; gap:32px; justify-content:center; flex-wrap:wrap; padding:14px 0 6px }
+  .big { --halo:var(--amber); position:relative; width:160px; height:160px; border-radius:50%; border:6px solid var(--ink);
+         color:#fff; font-family:inherit; font-size:1.45rem; font-weight:900; line-height:1.1; letter-spacing:.04em; cursor:pointer;
+         box-shadow:0 12px 0 var(--ink); transition:transform .08s, box-shadow .08s, filter .3s, background .4s }
+  .big:active:not(:disabled) { transform:translateY(10px); box-shadow:0 2px 0 var(--ink) }
+  .big:disabled { filter:saturate(.35) brightness(1.05); cursor:not-allowed }
+  .big.busy:disabled { filter:none; cursor:progress }
+  .big .icon { display:block; font-size:1.6rem; margin-bottom:2px }
+  #go { background:radial-gradient(circle at 35% 30%, #ffd98a, var(--amber) 55%, #b8650f) }
+  #go.ready { --halo:#3fb37f; background:radial-gradient(circle at 35% 30%, #b9f0d3, #3fb37f 55%, #23784f); animation:glow 2.4s ease-in-out infinite }
+  #stop { --halo:var(--red); background:radial-gradient(circle at 35% 30%, #ff8a8d, var(--red) 55%, #b4272c) }
+  /* idle START: two ripples invite the press */
+  .big.idle::before, .big.idle::after { content:''; position:absolute; inset:-8px; border-radius:50%; border:4px solid var(--halo);
+         animation:ripple 2s ease-out infinite; pointer-events:none }
+  .big.idle::after { animation-delay:1s }
+  /* busy: a spinning arc around the button that is working */
+  .big.busy::before { content:''; position:absolute; inset:-18px; border-radius:50%; border:7px solid transparent;
+         border-top-color:var(--halo); border-right-color:var(--halo); animation:spin .9s linear infinite; pointer-events:none }
+  .big.pop { animation:pop .5s cubic-bezier(.3,1.6,.5,1) }
+  .big.ready.pop { animation:pop .5s cubic-bezier(.3,1.6,.5,1), glow 2.4s ease-in-out .5s infinite }
+  @keyframes ripple { from { transform:scale(1); opacity:.6 } to { transform:scale(1.4); opacity:0 } }
+  @keyframes spin { to { transform:rotate(360deg) } }
+  @keyframes pop { 0% { transform:scale(.82) } 60% { transform:scale(1.08) } 100% { transform:scale(1) } }
+  @keyframes glow { 50% { box-shadow:0 12px 0 var(--ink), 0 0 34px 8px rgba(63,179,127,.55) } }
+  ul { list-style:none; padding:0; margin:14px 0 0; text-align:left; display:grid; gap:8px }
+  li { display:flex; gap:10px; align-items:flex-start; background:var(--card); border:2.5px solid var(--ink); border-radius:16px; padding:10px 14px;
+       box-shadow:3px 3px 0 var(--ink); animation:rowIn .35s ease-out both }
+  li:nth-child(2) { animation-delay:.04s } li:nth-child(3) { animation-delay:.08s } li:nth-child(4) { animation-delay:.12s }
+  li:nth-child(5) { animation-delay:.16s } li:nth-child(6) { animation-delay:.2s }
+  @keyframes rowIn { from { opacity:0; transform:translateY(-6px) } }
+  .dot { flex:none; width:14px; height:14px; margin-top:4px; border-radius:50%; border:2px solid var(--ink); background:var(--rose); transition:background .4s }
   .dot.ok { background:#3fb37f } .dot.running { background:#f7d26a; animation:pulse 1s infinite }
   @keyframes pulse { 50% { opacity:.35 } }
   small { display:block; opacity:.65; font-weight:600; word-break:break-all }
-  #reply { margin-top:16px; text-align:left; background:#fff7cc; border:2.5px solid var(--ink); border-radius:16px; padding:12px 14px; display:none }
-  #stop { margin-top:22px; background:none; border:2px solid var(--ink); border-radius:999px; padding:8px 18px; font-family:inherit; font-size:.95rem; font-weight:800; color:var(--ink); cursor:pointer }
+  #reply { margin-top:20px; text-align:left; background:#fff7cc; border:2.5px solid var(--ink); border-radius:16px; padding:12px 14px; display:none; animation:rowIn .35s ease-out }
   h2 { font-size:1rem; margin:26px 0 0; text-align:left }
+  .tun { margin-top:10px; text-align:left; background:var(--card); border:2.5px solid var(--ink); border-radius:18px; padding:14px 16px; box-shadow:3px 3px 0 var(--ink) }
+  .tun .head { display:flex; align-items:center; gap:10px; flex-wrap:wrap }
+  .badge { display:inline-flex; align-items:center; gap:7px; border:2px solid var(--ink); border-radius:999px; padding:3px 12px 3px 9px; font-weight:900; font-size:.85rem; letter-spacing:.06em; background:var(--rose); transition:background .4s }
+  .badge.on { background:#bfeed6 } .badge.wait { background:#fbe3a0 }
+  .live { position:relative; width:10px; height:10px; border-radius:50%; background:var(--ink) }
+  .badge.on .live { background:#2e9a69 }
+  .badge.on .live::after { content:''; position:absolute; inset:-4px; border-radius:50%; border:2px solid #2e9a69; animation:ripple 1.6s ease-out infinite }
+  .badge.wait .live { background:#c98a12; animation:pulse 1s infinite }
+  .tun a { color:inherit; font-weight:800; word-break:break-all }
+  .tun dl { display:grid; grid-template-columns:auto 1fr; gap:6px 14px; margin:12px 0 0; font-size:.92rem }
+  .tun dt { opacity:.65 } .tun dd { margin:0; font-weight:800 }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation:none !important; transition:none !important } }
 </style></head>
 <body><main>
   <h1>Edge AI</h1><p class="sub">Gemma 4 E2B on this Mac, for the app and the phones</p>
-  <button id="go">START</button>
+  <div class="pair">
+    <button id="go" class="big"></button>
+    <button id="stop" class="big"></button>
+  </div>
   <div id="reply"></div>
+  <h2>Tunnel for phones</h2>
+  <div class="tun">
+    <div class="head"><span id="tBadge" class="badge"><span class="live"></span><span id="tWord">…</span></span><a id="tUrl" target="_blank" rel="noopener"></a></div>
+    <dl><dt>ngrok</dt><dd id="tRun"></dd><dt>Reaches the hub</dt><dd id="tReach"></dd><dt>Traffic</dt><dd id="tTraffic"></dd></dl>
+  </div>
   <h2>Status</h2><ul id="parts"></ul>
   <h2 id="stepsTitle" hidden>Last run</h2><ul id="steps"></ul>
-  <button id="stop">Stop everything</button>
 </main>
 <script>
   const $ = (id) => document.getElementById(id)
   const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]))
   const row = (state, label, detail) => '<li><span class="dot ' + state + '"></span><span>' + esc(label) + '<small>' + esc(detail) + '</small></span></li>'
+  // Only touch the DOM when something changed, so the entry animations play once, not every poll.
+  const put = (el, html) => { if (el.innerHTML !== html) el.innerHTML = html }
+  const label = (icon, text) => '<span class="icon">' + icon + '</span>' + text
+  let wasReady = null
+  function pop(el) { el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop') }
   async function refresh() {
     const s = await fetch('/status').then((r) => r.json()).catch(() => null)
     if (!s) return
-    const ready = s.parts.every((p) => p.ok)
-    $('go').disabled = s.busy
-    $('go').classList.toggle('ready', ready && !s.busy)
-    $('go').textContent = s.busy ? 'STARTING…' : ready ? 'READY' : 'START'
-    $('parts').innerHTML = s.parts.map((p) => row(p.ok ? 'ok' : '', p.label, p.detail)).join('')
+    const ready = s.parts.every((p) => p.ok) && !s.busy
+    const anyUp = s.parts.some((p) => p.ok)
+    const starting = s.busy && s.action !== 'stop'
+    const stopping = s.busy && s.action === 'stop'
+    const go = $('go'), stop = $('stop')
+    go.disabled = s.busy
+    go.className = 'big' + (ready ? ' ready' : '') + (starting ? ' busy' : '') + (!ready && !s.busy ? ' idle' : '')
+    put(go, starting ? label('&#9203;', 'STARTING…') : ready ? label('&#10003;', 'READY') : label('&#9211;', 'START'))
+    stop.disabled = s.busy || !anyUp
+    stop.className = 'big' + (stopping ? ' busy' : '')
+    put(stop, stopping ? label('&#9203;', 'STOPPING…') : anyUp ? label('&#9632;', 'STOP') : label('&#9632;', 'OFF'))
+    if (wasReady === false && ready) pop(go)
+    if (wasReady === true && !ready && !s.busy) pop(stop)
+    wasReady = ready
+    const t = s.tunnel
+    if (t) {
+      // Text only, so the badge's ripple is not restarted by every poll.
+      const state = !t.running || !t.url ? 'off' : t.reachable === null ? 'wait' : t.reachable ? 'on' : 'off'
+      $('tBadge').className = 'badge ' + (state === 'off' ? '' : state)
+      $('tWord').textContent = { on:'ACTIVE', wait:'CHECKING', off: !t.running ? 'NGROK OFF' : !t.url ? 'NO TUNNEL' : 'NOT REACHABLE' }[state]
+      $('tUrl').textContent = t.url ? t.url.replace('https://', '') : ''
+      if (t.url) $('tUrl').href = t.url
+      $('tRun').textContent = t.running ? 'running' : 'not running'
+      $('tReach').textContent = (t.reachable === null ? 'checking…' : t.reachable ? 'yes, hub answered in ' + t.ms + ' ms' : (t.problem || 'no'))
+        + (t.url && t.checkedAgoS !== null ? '  (' + t.checkedAgoS + ' s ago)' : '')
+      $('tTraffic').textContent = t.requests + ' requests, ' + t.openConns + ' open now'
+    }
+    put($('parts'), s.parts.map((p) => row(p.ok ? 'ok' : '', p.label, p.detail)).join(''))
     $('stepsTitle').hidden = !s.steps.length
-    $('steps').innerHTML = s.steps.map((x) => row(x.state, x.label, x.detail)).join('')
+    put($('steps'), s.steps.map((x) => row(x.state, x.label, x.detail)).join(''))
     $('reply').style.display = s.test ? 'block' : 'none'
-    if (s.test) $('reply').innerHTML = '<b>' + (s.test.ok ? 'Gemma answered' : 'No answer') + '</b><br>' + esc(s.test.text)
+    if (s.test) put($('reply'), '<b>' + (s.test.ok ? 'Gemma answered' : 'No answer') + '</b><br>' + esc(s.test.text))
   }
   $('go').onclick = () => fetch('/start', { method: 'POST' }).then(refresh)
   $('stop').onclick = () => confirm('Stop Gemma, the hub and the tunnel? Phones will lose the AI.') && fetch('/stop', { method: 'POST' }).then(refresh)
