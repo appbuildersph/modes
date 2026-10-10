@@ -99,6 +99,7 @@ export default function Classroom({ competency, questions, questionSource = 'bun
   const ui = modeUi(mode)
   const [listening, setListening] = useState(false)
   const [transcribing, setTranscribing] = useState(false)
+  const [micError, setMicError] = useState(false)
   const recRef = useRef(null)
 
   const item = c.items[idx]
@@ -322,17 +323,26 @@ export default function Classroom({ competency, questions, questionSource = 'bun
   }
 
   function startWebSpeech() {
+    let heard = false
+    const done = () => {
+      setListening(false)
+      setTranscribing(false)
+      if (!heard) setMicError(true)
+    }
     const rec = createRecognizer({
       lang: speechLang(lang),
       onResult: (text) => {
+        heard = Boolean(text.trim())
+        setTranscribing(false)
+        if (!heard) return
         setQuestion(text)
         askGabay(text)
       },
-      onError: () => setListening(false),
-      onEnd: () => setListening(false),
+      onError: done,
+      onEnd: done,
     })
     if (!rec) {
-      setListening(false)
+      done()
       return
     }
     recRef.current = rec
@@ -349,6 +359,15 @@ export default function Classroom({ competency, questions, questionSource = 'bun
       return
     }
 
+    setMicError(false)
+    // Browser speech recognition first, started inside the tap: iOS refuses one
+    // started after an await. Gemini used to go first, but no deployment has a
+    // working /api/transcribe (the hub has no such route, Vercel no credentials),
+    // and starting Web Speech after the failed upload lost what the learner said.
+    if (isRecognitionSupported()) {
+      startWebSpeech()
+      return
+    }
     if (online && isMediaRecorderSupported()) {
       const rec = createGeminiRecorder({
         onStart: () => setListening(true),
@@ -357,9 +376,9 @@ export default function Classroom({ competency, questions, questionSource = 'bun
           setQuestion(text)
           askGabay(text)
         },
-        onError: (err) => {
+        onError: () => {
           setTranscribing(false)
-          if (err === 'stt-unconfigured' || err === 'stt-failed') startWebSpeech()
+          setMicError(true)
         },
         onEnd: () => {
           setListening(false)
@@ -369,10 +388,8 @@ export default function Classroom({ competency, questions, questionSource = 'bun
       if (rec) {
         recRef.current = rec
         rec.start()
-        return
       }
     }
-    startWebSpeech()
   }
 
   useEffect(() => () => recRef.current?.stop(), [])
@@ -751,6 +768,7 @@ export default function Classroom({ competency, questions, questionSource = 'bun
                   </Button>
                 </div>
                 {transcribing && <p className="mt-2 text-sm font-bold text-ink/60">{tt('class.listening')}</p>}
+                {micError && !listening && <p className="mt-2 text-sm font-bold text-ink/60">{tt('class.micError')}</p>}
                 {!online && <p className="mt-2 text-sm text-ink/60">{tt('class.offlineNote')}</p>}
                 {thinking && <ThinkingIndicator text={tt('class.thinking')} mode={mode} />}
                 {reply && (

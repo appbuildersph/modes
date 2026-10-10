@@ -276,6 +276,7 @@ export const STRINGS = {
     fil: 'Offline: sasagot pa rin si Gabo gamit ang on-device AI o naka-cache na paliwanag. Mic ay online lang.',
     taglish: 'Offline: sasagot pa rin si Gabo gamit ang on-device AI o cached na paliwanag. Mic ay online lang.',
   },
+  'class.micError': { en: "I didn't catch that. Tap Mic and try again, or type your question.", fil: 'Hindi ko narinig. Pindutin ulit ang Mic, o isulat ang tanong mo.', taglish: 'Hindi ko narinig. I-tap ulit ang Mic, o i-type ang tanong mo.' },
   'class.micOfflineTitle': { en: 'Mic — needs internet', fil: 'Mic — kailangan ng internet', taglish: 'Mic — kailangan ng internet' },
   'class.askError': { en: 'There was a problem answering. Please try again.', fil: 'May problema sa pagsagot. Subukan ulit.', taglish: 'May problema sa pagsagot. Subukan ulit.' },
   'class.startPractice': { en: 'Start the practice', fil: 'Simulan ang pagsasanay', taglish: 'Simulan ang pagsasanay' },
