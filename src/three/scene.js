@@ -8,6 +8,9 @@ const STAND_HEIGHT = 1.6
 const CROUCH_HEIGHT = 1.05
 const BASE_FOV = 70
 const ZOOM_FOV = 46
+// Sprite edge length in metres; the drawn cat is ~89% of it, about 1.55 m,
+// taller than the seated students so he reads as the teacher.
+const GABO_SIZE = 1.75
 const PALETTE = {
   cream: 0xfbf1da,
   board: 0x27433b,
@@ -140,7 +143,7 @@ export function buildClassroom({ mount, competency, onNearBoard, onInteract, the
   buildRoom()
   buildDecor()
   const board = buildBoard()
-  buildTeacherArea()
+  const teacher = buildTeacherArea()
   buildStudentArea()
   drawBoard(lastBoardText)
 
@@ -413,10 +416,39 @@ export function buildClassroom({ mount, competency, onNearBoard, onInteract, the
   function buildTeacherArea() {
     box({ x: 0, y: 0.42, z: -5.3, w: 2.3, h: 0.22, d: 0.9, color: PALETTE.wood, collide: true })
     for (const x of [-0.95, 0.95]) for (const z of [-5.65, -4.95]) leg(x, 0.18, z, 0.36, PALETTE.wood)
-    const teacher = makePerson(PALETTE.yellow, 0.95)
-    teacher.position.set(1.65, 0, -5.5)
-    teacher.rotation.y = Math.PI
-    scene.add(teacher)
+    return makeGaboTeacher(1.65, -5.5)
+  }
+
+  // Teacher Gabo is the same artwork as the 2D mascot, not a primitive stand-in:
+  // a camera-facing sprite keeps every line of the drawing readable from any
+  // seat, and stays unlit so his colours match the rest of the app.
+  function makeGaboTeacher(x, z) {
+    const tex = track(decorTexture(TEX.gabo))
+    const mat = track(new THREE.SpriteMaterial({ map: tex, transparent: true, alphaTest: 0.08 }))
+    const sprite = new THREE.Sprite(mat)
+    // Anchor at his feet (the art has a 24px transparent margin under them on
+    // a 512px canvas) so scaling the bob never lifts him off the floor.
+    sprite.center.set(0.5, 24 / 512)
+    sprite.position.set(x, 0.01, z)
+    sprite.scale.set(GABO_SIZE, GABO_SIZE, 1)
+    scene.add(sprite)
+
+    const shadowGeo = track(new THREE.CircleGeometry(0.42, 24))
+    const shadowMat = track(new THREE.MeshBasicMaterial({ color: PALETTE.ink, transparent: true, opacity: 0.16, depthWrite: false }))
+    const shadow = new THREE.Mesh(shadowGeo, shadowMat)
+    shadow.rotation.x = -Math.PI / 2
+    shadow.scale.set(1, 0.55, 1)
+    shadow.position.set(x, 0.012, z)
+    scene.add(shadow)
+
+    colliders.push({ x, z, halfX: 0.3 + PLAYER_RADIUS, halfZ: 0.3 + PLAYER_RADIUS })
+    return sprite
+  }
+
+  // Gentle breathing bounce so he reads as alive, not a cut-out.
+  function animateTeacher(time) {
+    const squash = Math.sin(time * 2.4) * 0.025
+    teacher.scale.set(GABO_SIZE * (1 - squash * 0.5), GABO_SIZE * (1 + squash), 1)
   }
 
   function buildStudentArea() {
@@ -464,6 +496,7 @@ export function buildClassroom({ mount, competency, onNearBoard, onInteract, the
     updateHeight(dt)
     updateCameraZoom(dt)
     updateNearBoard()
+    animateTeacher(clock.elapsedTime)
     applyLook()
     renderer.render(scene, camera)
   }

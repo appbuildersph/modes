@@ -14,6 +14,7 @@ import posterGeometryUrl from '../../textures/poster-geometry-shapes.png'
 import posterMultiplicationUrl from '../../textures/poster-multiplication.png'
 import posterNumberLineUrl from '../../textures/poster-number-line.png'
 import posterMotivationalUrl from '../../textures/poster-motivational.png'
+import gaboTeacherUrl from '../assets/gabo/gabo-star-pose.webp'
 
 const loader = new THREE.TextureLoader()
 
@@ -43,6 +44,7 @@ export const TEX = {
   corkboard: corkboardUrl,
   rug: rugUrl,
   window: windowUrl,
+  gabo: gaboTeacherUrl,
   posters: [
     posterFractionsUrl,
     posterGeometryUrl,
