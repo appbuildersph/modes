@@ -116,13 +116,15 @@ Three modes change both the interface and how the tutor replies. They are design
 
 | Mode | Designed to support | Tutor behaviour |
 |---|---|---|
-| **Kalma** (Calm / Focus) | learners who benefit from a calm, predictable screen | two short sentences, one idea, calm tone |
-| **Pakinig** (Listen) | learners who benefit from listening | written for speech: no symbols or markdown, "3/4" spoken as "three fourths" |
-| **Hakbang** (Step) | learners who benefit from small steps | one step per reply, simple words, then a check question |
+| **Kalma** (English label: Calm) | learners who benefit from a calm, predictable screen | two short sentences, one idea, calm tone |
+| **Pakinig** (English label: Listen) | learners who benefit from listening | written for speech: no symbols or markdown, "3/4" spoken as "three fourths" |
+| **Hakbang** (English label: Step by Step) | learners who benefit from small steps | one step per reply, simple words, then a check question |
 
 Small models follow format instructions unreliably, so the mode rules are also enforced **in code after the model replies** (`src/lib/tutor-modes.js`); a reply that fails validation falls through to the next provider.
 
-**Status:** implemented and tested: the mode preference (onboarding step and Profile screen), the mode-aware tutor prompt, the post-processing rules, per-mode screens (a calmer Kalma screen, large type with read-aloud word highlighting in Pakinig, a step card in Hakbang) and per-mode voice settings. Not built: the Grade 1 to 3 unlock for Hakbang. The modes are a design for different learners, not a tested intervention.
+In English the app shows the modes as Calm, Listen and Step by Step; in Tagalog and Taglish it keeps Kalma, Pakinig and Hakbang.
+
+**Status:** implemented and tested: the mode preference (onboarding step with an animated preview of each mode, and the Profile screen), the mode-aware tutor prompt, the post-processing rules, per-mode screens (a calmer Kalma screen, large type with read-aloud word highlighting in Pakinig, a step card in Hakbang) and per-mode voice settings. Gabo also changes pose with the mode. Not built: the Grade 1 to 3 unlock for Hakbang. The modes are a design for different learners, not a tested intervention.
 
 ## What you may not see (and why)
 
@@ -145,7 +147,7 @@ Some features are hidden, locked or replaced on purpose, depending on the learni
 
 | Feature | When offline | What happens instead |
 |---|---|---|
-| Mic button (voice questions) | Shown but disabled ("needs internet"). Hidden completely if the browser supports neither speech recognition nor audio recording. | The learner types the question |
+| Mic button (voice questions) | Shown but disabled ("needs internet"). Hidden completely if the browser supports neither speech recognition nor audio recording. Online, the mic uses the browser's own speech recognition first; recording for Gemini transcription is only used where that is missing. If nothing was heard, Gabo says "I didn't catch that". | The learner types the question |
 | ElevenLabs voice | Not reachable | The device's built-in voice (`speechSynthesis`) reads aloud |
 | AI tutor and AI questions | The edge hub cannot be reached | Bundled explanations and the bundled question rotation |
 | Offline banner | Pops up for 5 seconds when the connection drops | None needed online |
@@ -176,6 +178,12 @@ We built a small native macOS app, **Edge AI Launcher**, so anyone on the team c
 - **Or build it yourself:** `scripts/make-launcher-app.sh` (needs `swiftc` from the Xcode command line tools) creates `Edge AI Launcher.app` on the Desktop with the SIBOL icon.
 - **Phones need the team's tunnel.** The tunnel step uses the team's ngrok domain, so on another Mac it reports the tunnel as not running. Everything else still works, and the app is ready at `http://localhost:8787`.
 - **How it works:** the window is SwiftUI (`native/edge-launcher/EdgeLauncher.swift`). Behind it runs `scripts/launcher.mjs` on `127.0.0.1:8700`, which does the actual steps. The same buttons are available in a browser at that address, without the native app.
+- **Every part of SIBOL:** below the buttons, one health card per part of the system: Gemma in memory, RAM (sampled every 3 s, with peaks and a 10-minute chart), tutor traffic, voice and the ElevenLabs quota, the built app and offline cache, bundled content, the deployed PWAs and the tunnel, the Mac, and the code. **CHECK EVERYTHING** asks Gemma once per mode and language, plays one voice line per mode and runs `npm test`.
+
+<p align="center">
+  <img src="docs/images/edge-launcher-health.png" alt="Edge AI Launcher scrolled down: status rows for the edge hub, keep-awake and tunnel, then Every part of SIBOL with a CHECK EVERYTHING button, 31 fine, 2 to watch, 0 broken; Gemma on this Mac OK with Gemma in memory 4.37 GB and model state idle, context 8192; Memory (RAM) chart" width="720">
+</p>
+
 - **Tested:** with the stack already running (every step reported "already running" and Gemma answered in about 1 s). A cold start from nothing has not been run yet. Details: [`docs/EDGE_RUNBOOK.md`](docs/EDGE_RUNBOOK.md).
 
 ## Architecture
@@ -225,6 +233,7 @@ The same app also runs on the Mac itself at `http://localhost:8787`, where the h
 - **The server builds the prompt** from the request's `ref`, `lang` and `mode` against the bundled curriculum. It never accepts a client-supplied system prompt. Origin allow-listing, size caps and per-IP rate limits come from `api/_shared.js`.
 - **Tutor provider order** (`src/lib/tutor.js`): Chrome's built-in Gemini Nano if present, then the edge hub, then the cloud endpoint if configured, then a bundled explanation. Replies are cached in IndexedDB for offline re-reading.
 - **Voice-out** (`src/lib/speech.js`): `/api/tts` on the edge hub when the app has one (ElevenLabs if configured), else the host's own endpoint, else the device's `speechSynthesis`.
+- **Voice-in:** the browser's own speech recognition (Web Speech) first, started inside the learner's tap so iOS allows it; recording for Gemini transcription only where Web Speech is missing; otherwise the learner types.
 
 More detail: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), decisions in [`docs/DECISIONS.md`](docs/DECISIONS.md) (D-016 to D-018).
 
@@ -303,7 +312,7 @@ Names only; real values go in a local `.env` (gitignored, never committed). The 
 npm test
 ```
 
-Uses `node --test` over `test/*.test.js`. It covers the curriculum data, the tutor prompt and mode rules, the provider chain, the edge backend, the voice endpoint and the speech routing, all with fake networks and no model. On 2026-10-10 all tests passed on the team's Mac (198 at the last count) and in a fresh clone (the count changes as tests are added). The tests do not prove the model's reply quality.
+Uses `node --test` over `test/*.test.js`. It covers the curriculum data, the tutor prompt and mode rules, the provider chain, the edge backend, the voice endpoint and the speech routing, all with fake networks and no model. On 2026-10-10 all tests passed on the team's Mac (203 at the last count) and in a fresh clone (the count changes as tests are added). The tests do not prove the model's reply quality.
 
 ## Proof of local inference
 
@@ -379,7 +388,7 @@ Earlier single runs, recorded in [`docs/DECISIONS.md`](docs/DECISIONS.md) (D-018
 - **The model does not run on the phone.** In-browser attempts on an iPhone 13 failed (Safari 27.0.1): Gemma 4 E2B's page was killed during the roughly 3 GB download, and Gemma 3 1B loaded and then crashed; the browser reported a 683 MB maximum GPU buffer. That is why the model runs on a laptop instead. See D-018.
 - **Filipino quality is unverified.** Gemma 4 E2B's model card does not list Filipino among its languages. No Filipino benchmark exists for models this small, and no Filipino reader has reviewed the replies. Treat Tagalog and Taglish quality as unproven.
 - **Small-model output needs guard rails.** In earlier tests, small models broke the mode rules (markdown, long replies, loops), which is why the rules are enforced in code.
-- **The phone-to-laptop path** was run once on an iPhone 13 (Safari, installed from a Cloudflare quick tunnel, app and hub on one address): questions reached the hub and Gemma answered them (hub log `POST /api/tutor 200`, 0.65 to 1.0 s). The ngrok static domain and the Vercel deployment (`hiyang.vercel.app`, also `math-companion-edge.vercel.app`, redeployed 2026-10-10 around 05:15) are set up and were checked from the Mac. The team lead reported the app installed as a PWA on the iPhone 13 from `hiyang.vercel.app` working (05:32); no phone screenshot of that is in the repo yet. Offline operation is only valid on the laptop itself.
+- **The phone-to-laptop path** was run once on an iPhone 13 (Safari, installed from a Cloudflare quick tunnel, app and hub on one address): questions reached the hub and Gemma answered them (hub log `POST /api/tutor 200`, 0.65 to 1.0 s). The ngrok static domain and the Vercel deployment (`hiyang.vercel.app`, also `math-companion-edge.vercel.app`, redeployed 2026-10-10 around 05:15) are set up and were checked from the Mac. Since 2026-10-10 about 08:55, every push to `main` deploys the PWA to Vercel automatically (`sibol-tutor`, `hiyang` and `math-companion-edge` `.vercel.app`). The team lead reported the app installed as a PWA on the iPhone 13 from `hiyang.vercel.app` working (05:32); no phone screenshot of that is in the repo yet. Offline operation is only valid on the laptop itself.
 - **A tunnel URL is public.** Origin allow-listing and rate limits protect it, but non-browser clients can forge an origin. Stop the tunnel when not demoing.
 - **The ElevenLabs voice** has not been judged for Filipino naturalness, and the voice is chosen by ear.
 - **Grades 1 to 3:** curriculum data exists but is not bundled; the Hakbang unlock is not claimed.
