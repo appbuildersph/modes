@@ -7,6 +7,7 @@
 # SIBOL: Student-centered Inclusive Bilingual Offline Learning
 
 [![Live app](https://img.shields.io/badge/Live_app-sibol--tutor.vercel.app-2ea44f?logo=vercel&logoColor=white)](https://sibol-tutor.vercel.app)
+[![Landing page](https://img.shields.io/badge/Landing_page-sibol--landing--ph.vercel.app-f7d26a?logo=vercel&logoColor=black)](https://sibol-landing-ph.vercel.app)
 [![Demo video](https://img.shields.io/badge/Demo_video-YouTube-red?logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=TskCOFxtuWo)
 [![Post on X](https://img.shields.io/badge/Post-X-black?logo=x&logoColor=white)](https://x.com/eirmonpaculan/status/2108728926076010535)
 [![Post on LinkedIn](https://img.shields.io/badge/Post-LinkedIn-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/posts/eirmonpaculan_appbuildersph-ugcPost-7514496661063221248-_qyx/)
@@ -30,7 +31,7 @@
 
 An offline-first Local AI math companion for Filipino **Grade 4 to 6** learners (DepEd MATATAG curriculum). A friendly AI tutor answers a learner's question step by step in English, Tagalog or Taglish, and can read the answer aloud. The answers come from an open-source model, **Gemma 4 E2B, running on the team's own laptop** (an "edge" setup), not from a cloud AI API.
 
-This repository was built for the AppBuildersPH Hackathon 2026 (theme: Local AI). Demo video: [YouTube](https://www.youtube.com/watch?v=TskCOFxtuWo). Posts: [X](https://x.com/eirmonpaculan/status/2108728926076010535), [LinkedIn](https://www.linkedin.com/posts/eirmonpaculan_appbuildersph-ugcPost-7514496661063221248-_qyx/).
+This repository was built for the AppBuildersPH Hackathon 2026 (theme: Local AI). Landing page: [sibol-landing-ph.vercel.app](https://sibol-landing-ph.vercel.app) (source: [`public/landing.html`](public/landing.html), also served by the app at `/landing.html`; it shows the three learning modes and who each is designed for, and its buttons open the live app). Demo video: [YouTube](https://www.youtube.com/watch?v=TskCOFxtuWo). Posts: [X](https://x.com/eirmonpaculan/status/2108728926076010535), [LinkedIn](https://www.linkedin.com/posts/eirmonpaculan_appbuildersph-ugcPost-7514496661063221248-_qyx/).
 
 `#AppBuildersPH` `#LocalAI` `#EdgeAI` `#Gemma` `#DepEd` `#MATATAG` `#EdTech` `#Philippines`
 
@@ -458,7 +459,7 @@ Earlier single runs, recorded in [`docs/DECISIONS.md`](docs/DECISIONS.md) (D-018
 ## Models, services and tools used
 
 - **Model:** Gemma 4 E2B (`google/gemma-4-e2b`), run through LM Studio (MLX 4-bit). Apache 2.0 according to the official model card (`huggingface.co/google/gemma-4-E2B-it`); LM Studio serves a community MLX 4-bit conversion of those weights. It was chosen after testing candidates (Gemma 3 1B and Qwen3 0.6B) in the browser.
-- **Runtime and tooling:** LM Studio with Apple MLX (model runtime), ngrok (tunnel), Cloudflare quick tunnel (first phone test), Vercel (hosting the PWA), React 19, Vite 6, Tailwind CSS 3, vite-plugin-pwa, idb-keyval, Three.js, Node's built-in test runner.
+- **Runtime and tooling:** LM Studio with Apple MLX (model runtime), ngrok (tunnel), Cloudflare quick tunnel (first phone test), Vercel (hosting the PWA, and the static landing page as a separate project `sibol-landing`), React 19, Vite 6, Tailwind CSS 3, vite-plugin-pwa, idb-keyval, Three.js, Node's built-in test runner.
 - **Optional cloud services:** ElevenLabs (voice), Google Vertex AI / Gemini and Google Cloud Text-to-Speech (older fallback endpoints), Upstash Redis (optional rate limiting).
 - **Fonts:** Atkinson Hyperlegible, Baloo 2 and Nunito, bundled through the `@fontsource` packages, all under the SIL Open Font License 1.1.
 - **AI development tools:** Claude Code (Anthropic) for planning, research, code, tests and documentation; OpenAI Codex and Cursor for code assistance; ChatGPT / OpenAI image generation for the illustrations and textures.
